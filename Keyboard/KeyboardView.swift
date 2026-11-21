@@ -7,7 +7,6 @@ struct KeyboardView: View {
 
     var body: some View {
         ZStack {
-            Color(.systemGray5).ignoresSafeArea()
             switch model.mode {
             case .voice:
                 VoiceView(model: model, globe: globe)
@@ -81,7 +80,7 @@ private struct KeyCap: View {
                 .lineLimit(1)
                 .frame(maxWidth: .infinity, minHeight: 42)
                 .foregroundStyle(Color(.label))
-                .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 5))
+                .background(Color(.systemGray4), in: RoundedRectangle(cornerRadius: 5))
                 .shadow(color: .black.opacity(0.25), radius: 0, y: 1)
         }
         .buttonStyle(.plain)
@@ -149,7 +148,7 @@ private struct DictationView: View {
                         .font(.system(size: 20, weight: .semibold))
                         .frame(width: 56, height: 56)
                         .foregroundStyle(Color(.label))
-                        .background(Color(.systemBackground), in: Circle())
+                        .background(Color(.systemGray4), in: Circle())
                 }
                 .accessibilityLabel("Cancel")
                 Spacer()
@@ -205,23 +204,46 @@ private struct HeardText: View {
                 .frame(maxHeight: .infinity, alignment: .top)
             if settled { ProgressView() }
         }
-        .animation(.easeOut(duration: 0.15), value: heard)
     }
 }
 
+/// Bars mirrored around the centre: the newest level sits in the middle and older ones move outwards, so each
+/// sound spreads from the centre. Bars shrink and fade towards the edges, down to dots, under a glow that
+/// follows the voice.
 private struct Waveform: View {
+    static let barsPerSide = 11
+
     let levels: [Float]
     let active: Bool
 
     var body: some View {
-        HStack(alignment: .center, spacing: 3) {
-            ForEach(levels.indices, id: \.self) { i in
+        let ink = Color(.label)
+        let newest = CGFloat(active ? levels.last ?? 0 : 0)
+        HStack(alignment: .center, spacing: 4) {
+            ForEach(-Self.barsPerSide...Self.barsPerSide, id: \.self) { i in
+                let falloff = 1 - CGFloat(abs(i)) / CGFloat(Self.barsPerSide + 1)
                 Capsule()
-                    .fill(Color(.label).opacity(active ? 0.85 : 0.3))
-                    .frame(width: 3, height: 4 + CGFloat(levels[i]) * 40)
+                    .fill(LinearGradient(colors: [ink.opacity(0.75), ink, ink.opacity(0.6)], startPoint: .top, endPoint: .bottom))
+                    .frame(width: 5, height: 5 + level(abs(i)) * 38 * falloff * falloff)
+                    .opacity(active ? 0.2 + 0.8 * falloff * falloff : 0.2)
             }
         }
-        .animation(.linear(duration: 0.05), value: levels)
+        .padding(.horizontal, 14)
+        .frame(maxHeight: .infinity)
+        .background {
+            RadialGradient(colors: [ink.opacity(0.45 * newest), .clear], center: .center, startRadius: 0, endRadius: 60)
+                .blur(radius: 10)
+        }
+        .background(ink.opacity(0.03))
+        .clipShape(Capsule())
+        .overlay(Capsule().strokeBorder(ink.opacity(0.12), lineWidth: 1))
+        .animation(.easeOut(duration: 0.08), value: levels)
+    }
+
+    /// The level `age` steps before the newest one.
+    private func level(_ age: Int) -> CGFloat {
+        guard active, age < levels.count else { return 0 }
+        return CGFloat(levels[levels.count - 1 - age])
     }
 }
 
