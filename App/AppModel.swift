@@ -95,7 +95,7 @@ final class AppModel: ObservableObject {
     func beginSession() async {
         if micPermission == .undetermined { await requestMicrophone() }
         guard micPermission == .granted else {
-            error = "ต้องอนุญาตไมโครโฟนก่อน (Microphone permission needed)"
+            error = "ต้องอนุญาตไมโครโฟนก่อน"
             return
         }
         await loadModel()
