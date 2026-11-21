@@ -1,12 +1,14 @@
-เว่า downloads the speech recognition model it runs, iapp/OpenThai2.0-ASR-Streaming-ONNX
-(https://huggingface.co/iapp/OpenThai2.0-ASR-Streaming-ONNX, int8 files), at first launch. It is not part of
-the app itself.
+เว่า downloads the speech recognition model it runs at first launch; the model
+is not part of the app itself. The files are the int8 ONNX export
+iapp/OpenThai2.0-ASR-Streaming-ONNX
+(https://huggingface.co/iapp/OpenThai2.0-ASR-Streaming-ONNX).
 
-Notice of origin: OpenThai2.0-ASR-Streaming is developed by iApp Technology (iApp) and launched with AIEAT,
-as part of OpenThai (formerly OpenThaiGPT). The ONNX files are exported from the NeMo model
-iapp/OpenThai2.0-ASR-Streaming (https://huggingface.co/iapp/OpenThai2.0-ASR-Streaming), which is built on
-NVIDIA's Nemotron ASR streaming model. Both are released under the OpenMDW License Agreement, version 1.1
-(https://openmdw.ai/license/1-1/):
+Notice of origin: OpenThai2.0-ASR-Streaming is developed by iApp Technology
+(iApp) and launched with AIEAT, as part of OpenThai (formerly OpenThaiGPT).
+The ONNX files are exported from the NeMo model iapp/OpenThai2.0-ASR-Streaming
+(https://huggingface.co/iapp/OpenThai2.0-ASR-Streaming), which is built on
+NVIDIA's Nemotron ASR streaming model. Both are released under the OpenMDW
+License Agreement, version 1.1 (https://openmdw.ai/license/1-1/):
 
 OpenMDW License Agreement, version 1.1 (OpenMDW-1.1)
 

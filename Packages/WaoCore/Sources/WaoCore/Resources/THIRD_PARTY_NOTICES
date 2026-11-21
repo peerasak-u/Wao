@@ -1,6 +1,7 @@
-vocabulary.txt and corrections.txt in this folder, and the decoding and text clean-up in
-WaoInference/Transcriber.swift, Hotwords.swift, Corrections.swift and TextCleanup.swift, are adapted from
-PoodPim (https://github.com/thirawat/PoodPim) under this licence:
+vocabulary.txt and corrections.txt in this folder, and the decoding and text
+clean-up in WaoInference/Transcriber.swift, Hotwords.swift, Corrections.swift
+and TextCleanup.swift, are adapted from PoodPim
+(https://github.com/thirawat/PoodPim) under this licence:
 
 MIT License
 
