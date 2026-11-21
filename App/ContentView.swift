@@ -5,6 +5,7 @@ import WaoInference
 
 @main
 struct WaoApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @StateObject private var model = AppModel()
     @Environment(\.scenePhase) private var scenePhase
 
@@ -440,13 +441,24 @@ private struct SetupCard: View {
     @ViewBuilder private var modelStep: some View {
         Step(number: 1, done: model.model.isReady, title: "โมเดลถอดเสียง", detail: modelDetail) {
             switch model.model {
-            case .missing: PillButton(title: "ดาวน์โหลด") { Task { await model.download() } }
-            case .failed: PillButton(title: "ลองอีกครั้ง") { Task { await model.download() } }
-            case .downloading, .ready: EmptyView()
+            case .missing: PillButton(title: "ดาวน์โหลด", action: model.download)
+            case .downloading: PillButton(title: "หยุด", action: model.pauseDownload)
+            case .paused: PillButton(title: "ดาวน์โหลดต่อ", action: model.download)
+            case .failed: PillButton(title: "ลองอีกครั้ง", action: model.download)
+            case .ready: EmptyView()
             }
         } footer: {
-            if case .downloading(let progress) = model.model {
-                ProgressBar(value: progress)
+            switch model.model {
+            case .missing:
+                Text("แนะนำให้ต่อ Wi-Fi · ดาวน์โหลดครั้งเดียว")
+                    .font(.loopless(13))
+                    .foregroundStyle(Palette.tertiary)
+            case .downloading(let progress), .paused(let progress):
+                ProgressBar(value: progress.fraction)
+            case .failed(_, let progress) where progress.received > 0:
+                ProgressBar(value: progress.fraction)
+            default:
+                EmptyView()
             }
         }
     }
@@ -454,9 +466,10 @@ private struct SetupCard: View {
     private var modelDetail: String {
         switch model.model {
         case .missing: "OpenThai2.0 ASR โดย iApp Technology · ประมาณ 1 GB"
-        case .downloading(let progress): "กำลังดาวน์โหลด \(Int(progress * 100))%"
+        case .downloading(let progress): "กำลังดาวน์โหลด · \(progress.megabytes)"
+        case .paused(let progress): "หยุดไว้ · \(progress.megabytes)"
         case .ready: "OpenThai2.0 ASR โดย iApp Technology\nพร้อมใช้บนเครื่อง"
-        case .failed(let reason): reason
+        case .failed(let reason, let progress): progress.received > 0 ? "\(reason)\n\(progress.megabytes)" : reason
         }
     }
 
@@ -619,6 +632,10 @@ extension SessionState {
         default: false
         }
     }
+}
+
+extension DownloadProgress {
+    var megabytes: String { "\(received / 1_000_000) / \(total / 1_000_000) MB" }
 }
 
 extension ModelState {

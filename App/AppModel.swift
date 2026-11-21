@@ -23,7 +23,7 @@ final class AppModel: ObservableObject {
     @Published var micPermission = AVAudioApplication.shared.recordPermission
     @Published var vocabulary = VocabularyStore.load()
 
-    let store = ModelStore(directory: ModelStore.defaultDirectory)
+    private let downloader = AppDelegate.downloader
     private var dictation: DictationSession!
     private var interruptionObserver: NSObjectProtocol?
     private var vocabularyCommit: AnyCancellable?
@@ -32,7 +32,10 @@ final class AppModel: ObservableObject {
     private var testStartedAt = Date()
 
     init() {
-        model = store.diskState()
+        model = downloader.store.state()
+        downloader.observe { state in
+            DispatchQueue.main.async { [weak self] in self?.model = state }
+        }
         let bridge = try? Bridge.shared()
         dictation = DictationSession(bridge: bridge, hotwords: vocabulary.hotwords) { [weak self] snapshot in
             Task { @MainActor in self?.observe(snapshot) }
@@ -69,14 +72,13 @@ final class AppModel: ObservableObject {
     var isSessionLive: Bool { session != .off }
     var isKeyboardSessionOn: Bool { isSessionLive && !testOwnsSession }
 
-    func download() async {
-        model = .downloading(progress: 0)
-        let state = await store.ensureReady { progress in
-            Task { @MainActor [weak self] in
-                if case .downloading = self?.model { self?.model = .downloading(progress: progress) }
-            }
-        }
-        model = state
+    /// Starts, resumes, or retries; whatever is on disk is kept.
+    func download() {
+        downloader.start()
+    }
+
+    func pauseDownload() {
+        downloader.pause()
     }
 
     func requestMicrophone() async {
