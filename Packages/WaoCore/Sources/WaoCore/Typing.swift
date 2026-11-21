@@ -28,6 +28,9 @@ public struct Typing: Equatable, Sendable {
         }
     }
 
+    /// Only the Thai letters page reads taps through the language model; English and the symbols stay geometric.
+    public var decodes: Bool { language == .thai && page == .letters }
+
     /// Caption of the key that switches language.
     public var languageLabel: String { language == .thai ? "ABC" : "ไทย" }
 

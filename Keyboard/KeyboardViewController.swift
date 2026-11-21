@@ -8,12 +8,21 @@ final class KeyboardViewController: UIInputViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        model.insert = { [weak self] in self?.textDocumentProxy.insertText($0) }
-        model.deleteBackward = { [weak self] in self?.textDocumentProxy.deleteBackward() }
+        model.insert = { [weak self] in
+            self?.textDocumentProxy.insertText($0)
+            self?.model.refreshContext()
+        }
+        model.deleteBackward = { [weak self] in
+            self?.textDocumentProxy.deleteBackward()
+            self?.model.refreshContext()
+        }
+        model.readContext = { [weak self] in self?.textDocumentProxy.documentContextBeforeInput ?? "" }
         model.openApp = { [weak self] in self?.openContainingApp() ?? false }
 
         let host = UIHostingController(rootView: KeyboardView(model: model, globe: { [weak self] in self?.globeButton() }))
-        host.view.backgroundColor = .clear
+        // iOS hands a touch on a fully transparent part of a keyboard to the app behind it, so the touch surface
+        // and the suggestion bar, which draw nothing of their own, would never see one.
+        host.view.backgroundColor = UIColor(white: 0, alpha: 0.001)
         host.sizingOptions = []
         addChild(host)
         view.addSubview(host.view)
@@ -23,7 +32,7 @@ final class KeyboardViewController: UIInputViewController {
             host.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             host.view.topAnchor.constraint(equalTo: view.topAnchor),
             host.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            view.heightAnchor.constraint(equalToConstant: 270),
+            view.heightAnchor.constraint(equalToConstant: 282),
         ])
         host.didMove(toParent: self)
         self.host = host
@@ -33,6 +42,13 @@ final class KeyboardViewController: UIInputViewController {
         super.viewWillAppear(animated)
         model.hasFullAccess = hasFullAccess
         model.activate()
+        model.refreshContext()
+    }
+
+    /// The cursor moved, or the host changed the text.
+    override func textDidChange(_ textInput: UITextInput?) {
+        super.textDidChange(textInput)
+        model.refreshContext()
     }
 
     /// `needsInputModeSwitchKey` is only reliable once layout starts; on devices where iOS draws its own globe

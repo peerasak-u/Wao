@@ -3,7 +3,7 @@ import WaoCore
 
 /// Thai Kedmanee, QWERTY and symbols. Without Full Access this is the whole keyboard; with it, a detour from the mic.
 struct TypingView: View {
-    static let stripHeight: CGFloat = 28
+    static let stripHeight: CGFloat = 40
 
     @ObservedObject var model: KeyboardModel
     let globe: () -> UIView?
@@ -12,8 +12,12 @@ struct TypingView: View {
 
     var body: some View {
         VStack(spacing: 0) {
+            let completions = model.completions
             Group {
-                if model.hasFullAccess {
+                if !completions.isEmpty {
+                    SuggestionBar(completions: completions, choose: { model.insert($0.remainder) },
+                                  explain: model.hasFullAccess ? nil : { explaining = true })
+                } else if model.hasFullAccess {
                     Color.clear
                 } else {
                     FullAccessBanner { explaining = true }
@@ -23,6 +27,21 @@ struct TypingView: View {
             GeometryReader { geo in
                 let grid = KeyLayout(size: geo.size, rows: model.typing.rows)
                 ZStack(alignment: .topLeading) {
+                    TouchSurfaceView { event in
+                        switch event {
+                        case .press(let point, let interval):
+                            pressed = model.resolve(point, in: grid, interval: interval)
+                        case .release(let point, let interval):
+                            pressed = nil
+                            if case .character(let character) = model.resolve(point, in: grid, interval: interval)?.kind {
+                                model.type(character)
+                            }
+                        case .cancel:
+                            pressed = nil
+                        }
+                    }
+                    .frame(width: grid.characterArea.width, height: grid.characterArea.height)
+                    .position(x: grid.characterArea.midX, y: grid.characterArea.midY)
                     ForEach(grid.keys) { key in
                         keyView(key)
                             .frame(width: key.hit.width, height: key.hit.height)
@@ -73,8 +92,8 @@ struct TypingView: View {
         switch key.kind {
         case .character(let character):
             let label = model.typing.text(of: character)
+            // Drawn only: the touch surface beneath decides what a touch types.
             Color.clear
-                .contentShape(Rectangle())
                 .overlay(alignment: .topLeading) {
                     model.typing.caption(of: character)
                         .font(capFont(popup: false))
@@ -86,16 +105,7 @@ struct TypingView: View {
                         .shadow(color: .black.opacity(0.25), radius: 0, y: 1)
                         .offset(x: cap.minX, y: cap.minY)
                 }
-                .gesture(
-                    DragGesture(minimumDistance: 0)
-                        .onChanged { _ in if pressed?.id != key.id { pressed = key } }
-                        .onEnded { value in
-                            if pressed?.id == key.id { pressed = nil }
-                            // A finger that slid well off the key changed its mind.
-                            let slack = CGRect(origin: .zero, size: key.hit.size).insetBy(dx: -16, dy: -16)
-                            if slack.contains(value.location) { model.type(character) }
-                        }
-                )
+                .allowsHitTesting(false)
                 .accessibilityElement()
                 .accessibilityLabel(label)
                 .accessibilityAddTraits(.isKeyboardKey)
@@ -120,7 +130,7 @@ struct TypingView: View {
         return thai ? .loopless(size) : .system(size: size)
     }
 
-    /// Sits above the key; on the top row it is pushed down into the banner strip rather than cut off.
+    /// Sits above the key; on the top row it is pushed down into the suggestion strip rather than cut off.
     private func popupCenter(for cap: CGRect, width: CGFloat) -> CGPoint {
         let halfWidth = max(cap.width * 1.5, 44) / 2
         let x = min(max(cap.midX, halfWidth), width - halfWidth)
@@ -152,6 +162,60 @@ private struct KeyPopup: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Key.letterFill, in: RoundedRectangle(cornerRadius: 8))
             .shadow(color: .black.opacity(0.35), radius: 4, y: 2)
+    }
+}
+
+/// Up to three words that finish the one being typed: the likeliest in the middle, as on the system keyboard.
+private struct SuggestionBar: View {
+    let completions: [Completion]
+    let choose: (Completion) -> Void
+    /// Without Full Access the bar takes the banner's place, so its way to the help stays at the trailing edge.
+    let explain: (() -> Void)?
+
+    var body: some View {
+        HStack(spacing: 0) {
+            ForEach(Array([1, 0, 2].enumerated()), id: \.offset) { position, rank in
+                if position > 0 { Divider().frame(height: 22) }
+                Group {
+                    if rank < completions.count {
+                        Button { choose(completions[rank]) } label: {
+                            Text(label(completions[rank]))
+                                .font(.loopless(17))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.6)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                .contentShape(Rectangle())
+                        }
+                        .buttonStyle(.plain)
+                    } else {
+                        Color.clear
+                    }
+                }
+                .frame(maxWidth: .infinity)
+            }
+            if let explain {
+                Button(action: explain) {
+                    Image(systemName: "mic.slash")
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundStyle(Color(.secondaryLabel))
+                        .frame(width: 28, height: 28)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Full Access")
+            }
+        }
+        .padding(.horizontal, 4)
+    }
+
+    /// What has been typed already reads fainter than what a tap adds.
+    private func label(_ completion: Completion) -> AttributedString {
+        var text = AttributedString(completion.word)
+        text.foregroundColor = Color(.label)
+        let added = completion.remainder.unicodeScalars.count
+        let typed = text.unicodeScalars.index(text.unicodeScalars.endIndex, offsetBy: -added)
+        text[text.startIndex..<typed].foregroundColor = Color(.secondaryLabel)
+        return text
     }
 }
 

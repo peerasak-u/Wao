@@ -1,3 +1,4 @@
+import CoreGraphics
 import Foundation
 import WaoCore
 
@@ -33,11 +34,14 @@ final class KeyboardModel: ObservableObject {
     @Published var typing = Typing()
     @Published private(set) var levels: [Float] = Array(repeating: 0, count: 24)
     @Published var notice: String?
+    /// The text before the cursor as the host last reported it: what tap decoding and suggestions read.
+    @Published private(set) var context = ""
 
     var hasFullAccess = false
     @Published var showsGlobe = true
     var insert: (String) -> Void = { _ in }
     var deleteBackward: () -> Void = {}
+    var readContext: () -> String = { "" }
     var openApp: () -> Bool = { false }
 
     private var bridge: Bridge?
@@ -63,6 +67,26 @@ final class KeyboardModel: ObservableObject {
 
     func type(_ key: CharacterKey) {
         insert(typing.type(key))
+    }
+
+    func refreshContext() {
+        context = readContext()
+    }
+
+    /// The character key a touch on the key rows types, or `nil` when it ended on shift or delete.
+    func resolve(_ point: CGPoint, in layout: KeyLayout, interval: TimeInterval) -> PlacedKey? {
+        let key = if typing.decodes, let model = TypingModel.bundled {
+            model.key(at: point, in: layout, shifted: typing.shifted, before: context, interval: interval)
+        } else {
+            layout.key(at: point)
+        }
+        guard case .character = key?.kind else { return nil }
+        return key
+    }
+
+    var completions: [Completion] {
+        guard typing.decodes, let model = TypingModel.bundled else { return [] }
+        return model.completions(after: context)
     }
 
     func showTyping() {
