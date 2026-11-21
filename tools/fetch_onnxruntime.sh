@@ -49,6 +49,12 @@ device="$work/ios/onnxruntime.xcframework/ios-arm64/onnxruntime.framework"
 sim="$work/ios/onnxruntime.xcframework/ios-arm64_x86_64-simulator/onnxruntime.framework"
 modulemap "$device/Modules"
 modulemap "$sim/Modules"
+# Xcode embeds this static framework with a stub binary built for the app's deployment target, but
+# keeps this Info.plist; App Store upload rejects a MinimumOSVersion that differs (ITMS-90208).
+ios_target="$(awk '/deploymentTarget:/ { getline; gsub(/[^0-9.]/, ""); print; exit }' "$root/project.yml")"
+for fw in "$device" "$sim"; do
+  plutil -replace MinimumOSVersion -string "$ios_target" "$fw/Info.plist"
+done
 
 mac="$work/macos/onnxruntime.framework"
 mkdir -p "$mac/Versions/A/Resources"
