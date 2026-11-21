@@ -1,4 +1,5 @@
 # From PoodPim (https://github.com/thirawat/PoodPim) assets/vocabulary.txt, MIT licence, Copyright (c) 2026 Thirawat Sutalungka. See THIRD_PARTY_NOTICES.
+# Curated by Peerasak in PoodPim (~/Library/Application Support/poodpim/vocabulary.txt), 2026-11-21.
 # คำศัพท์ของฉัน: คำภาษาอังกฤษที่อยากให้ PoodPim ถอดออกมาเป็นตัวอักษรอังกฤษ
 # เช่น ชื่อบริษัท ชื่อสินค้า ศัพท์เทคนิคที่ใช้บ่อย หนึ่งคำ (หรือวลี) ต่อบรรทัด
 # บรรทัดที่ขึ้นต้นด้วย # จะถูกข้าม
@@ -21,7 +22,6 @@ Netflix
 Nvidia
 AMD
 Intel
-Qualcomm
 Samsung
 Huawei
 Xiaomi
@@ -29,25 +29,15 @@ Tesla
 SpaceX
 OpenAI
 Anthropic
-DeepMind
 LinkedIn
 YouTube
 TikTok
 Twitter
 Oracle
-IBM
-Cisco
 Adobe
-Salesforce
-Shopify
 Lazada
 Shopee
 Agoda
-Uber
-Airbnb
-Alibaba
-Tencent
-ByteDance
 GitHub
 GitLab
 # Products and platforms
@@ -56,9 +46,7 @@ GPT
 Gemini
 Claude
 Copilot
-Llama
 DeepSeek
-Midjourney
 iPhone
 iPad
 MacBook
@@ -75,24 +63,17 @@ Slack
 Figma
 Jira
 AWS
-Azure
 Kubernetes
 Docker
-Terraform
 Python
 JavaScript
 TypeScript
-Golang
 React
 Node.js
 PostgreSQL
 MySQL
-MongoDB
 Redis
-Kafka
-TensorFlow
 PyTorch
-CUDA
 # Terms
 AI
 AGI
@@ -109,7 +90,6 @@ agent
 data
 dataset
 database
-data center
 cloud
 server
 serverless
@@ -119,19 +99,13 @@ startup
 open source
 machine learning
 deep learning
-neural network
 transformer
 training
 inference
 fine-tune
 benchmark
 robot
-robotics
 chatbot
-cybersecurity
-blockchain
-crypto
-Bitcoin
 DevOps
 backend
 frontend
@@ -140,28 +114,16 @@ production
 framework
 platform
 algorithm
-computing
-semiconductor
 scale
 scaling
-investor
-venture capital
-IPO
 CEO
-CTO
 engineer
 engineering
 developer
-Silicon Valley
-MIT
-Stanford
-Harvard
 
 # Words Thai developers say in English (and usually write in English)
 dev
-dev team
 structure
-data structure
 architecture
 infrastructure
 infra
@@ -169,16 +131,7 @@ maintain
 operation
 tool
 skill
-SRE
-SLA
-SLO
-SLI
-Stack Overflow
-sysadmin
-on-call
 microservice
-monolith
-design pattern
 refactor
 code
 coding
@@ -199,9 +152,6 @@ sprint
 backlog
 scrum
 agile
-kanban
-standup
-retro
 ticket
 task
 issue
@@ -226,7 +176,6 @@ compile
 runtime
 environment
 staging
-dev environment
 config
 configuration
 deployment
@@ -235,9 +184,7 @@ cluster
 node
 instance
 load balancer
-auto scale
 latency
-throughput
 performance
 optimize
 optimization
@@ -269,10 +216,8 @@ request
 response
 payload
 REST
-GraphQL
 JSON
 webhook
-callback
 async
 thread
 process
@@ -293,7 +238,6 @@ variable
 parameter
 array
 string
-integer
 boolean
 null
 exception
@@ -333,7 +277,6 @@ UX
 wireframe
 mockup
 prototype
-user story
 use case
 flow
 workflow
@@ -344,125 +287,112 @@ legacy
 tech debt
 testing
 unit test
-integration test
-test case
 QA
-UAT
-go live
 launch
 MVP
-POC
-product owner
-project manager
 stakeholder
-tech lead
 senior
-junior
-intern
-outsource
 freelance
 remote
 onboarding
 
 # Business analysis (BA)
-business requirement
-functional requirement
-non-functional requirement
-acceptance criteria
-definition of done
-use case diagram
-BRD
-FRD
-SRS
-as-is
-to-be
-gap analysis
-process flow
 flowchart
-swimlane
-BPMN
-ERD
-data flow
-data mapping
-data dictionary
-sign-off
-SIT
-test scenario
-defect
-change request
 impact
-impact analysis
-out of scope
 timeline
-deliverable
-cutover
-rollout
-hypercare
-handover
 KPI
-OKR
 insight
 report
 reporting
 analytics
-business case
 ROI
 cost
 budget
 risk
-assumption
-constraint
 priority
-prioritize
-MoSCoW
 workshop
 interview
-survey
-persona
-user journey
-customer journey
-pain point
 feedback
-follow up
-action item
-agenda
 presentation
 proposal
 approve
 approval
 review
-feasibility
-sprint planning
-sprint review
-retrospective
-grooming
-refinement
-story point
-epic
-effort
-velocity
-capacity
 resource
 vendor
-contract
-compliance
 audit
 PDPA
-consent
-CRM
 ERP
-SAP
-Power BI
-Tableau
-Confluence
-Miro
-Visio
-Scrum Master
-CSM
-certificate
-certified
-product backlog
-business analyst
-system analyst
 template
-requirement gathering
+
+# คำที่ฉันใช้บ่อย (จากแชท T3)
+activate
+active
+# ชื่อเครื่องมือ โปรเจกต์ และบริการ
+worktree
+Cloudflare
+StockWin
+PEAK
+herdr
+Dropbox
+Handy
+T3
+pstack
+Codex
+Pygmy
+Makro
+luna
+clonez
+Hermes
+Dokploy
+Cursor
+Haiku
+Sonnet
+Opus
+OpenRouter
+KSK
+srichai
+MCP
+D1
+R2
+Swift
+Rust
+App Store
+GitHub Actions
+Docker Compose
+Markdown
+# ตัวย่อที่สะกดทีละตัว: VAT และรหัสเอกสาร BR (ใบยืม), IV (ใบกำกับ), PO (ใบสั่งซื้อ)
+VAT
+BR
+IV
+PO
+# ศัพท์งานที่พูดเป็นอังกฤษ
+screenshot
+supplier
+parser
+parse
+migrate
+implement
+export
+import
+dialog
+layout
+demo
+seed
+theme
+filter
+workspace
+icon
+image
+folder
+project
+update
+improve
+test
+run
+pull
+PR
+HTML
+PDF
+cleansing
+keyboard

@@ -20,7 +20,7 @@ final class AppModel: ObservableObject {
     @Published private(set) var loadedThreads: Int?
     @Published private(set) var isLoading = false
     @Published private(set) var isTranscribingFile = false
-    @Published var threads = 2
+    @Published var threads = 1
     @Published var error: String?
     @Published var micPermission = AVAudioApplication.shared.recordPermission
 
