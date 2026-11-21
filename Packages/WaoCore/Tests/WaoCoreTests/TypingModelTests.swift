@@ -1,0 +1,63 @@
+import Foundation
+import WaoCore
+import XCTest
+
+final class TypingModelTests: XCTestCase {
+    private var model: TypingModel { get throws { try XCTUnwrap(TypingModel.bundled, "thai-typing.bin missing or corrupt") } }
+
+    func testEverySymbolIsAKedmaneeKeyOrTheSpace() throws {
+        let keys = Set(Typing().rows.joined().flatMap { [$0.output, $0.shifted] })
+        XCTAssertEqual(Set(try model.symbols.map(String.init)), keys.union([" "]))
+    }
+
+    func testMatchesTheBuildersUnquantisedModel() throws {
+        struct Golden: Decodable { let context: String; let char: String; let logp: Float }
+        let golden = try String(contentsOf: Paths.fixtures.appendingPathComponent("typing-golden.jsonl"), encoding: .utf8)
+            .split(separator: "\n").map { try JSONDecoder().decode(Golden.self, from: Data($0.utf8)) }
+        let errors = try golden.map { abs(try model.nextCharacter(after: $0.context).logP($0.char) - $0.logp) }.sorted()
+        XCTAssertEqual(errors.count, 500)
+        XCTAssertLessThan(errors[errors.count / 2], 0.05)
+        XCTAssertLessThan(errors.last!, 0.2)
+    }
+
+    func testEachContextIsADistribution() throws {
+        let model = try model
+        for context in ["", "สวัส", "ฉันจะไปกินข้า", "555 ", "ครับ ", "เ"] {
+            let next = model.nextCharacter(after: context)
+            let total = model.symbols.reduce(Float(0)) { $0 + exp(next.logP(String($1))) }
+            XCTAssertEqual(total, 1, accuracy: 0.05, context)
+        }
+    }
+
+    func testAnythingOffTheKeysReadsAsASpace() throws {
+        let model = try model
+        for (context, same) in [("ok ไป", " ไป"), ("ไป🙂", "ไป "), ("hello\nสวั", "สวั"), ("ไป  \t ", "ไป ")] {
+            XCTAssertEqual(model.nextCharacter(after: context).logP("ส"), model.nextCharacter(after: same).logP("ส"), context)
+        }
+        XCTAssertEqual(model.nextCharacter(after: "x").logP("x"), -.infinity)
+    }
+
+    func testFitsTheKeyboardsMemoryBudget() throws {
+        let url = Paths.repo.appendingPathComponent("Packages/WaoCore/Sources/WaoCore/Resources/thai-typing.bin")
+        let size = try XCTUnwrap(try FileManager.default.attributesOfItem(atPath: url.path)[.size] as? Int)
+        XCTAssertLessThanOrEqual(size, 8_000_000)
+        XCTAssertTrue(try model.buildInfo.contains("sentence-collector.txt"))
+    }
+
+    func testCompletesTheWordBeingTyped() throws {
+        let model = try model
+        let hello = model.completions(after: "สวัส").map { [$0.word, $0.remainder] }
+        XCTAssertTrue(hello.contains(["สวัสดี", "ดี"]), "\(hello)")
+        let rice = model.completions(after: "ฉันจะไปกินข้า")
+        XCTAssertTrue(rice.contains { $0.word.hasSuffix("ข้าว") && $0.remainder == "ว" }, "\(rice)")
+        XCTAssertLessThanOrEqual(rice.count, 3)
+    }
+
+    func testOffersNothingOutsideAThaiWord() throws {
+        let model = try model
+        XCTAssertEqual(model.completions(after: ""), [])
+        XCTAssertEqual(model.completions(after: "ไปกิน "), [])
+        XCTAssertEqual(model.completions(after: "hello"), [])
+        XCTAssertFalse(model.completions(after: "ข้าว").contains { $0.remainder.isEmpty })
+    }
+}
