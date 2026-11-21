@@ -53,6 +53,7 @@ struct ContentView: View {
                 .navigationTitle("เว่า")
                 .toolbar(.hidden, for: .navigationBar)
                 .navigationDestination(for: VocabularyRoute.self) { $0.screen }
+                .navigationDestination(for: CreditsRoute.self) { $0.screen }
         }
         .alert("เกิดข้อผิดพลาด", isPresented: Binding(get: { model.error != nil }, set: { if !$0 { model.error = nil } })) {
             Button("ตกลง") { model.error = nil }
@@ -70,6 +71,7 @@ struct ContentView: View {
                     SetupCard().id(SetupCard.anchor)
                     VocabularyCard()
                     LabCard()
+                    CreditsFooter()
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 40)
@@ -452,9 +454,9 @@ private struct SetupCard: View {
 
     private var modelDetail: String {
         switch model.model {
-        case .missing: "OpenThai2.0 ASR · ประมาณ 1 GB"
+        case .missing: "OpenThai2.0 ASR โดย iApp Technology · ประมาณ 1 GB"
         case .downloading(let progress): "กำลังดาวน์โหลด \(Int(progress * 100))%"
-        case .ready: "พร้อมใช้บนเครื่อง"
+        case .ready: "OpenThai2.0 ASR โดย iApp Technology\nพร้อมใช้บนเครื่อง"
         case .failed(let reason): reason
         }
     }
