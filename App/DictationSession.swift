@@ -4,6 +4,11 @@ import WaoInference
 
 /// Drives `SessionMachine` and applies its effects. The only writer of `state.json` and `level`.
 actor DictationSession {
+    static let previewEvery: Duration = .milliseconds(700)
+    /// Previews transcribe only the end of the utterance: the keyboard shows two or three lines, and a whole
+    /// long utterance each time would keep the CPU busy and delay the final transcription.
+    static let previewWindowSeconds = 6.0
+
     struct Snapshot: Sendable {
         var state: SessionState
         var lastResult: Transcription?
@@ -13,6 +18,7 @@ actor DictationSession {
     private var lastResult: Transcription?
     private var transcriber: Transcriber?
     private var idleTimer: Task<Void, Never>?
+    private var preview: Task<Void, Never>?
     private var lastCommandID: UUID?
     private var commandObserver: DarwinObserver?
 
@@ -78,6 +84,10 @@ actor DictationSession {
         let (next, effects) = SessionMachine.reduce(state, event)
         if next != state {
             state = next
+            if case .listening = next {} else {
+                preview?.cancel()
+                preview = nil
+            }
             try? bridge?.write(next)
             BridgeSignal.state.post()
             onChange(Snapshot(state: next, lastResult: lastResult))
@@ -91,9 +101,11 @@ actor DictationSession {
             idleTimer?.cancel()
             capture.stop()
             bridge?.writeLevel(0)
-        case .beginCapture:
+        case .beginCapture(let id, let language):
             idleTimer?.cancel()
             capture.beginUtterance()
+            preview?.cancel()
+            preview = transcriber.map { previewLoop(id: id, language: language, transcriber: $0) }
         case .discardCapture:
             _ = capture.endUtterance()
             bridge?.writeLevel(0)
@@ -121,6 +133,25 @@ actor DictationSession {
                 try? await Task.sleep(for: .seconds(max(0, fireAt.timeIntervalSinceNow)))
                 guard !Task.isCancelled else { return }
                 await self?.send(.idleTimerFired)
+            }
+        }
+    }
+
+    /// Re-transcribes the end of the utterance while it is being recorded. One preview runs at a time, started
+    /// at most every `previewEvery`, at a lower priority than the final transcription.
+    private func previewLoop(id: UUID, language: Language, transcriber: Transcriber) -> Task<Void, Never> {
+        Task.detached(priority: .utility) { [capture, weak self] in
+            let clock = ContinuousClock()
+            while !Task.isCancelled {
+                let started = clock.now
+                let (audio, clipped) = capture.recent(seconds: Self.previewWindowSeconds)
+                if audio.count >= MelFeaturizer.sampleRate,
+                   // PREVIEW-DECODING: switch to `decoding: .greedy` once Transcriber takes it.
+                   let result = try? transcriber.transcribe(audio, language: language),
+                   !Task.isCancelled {
+                    await self?.send(.heard(id: id, Heard(text: result.text, clipped: clipped)))
+                }
+                try? await clock.sleep(until: started + Self.previewEvery)
             }
         }
     }

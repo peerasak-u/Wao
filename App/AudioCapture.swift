@@ -11,16 +11,27 @@ final class AudioCapture: @unchecked Sendable {
     private var samples: [Float] = []
     private var capturing = false
     private var limitReported = false
+    private var utteranceBegan = Date()
 
     /// Called on the tap's thread with a 0...1 loudness while capturing.
     var onLevel: (@Sendable (Float) -> Void)?
     /// Called once when an utterance reaches `maxUtteranceSeconds`.
     var onLimit: (@Sendable () -> Void)?
 
-    var isRunning: Bool { engine.isRunning }
+    var isRunning: Bool {
+        #if DEBUG
+        if fakeMic != nil { return true }
+        #endif
+        return engine.isRunning
+    }
 
     func start() throws {
-        guard !engine.isRunning else { return }
+        guard !isRunning else { return }
+        #if DEBUG
+        if let path = ProcessInfo.processInfo.environment["WAO_FAKE_MIC"] {
+            return try startFakeMic(URL(fileURLWithPath: path))
+        }
+        #endif
         let session = AVAudioSession.sharedInstance()
         try session.setCategory(.playAndRecord, mode: .default, options: [.mixWithOthers, .defaultToSpeaker, .allowBluetoothHFP])
         try session.setActive(true)
@@ -45,6 +56,10 @@ final class AudioCapture: @unchecked Sendable {
     }
 
     func stop() {
+        #if DEBUG
+        fakeMic?.cancel()
+        fakeMic = nil
+        #endif
         engine.inputNode.removeTap(onBus: 0)
         engine.stop()
         _ = endUtterance()
@@ -56,6 +71,15 @@ final class AudioCapture: @unchecked Sendable {
             samples.removeAll(keepingCapacity: true)
             limitReported = false
             capturing = true
+            utteranceBegan = Date()
+        }
+    }
+
+    /// The last `seconds` of the utterance so far; `clipped` when earlier audio was left out.
+    func recent(seconds: Double) -> (samples: [Float], clipped: Bool) {
+        lock.withLock {
+            let window = Int(seconds * Double(MelFeaturizer.sampleRate))
+            return (Array(samples.suffix(window)), samples.count > window)
         }
     }
 
@@ -83,8 +107,10 @@ final class AudioCapture: @unchecked Sendable {
             return buffer
         }
         guard error == nil, out.frameLength > 0 else { return }
-        let chunk = UnsafeBufferPointer(start: out.floatChannelData![0], count: Int(out.frameLength))
+        append(UnsafeBufferPointer(start: out.floatChannelData![0], count: Int(out.frameLength)))
+    }
 
+    private func append(_ chunk: UnsafeBufferPointer<Float>) {
         var sum: Float = 0
         for x in chunk { sum += x * x }
         let rms = (sum / Float(chunk.count)).squareRoot()
@@ -100,4 +126,38 @@ final class AudioCapture: @unchecked Sendable {
         }
         if hitLimit { onLimit?() }
     }
+
+    #if DEBUG
+    private var fakeMic: DispatchSourceTimer?
+
+    /// The simulator has no repeatable microphone: `WAO_FAKE_MIC=<16 kHz mono wav>` plays that file from its
+    /// start into every utterance at real-time pace, then silence.
+    private func startFakeMic(_ url: URL) throws {
+        let audio = try AudioFile.load16kMono(url)
+        let timer = DispatchSource.makeTimerSource(queue: DispatchQueue(label: "com.peerasak.wao.fake-mic"))
+        var fed = 0
+        var utterance = Date.distantPast
+        timer.setEventHandler { [weak self] in
+            guard let self else { return }
+            let (live, began) = self.lock.withLock { (self.capturing, self.utteranceBegan) }
+            guard live else { return }
+            if began != utterance {
+                utterance = began
+                fed = 0
+            }
+            let due = Int(Date().timeIntervalSince(began) * Double(MelFeaturizer.sampleRate))
+            guard due > fed else { return }
+            var chunk = [Float](repeating: 0, count: due - fed)
+            if fed < audio.count {
+                let end = min(due, audio.count)
+                chunk.replaceSubrange(0..<(end - fed), with: audio[fed..<end])
+            }
+            fed = due
+            chunk.withUnsafeBufferPointer { self.append($0) }
+        }
+        timer.schedule(deadline: .now(), repeating: .milliseconds(100))
+        timer.resume()
+        fakeMic = timer
+    }
+    #endif
 }

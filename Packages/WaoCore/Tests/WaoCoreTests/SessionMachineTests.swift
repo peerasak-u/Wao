@@ -21,7 +21,7 @@ final class SessionMachineTests: XCTestCase {
         ])
         XCTAssertEqual(state, .done(id: start.id, text: "สวัสดี"))
         XCTAssertEqual(effects, [
-            .armIdleTimer(fireAt: t0 + 300), .beginCapture,
+            .armIdleTimer(fireAt: t0 + 300), .beginCapture(id: start.id, language: .thai),
             .transcribe(id: start.id, language: .thai), .armIdleTimer(fireAt: t0 + 302),
         ])
     }
@@ -74,7 +74,7 @@ final class SessionMachineTests: XCTestCase {
         let (state, effects) = run([.begin(now: t0), .command(start, now: t0),
                                     .heard(id: start.id, first), .heard(id: start.id, second)])
         XCTAssertEqual(state, .listening(id: start.id, language: .thaiEnglishMix, heard: second))
-        XCTAssertEqual(effects, [.armIdleTimer(fireAt: t0 + 300), .beginCapture])
+        XCTAssertEqual(effects, [.armIdleTimer(fireAt: t0 + 300), .beginCapture(id: start.id, language: .thaiEnglishMix)])
     }
 
     func testHeardFromAnEarlierRecordingIsDropped() {

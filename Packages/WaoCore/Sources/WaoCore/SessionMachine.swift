@@ -15,7 +15,8 @@ public enum SessionEvent: Equatable, Sendable {
 
 public enum SessionEffect: Equatable, Sendable {
     case closeMic
-    case beginCapture
+    /// Starts keeping audio for the utterance `id`, and previewing it while it lasts.
+    case beginCapture(id: UUID, language: Language)
     case discardCapture
     case transcribe(id: UUID, language: Language)
     /// Replaces any previously armed timer.
@@ -34,7 +35,7 @@ public enum SessionMachine {
 
         case (.idle, .command(let c, _)), (.done, .command(let c, _)), (.failed, .command(let c, _)):
             guard case .start(let language) = c.kind else { return (state, []) }
-            return (.listening(id: c.id, language: language, heard: nil), [.beginCapture])
+            return (.listening(id: c.id, language: language, heard: nil), [.beginCapture(id: c.id, language: language)])
 
         case (.listening(let current, let language, _), .heard(let id, let heard)) where current == id:
             return (.listening(id: id, language: language, heard: heard), [])
