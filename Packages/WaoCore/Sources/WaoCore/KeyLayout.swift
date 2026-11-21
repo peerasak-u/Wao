@@ -13,6 +13,11 @@ public struct PlacedKey: Identifiable, Equatable, Sendable {
     /// Where a touch lands on this key: the cap plus its share of the gaps, out to the screen edge on the outer keys.
     public let hit: CGRect
     public let cap: CGRect
+
+    /// The middle `fraction` of the cap in each direction: a touch here types this key whatever the context says.
+    public func anchor(_ fraction: CGFloat) -> CGRect {
+        cap.insetBy(dx: cap.width * (1 - fraction) / 2, dy: cap.height * (1 - fraction) / 2)
+    }
 }
 
 /// Keys are laid out by hand rather than in stacks so the popup and the hit areas know each key's exact frame.
@@ -56,6 +61,13 @@ public struct KeyLayout: Equatable, Sendable {
             }
         }
         keys = placed
+    }
+
+    /// The rows of character keys, shift and delete included: everything above the bottom row.
+    public var characterArea: CGRect { CGRect(x: 0, y: 0, width: size.width, height: size.height - rowHeight) }
+
+    public var characterKeys: [PlacedKey] {
+        keys.filter { if case .character = $0.kind { true } else { false } }
     }
 
     /// The key whose fixed hit rect holds `point`, shift and delete included.
