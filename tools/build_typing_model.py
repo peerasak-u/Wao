@@ -81,7 +81,7 @@ V = len(SYMBOLS)
 ORDER = 6
 MAX_WORD = 24
 HOLDOUT = 0.05
-TEST_CHARS = 40000
+TEST_CHARS = 30000
 
 
 def fetch(cache):

@@ -23,7 +23,7 @@ public struct TapTuning: Equatable, Sendable {
         self.anchor = anchor
     }
 
-    public static let shipped = TapTuning(sigmaFast: 7.5, sigmaSlow: 4, intervalFast: 0.15, intervalSlow: 0.6, lambda: 0.5, anchor: 0.5)
+    public static let shipped = TapTuning(sigmaFast: 8.5, sigmaSlow: 3.5, intervalFast: 0.15, intervalSlow: 0.6, lambda: 0.5, anchor: 0.5)
 
     /// Hurried fingers land further from the key they meant, so the touch counts for less and the context for more;
     /// a deliberate tap is taken nearly at its word.
