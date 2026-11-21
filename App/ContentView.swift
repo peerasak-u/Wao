@@ -70,7 +70,6 @@ struct ContentView: View {
                     SessionCard()
                     SetupCard().id(SetupCard.anchor)
                     VocabularyCard()
-                    LabCard()
                     CreditsFooter()
                 }
                 .padding(.horizontal, 20)
@@ -595,122 +594,6 @@ private struct ProgressBar: View {
     }
 }
 
-private struct LabCard: View {
-    @EnvironmentObject private var model: AppModel
-    @State private var expanded = false
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Button { withAnimation(.snappy) { expanded.toggle() } } label: {
-                HStack {
-                    Image(systemName: "flask")
-                        .font(.system(size: 15, weight: .medium))
-                        .foregroundStyle(Palette.secondary)
-                        .frame(width: 28)
-                    Text("ห้องทดลอง").font(.loopless(16, .medium))
-                    Spacer()
-                    Image(systemName: "chevron.down")
-                        .font(.system(size: 13, weight: .semibold))
-                        .foregroundStyle(Palette.tertiary)
-                        .rotationEffect(.degrees(expanded ? 180 : 0))
-                }
-                .padding(18)
-                .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            if expanded {
-                content
-                    .padding([.horizontal, .bottom], 18)
-                    .transition(.opacity)
-            }
-        }
-        .card()
-    }
-
-    private var content: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            LabRow("ภาษา") {
-                Picker("ภาษา", selection: $model.testLanguage) {
-                    Text("ไทย+อังกฤษ").tag(Language.thaiEnglishMix)
-                    Text("ไทย").tag(Language.thai)
-                }
-                .pickerStyle(.segmented)
-                .frame(width: 180)
-            }
-            LabRow("CPU threads") {
-                Picker("CPU threads", selection: $model.threads) {
-                    ForEach([1, 2, 4], id: \.self) { Text("\($0)").tag($0) }
-                }
-                .pickerStyle(.segmented)
-                .frame(width: 180)
-            }
-            Text("ใช้กับการลองพูดที่คลื่นเสียงด้านบน")
-                .font(.loopless(13))
-                .foregroundStyle(Palette.tertiary)
-            Divider().overlay(Palette.hairline)
-            if let result = model.lastTest {
-                VStack(spacing: 8) {
-                    Metric("ความยาวเสียง", String(format: "%.2f s", result.audioSeconds))
-                    Metric("เวลาถอดเสียง", String(format: "%.3f s", result.totalSeconds))
-                    Metric("features / encoder / decoder", String(format: "%.3f / %.3f / %.3f", result.featureSeconds, result.encoderSeconds, result.decoderSeconds))
-                    Metric("Real-time factor", String(format: "%.3f", result.realTimeFactor))
-                }
-            } else {
-                Text("ยังไม่มีผลทดสอบ")
-                    .font(.loopless(13))
-                    .foregroundStyle(Palette.tertiary)
-            }
-            if let load = model.loadReport {
-                VStack(spacing: 8) {
-                    Metric("โหลดโมเดล (\(model.loadedThreads ?? 0) threads)", String(format: "%.2f s", load.seconds))
-                    Metric("หน่วยความจำว่าง ก่อนโหลด", load.availableBefore.megabytes)
-                    Metric("หน่วยความจำว่าง หลังโหลด", load.availableAfter.megabytes)
-                    Metric("footprint ก่อน → หลัง", "\(load.footprintBefore.megabytes) → \(load.footprintAfter.megabytes)")
-                }
-            }
-        }
-    }
-}
-
-private struct LabRow<Control: View>: View {
-    let title: String
-    @ViewBuilder let control: Control
-
-    init(_ title: String, @ViewBuilder control: () -> Control) {
-        self.title = title
-        self.control = control()
-    }
-
-    var body: some View {
-        HStack {
-            Text(title).font(.loopless(14)).foregroundStyle(Palette.secondary)
-            Spacer()
-            control
-        }
-    }
-}
-
-private struct Metric: View {
-    let title: String
-    let value: String
-
-    init(_ title: String, _ value: String) {
-        self.title = title
-        self.value = value
-    }
-
-    var body: some View {
-        HStack(alignment: .firstTextBaseline) {
-            Text(title).font(.loopless(13)).foregroundStyle(Palette.secondary)
-            Spacer()
-            Text(value)
-                .font(.loopless(13).monospacedDigit())
-                .lineLimit(1)
-                .layoutPriority(1)
-        }
-    }
-}
-
 struct Pressable: ButtonStyle {
     var scale: CGFloat = 0.97
 
@@ -743,12 +626,4 @@ extension ModelState {
         if case .ready = self { return true }
         return false
     }
-}
-
-extension UInt64 {
-    var megabytes: String { String(format: "%.0f MB", Double(self) / 1_048_576) }
-}
-
-extension Optional where Wrapped == UInt64 {
-    var megabytes: String { map(\.megabytes) ?? "ไม่มี (เฉพาะเครื่องจริง)" }
 }
