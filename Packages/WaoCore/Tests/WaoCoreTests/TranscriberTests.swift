@@ -8,7 +8,7 @@ final class TranscriberTests: XCTestCase {
         for (name, fixture) in try ReferenceFixture.all() {
             let audio = try AudioFile.load16kMono(Paths.samples.appendingPathComponent(fixture.wav))
             let language = try XCTUnwrap(Language(rawValue: fixture.lang))
-            let result = try transcriber.transcribe(audio, language: language)
+            let result = try transcriber.transcribe(audio, language: language, decoding: .greedy)
             print(String(format: "transcribe %@: \"%@\" audio %.2fs, features %.3fs, encoder %.3fs, decoder %.3fs, RTF %.3f (Mac)",
                          name, result.text, result.audioSeconds, result.featureSeconds, result.encoderSeconds,
                          result.decoderSeconds, result.realTimeFactor))
