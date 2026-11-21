@@ -7,6 +7,21 @@ import WaoInference
 struct WaoApp: App {
     @StateObject private var model = AppModel()
 
+    init() {
+        let bar = UINavigationBarAppearance()
+        bar.configureWithTransparentBackground()
+        let title: [NSAttributedString.Key: Any] = [.font: UIFont(name: "SukhumvitSet-SemiBold", size: 17)!, .foregroundColor: UIColor.white]
+        bar.titleTextAttributes = title
+        bar.largeTitleTextAttributes = [.font: UIFont(name: "SukhumvitSet-Bold", size: 32)!, .foregroundColor: UIColor.white]
+        bar.backButtonAppearance.normal.titleTextAttributes = [.font: UIFont(name: "SukhumvitSet-Text", size: 17)!]
+        let scrolled = bar.copy()
+        scrolled.backgroundColor = UIColor(white: 0.039, alpha: 0.92)
+        scrolled.shadowColor = UIColor(white: 1, alpha: 0.08)
+        UINavigationBar.appearance().scrollEdgeAppearance = bar
+        UINavigationBar.appearance().standardAppearance = scrolled
+        UINavigationBar.appearance().tintColor = .white
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -20,7 +35,7 @@ struct WaoApp: App {
     }
 }
 
-private enum Palette {
+enum Palette {
     static let canvas = Color(red: 0.039, green: 0.039, blue: 0.043)
     static let secondary = Color.white.opacity(0.55)
     static let tertiary = Color.white.opacity(0.35)
@@ -31,11 +46,26 @@ struct ContentView: View {
     @EnvironmentObject private var model: AppModel
 
     var body: some View {
+        NavigationStack {
+            main
+                .navigationTitle("เว่า")
+                .toolbar(.hidden, for: .navigationBar)
+                .navigationDestination(for: VocabularyRoute.self) { $0.screen }
+        }
+        .alert("เกิดข้อผิดพลาด", isPresented: Binding(get: { model.error != nil }, set: { if !$0 { model.error = nil } })) {
+            Button("ตกลง") { model.error = nil }
+        } message: {
+            Text(model.error ?? "")
+        }
+    }
+
+    private var main: some View {
         ScrollView {
             VStack(spacing: 32) {
                 Hero()
                 PrimaryAction()
                 SetupCard()
+                VocabularyCard()
                 LabCard()
             }
             .padding(.horizontal, 20)
@@ -57,22 +87,23 @@ struct ContentView: View {
             }
             .allowsHitTesting(false)
         }
-        .font(.loopless(16))
-        .foregroundStyle(.white)
-        .background {
-            ZStack(alignment: .top) {
-                Palette.canvas
-                RadialGradient(colors: [.white.opacity(0.10), .clear], center: .center, startRadius: 0, endRadius: 300)
-                    .frame(width: 640, height: 640)
-                    .offset(y: -200)
+        .screenBackground()
+    }
+}
+
+extension View {
+    func screenBackground() -> some View {
+        font(.loopless(16))
+            .foregroundStyle(.white)
+            .background {
+                ZStack(alignment: .top) {
+                    Palette.canvas
+                    RadialGradient(colors: [.white.opacity(0.10), .clear], center: .center, startRadius: 0, endRadius: 300)
+                        .frame(width: 640, height: 640)
+                        .offset(y: -200)
+                }
+                .ignoresSafeArea()
             }
-            .ignoresSafeArea()
-        }
-        .alert("เกิดข้อผิดพลาด", isPresented: Binding(get: { model.error != nil }, set: { if !$0 { model.error = nil } })) {
-            Button("ตกลง") { model.error = nil }
-        } message: {
-            Text(model.error ?? "")
-        }
     }
 }
 
@@ -352,7 +383,7 @@ private struct StepMark: View {
     }
 }
 
-private struct PillButton: View {
+struct PillButton: View {
     let title: String
     let action: () -> Void
 
@@ -528,7 +559,7 @@ private struct Metric: View {
     }
 }
 
-private struct Pressable: ButtonStyle {
+struct Pressable: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .scaleEffect(configuration.isPressed ? 0.97 : 1)
@@ -537,7 +568,7 @@ private struct Pressable: ButtonStyle {
     }
 }
 
-private extension View {
+extension View {
     func card() -> some View {
         background(.white.opacity(0.04), in: RoundedRectangle(cornerRadius: 24, style: .continuous))
             .overlay(RoundedRectangle(cornerRadius: 24, style: .continuous).strokeBorder(Palette.hairline, lineWidth: 1))
