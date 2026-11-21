@@ -200,7 +200,7 @@ private struct DictationView: View {
                     Image(systemName: "checkmark")
                         .font(.system(size: 18, weight: .bold))
                         .frame(width: 48, height: 48)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(Color(.systemBackground))
                         .background(Color(.label), in: Circle())
                 }
                 .disabled(!isListening)

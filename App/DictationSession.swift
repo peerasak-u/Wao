@@ -148,7 +148,8 @@ actor DictationSession {
                 if audio.count >= MelFeaturizer.sampleRate,
                    // PREVIEW-DECODING: switch to `decoding: .greedy` once Transcriber takes it.
                    let result = try? transcriber.transcribe(audio, language: language),
-                   !Task.isCancelled {
+                   // A window of trailing silence reads as nothing; keep the words already shown.
+                   !result.text.isEmpty, !Task.isCancelled {
                     await self?.send(.heard(id: id, Heard(text: result.text, clipped: clipped)))
                 }
                 try? await clock.sleep(until: started + Self.previewEvery)
