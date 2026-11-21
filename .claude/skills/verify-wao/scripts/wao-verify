@@ -1,0 +1,158 @@
+#!/bin/bash
+# Verification helper for เว่า (com.peerasak.wao) on an iOS Simulator.
+# Handles the host side only: build, install, seed, doctor, state, cleanup.
+# Every UI action (open, tap, snapshot, screenshot) goes through the agent-device command from T3's device_open.
+set -euo pipefail
+
+BUNDLE=com.peerasak.wao
+GROUP=group.com.peerasak.wao
+ROOT="$(git -C "$(dirname "$0")" rev-parse --show-toplevel)"
+DD="$ROOT/build/verify-dd"
+APP="$DD/Build/Products/Debug-iphonesimulator/Wao.app"
+MARKS="$ROOT/build/verify-state"
+EVIDENCE="$ROOT/build/verify-evidence"
+MODEL_SUBDIR="Library/Application Support/Models/openthai2.0-asr-streaming-int8"
+MODEL_FILES=(encoder.int8.onnx.data openthai2.0-asr-streaming-int8.asr.zip encoder.int8.onnx decoder_joint.onnx tokens.txt)
+
+usage() {
+  cat <<EOF
+usage: wao-verify <command> [args]
+  build                        fetch ONNX Runtime, xcodegen, Debug build for the simulator into build/verify-dd
+  prepare <udid> [wav] [--no-model]
+                               install the build, seed the model, grant the mic, point WAO_FAKE_MIC at <wav>
+                               (default samples/greeting.wav), keep the software keyboard visible
+  fake-mic <udid> <wav>        repoint WAO_FAKE_MIC (relaunch the app afterwards)
+  doctor <udid>                read-only: is this simulator worth driving?
+  state <udid>                 print the App Group bridge files (state.json, command.json)
+  evidence <name>              create and print build/verify-evidence/<timestamp>-<name>
+  cleanup <udid>               unset WAO_FAKE_MIC, stop and uninstall the app if this helper installed it
+EOF
+}
+
+die() { echo "wao-verify: $*" >&2; exit 1; }
+# grep reads whole inputs from variables: with pipefail, `cmd | grep -q` fails when grep exits early.
+need_udid() { [ -n "${1:-}" ] || die "missing <udid>"; grep -q "$1" <<<"$(xcrun simctl list devices)" || die "no simulator $1"; }
+data_dir() { xcrun simctl get_app_container "$1" "$BUNDLE" data 2>/dev/null; }
+group_dir() { xcrun simctl get_app_container "$1" "$BUNDLE" "$GROUP" 2>/dev/null; }
+
+model_cache() {
+  local common main
+  for c in "${WAO_MODEL_CACHE:-}" "$ROOT/.model-cache/int8"; do
+    [ -n "$c" ] && [ -f "$c/encoder.int8.onnx.data" ] && { echo "$c"; return; }
+  done
+  common="$(git -C "$ROOT" rev-parse --path-format=absolute --git-common-dir)"
+  main="$(dirname "$common")/.model-cache/int8"
+  [ -f "$main/encoder.int8.onnx.data" ] && { echo "$main"; return; }
+  die "no model cache: set WAO_MODEL_CACHE or put the int8 files in .model-cache/int8"
+}
+
+cmd_build() {
+  "$ROOT/tools/fetch_onnxruntime.sh"
+  (cd "$ROOT" && xcodegen generate --quiet)
+  local dest
+  dest="${WAO_VERIFY_UDID:+id=$WAO_VERIFY_UDID}"
+  xcodebuild -project "$ROOT/Wao.xcodeproj" -scheme Wao -configuration Debug \
+    -destination "${dest:-generic/platform=iOS Simulator}" -derivedDataPath "$DD" build -quiet
+  [ -d "$APP/PlugIns/WaoKeyboard.appex" ] || die "build has no keyboard extension"
+  echo "built $APP"
+}
+
+set_fake_mic() {
+  local udid=$1 wav=$2 data
+  [ -f "$wav" ] || die "no wav at $wav"
+  data="$(data_dir "$udid")" || die "app not installed on $udid"
+  mkdir -p "$data/tmp"
+  cp "$wav" "$data/tmp/fake-mic.wav"
+  xcrun simctl spawn "$udid" launchctl setenv WAO_FAKE_MIC "$data/tmp/fake-mic.wav"
+  echo "WAO_FAKE_MIC=$data/tmp/fake-mic.wav ($(basename "$wav"))"
+}
+
+cmd_prepare() {
+  local udid=${1:-} wav="$ROOT/samples/greeting.wav" seed=1 a
+  need_udid "$udid"; shift
+  for a in "$@"; do case $a in --no-model) seed=0 ;; *) wav=$a ;; esac; done
+  [ -d "$APP" ] || die "no build; run: wao-verify build"
+  xcrun simctl bootstatus "$udid" -b >/dev/null
+  mkdir -p "$MARKS"
+  if ! data_dir "$udid" >/dev/null; then touch "$MARKS/$udid.installed"; fi
+  xcrun simctl terminate "$udid" "$BUNDLE" 2>/dev/null || true
+  xcrun simctl install "$udid" "$APP"
+  local data; data="$(data_dir "$udid")"
+  if [ $seed = 1 ]; then
+    local cache; cache="$(model_cache)"
+    mkdir -p "$data/$MODEL_SUBDIR"
+    for f in "${MODEL_FILES[@]}"; do
+      [ -f "$data/$MODEL_SUBDIR/$f" ] || cp "$cache/$f" "$data/$MODEL_SUBDIR/$f"
+    done
+    echo "model seeded from $cache"
+  else
+    rm -rf "$data/$MODEL_SUBDIR"
+    echo "model removed (fresh-install state)"
+  fi
+  xcrun simctl privacy "$udid" grant microphone "$BUNDLE"
+  xcrun simctl spawn "$udid" defaults write com.apple.keyboard.preferences AutomaticMinimizationEnabled -bool false
+  set_fake_mic "$udid" "$wav"
+  echo "prepared $udid; now: agent-device open $BUNDLE --relaunch"
+}
+
+cmd_doctor() {
+  local udid=${1:-} ok=1 data group built installed
+  need_udid "$udid"
+  grep "$udid" <<<"$(xcrun simctl list devices)" | grep -q Booted && echo "ok   simulator booted" || { echo "FAIL simulator not booted"; ok=0; }
+  if [ -d "$APP" ]; then
+    built="$(/usr/libexec/PlistBuddy -c 'Print CFBundleVersion' "$APP/Info.plist")"
+    echo "ok   build present (CFBundleVersion $built, $(git -C "$ROOT" rev-parse --short HEAD))"
+  else echo "FAIL no build at $APP"; ok=0; fi
+  if data="$(data_dir "$udid")"; then
+    installed="$(/usr/libexec/PlistBuddy -c 'Print CFBundleVersion' "$(xcrun simctl get_app_container "$udid" "$BUNDLE" app)/Info.plist")"
+    echo "ok   app installed (CFBundleVersion $installed)"
+    if [ -d "$APP" ] && ! cmp -s "$APP/Wao.debug.dylib" "$(xcrun simctl get_app_container "$udid" "$BUNDLE" app)/Wao.debug.dylib"; then
+      echo "WARN installed binary differs from build/verify-dd; re-run prepare"
+    fi
+    local n=0 f; for f in "${MODEL_FILES[@]}"; do [ -f "$data/$MODEL_SUBDIR/$f" ] && n=$((n+1)); done
+    echo "info model files ${n}/${#MODEL_FILES[@]} in data container"
+    group="$(group_dir "$udid")" && echo "ok   App Group container $group" || { echo "FAIL App Group container missing"; ok=0; }
+  else echo "FAIL $BUNDLE not installed"; ok=0; fi
+  local fake; fake="$(xcrun simctl spawn "$udid" launchctl getenv WAO_FAKE_MIC 2>/dev/null || true)"
+  if [ -n "$fake" ]; then
+    [ -f "$fake" ] && echo "ok   WAO_FAKE_MIC=$fake" || { echo "FAIL WAO_FAKE_MIC points at a missing file (container moved?): $fake"; ok=0; }
+  else echo "info WAO_FAKE_MIC unset (real mic; the simulator has none worth testing)"; fi
+  grep -q "UIKitApplication:$BUNDLE\[" <<<"$(xcrun simctl spawn "$udid" launchctl list 2>/dev/null)" && echo "info app running" || echo "info app not running"
+  [ $ok = 1 ] && echo "doctor: OK" || { echo "doctor: NOT READY"; exit 1; }
+}
+
+cmd_state() {
+  local udid=${1:-} g; need_udid "$udid"
+  g="$(group_dir "$udid")" || die "app not installed"
+  for f in state.json command.json; do
+    printf '%s: ' "$f"; if [ -f "$g/$f" ]; then cat "$g/$f"; echo; else echo "(absent)"; fi
+  done
+}
+
+cmd_evidence() {
+  local d="$EVIDENCE/$(date +%Y%m%d-%H%M%S)-${1:?missing <name>}"
+  mkdir -p "$d"; echo "$d"
+}
+
+cmd_cleanup() {
+  local udid=${1:-}; need_udid "$udid"
+  xcrun simctl spawn "$udid" launchctl unsetenv WAO_FAKE_MIC 2>/dev/null || true
+  xcrun simctl terminate "$udid" "$BUNDLE" 2>/dev/null || true
+  if [ -f "$MARKS/$udid.installed" ]; then
+    xcrun simctl uninstall "$udid" "$BUNDLE" && rm -f "$MARKS/$udid.installed" && echo "uninstalled $BUNDLE"
+  else
+    echo "kept $BUNDLE: it was installed before this helper ran"
+  fi
+  echo "evidence kept in $EVIDENCE"
+}
+
+case "${1:-}" in
+  build) shift; cmd_build "$@" ;;
+  prepare) shift; cmd_prepare "$@" ;;
+  fake-mic) shift; need_udid "${1:-}"; set_fake_mic "$1" "${2:?missing <wav>}" ;;
+  doctor) shift; cmd_doctor "$@" ;;
+  state) shift; cmd_state "$@" ;;
+  evidence) shift; cmd_evidence "$@" ;;
+  cleanup) shift; cmd_cleanup "$@" ;;
+  *) usage; exit 2 ;;
+esac
