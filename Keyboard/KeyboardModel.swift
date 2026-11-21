@@ -4,20 +4,22 @@ import WaoCore
 /// Everything the keyboard shows. Dictation phases are derived from the app's `state.json`, matched against the
 /// utterance this keyboard started, so a stale `done` from an earlier session is never inserted.
 enum KeyboardMode: Equatable {
+    case voice
     case typing
     case dictation(Dictation)
 
-    enum Dictation: Equatable {
-        /// Start command written; waiting for the app to report `listening`.
-        case starting(UUID)
-        case listening(UUID)
-        case transcribing(UUID)
-
-        var id: UUID {
-            switch self {
-            case .starting(let id), .listening(let id), .transcribing(let id): id
-            }
+    struct Dictation: Equatable {
+        enum Phase: Equatable {
+            /// Start command written; waiting for the app to report `listening`.
+            case starting
+            case listening
+            case transcribing
         }
+
+        let id: UUID
+        var phase: Phase
+        /// The newest preview, kept through `transcribing` so the words stay on screen until the result lands.
+        var heard: Heard?
     }
 }
 
@@ -25,10 +27,11 @@ enum KeyboardMode: Equatable {
 final class KeyboardModel: ObservableObject {
     /// How long the app gets to answer a start command before we assume its session is gone.
     static let startTimeout: TimeInterval = 1.5
+    static let fullAccessNotice = "เปิด \"อนุญาตการเข้าถึงแบบเต็ม\" ให้เว่าก่อน: การตั้งค่า > ทั่วไป > แป้นพิมพ์ > แป้นพิมพ์ > เว่า"
 
     @Published var layout: KeyboardLayout = .thai
     @Published var shifted = false
-    @Published private(set) var mode: KeyboardMode = .typing
+    @Published private(set) var mode: KeyboardMode = .voice
     @Published private(set) var levels: [Float] = Array(repeating: 0, count: 24)
     @Published var notice: String?
 
@@ -43,7 +46,9 @@ final class KeyboardModel: ObservableObject {
     private var levelTimer: Timer?
     private var startTimer: Timer?
 
+    /// Without Full Access there is no mic, so the keyboard opens on the typing layout (App Review 4.4.1).
     func activate() {
+        mode = hasFullAccess ? .voice : .typing
         guard hasFullAccess, stateObserver == nil else { return }
         bridge = try? Bridge.shared()
         stateObserver = DarwinObserver(.state) { [weak self] in
@@ -62,9 +67,23 @@ final class KeyboardModel: ObservableObject {
         shifted = false
     }
 
+    func showTyping() {
+        notice = nil
+        mode = .typing
+    }
+
+    func showVoice() {
+        guard hasFullAccess else {
+            notice = Self.fullAccessNotice
+            return
+        }
+        notice = nil
+        mode = .voice
+    }
+
     func micTapped() {
         guard hasFullAccess, let bridge else {
-            notice = "เปิด \"อนุญาตการเข้าถึงแบบเต็ม\" ให้เว่าก่อน: การตั้งค่า > ทั่วไป > แป้นพิมพ์ > แป้นพิมพ์ > เว่า"
+            notice = Self.fullAccessNotice
             return
         }
         notice = nil
@@ -78,12 +97,12 @@ final class KeyboardModel: ObservableObject {
         } else {
             let command = Command(kind: .start(.thaiEnglishMix))
             write(command)
-            mode = .dictation(.starting(command.id))
+            mode = .dictation(.init(id: command.id, phase: .starting))
             startTimer?.invalidate()
             startTimer = Timer.scheduledTimer(withTimeInterval: Self.startTimeout, repeats: false) { [weak self] _ in
                 MainActor.assumeIsolated {
-                    guard let self, case .dictation(.starting) = self.mode else { return }
-                    self.mode = .typing
+                    guard let self, case .dictation(let dictation) = self.mode, dictation.phase == .starting else { return }
+                    self.mode = .voice
                     self.launchApp()
                 }
             }
@@ -96,8 +115,7 @@ final class KeyboardModel: ObservableObject {
 
     func cancel() {
         send(.cancel)
-        mode = .typing
-        stopLevels()
+        finish()
     }
 
     private func launchApp() {
@@ -120,7 +138,7 @@ final class KeyboardModel: ObservableObject {
     }
 
     private func stateChanged() {
-        guard case .dictation(let dictation) = mode, let bridge else { return }
+        guard case .dictation(var dictation) = mode, let bridge else { return }
         let state: SessionState
         do {
             state = try bridge.readState()
@@ -129,28 +147,33 @@ final class KeyboardModel: ObservableObject {
             return
         }
         switch state {
-        case .listening(let id, _, _) where id == dictation.id:
+        case .listening(let id, _, let heard) where id == dictation.id:
             startTimer?.invalidate()
-            mode = .dictation(.listening(id))
+            dictation.phase = .listening
+            dictation.heard = heard ?? dictation.heard
+            mode = .dictation(dictation)
             startLevels()
         case .transcribing(let id) where id == dictation.id:
-            mode = .dictation(.transcribing(id))
+            dictation.phase = .transcribing
+            mode = .dictation(dictation)
             stopLevels()
         case .done(let id, let text) where id == dictation.id:
             if text.isEmpty { notice = "ไม่ได้ยินเสียงพูด ลองอีกครั้ง" } else { insert(text) }
-            mode = .typing
-            stopLevels()
+            finish()
         case .failed(let id, let reason) where id == dictation.id:
             notice = reason
-            mode = .typing
-            stopLevels()
+            finish()
         case .off, .idle:
-            if case .starting = dictation { return }
-            mode = .typing
-            stopLevels()
+            if dictation.phase == .starting { return }
+            finish()
         default:
             break
         }
+    }
+
+    private func finish() {
+        mode = .voice
+        stopLevels()
     }
 
     private func startLevels() {
