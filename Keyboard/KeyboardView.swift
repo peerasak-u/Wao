@@ -10,6 +10,8 @@ struct KeyboardView: View {
             switch model.mode {
             case .voice:
                 VoiceView(model: model, globe: globe)
+            case .typing:
+                TypingView(model: model, globe: globe)
             case .dictation(let dictation):
                 DictationView(model: model, dictation: dictation)
             }
@@ -52,69 +54,24 @@ private struct VoiceView: View {
                 .font(.loopless(15))
                 .foregroundStyle(Color(.secondaryLabel))
             Spacer()
-            HStack(spacing: 4) {
+            HStack(spacing: 0) {
                 if model.showsGlobe {
-                    GlobeKey(make: globe).frame(width: 40)
+                    GlobeKey(make: globe).padded().frame(width: 46)
                 }
-                KeyCap(label: "เว้นวรรค") { model.insert(" ") }
-                SpecialKey(systemImage: "delete.left") { model.deleteBackward() }
+                SpecialKey(systemImage: "keyboard", action: model.showTyping)
                     .frame(width: 52)
+                    .accessibilityLabel("Keyboard")
+                KeyCap(label: "เว้นวรรค") { model.insert(" ") }
+                DeleteKey(action: model.deleteBackward)
+                    .frame(width: 56)
                 SpecialKey(systemImage: "return") { model.insert("\n") }
-                    .frame(width: 64)
+                    .frame(width: 68)
             }
+            .frame(height: Key.capHeight + Key.gapY)
         }
-        .padding(.horizontal, 3)
-        .padding(.vertical, 6)
+        .padding(.top, 6)
+        .padding(.bottom, 2)
     }
-}
-
-private struct KeyCap: View {
-    let label: String
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            Text(label)
-                .font(.loopless(17))
-                .minimumScaleFactor(0.5)
-                .lineLimit(1)
-                .frame(maxWidth: .infinity, minHeight: 42)
-                .foregroundStyle(Color(.label))
-                .background(Color(.systemGray4), in: RoundedRectangle(cornerRadius: 5))
-                .shadow(color: .black.opacity(0.25), radius: 0, y: 1)
-        }
-        .buttonStyle(.plain)
-    }
-}
-
-private struct SpecialKey: View {
-    let systemImage: String
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            Image(systemName: systemImage)
-                .frame(maxWidth: .infinity, minHeight: 42)
-                .foregroundStyle(Color(.label))
-                .background(Color(.systemGray3), in: RoundedRectangle(cornerRadius: 5))
-                .shadow(color: .black.opacity(0.25), radius: 0, y: 1)
-        }
-        .buttonStyle(.plain)
-    }
-}
-
-/// The globe has to be a UIKit control so `handleInputModeList(from:with:)` gets real touch events.
-private struct GlobeKey: UIViewRepresentable {
-    let make: () -> UIView?
-
-    func makeUIView(context: Context) -> UIView {
-        let view = make() ?? UIView()
-        view.backgroundColor = .systemGray3
-        view.layer.cornerRadius = 5
-        return view
-    }
-
-    func updateUIView(_ uiView: UIView, context: Context) {}
 }
 
 /// ✕ / waveform / ✓ over what has been heard so far, in the style of the reference screenshot.

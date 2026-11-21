@@ -5,6 +5,7 @@ import WaoCore
 /// utterance this keyboard started, so a stale `done` from an earlier session is never inserted.
 enum KeyboardMode: Equatable {
     case voice
+    case typing
     case dictation(Dictation)
 
     struct Dictation: Equatable {
@@ -29,6 +30,7 @@ final class KeyboardModel: ObservableObject {
     static let fullAccessNotice = "เปิด \"อนุญาตการเข้าถึงแบบเต็ม\" ให้เว่าก่อน: การตั้งค่า > ทั่วไป > แป้นพิมพ์ > แป้นพิมพ์ > เว่า"
 
     @Published private(set) var mode: KeyboardMode = .voice
+    @Published var typing = Typing()
     @Published private(set) var levels: [Float] = Array(repeating: 0, count: 24)
     @Published var notice: String?
 
@@ -43,13 +45,10 @@ final class KeyboardModel: ObservableObject {
     private var levelTimer: Timer?
     private var startTimer: Timer?
 
+    /// Without Full Access there is no mic, so the keyboard opens on the typing layout (App Review 4.4.1).
     func activate() {
-        mode = .voice
-        guard hasFullAccess else {
-            notice = Self.fullAccessNotice
-            return
-        }
-        guard stateObserver == nil else { return }
+        mode = hasFullAccess ? .voice : .typing
+        guard hasFullAccess, stateObserver == nil else { return }
         bridge = try? Bridge.shared()
         stateObserver = DarwinObserver(.state) { [weak self] in
             MainActor.assumeIsolated { self?.stateChanged() }
@@ -60,6 +59,20 @@ final class KeyboardModel: ObservableObject {
         if case .dictation = mode { send(.cancel) }
         stateObserver = nil
         stopLevels()
+    }
+
+    func type(_ key: CharacterKey) {
+        insert(typing.type(key))
+    }
+
+    func showTyping() {
+        notice = nil
+        mode = .typing
+    }
+
+    func showVoice() {
+        notice = nil
+        mode = .voice
     }
 
     func micTapped() {
