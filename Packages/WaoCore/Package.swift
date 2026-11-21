@@ -7,6 +7,7 @@ let package = Package(
     products: [
         .library(name: "WaoCore", targets: ["WaoCore"]),
         .library(name: "WaoInference", targets: ["WaoInference"]),
+        .executable(name: "wao-transcribe", targets: ["wao-transcribe"]),
     ],
     targets: [
         .target(name: "WaoCore", resources: [.process("Resources")]),
@@ -22,6 +23,7 @@ let package = Package(
                 .linkedFramework("CoreML", .when(platforms: [.iOS])),
             ]
         ),
+        .executableTarget(name: "wao-transcribe", dependencies: ["WaoCore", "WaoInference"]),
         .testTarget(
             name: "WaoCoreTests",
             dependencies: ["WaoCore", "WaoInference"],
