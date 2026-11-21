@@ -134,17 +134,15 @@ private struct TestPanel: View {
                         .disabled(!model.model.isReady || model.session.isBusy)
                 }
             }
-            HStack {
-                Picker("ไฟล์ตัวอย่าง", selection: $sample) {
-                    ForEach(Self.samples, id: \.self) { Text($0).tag($0) }
-                }
-                Button("ถอดเสียง") {
-                    guard let url = Bundle.main.url(forResource: sample, withExtension: "wav", subdirectory: "samples") else { return }
-                    Task { await model.transcribeSample(url, language: language) }
-                }
-                .disabled(!model.model.isReady || model.isTranscribingFile)
-                .accessibilityIdentifier("transcribe-sample")
+            Picker("ไฟล์ตัวอย่าง", selection: $sample) {
+                ForEach(Self.samples, id: \.self) { Text($0).tag($0) }
             }
+            Button("ถอดเสียงไฟล์ตัวอย่าง (Transcribe sample)") {
+                guard let url = Bundle.main.url(forResource: sample, withExtension: "wav", subdirectory: "samples") else { return }
+                Task { await model.transcribeSample(url, language: language) }
+            }
+            .disabled(!model.model.isReady || model.isTranscribingFile)
+            .accessibilityIdentifier("transcribe-sample")
             if model.isLoading || model.isTranscribingFile || model.session.isBusy {
                 ProgressView()
             }
