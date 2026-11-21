@@ -526,18 +526,21 @@ private struct Step<Action: View, Footer: View>: View {
     }
 
     var body: some View {
-        HStack(alignment: .top, spacing: 14) {
-            StepMark(done: done, number: number)
-            VStack(alignment: .leading, spacing: 4) {
-                Text(title).font(.loopless(16, .medium))
-                Text(detail)
-                    .font(.loopless(13))
-                    .foregroundStyle(Palette.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
-                footer.padding(.top, 6)
+        VStack(alignment: .leading, spacing: 10) {
+            HStack(alignment: .top, spacing: 14) {
+                StepMark(done: done, number: number)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(title).font(.loopless(16, .medium))
+                    Text(detail)
+                        .font(.loopless(13))
+                        .foregroundStyle(Palette.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                action
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            action
+            // Below the action, so the progress bar keeps one width whichever button sits beside it.
+            footer.padding(.leading, 28 + 14)
         }
         .padding(18)
     }
