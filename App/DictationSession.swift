@@ -70,9 +70,9 @@ actor DictationSession {
         send(.end)
     }
 
-    /// The in-app test panel drives the same state machine without going through the keyboard's file.
-    func sendLocal(_ kind: Command.Kind) {
-        send(.command(Command(kind: kind), now: Date()))
+    /// The in-app mic test drives the same state machine without going through the keyboard's file.
+    func sendLocal(_ command: Command) {
+        send(.command(command, now: Date()))
     }
 
     private func receiveCommandFile() {

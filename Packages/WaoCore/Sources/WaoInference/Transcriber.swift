@@ -1,7 +1,7 @@
 import Foundation
 import WaoCore
 
-public struct Transcription: Sendable {
+public struct Transcription: Equatable, Sendable {
     public let text: String
     public let tokens: [Int]
     public let audioSeconds: Double

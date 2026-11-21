@@ -181,28 +181,3 @@ private struct DictationView: View {
         }
     }
 }
-
-/// The preview from the top of its box; once it runs past three lines its start is clipped off the top, so the
-/// words being spoken stay in view.
-private struct HeardText: View {
-    static let size: CGFloat = 21
-    /// Sukhumvit Set's lines are taller than the system font's; a box sized for those cut the top line in half.
-    static let lineHeight = UIFont(name: "SukhumvitSet-Medium", size: size)?.lineHeight ?? 36
-
-    let heard: Heard
-    let settled: Bool
-
-    var body: some View {
-        ZStack(alignment: .bottomTrailing) {
-            Text((heard.clipped ? "…" : "") + heard.text)
-                .font(.loopless(Self.size, .medium))
-                .foregroundStyle(Color(.label).opacity(settled ? 0.4 : 1))
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .fixedSize(horizontal: false, vertical: true)
-                .frame(maxHeight: Self.lineHeight * 3, alignment: .bottom)
-                .clipped()
-                .frame(maxHeight: .infinity, alignment: .top)
-            if settled { ProgressView() }
-        }
-    }
-}

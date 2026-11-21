@@ -62,19 +62,21 @@ struct ContentView: View {
     }
 
     private var main: some View {
-        ScrollView {
-            VStack(spacing: 32) {
-                Hero()
-                PrimaryAction()
-                SetupCard()
-                VocabularyCard()
-                LabCard()
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(spacing: 32) {
+                    Hero { withAnimation(.snappy) { proxy.scrollTo(SetupCard.anchor, anchor: .top) } }
+                    SessionCard()
+                    SetupCard().id(SetupCard.anchor)
+                    VocabularyCard()
+                    LabCard()
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 40)
+                .padding(.bottom, 48)
             }
-            .padding(.horizontal, 20)
-            .padding(.top, 40)
-            .padding(.bottom, 48)
+            .scrollIndicators(.hidden)
         }
-        .scrollIndicators(.hidden)
         .overlay {
             GeometryReader { geometry in
                 let inset = geometry.safeAreaInsets.top
@@ -110,6 +112,8 @@ extension View {
 }
 
 private struct Hero: View {
+    let showSetup: () -> Void
+
     var body: some View {
         VStack(spacing: 14) {
             Text("เว่า")
@@ -120,107 +124,269 @@ private struct Hero: View {
                 .multilineTextAlignment(.center)
                 .foregroundStyle(Palette.secondary)
                 .lineSpacing(2)
-            HeroWaveform()
-                .frame(height: 64)
+            TestPanel(showSetup: showSetup)
                 .padding(.top, 18)
         }
     }
 }
 
-/// Live from the bridge while listening; otherwise a slow sine fed through the same rolling buffer, so the
-/// breath ripples outward from the centre the way speech does.
-private struct HeroWaveform: View {
+/// The hero waveform is the test button: tap, speak, tap, and read what the model heard.
+private struct TestPanel: View {
     @EnvironmentObject private var model: AppModel
+    let showSetup: () -> Void
+
+    private var blocker: (reason: String, step: Int?)? {
+        if !model.model.isReady { return ("ต้องดาวน์โหลดโมเดลก่อน", 1) }
+        if model.micPermission != .granted { return ("ต้องอนุญาตไมโครโฟนก่อน", 2) }
+        switch model.test {
+        case .ready, .done: if model.session.isBusy { return ("คีย์บอร์ดกำลังใช้ไมค์อยู่", nil) }
+        case .recording, .transcribing: break
+        }
+        return nil
+    }
+
+    private var look: TestWaveform.Look {
+        switch model.test {
+        case .recording: .live
+        case .transcribing: .shimmer
+        case .ready, .done: .breathing
+        }
+    }
+
+    var body: some View {
+        VStack(spacing: 16) {
+            Button { Task { await model.toggleTest() } } label: {
+                TestWaveform(look: look).frame(height: 72)
+            }
+            .buttonStyle(Pressable(scale: 0.94))
+            .disabled(blocker != nil || model.isLoading || model.test.isTranscribing)
+            .opacity(blocker != nil ? 0.35 : 1)
+            .accessibilityLabel(model.test.isRecording ? "หยุดและถอดเสียง" : "ลองพูด")
+            .accessibilityIdentifier("mic-test")
+            caption
+                .font(.loopless(14))
+                .foregroundStyle(Palette.secondary)
+            output
+                .transition(.opacity)
+        }
+        .animation(.snappy, value: model.test.step)
+        .sensoryFeedback(trigger: model.test.step) { _, step in
+            switch step {
+            case .recording: .start
+            case .transcribing: .stop
+            case .done: .success
+            case .ready: nil
+            }
+        }
+    }
+
+    @ViewBuilder private var caption: some View {
+        if let blocker {
+            HStack(spacing: 6) {
+                Text(blocker.reason)
+                if let step = blocker.step {
+                    Button("ไปที่ขั้นที่ \(step)", action: showSetup)
+                        .font(.loopless(14, .medium))
+                        .foregroundStyle(.white)
+                        .underline()
+                }
+            }
+        } else {
+            switch model.test {
+            case .ready:
+                Text(model.isLoading ? "กำลังโหลดโมเดล…" : "แตะเพื่อลองพูด")
+            case .done:
+                Text("แตะเพื่อลองอีกครั้ง")
+            case .recording(let since, _):
+                HStack(spacing: 8) {
+                    LiveDot()
+                    Text("กำลังฟัง · แตะเพื่อหยุด")
+                    Text(since, style: .timer)
+                        .font(.loopless(14, .medium).monospacedDigit())
+                        .foregroundStyle(.white)
+                }
+            case .transcribing:
+                HStack(spacing: 8) {
+                    ProgressView().controlSize(.small).tint(.white)
+                    Text("กำลังถอดเสียง")
+                }
+            }
+        }
+    }
+
+    @ViewBuilder private var output: some View {
+        switch model.test {
+        case .ready:
+            EmptyView()
+        case .recording(_, let heard), .transcribing(let heard):
+            Group {
+                if let heard, !heard.text.isEmpty {
+                    HeardText(heard: heard, settled: model.test.isTranscribing)
+                } else {
+                    Text(model.test.isTranscribing ? "" : "พูดได้เลย…")
+                        .font(.loopless(HeardText.size, .medium))
+                        .foregroundStyle(Palette.tertiary)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                }
+            }
+            .frame(height: HeardText.lineHeight * 3)
+            .padding(18)
+            .card()
+        case .done(let result):
+            TestResult(result: result)
+        }
+    }
+}
+
+private struct TestResult: View {
+    let result: Transcription
+    @State private var copied = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text(result.text.isEmpty ? "(ไม่ได้ยินเสียงพูด)" : result.text)
+                .font(.loopless(24, .medium))
+                .foregroundStyle(result.text.isEmpty ? Palette.tertiary : .white)
+                .lineSpacing(2)
+                .textSelection(.enabled)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityIdentifier("result-text")
+            HStack {
+                Text(String(format: "%.1f วินาที · ถอดใน %.2f วินาที", result.audioSeconds, result.totalSeconds))
+                    .font(.loopless(13).monospacedDigit())
+                    .foregroundStyle(Palette.tertiary)
+                Spacer()
+                Button {
+                    UIPasteboard.general.string = result.text
+                    copied = true
+                    Task {
+                        try? await Task.sleep(for: .seconds(1.5))
+                        copied = false
+                    }
+                } label: {
+                    Label(copied ? "คัดลอกแล้ว" : "คัดลอก", systemImage: copied ? "checkmark" : "doc.on.doc")
+                        .font(.loopless(13, .medium))
+                        .padding(.horizontal, 12)
+                        .frame(minHeight: 30)
+                        .background(.white.opacity(0.1), in: Capsule())
+                        .overlay(Capsule().strokeBorder(.white.opacity(0.14), lineWidth: 1))
+                }
+                .buttonStyle(Pressable())
+                .disabled(result.text.isEmpty)
+                .sensoryFeedback(.success, trigger: copied) { _, now in now }
+            }
+        }
+        .padding(18)
+        .card()
+    }
+}
+
+private struct LiveDot: View {
+    @State private var pulse = false
+
+    var body: some View {
+        Circle()
+            .fill(.white)
+            .frame(width: 7, height: 7)
+            .shadow(color: .white.opacity(0.9), radius: 5)
+            .opacity(pulse ? 0.35 : 1)
+            .animation(.easeInOut(duration: 0.7).repeatForever(), value: pulse)
+            .onAppear { pulse = true }
+    }
+}
+
+/// Live from the bridge while recording; otherwise a sine fed through the same rolling buffer, so it ripples
+/// outward from the centre the way speech does: a slow breath at rest, a quick low shimmer while transcribing.
+private struct TestWaveform: View {
+    enum Look { case breathing, live, shimmer }
+
+    let look: Look
     @State private var levels = Array(repeating: Float(0), count: Waveform.barsPerSide + 1)
     @State private var bridge = try? Bridge.shared()
     private let tick = Timer.publish(every: 0.05, on: .main, in: .common).autoconnect()
 
     var body: some View {
-        Waveform(levels: levels, active: true)
+        Waveform(levels: levels, active: true, lit: look == .live)
+            .animation(.easeOut(duration: 0.3), value: look)
             .onReceive(tick) { now in
                 levels = Array(levels.dropFirst()) + [nextLevel(at: now)]
             }
     }
 
     private func nextLevel(at now: Date) -> Float {
-        if case .listening = model.session { return bridge?.readLevel() ?? 0 }
-        let phase = now.timeIntervalSinceReferenceDate * 2 * .pi / 3.2
-        return Float(0.3 + 0.22 * sin(phase))
-    }
-}
-
-private struct PrimaryAction: View {
-    @EnvironmentObject private var model: AppModel
-
-    var body: some View {
-        VStack(spacing: 14) {
-            Button {
-                Task { model.isSessionLive ? await model.endSession() : await model.beginSession() }
-            } label: {
-                HStack(spacing: 10) {
-                    Image(systemName: model.isSessionLive ? "stop.fill" : "mic.fill")
-                        .font(.system(size: 17, weight: .semibold))
-                    Text(model.isSessionLive ? "ปิดเซสชัน" : "เริ่มเซสชัน")
-                        .font(.loopless(19, .semibold))
-                }
-                .frame(maxWidth: .infinity, minHeight: 60)
-                .foregroundStyle(model.isSessionLive ? .white : Palette.canvas)
-                .background {
-                    if model.isSessionLive {
-                        Capsule().fill(.white.opacity(0.06))
-                            .overlay(Capsule().strokeBorder(.white.opacity(0.22), lineWidth: 1))
-                    } else {
-                        Capsule().fill(.white)
-                            .shadow(color: .white.opacity(0.35), radius: 22)
-                    }
-                }
-            }
-            .buttonStyle(Pressable())
-            .disabled(!model.isSessionLive && !model.model.isReady)
-            .opacity(!model.isSessionLive && !model.model.isReady ? 0.35 : 1)
-            SessionStatus()
+        let t = now.timeIntervalSinceReferenceDate
+        switch look {
+        case .live: return bridge?.readLevel() ?? 0
+        case .shimmer: return Float(0.16 + 0.1 * sin(t * 2 * .pi / 0.9))
+        case .breathing: return Float(0.3 + 0.22 * sin(t * 2 * .pi / 3.2))
         }
     }
 }
 
-private struct SessionStatus: View {
+private struct SessionCard: View {
     @EnvironmentObject private var model: AppModel
 
+    private var on: Bool { model.isKeyboardSessionOn }
+
     var body: some View {
-        TimelineView(.periodic(from: .now, by: 1)) { context in
-            HStack(spacing: 8) {
-                Circle()
-                    .fill(model.isSessionLive ? Color.white : Palette.tertiary)
-                    .frame(width: 6, height: 6)
-                    .shadow(color: .white.opacity(model.isSessionLive ? 0.8 : 0), radius: 4)
-                Text(text(at: context.date))
-                    .font(.loopless(14).monospacedDigit())
+        HStack(alignment: .center, spacing: 14) {
+            Image(systemName: "keyboard")
+                .font(.system(size: 15, weight: .medium))
+                .foregroundStyle(on ? .white : Palette.secondary)
+                .frame(width: 28)
+            VStack(alignment: .leading, spacing: 4) {
+                Text("เซสชันคีย์บอร์ด").font(.loopless(16, .medium))
+                Text(model.model.isReady || on ? "เปิดไมค์ค้างไว้ให้คีย์บอร์ดใช้ในแอปอื่น" : "ต้องดาวน์โหลดโมเดลก่อน จึงจะเปิดได้")
+                    .font(.loopless(13))
                     .foregroundStyle(Palette.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                if on {
+                    TimelineView(.periodic(from: .now, by: 1)) { context in
+                        HStack(spacing: 7) {
+                            Circle()
+                                .fill(.white)
+                                .frame(width: 6, height: 6)
+                                .shadow(color: .white.opacity(0.8), radius: 4)
+                            Text(status(at: context.date))
+                                .font(.loopless(13, .medium).monospacedDigit())
+                        }
+                    }
+                    .padding(.top, 2)
+                    .transition(.opacity)
+                }
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            PillButton(title: on ? "ปิด" : "เปิด", prominent: !on) {
+                Task { on ? await model.endSession() : await model.beginSession() }
+            }
+            .disabled(!on && !model.model.isReady)
+            .opacity(!on && !model.model.isReady ? 0.35 : 1)
+            .accessibilityIdentifier("session-toggle")
         }
+        .padding(18)
+        .card(lit: on)
+        .animation(.snappy, value: on)
     }
 
-    private func text(at now: Date) -> String {
-        guard model.model.isReady || model.isSessionLive else { return "ต้องดาวน์โหลดโมเดลก่อน จึงจะเริ่มได้" }
+    private func status(at now: Date) -> String {
         switch model.session {
-        case .off:
-            return "ปิดอยู่ · ไมโครโฟนปิดเองหลังไม่ใช้ 5 นาที"
         case .idle(let expiresAt):
             let seconds = max(0, Int(expiresAt.timeIntervalSince(now).rounded(.up)))
             return "พร้อมฟัง · ปิดเองใน \(seconds / 60):\(String(format: "%02d", seconds % 60))"
         case .listening:
-            return "กำลังฟัง"
+            return model.test.isRecording ? "ไมค์ใช้ทดสอบอยู่" : "กำลังฟังจากคีย์บอร์ด"
         case .transcribing:
             return "กำลังถอดเสียง"
-        case .done:
-            return "ถอดเสียงเสร็จแล้ว"
-        case .failed(_, let reason):
-            return "ถอดเสียงไม่สำเร็จ · \(reason)"
+        case .off, .done, .failed:
+            return "พร้อมฟัง"
         }
     }
 }
 
 private struct SetupCard: View {
+    static let anchor = "setup"
+
     @EnvironmentObject private var model: AppModel
     @Environment(\.openURL) private var openURL
     @Environment(\.scenePhase) private var scenePhase
@@ -387,16 +553,24 @@ private struct StepMark: View {
 
 struct PillButton: View {
     let title: String
+    var prominent = false
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(.loopless(14, .medium))
-                .padding(.horizontal, 14)
+                .font(.loopless(14, prominent ? .semibold : .medium))
+                .foregroundStyle(prominent ? Palette.canvas : .white)
+                .padding(.horizontal, prominent ? 18 : 14)
                 .frame(minHeight: 32)
-                .background(.white.opacity(0.1), in: Capsule())
-                .overlay(Capsule().strokeBorder(.white.opacity(0.14), lineWidth: 1))
+                .background {
+                    if prominent {
+                        Capsule().fill(.white).shadow(color: .white.opacity(0.3), radius: 10)
+                    } else {
+                        Capsule().fill(.white.opacity(0.1))
+                            .overlay(Capsule().strokeBorder(.white.opacity(0.14), lineWidth: 1))
+                    }
+                }
         }
         .buttonStyle(Pressable())
     }
@@ -422,7 +596,6 @@ private struct ProgressBar: View {
 private struct LabCard: View {
     @EnvironmentObject private var model: AppModel
     @State private var expanded = false
-    @State private var language = Language.thai
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -455,9 +628,9 @@ private struct LabCard: View {
     private var content: some View {
         VStack(alignment: .leading, spacing: 16) {
             LabRow("ภาษา") {
-                Picker("ภาษา", selection: $language) {
-                    Text("ไทย").tag(Language.thai)
+                Picker("ภาษา", selection: $model.testLanguage) {
                     Text("ไทย+อังกฤษ").tag(Language.thaiEnglishMix)
+                    Text("ไทย").tag(Language.thai)
                 }
                 .pickerStyle(.segmented)
                 .frame(width: 180)
@@ -469,20 +642,21 @@ private struct LabCard: View {
                 .pickerStyle(.segmented)
                 .frame(width: 180)
             }
-            if let result = model.lastResult {
-                Text(result.text.isEmpty ? "(ว่าง)" : result.text)
-                    .font(.loopless(19, .medium))
-                    .textSelection(.enabled)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(14)
-                    .background(.white.opacity(0.04), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-                    .accessibilityIdentifier("result-text")
+            Text("ใช้กับการลองพูดที่คลื่นเสียงด้านบน")
+                .font(.loopless(13))
+                .foregroundStyle(Palette.tertiary)
+            Divider().overlay(Palette.hairline)
+            if let result = model.lastTest {
                 VStack(spacing: 8) {
                     Metric("ความยาวเสียง", String(format: "%.2f s", result.audioSeconds))
                     Metric("เวลาถอดเสียง", String(format: "%.3f s", result.totalSeconds))
                     Metric("features / encoder / decoder", String(format: "%.3f / %.3f / %.3f", result.featureSeconds, result.encoderSeconds, result.decoderSeconds))
                     Metric("Real-time factor", String(format: "%.3f", result.realTimeFactor))
                 }
+            } else {
+                Text("ยังไม่มีผลทดสอบ")
+                    .font(.loopless(13))
+                    .foregroundStyle(Palette.tertiary)
             }
             if let load = model.loadReport {
                 VStack(spacing: 8) {
@@ -536,18 +710,20 @@ private struct Metric: View {
 }
 
 struct Pressable: ButtonStyle {
+    var scale: CGFloat = 0.97
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .scaleEffect(configuration.isPressed ? 0.97 : 1)
+            .scaleEffect(configuration.isPressed ? scale : 1)
             .opacity(configuration.isPressed ? 0.8 : 1)
             .animation(.easeOut(duration: 0.15), value: configuration.isPressed)
     }
 }
 
 extension View {
-    func card() -> some View {
-        background(.white.opacity(0.04), in: RoundedRectangle(cornerRadius: 24, style: .continuous))
-            .overlay(RoundedRectangle(cornerRadius: 24, style: .continuous).strokeBorder(Palette.hairline, lineWidth: 1))
+    func card(lit: Bool = false) -> some View {
+        background(.white.opacity(lit ? 0.07 : 0.04), in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+            .overlay(RoundedRectangle(cornerRadius: 24, style: .continuous).strokeBorder(lit ? .white.opacity(0.2) : Palette.hairline, lineWidth: 1))
     }
 }
 

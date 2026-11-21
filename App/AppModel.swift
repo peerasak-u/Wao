@@ -15,8 +15,19 @@ final class AppModel: ObservableObject {
     }
 
     @Published private(set) var model: ModelState
+    enum MicTest: Equatable {
+        case ready
+        case recording(since: Date, heard: Heard?)
+        case transcribing(heard: Heard?)
+        case done(Transcription)
+    }
+
     @Published private(set) var session: SessionState = .off
-    @Published private(set) var lastResult: Transcription?
+    @Published private(set) var test = MicTest.ready
+    @Published private(set) var lastTest: Transcription?
+    /// The mic test opened the session itself and will close it again; the user has not started one.
+    @Published private(set) var testOwnsSession = false
+    @Published var testLanguage = Language.thaiEnglishMix
     @Published private(set) var loadReport: LoadReport?
     @Published private(set) var loadedThreads: Int?
     @Published private(set) var isLoading = false
@@ -29,15 +40,14 @@ final class AppModel: ObservableObject {
     private var dictation: DictationSession!
     private var interruptionObserver: NSObjectProtocol?
     private var vocabularyCommit: AnyCancellable?
+    private var testID: UUID?
+    private var testStartedAt = Date()
 
     init() {
         model = store.diskState()
         let bridge = try? Bridge.shared()
         dictation = DictationSession(bridge: bridge, hotwords: vocabulary.hotwords) { [weak self] snapshot in
-            Task { @MainActor in
-                self?.session = snapshot.state
-                self?.lastResult = snapshot.lastResult
-            }
+            Task { @MainActor in self?.observe(snapshot) }
         }
         Task { await dictation.listenForKeyboard() }
         interruptionObserver = NotificationCenter.default.addObserver(
@@ -69,6 +79,7 @@ final class AppModel: ObservableObject {
     }
 
     var isSessionLive: Bool { session != .off }
+    var isKeyboardSessionOn: Bool { isSessionLive && !testOwnsSession }
 
     func download() async {
         model = .downloading(progress: 0)
@@ -113,16 +124,24 @@ final class AppModel: ObservableObject {
     }
 
     func beginSession() async {
+        testOwnsSession = false
+        await openSession()
+    }
+
+    @discardableResult
+    private func openSession() async -> Bool {
         if micPermission == .undetermined { await requestMicrophone() }
         guard micPermission == .granted else {
             error = "ต้องอนุญาตไมโครโฟนก่อน"
-            return
+            return false
         }
         await loadModel()
         do {
             try await dictation.begin()
+            return true
         } catch {
             self.error = error.localizedDescription
+            return false
         }
     }
 
@@ -130,8 +149,82 @@ final class AppModel: ObservableObject {
         await dictation.end()
     }
 
-    func record(_ kind: Command.Kind) async {
-        if !isSessionLive { await beginSession() }
-        await dictation.sendLocal(kind)
+    func toggleTest() async {
+        switch test {
+        case .recording: await dictation.sendLocal(Command(kind: .stop))
+        case .transcribing: break
+        case .ready, .done: await startTest()
+        }
     }
+
+    private func startTest() async {
+        if isSessionLive {
+            await loadModel()
+        } else {
+            testOwnsSession = true
+            guard await openSession() else {
+                testOwnsSession = false
+                return
+            }
+        }
+        let start = Command(kind: .start(testLanguage))
+        testID = start.id
+        testStartedAt = Date()
+        await dictation.sendLocal(start)
+    }
+
+    private func observe(_ snapshot: DictationSession.Snapshot) {
+        session = snapshot.state
+        if snapshot.state == .off { testOwnsSession = false }
+        guard let id = testID else { return }
+        switch snapshot.state {
+        case .listening(let current, _, let heard) where current == id:
+            test = .recording(since: testStartedAt, heard: heard)
+        case .transcribing(let current) where current == id:
+            if case .recording(_, let heard) = test { test = .transcribing(heard: heard) } else { test = .transcribing(heard: nil) }
+        case .done(let current, _) where current == id:
+            finishTest()
+            lastTest = snapshot.lastResult
+            test = snapshot.lastResult.map(MicTest.done) ?? .ready
+        case .failed(let current, let reason) where current == id:
+            finishTest()
+            test = .ready
+            error = "ถอดเสียงไม่สำเร็จ: \(reason)"
+        case .off:
+            // The session closed under the test: ended by the user, an interruption, or the idle timer.
+            testID = nil
+            test = .ready
+        default:
+            break
+        }
+    }
+
+    /// Leaves the session as the test found it: closed if the test opened it, otherwise back to waiting.
+    private func finishTest() {
+        testID = nil
+        let close = testOwnsSession
+        Task {
+            if close {
+                await dictation.end()
+            } else {
+                try? await dictation.begin()
+            }
+        }
+    }
+}
+
+extension AppModel.MicTest {
+    enum Step { case ready, recording, transcribing, done }
+
+    var step: Step {
+        switch self {
+        case .ready: .ready
+        case .recording: .recording
+        case .transcribing: .transcribing
+        case .done: .done
+        }
+    }
+
+    var isRecording: Bool { step == .recording }
+    var isTranscribing: Bool { step == .transcribing }
 }
