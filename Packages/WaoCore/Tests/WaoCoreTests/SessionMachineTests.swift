@@ -101,4 +101,18 @@ final class SessionMachineTests: XCTestCase {
                               .heard(id: start.id, Heard(text: "late", clipped: false))])
         XCTAssertEqual(state, .idle(expiresAt: t0 + 300))
     }
+
+    func testBeginAfterAFinishedRecordingReturnsToIdle() {
+        let start = Command(kind: .start(.thaiEnglishMix))
+        let (state, effects) = run([.begin(now: t0), .command(start, now: t0), .command(Command(kind: .stop), now: t0),
+                                    .transcribed(id: start.id, text: "สวัสดี", now: t0 + 2), .begin(now: t0 + 3)])
+        XCTAssertEqual(state, .idle(expiresAt: t0 + 303))
+        XCTAssertEqual(effects.last, .armIdleTimer(fireAt: t0 + 303))
+    }
+
+    func testBeginWhileRecordingDoesNotInterruptIt() {
+        let start = Command(kind: .start(.thai))
+        let (state, _) = run([.begin(now: t0), .command(start, now: t0), .begin(now: t0 + 1)])
+        XCTAssertEqual(state, .listening(id: start.id, language: .thai, heard: nil))
+    }
 }

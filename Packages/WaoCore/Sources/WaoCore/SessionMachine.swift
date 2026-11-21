@@ -30,7 +30,7 @@ public enum SessionMachine {
 
     public static func reduce(_ state: SessionState, _ event: SessionEvent) -> (SessionState, [SessionEffect]) {
         switch (state, event) {
-        case (.off, .begin(let now)), (.idle, .begin(let now)):
+        case (.off, .begin(let now)), (.idle, .begin(let now)), (.done, .begin(let now)), (.failed, .begin(let now)):
             return idle(now, [])
 
         case (.idle, .command(let c, _)), (.done, .command(let c, _)), (.failed, .command(let c, _)):
