@@ -9,7 +9,7 @@ let package = Package(
         .library(name: "WaoInference", targets: ["WaoInference"]),
     ],
     targets: [
-        .target(name: "WaoCore"),
+        .target(name: "WaoCore", resources: [.process("Resources")]),
         // Built by tools/fetch_onnxruntime.sh; only the app links it, never the keyboard.
         .binaryTarget(name: "onnxruntime", path: "Vendor/onnxruntime.xcframework"),
         .target(
