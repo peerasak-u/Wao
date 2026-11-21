@@ -146,8 +146,8 @@ actor DictationSession {
                 let started = clock.now
                 let (audio, clipped) = capture.recent(seconds: Self.previewWindowSeconds)
                 if audio.count >= MelFeaturizer.sampleRate,
-                   // PREVIEW-DECODING: switch to `decoding: .greedy` once Transcriber takes it.
-                   let result = try? transcriber.transcribe(audio, language: language),
+                   // Greedy: beam with its greedy guard costs ~2.3x the decoder time, too much every 700 ms.
+                   let result = try? transcriber.transcribe(audio, language: language, decoding: .greedy),
                    // A window of trailing silence reads as nothing; keep the words already shown.
                    !result.text.isEmpty, !Task.isCancelled {
                     await self?.send(.heard(id: id, Heard(text: result.text, clipped: clipped)))
