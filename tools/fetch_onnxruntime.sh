@@ -3,6 +3,7 @@
 # from Microsoft's signed NuGet package. The GitHub Swift package and download.onnxruntime.ai
 # were unreachable in Nov 2026 (repo removed, CDN serving a mismatched TLS certificate),
 # so the NuGet payload, pinned by hash, is the official source we can verify.
+# Its LICENSE and ThirdPartyNotices.txt go into WaoInference's resources, since the app ships the binary.
 set -eu
 
 VERSION=1.32.0
@@ -14,8 +15,9 @@ vendor="$root/Packages/WaoCore/Vendor"
 out="$vendor/onnxruntime.xcframework"
 stamp="$vendor/onnxruntime.version"
 cache="$root/.model-cache/onnxruntime-$VERSION"
+notices="$root/Packages/WaoCore/Sources/WaoInference/Resources"
 
-if [ -d "$out" ] && [ "$(cat "$stamp" 2>/dev/null)" = "$VERSION" ]; then
+if [ -d "$out" ] && [ "$(cat "$stamp" 2>/dev/null)" = "$VERSION" ] && [ -f "$notices/onnxruntime-ThirdPartyNotices.txt" ]; then
   echo "onnxruntime $VERSION already at $out"
   exit 0
 fi
@@ -28,6 +30,10 @@ if [ ! -f "$nupkg" ] || [ "$(shasum -a 256 "$nupkg" | cut -d' ' -f1)" != "$SHA25
 fi
 actual="$(shasum -a 256 "$nupkg" | cut -d' ' -f1)"
 [ "$actual" = "$SHA256" ] || { echo "sha256 mismatch: $actual" >&2; exit 1; }
+
+mkdir -p "$notices"
+unzip -p "$nupkg" LICENSE > "$notices/onnxruntime-LICENSE.txt"
+unzip -p "$nupkg" ThirdPartyNotices.txt > "$notices/onnxruntime-ThirdPartyNotices.txt"
 
 work="$cache/work"
 rm -rf "$work"

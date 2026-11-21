@@ -59,11 +59,12 @@ extension Corrections {
 public enum BundledLists {
     public static let vocabulary = load("vocabulary")
     public static let corrections = load("corrections")
+    public static var notice: String { load("THIRD_PARTY_NOTICES", extension: nil) }
 
-    private static func load(_ name: String) -> String {
-        guard let url = Bundle.module.url(forResource: name, withExtension: "txt"),
+    private static func load(_ name: String, extension ext: String? = "txt") -> String {
+        guard let url = Bundle.module.url(forResource: name, withExtension: ext),
               let text = try? String(contentsOf: url, encoding: .utf8)
-        else { preconditionFailure("\(name).txt missing from the WaoCore bundle") }
+        else { preconditionFailure("\(name) missing from the WaoCore bundle") }
         return text
     }
 }

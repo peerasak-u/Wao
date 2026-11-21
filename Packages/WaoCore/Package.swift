@@ -19,6 +19,7 @@ let package = Package(
         .target(
             name: "WaoInference",
             dependencies: ["WaoCore", "onnxruntime"],
+            resources: [.process("Resources")],
             swiftSettings: optimizedInDebug,
             linkerSettings: [
                 .linkedLibrary("c++"),
