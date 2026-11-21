@@ -1,6 +1,9 @@
 // swift-tools-version:5.10
 import PackageDescription
 
+// Beam search is plain Swift array work: unoptimized, a 9 s clip took 5.9 s to decode instead of 0.75 s.
+let optimizedInDebug: [SwiftSetting] = [.unsafeFlags(["-O"], .when(configuration: .debug))]
+
 let package = Package(
     name: "WaoCore",
     platforms: [.iOS(.v17), .macOS(.v14)],
@@ -10,12 +13,13 @@ let package = Package(
         .executable(name: "wao-transcribe", targets: ["wao-transcribe"]),
     ],
     targets: [
-        .target(name: "WaoCore", resources: [.process("Resources")]),
+        .target(name: "WaoCore", resources: [.process("Resources")], swiftSettings: optimizedInDebug),
         // Built by tools/fetch_onnxruntime.sh; only the app links it, never the keyboard.
         .binaryTarget(name: "onnxruntime", path: "Vendor/onnxruntime.xcframework"),
         .target(
             name: "WaoInference",
             dependencies: ["WaoCore", "onnxruntime"],
+            swiftSettings: optimizedInDebug,
             linkerSettings: [
                 .linkedLibrary("c++"),
                 .linkedLibrary("z", .when(platforms: [.iOS])),
