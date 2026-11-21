@@ -24,3 +24,19 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+----
+
+thai-typing.bin in this folder, the Thai language model and word list behind
+tap decoding and word suggestions, is built by tools/build_typing_model.py
+from these sources, each dedicated to the public domain under CC0 1.0
+(https://creativecommons.org/publicdomain/zero/1.0/):
+
+- Common Voice Thai sentences, server/data/th/sentence-collector.txt at
+  commit 3acf94e65c97ea1409a070ade72f379e7caea7da of
+  https://github.com/common-voice/common-voice (Mozilla)
+- wisesight-sentiment, neg.txt, neu.txt, pos.txt and q.txt at commit
+  c1d063649abc3a6870b5fd1aae26cd1c64bdde7b of
+  https://github.com/PyThaiNLP/wisesight-sentiment (Wisesight and PyThaiNLP)
+- PyThaiNLP 5.4.0's words_th.txt and tnc_freq.txt (word frequencies from the
+  Thai National Corpus), https://github.com/PyThaiNLP/pythainlp
