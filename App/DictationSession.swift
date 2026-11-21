@@ -17,6 +17,7 @@ actor DictationSession {
     private(set) var state: SessionState = .off
     private var lastResult: Transcription?
     private var transcriber: Transcriber?
+    private var hotwords: Hotwords
     private var idleTimer: Task<Void, Never>?
     private var preview: Task<Void, Never>?
     private var lastCommandID: UUID?
@@ -26,8 +27,9 @@ actor DictationSession {
     private let capture = AudioCapture()
     private let onChange: @Sendable (Snapshot) -> Void
 
-    init(bridge: Bridge?, onChange: @escaping @Sendable (Snapshot) -> Void) {
+    init(bridge: Bridge?, hotwords: Hotwords, onChange: @escaping @Sendable (Snapshot) -> Void) {
         self.bridge = bridge
+        self.hotwords = hotwords
         self.onChange = onChange
         try? bridge?.write(SessionState.off)
         bridge?.writeLevel(0)
@@ -46,6 +48,13 @@ actor DictationSession {
 
     func use(_ transcriber: Transcriber?) {
         self.transcriber = transcriber
+        use(hotwords: hotwords)
+    }
+
+    /// Reaches the loaded model without reloading it; a transcription already running finishes with the old list.
+    func use(hotwords: Hotwords) {
+        self.hotwords = hotwords
+        transcriber?.use(hotwords: hotwords, cleanup: TextCleanup(hotwords: hotwords, corrections: .bundled))
     }
 
     /// Opens the mic. Must be called while the app is in the foreground; iOS refuses to start recording otherwise.

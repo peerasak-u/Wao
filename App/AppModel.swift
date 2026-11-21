@@ -1,4 +1,5 @@
 import AVFoundation
+import Combine
 import SwiftUI
 import WaoCore
 import WaoInference
@@ -23,15 +24,17 @@ final class AppModel: ObservableObject {
     @Published var threads = 1
     @Published var error: String?
     @Published var micPermission = AVAudioApplication.shared.recordPermission
+    @Published var vocabulary = VocabularyStore.load()
 
     let store = ModelStore(directory: ModelStore.defaultDirectory)
     private var dictation: DictationSession!
     private var interruptionObserver: NSObjectProtocol?
+    private var vocabularyCommit: AnyCancellable?
 
     init() {
         model = store.diskState()
         let bridge = try? Bridge.shared()
-        dictation = DictationSession(bridge: bridge) { [weak self] snapshot in
+        dictation = DictationSession(bridge: bridge, hotwords: vocabulary.hotwords) { [weak self] snapshot in
             Task { @MainActor in
                 self?.session = snapshot.state
                 self?.lastResult = snapshot.lastResult
@@ -46,6 +49,19 @@ final class AppModel: ObservableObject {
             Task { await self?.dictation.end() }
         }
         if bridge == nil { error = "App Group container unavailable; the keyboard cannot reach the app." }
+        vocabularyCommit = $vocabulary.dropFirst().removeDuplicates()
+            .debounce(for: .milliseconds(400), scheduler: RunLoop.main)
+            .sink { [weak self] book in self?.commit(book) }
+    }
+
+    private func commit(_ book: VocabularyBook) {
+        do {
+            try VocabularyStore.save(book)
+        } catch {
+            self.error = "บันทึกคลังคำศัพท์ไม่สำเร็จ: \(error.localizedDescription)"
+        }
+        let hotwords = book.hotwords
+        Task { await dictation.use(hotwords: hotwords) }
     }
 
     var isSessionLive: Bool { session != .off }
