@@ -32,8 +32,14 @@ final class KeyboardViewController: UIInputViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         model.hasFullAccess = hasFullAccess
-        model.showsGlobe = needsInputModeSwitchKey
         model.activate()
+    }
+
+    /// `needsInputModeSwitchKey` is only reliable once layout starts; on devices where iOS draws its own globe
+    /// below the keyboard it is false.
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        if model.showsGlobe != needsInputModeSwitchKey { model.showsGlobe = needsInputModeSwitchKey }
     }
 
     override func viewWillDisappear(_ animated: Bool) {

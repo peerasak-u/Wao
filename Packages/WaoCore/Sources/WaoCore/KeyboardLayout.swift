@@ -6,13 +6,6 @@ public struct CharacterKey: Equatable, Sendable {
     public let shifted: String
 
     public func text(shifted isShifted: Bool) -> String { isShifted ? shifted : output }
-
-    /// Thai vowel and tone marks combine with the previous character, so their caps show a dotted circle.
-    public func label(shifted isShifted: Bool) -> String {
-        let text = text(shifted: isShifted)
-        guard let scalar = text.unicodeScalars.first, scalar.properties.generalCategory == .nonspacingMark else { return text }
-        return "\u{25CC}" + text
-    }
 }
 
 public enum KeyboardLayout: String, CaseIterable, Sendable {

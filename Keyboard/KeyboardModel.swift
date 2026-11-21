@@ -33,7 +33,7 @@ final class KeyboardModel: ObservableObject {
     @Published var notice: String?
 
     var hasFullAccess = false
-    var showsGlobe = true
+    @Published var showsGlobe = true
     var insert: (String) -> Void = { _ in }
     var deleteBackward: () -> Void = {}
     var openApp: () -> Bool = { false }
@@ -137,7 +137,7 @@ final class KeyboardModel: ObservableObject {
             mode = .dictation(.transcribing(id))
             stopLevels()
         case .done(let id, let text) where id == dictation.id:
-            insert(text)
+            if text.isEmpty { notice = "ไม่ได้ยินเสียงพูด ลองอีกครั้ง" } else { insert(text) }
             mode = .typing
             stopLevels()
         case .failed(let id, let reason) where id == dictation.id:

@@ -24,15 +24,6 @@ private struct TypingView: View {
 
     var body: some View {
         VStack(spacing: 8) {
-            if let notice = model.notice {
-                Text(notice)
-                    .font(.footnote)
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: .infinity)
-                    .padding(6)
-                    .background(Color(.systemYellow).opacity(0.25), in: RoundedRectangle(cornerRadius: 6))
-                    .onTapGesture { model.notice = nil }
-            }
             let rows = model.layout.rows
             ForEach(rows.indices, id: \.self) { index in
                 HStack(spacing: 4) {
@@ -41,7 +32,7 @@ private struct TypingView: View {
                     }
                     ForEach(rows[index].indices, id: \.self) { column in
                         let key = rows[index][column]
-                        KeyCap(label: key.label(shifted: model.shifted)) { model.type(key) }
+                        KeyCap(label: key.text(shifted: model.shifted)) { model.type(key) }
                     }
                     if index == rows.count - 1 {
                         SpecialKey(systemImage: "delete.left") { model.deleteBackward() }
@@ -64,6 +55,20 @@ private struct TypingView: View {
         }
         .padding(.horizontal, 3)
         .padding(.vertical, 6)
+        .overlay(alignment: .top) {
+            if let notice = model.notice {
+                // Floats over the top row: the keyboard height is fixed, so a notice in the stack pushed keys out.
+                Text(notice)
+                    .font(.footnote)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(3)
+                    .frame(maxWidth: .infinity)
+                    .padding(8)
+                    .background(Color(.systemYellow).opacity(0.9), in: RoundedRectangle(cornerRadius: 8))
+                    .padding(4)
+                    .onTapGesture { model.notice = nil }
+            }
+        }
     }
 }
 
