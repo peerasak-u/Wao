@@ -1,0 +1,74 @@
+name: Wao
+options:
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    DEVELOPMENT_TEAM: JL47A9ESW6
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_VERSION: "5.0"
+    TARGETED_DEVICE_FAMILY: "1"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+packages:
+  WaoCore:
+    path: Packages/WaoCore
+targets:
+  Wao:
+    type: application
+    platform: iOS
+    sources:
+      - path: App
+      - path: samples
+        type: folder
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.peerasak.wao
+        PRODUCT_NAME: Wao
+        CODE_SIGN_ENTITLEMENTS: App/Wao.entitlements
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: เว่า
+        CFBundleDevelopmentRegion: th
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UIBackgroundModes: [audio]
+        NSMicrophoneUsageDescription: เว่าใช้ไมโครโฟนเพื่อถอดเสียงพูดเป็นข้อความบนเครื่องนี้เท่านั้น เสียงไม่ถูกส่งออกนอกเครื่อง
+        ITSAppUsesNonExemptEncryption: false
+        CFBundleURLTypes:
+          - CFBundleURLName: com.peerasak.wao
+            CFBundleURLSchemes: [wao]
+    dependencies:
+      - package: WaoCore
+        product: WaoCore
+      - package: WaoCore
+        product: WaoInference
+      - target: WaoKeyboard
+  WaoKeyboard:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Keyboard
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.peerasak.wao.keyboard
+        PRODUCT_NAME: WaoKeyboard
+        CODE_SIGN_ENTITLEMENTS: Keyboard/WaoKeyboard.entitlements
+    info:
+      path: Keyboard/Info.plist
+      properties:
+        CFBundleDisplayName: เว่า
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.keyboard-service
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).KeyboardViewController
+          NSExtensionAttributes:
+            IsASCIICapable: false
+            PrefersRightToLeft: false
+            PrimaryLanguage: th
+            RequestsOpenAccess: true
+    dependencies:
+      - package: WaoCore
+        product: WaoCore

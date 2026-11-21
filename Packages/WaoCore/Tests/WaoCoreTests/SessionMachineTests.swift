@@ -21,7 +21,7 @@ final class SessionMachineTests: XCTestCase {
         ])
         XCTAssertEqual(state, .done(id: start.id, text: "สวัสดี"))
         XCTAssertEqual(effects, [
-            .openMic, .armIdleTimer(fireAt: t0 + 300), .beginCapture,
+            .armIdleTimer(fireAt: t0 + 300), .beginCapture,
             .transcribe(id: start.id, language: .thai), .armIdleTimer(fireAt: t0 + 302),
         ])
     }

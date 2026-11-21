@@ -1,7 +1,7 @@
 import Foundation
 
 public enum SessionEvent: Equatable, Sendable {
-    /// The user started a session from the app (it must be in the foreground to open the mic).
+    /// The app opened the mic (it can only do so in the foreground) and the session is live.
     case begin(now: Date)
     case command(Command, now: Date)
     case transcribed(id: UUID, text: String, now: Date)
@@ -12,7 +12,6 @@ public enum SessionEvent: Equatable, Sendable {
 }
 
 public enum SessionEffect: Equatable, Sendable {
-    case openMic
     case closeMic
     case beginCapture
     case discardCapture
@@ -28,9 +27,7 @@ public enum SessionMachine {
 
     public static func reduce(_ state: SessionState, _ event: SessionEvent) -> (SessionState, [SessionEffect]) {
         switch (state, event) {
-        case (.off, .begin(let now)):
-            return idle(now, [.openMic])
-        case (.idle, .begin(let now)):
+        case (.off, .begin(let now)), (.idle, .begin(let now)):
             return idle(now, [])
 
         case (.idle, .command(let c, _)), (.done, .command(let c, _)), (.failed, .command(let c, _)):

@@ -17,6 +17,8 @@ let package = Package(
             dependencies: ["WaoCore", "onnxruntime"],
             linkerSettings: [
                 .linkedLibrary("c++"),
+                .linkedLibrary("z", .when(platforms: [.iOS])),
+                .linkedLibrary("sqlite3", .when(platforms: [.iOS])),
                 .linkedFramework("CoreML", .when(platforms: [.iOS])),
             ]
         ),
