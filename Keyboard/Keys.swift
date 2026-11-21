@@ -1,8 +1,7 @@
 import SwiftUI
+import WaoCore
 
 enum Key {
-    static let gapX: CGFloat = 5
-    static let gapY: CGFloat = 8
     static let capHeight: CGFloat = 42
     static let letterFill = Color(.systemGray4)
     static let specialFill = Color(.systemGray3)
@@ -15,8 +14,8 @@ extension View {
             .foregroundStyle(Color(.label))
             .background(fill, in: RoundedRectangle(cornerRadius: 5))
             .shadow(color: .black.opacity(0.25), radius: 0, y: 1)
-            .padding(.horizontal, Key.gapX / 2)
-            .padding(.vertical, Key.gapY / 2)
+            .padding(.horizontal, KeyLayout.gap.width / 2)
+            .padding(.vertical, KeyLayout.gap.height / 2)
             .contentShape(Rectangle())
     }
 }
@@ -117,6 +116,6 @@ struct GlobeKey: UIViewRepresentable {
 
 extension GlobeKey {
     func padded() -> some View {
-        padding(.horizontal, Key.gapX / 2).padding(.vertical, Key.gapY / 2)
+        padding(.horizontal, KeyLayout.gap.width / 2).padding(.vertical, KeyLayout.gap.height / 2)
     }
 }

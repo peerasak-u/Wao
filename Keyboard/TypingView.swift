@@ -21,7 +21,7 @@ struct TypingView: View {
             }
             .frame(height: Self.stripHeight)
             GeometryReader { geo in
-                let grid = KeyGrid(size: geo.size, rows: model.typing.rows)
+                let grid = KeyLayout(size: geo.size, rows: model.typing.rows)
                 ZStack(alignment: .topLeading) {
                     ForEach(grid.keys) { key in
                         keyView(key)
@@ -138,59 +138,6 @@ extension Typing {
         let text = text(of: key)
         guard text.unicodeScalars.first?.properties.generalCategory == .nonspacingMark else { return Text(text) }
         return Text("อ").foregroundColor(Color(.label).opacity(0.6)) + Text(text)
-    }
-}
-
-struct PlacedKey: Identifiable, Equatable {
-    enum Kind: Equatable {
-        case character(CharacterKey)
-        case shift
-        case delete
-    }
-
-    let id: String
-    let kind: Kind
-    /// Where a touch lands on this key: the cap plus its share of the gaps, out to the screen edge on the outer keys.
-    let hit: CGRect
-    let cap: CGRect
-}
-
-/// Keys are laid out by hand rather than in stacks so the popup and the hit areas know each key's exact frame.
-struct KeyGrid {
-    let keys: [PlacedKey]
-    let rowHeight: CGFloat
-
-    init(size: CGSize, rows: [[CharacterKey]]) {
-        let columns = CGFloat(max(rows.map(\.count).max() ?? 10, 10))
-        let unit = size.width / columns
-        let rowHeight = size.height / CGFloat(rows.count + 1)
-        self.rowHeight = rowHeight
-        var placed: [PlacedKey] = []
-        for (r, row) in rows.enumerated() {
-            let y = CGFloat(r) * rowHeight
-            let isLast = r == rows.count - 1
-            let count = CGFloat(row.count)
-            let special = isLast ? min(unit * 1.4, (size.width - count * unit) / 2) : 0
-            let width = isLast ? (size.width - 2 * special) / count : unit
-            let margin = (size.width - 2 * special - count * width) / 2
-            func slot(_ x: CGFloat, _ w: CGFloat) -> CGRect {
-                CGRect(x: x, y: y, width: w, height: rowHeight).insetBy(dx: Key.gapX / 2, dy: Key.gapY / 2)
-            }
-            if isLast {
-                placed.append(.init(id: "shift", kind: .shift, hit: CGRect(x: 0, y: y, width: special, height: rowHeight), cap: slot(0, special)))
-            }
-            for (c, key) in row.enumerated() {
-                let x = special + margin + CGFloat(c) * width
-                var hit = CGRect(x: x, y: y, width: width, height: rowHeight)
-                if c == 0 { hit = CGRect(x: hit.minX - margin, y: y, width: hit.width + margin, height: rowHeight) }
-                if c == row.count - 1 { hit.size.width += margin }
-                placed.append(.init(id: "\(r).\(c)", kind: .character(key), hit: hit, cap: slot(x, width)))
-            }
-            if isLast {
-                placed.append(.init(id: "delete", kind: .delete, hit: CGRect(x: size.width - special, y: y, width: special, height: rowHeight), cap: slot(size.width - special, special)))
-            }
-        }
-        keys = placed
     }
 }
 
