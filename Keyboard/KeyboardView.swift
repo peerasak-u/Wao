@@ -11,8 +11,6 @@ struct KeyboardView: View {
             switch model.mode {
             case .voice:
                 VoiceView(model: model, globe: globe)
-            case .typing:
-                TypingView(model: model, globe: globe)
             case .dictation(let dictation):
                 DictationView(model: model, dictation: dictation)
             }
@@ -21,7 +19,7 @@ struct KeyboardView: View {
             if let notice = model.notice {
                 // Floats over the top of the keyboard: its height is fixed, so a notice in the stack pushed keys out.
                 Text(notice)
-                    .font(.footnote)
+                    .font(.loopless(13))
                     .multilineTextAlignment(.center)
                     .lineLimit(3)
                     .frame(maxWidth: .infinity)
@@ -52,59 +50,16 @@ private struct VoiceView: View {
             .buttonStyle(.plain)
             .accessibilityLabel("Dictation")
             Text("แตะเพื่อพูด")
-                .font(.system(size: 15))
+                .font(.loopless(15))
                 .foregroundStyle(Color(.secondaryLabel))
             Spacer()
             HStack(spacing: 4) {
                 if model.showsGlobe {
                     GlobeKey(make: globe).frame(width: 40)
                 }
-                SpecialKey(systemImage: "keyboard") { model.showTyping() }
-                    .frame(width: 52)
-                    .accessibilityLabel("Keyboard")
-                KeyCap(label: KeyboardLayout.thai.spaceLabel) { model.insert(" ") }
+                KeyCap(label: "เว้นวรรค") { model.insert(" ") }
                 SpecialKey(systemImage: "delete.left") { model.deleteBackward() }
                     .frame(width: 52)
-                SpecialKey(systemImage: "return") { model.insert("\n") }
-                    .frame(width: 64)
-            }
-        }
-        .padding(.horizontal, 3)
-        .padding(.vertical, 6)
-    }
-}
-
-private struct TypingView: View {
-    @ObservedObject var model: KeyboardModel
-    let globe: () -> UIView?
-
-    var body: some View {
-        VStack(spacing: 8) {
-            let rows = model.layout.rows
-            ForEach(rows.indices, id: \.self) { index in
-                HStack(spacing: 4) {
-                    if index == rows.count - 1 {
-                        SpecialKey(systemImage: model.shifted ? "shift.fill" : "shift") { model.shifted.toggle() }
-                    }
-                    ForEach(rows[index].indices, id: \.self) { column in
-                        let key = rows[index][column]
-                        KeyCap(label: key.text(shifted: model.shifted)) { model.type(key) }
-                    }
-                    if index == rows.count - 1 {
-                        SpecialKey(systemImage: "delete.left") { model.deleteBackward() }
-                    }
-                }
-            }
-            HStack(spacing: 4) {
-                if model.showsGlobe {
-                    GlobeKey(make: globe).frame(width: 40)
-                }
-                SpecialKey(title: model.layout.switchLabel) { model.layout = model.layout.other }
-                    .frame(width: 52)
-                SpecialKey(systemImage: "mic.fill") { model.showVoice() }
-                    .frame(width: 44)
-                    .accessibilityLabel("Voice")
-                KeyCap(label: model.layout.spaceLabel) { model.insert(" ") }
                 SpecialKey(systemImage: "return") { model.insert("\n") }
                     .frame(width: 64)
             }
@@ -121,7 +76,7 @@ private struct KeyCap: View {
     var body: some View {
         Button(action: action) {
             Text(label)
-                .font(.system(size: 19))
+                .font(.loopless(17))
                 .minimumScaleFactor(0.5)
                 .lineLimit(1)
                 .frame(maxWidth: .infinity, minHeight: 42)
@@ -134,29 +89,16 @@ private struct KeyCap: View {
 }
 
 private struct SpecialKey: View {
-    var title: String?
-    var systemImage: String?
+    let systemImage: String
     let action: () -> Void
-
-    init(title: String, action: @escaping () -> Void) {
-        self.title = title
-        self.action = action
-    }
-
-    init(systemImage: String, action: @escaping () -> Void) {
-        self.systemImage = systemImage
-        self.action = action
-    }
 
     var body: some View {
         Button(action: action) {
-            Group {
-                if let systemImage { Image(systemName: systemImage) } else { Text(title ?? "").font(.system(size: 15)) }
-            }
-            .frame(maxWidth: .infinity, minHeight: 42)
-            .foregroundStyle(Color(.label))
-            .background(Color(.systemGray3), in: RoundedRectangle(cornerRadius: 5))
-            .shadow(color: .black.opacity(0.25), radius: 0, y: 1)
+            Image(systemName: systemImage)
+                .frame(maxWidth: .infinity, minHeight: 42)
+                .foregroundStyle(Color(.label))
+                .background(Color(.systemGray3), in: RoundedRectangle(cornerRadius: 5))
+                .shadow(color: .black.opacity(0.25), radius: 0, y: 1)
         }
         .buttonStyle(.plain)
     }
@@ -217,7 +159,7 @@ private struct DictationView: View {
                 HStack(spacing: 8) {
                     if !isListening { ProgressView() }
                     Text(caption)
-                        .font(.system(size: 17, weight: .medium))
+                        .font(.loopless(17, .medium))
                         .foregroundStyle(Color(.secondaryLabel))
                 }
             }
@@ -239,7 +181,9 @@ private struct DictationView: View {
 /// The newest three lines of the preview: the text is bottom-aligned in a fixed frame and its start is clipped
 /// off the top, so the words being spoken stay in view.
 private struct HeardText: View {
-    static let lineHeight: CGFloat = 30
+    static let size: CGFloat = 21
+    /// Sukhumvit Set's lines are taller than the system font's; a box sized for those cut the top line in half.
+    static let lineHeight = UIFont(name: "SukhumvitSet-Medium", size: size)?.lineHeight ?? 36
 
     let heard: Heard
     let settled: Bool
@@ -247,7 +191,7 @@ private struct HeardText: View {
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             Text((heard.clipped ? "…" : "") + heard.text)
-                .font(.system(size: 20))
+                .font(.loopless(Self.size, .medium))
                 .foregroundStyle(Color(.label).opacity(settled ? 0.4 : 1))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .fixedSize(horizontal: false, vertical: true)
@@ -274,5 +218,14 @@ private struct Waveform: View {
             }
         }
         .animation(.linear(duration: 0.05), value: levels)
+    }
+}
+
+private extension Font {
+    enum Face: String { case text = "Text", medium = "Medium" }
+
+    /// Sukhumvit Set ships with iOS and has no loops (หัว); the system's Thai fallback, Thonburi, does.
+    static func loopless(_ size: CGFloat, _ face: Face = .text) -> Font {
+        .custom("SukhumvitSet-\(face.rawValue)", size: size)
     }
 }
