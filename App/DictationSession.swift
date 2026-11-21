@@ -75,14 +75,6 @@ actor DictationSession {
         send(.command(Command(kind: kind), now: Date()))
     }
 
-    func transcribe(file url: URL, language: Language) throws -> Transcription {
-        guard let transcriber else { throw SessionError.modelNotLoaded }
-        let result = try transcriber.transcribe(try AudioFile.load16kMono(url), language: language)
-        lastResult = result
-        onChange(Snapshot(state: state, lastResult: result))
-        return result
-    }
-
     private func receiveCommandFile() {
         guard let command = try? bridge?.readCommand(), command.id != lastCommandID else { return }
         lastCommandID = command.id

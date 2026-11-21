@@ -423,9 +423,6 @@ private struct LabCard: View {
     @EnvironmentObject private var model: AppModel
     @State private var expanded = false
     @State private var language = Language.thai
-    @State private var sample = "greeting"
-
-    private static let samples = ["greeting", "food", "trip", "thanks"]
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -471,29 +468,6 @@ private struct LabCard: View {
                 }
                 .pickerStyle(.segmented)
                 .frame(width: 180)
-            }
-            LabRow("ไฟล์ตัวอย่าง") {
-                Picker("ไฟล์ตัวอย่าง", selection: $sample) {
-                    ForEach(Self.samples, id: \.self) { Text($0).tag($0) }
-                }
-                .tint(.white)
-            }
-            HStack(spacing: 10) {
-                if case .listening = model.session {
-                    PillButton(title: "หยุดและถอดเสียง") { Task { await model.record(.stop) } }
-                } else {
-                    PillButton(title: "อัดเสียง") { Task { await model.record(.start(language)) } }
-                        .disabled(!model.model.isReady || model.session.isBusy)
-                }
-                PillButton(title: "ถอดเสียงไฟล์ตัวอย่าง") {
-                    guard let url = Bundle.main.url(forResource: sample, withExtension: "wav", subdirectory: "samples") else { return }
-                    Task { await model.transcribeSample(url, language: language) }
-                }
-                .disabled(!model.model.isReady || model.isTranscribingFile)
-                .accessibilityIdentifier("transcribe-sample")
-                if model.isLoading || model.isTranscribingFile || model.session.isBusy {
-                    ProgressView().tint(.white)
-                }
             }
             if let result = model.lastResult {
                 Text(result.text.isEmpty ? "(ว่าง)" : result.text)

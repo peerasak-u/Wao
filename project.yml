@@ -21,9 +21,6 @@ targets:
     sources:
       - path: App
       - path: Shared
-      - path: samples
-        type: folder
-        buildPhase: resources
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.peerasak.wao

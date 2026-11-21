@@ -20,7 +20,6 @@ final class AppModel: ObservableObject {
     @Published private(set) var loadReport: LoadReport?
     @Published private(set) var loadedThreads: Int?
     @Published private(set) var isLoading = false
-    @Published private(set) var isTranscribingFile = false
     @Published var threads = 1
     @Published var error: String?
     @Published var micPermission = AVAudioApplication.shared.recordPermission
@@ -134,16 +133,5 @@ final class AppModel: ObservableObject {
     func record(_ kind: Command.Kind) async {
         if !isSessionLive { await beginSession() }
         await dictation.sendLocal(kind)
-    }
-
-    func transcribeSample(_ url: URL, language: Language) async {
-        await loadModel()
-        isTranscribingFile = true
-        defer { isTranscribingFile = false }
-        do {
-            _ = try await dictation.transcribe(file: url, language: language)
-        } catch {
-            self.error = "Transcription failed: \(error)"
-        }
     }
 }
