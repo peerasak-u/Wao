@@ -20,6 +20,7 @@ targets:
     platform: iOS
     sources:
       - path: App
+      - path: Shared
       - path: samples
         type: folder
         buildPhase: resources
@@ -52,6 +53,7 @@ targets:
     platform: iOS
     sources:
       - path: Keyboard
+      - path: Shared
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.peerasak.wao.keyboard
