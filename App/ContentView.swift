@@ -6,6 +6,7 @@ import WaoInference
 @main
 struct WaoApp: App {
     @StateObject private var model = AppModel()
+    @Environment(\.scenePhase) private var scenePhase
 
     init() {
         let bar = UINavigationBarAppearance()
@@ -31,6 +32,7 @@ struct WaoApp: App {
                     guard url.scheme == "wao", url.host == "session" else { return }
                     Task { await model.beginSession() }
                 }
+                .onChange(of: scenePhase) { _, phase in if phase == .background { model.commitVocabularyNow() } }
         }
     }
 }

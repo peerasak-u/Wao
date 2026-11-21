@@ -54,6 +54,11 @@ final class AppModel: ObservableObject {
             .sink { [weak self] book in self?.commit(book) }
     }
 
+    /// iOS may kill a backgrounded app before the debounced save fires.
+    func commitVocabularyNow() {
+        commit(vocabulary)
+    }
+
     private func commit(_ book: VocabularyBook) {
         do {
             try VocabularyStore.save(book)
