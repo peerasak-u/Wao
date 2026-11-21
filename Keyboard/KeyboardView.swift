@@ -123,25 +123,43 @@ private struct DictationView: View {
     @ObservedObject var model: KeyboardModel
     let dictation: KeyboardMode.Dictation
 
+    /// The words sit on top where the eye rests; the controls sit at the bottom, within reach of the thumb.
     var body: some View {
         VStack(spacing: 0) {
+            Group {
+                if let heard = dictation.heard, !heard.text.isEmpty {
+                    HeardText(heard: heard, settled: !isListening)
+                } else {
+                    HStack(spacing: 8) {
+                        if !isListening { ProgressView() }
+                        Text(caption)
+                            .font(.loopless(17, .medium))
+                            .foregroundStyle(Color(.secondaryLabel))
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+            }
+            .frame(height: HeardText.lineHeight * 3)
+            .padding(.horizontal, 20)
+            .padding(.top, 16)
+            Spacer(minLength: 8)
             HStack {
                 Button(action: model.cancel) {
                     Image(systemName: "xmark")
-                        .font(.system(size: 18, weight: .semibold))
-                        .frame(width: 48, height: 48)
+                        .font(.system(size: 20, weight: .semibold))
+                        .frame(width: 56, height: 56)
                         .foregroundStyle(Color(.label))
                         .background(Color(.systemBackground), in: Circle())
                 }
                 .accessibilityLabel("Cancel")
                 Spacer()
                 Waveform(levels: model.levels, active: isListening)
-                    .frame(height: 48)
+                    .frame(height: 56)
                 Spacer()
                 Button(action: model.confirm) {
                     Image(systemName: "checkmark")
-                        .font(.system(size: 18, weight: .bold))
-                        .frame(width: 48, height: 48)
+                        .font(.system(size: 20, weight: .bold))
+                        .frame(width: 56, height: 56)
                         .foregroundStyle(Color(.systemBackground))
                         .background(Color(.label), in: Circle())
                 }
@@ -150,20 +168,7 @@ private struct DictationView: View {
                 .accessibilityLabel("Done")
             }
             .padding(.horizontal, 16)
-            .padding(.top, 20)
-            Spacer(minLength: 12)
-            if let heard = dictation.heard, !heard.text.isEmpty {
-                HeardText(heard: heard, settled: !isListening)
-                    .padding(.horizontal, 20)
-            } else {
-                HStack(spacing: 8) {
-                    if !isListening { ProgressView() }
-                    Text(caption)
-                        .font(.loopless(17, .medium))
-                        .foregroundStyle(Color(.secondaryLabel))
-                }
-            }
-            Spacer(minLength: 12)
+            .padding(.bottom, 12)
         }
     }
 
@@ -178,8 +183,8 @@ private struct DictationView: View {
     }
 }
 
-/// The newest three lines of the preview: the text is bottom-aligned in a fixed frame and its start is clipped
-/// off the top, so the words being spoken stay in view.
+/// The preview from the top of its box; once it runs past three lines its start is clipped off the top, so the
+/// words being spoken stay in view.
 private struct HeardText: View {
     static let size: CGFloat = 21
     /// Sukhumvit Set's lines are taller than the system font's; a box sized for those cut the top line in half.
@@ -195,10 +200,9 @@ private struct HeardText: View {
                 .foregroundStyle(Color(.label).opacity(settled ? 0.4 : 1))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .fixedSize(horizontal: false, vertical: true)
-                .frame(height: Self.lineHeight * 3, alignment: .bottom)
+                .frame(maxHeight: Self.lineHeight * 3, alignment: .bottom)
                 .clipped()
-                .mask(LinearGradient(stops: [.init(color: .clear, location: 0), .init(color: .black, location: 0.25)],
-                                     startPoint: .top, endPoint: .bottom))
+                .frame(maxHeight: .infinity, alignment: .top)
             if settled { ProgressView() }
         }
         .animation(.easeOut(duration: 0.15), value: heard)
