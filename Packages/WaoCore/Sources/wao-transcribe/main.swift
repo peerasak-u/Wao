@@ -3,12 +3,13 @@ import WaoCore
 import WaoInference
 
 let usage = """
-    wao-transcribe [--model DIR] [--language th-TH|th-mix] [--decoding greedy|beam] [--no-cleanup] [--threads N]
+    wao-transcribe [--model DIR] [--language th-TH|th-mix] [--decoding greedy|beam] [--hotwords FILE] [--no-cleanup] [--threads N]
         [--beam-width N] [--hotword-bonus X] [--beam-blank-bias X]
         [--deletion-guard SHARE | --no-deletion-guard] WAV...
 
     Prints one JSON line per file: file, text, tokens, audio_seconds, seconds (features + encoder + decoder),
-    encoder_seconds, decoder_seconds. The model defaults to $WAO_MODEL_DIR or .model-cache/int8.
+    encoder_seconds, decoder_seconds. --hotwords replaces the bundled vocabulary with FILE, one term per line
+    (an empty file turns biasing off). The model defaults to $WAO_MODEL_DIR or .model-cache/int8.
     """
 
 func fail(_ message: String) -> Never {
@@ -19,7 +20,8 @@ func fail(_ message: String) -> Never {
 var model = ProcessInfo.processInfo.environment["WAO_MODEL_DIR"] ?? ".model-cache/int8"
 var language = Language.thaiEnglishMix
 var decoding = Decoding.beam
-var cleanup = TextCleanup.standard
+var hotwords = Hotwords.bundled
+var cleanup: TextCleanup?
 var threads = 2
 var beam = BeamSettings.poodPim
 var files: [String] = []
@@ -33,7 +35,8 @@ while let arg = args.popFirst() {
     case "--model": model = value { $0 }
     case "--language": language = value(Language.init(rawValue:))
     case "--decoding": decoding = value(Decoding.init(rawValue:))
-    case "--no-cleanup": cleanup = .none
+    case "--hotwords": hotwords = Hotwords(list: value { try? String(contentsOfFile: $0, encoding: .utf8) })
+    case "--no-cleanup": cleanup = TextCleanup.none
     case "--threads": threads = value { Int($0) }
     case "--beam-width": beam.width = value { Int($0) }
     case "--hotword-bonus": beam.hotwordBonus = value { Float($0) }
@@ -60,7 +63,9 @@ struct Line: Encodable {
     let decoder_seconds: Double
 }
 
-let transcriber = try Transcriber(modelDirectory: URL(fileURLWithPath: model), threads: threads, cleanup: cleanup, beam: beam)
+let transcriber = try Transcriber(
+    modelDirectory: URL(fileURLWithPath: model), threads: threads, hotwords: hotwords,
+    cleanup: cleanup ?? TextCleanup(hotwords: hotwords, corrections: .bundled), beam: beam)
 let encoder = JSONEncoder()
 encoder.outputFormatting = [.withoutEscapingSlashes, .sortedKeys]
 for file in files {

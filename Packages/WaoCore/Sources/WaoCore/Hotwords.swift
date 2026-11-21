@@ -27,9 +27,13 @@ public struct Hotwords: Sendable {
 
     /// One term per line; blank lines and lines starting with # are skipped.
     public init(list: String) {
-        for line in list.components(separatedBy: "\n") {
-            let word = line.trimmingCharacters(in: .whitespaces)
-            if word.isEmpty || word.hasPrefix("#") { continue }
+        self.init(words: list.components(separatedBy: "\n")
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { !$0.isEmpty && !$0.hasPrefix("#") })
+    }
+
+    public init(words terms: [String]) {
+        for word in terms {
             var node = 0
             for c in Self.key(word) {
                 if let next = nodes[node].children.first(where: { $0.0 == c }) {

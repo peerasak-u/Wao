@@ -54,9 +54,9 @@ public final class Transcriber: @unchecked Sendable {
     private let decoder: Session
     private let vocabulary: Vocabulary
     private let featurizer = MelFeaturizer()
-    private let hotwords: Hotwords
-    private let cleanup: TextCleanup
     private let beam: BeamSettings
+    private let lexiconLock = NSLock()
+    private var lexicon: (hotwords: Hotwords, cleanup: TextCleanup)
 
     /// On an M4 Mac 2 threads beat 1 by ~20% and 4 add little (TranscriberTests.testThreadCountTiming).
     /// 2 matches the iPhone 15 Pro's two performance cores; the app's test panel can try others.
@@ -67,13 +67,20 @@ public final class Transcriber: @unchecked Sendable {
         encoder = try Session(path: modelDirectory.appendingPathComponent("encoder.int8.onnx"), threads: threads)
         decoder = try Session(path: modelDirectory.appendingPathComponent("decoder_joint.onnx"), threads: threads)
         vocabulary = try Vocabulary(contentsOf: modelDirectory.appendingPathComponent("tokens.txt"))
-        self.hotwords = hotwords
-        self.cleanup = cleanup
+        lexicon = (hotwords, cleanup)
         self.beam = beam
+    }
+
+    public var hotwords: Hotwords { lexiconLock.withLock { lexicon.hotwords } }
+
+    /// Takes effect from the next `transcribe`; one already running keeps the lists it started with.
+    public func use(hotwords: Hotwords, cleanup: TextCleanup) {
+        lexiconLock.withLock { lexicon = (hotwords, cleanup) }
     }
 
     /// `audio` is 16 kHz mono in [-1, 1).
     public func transcribe(_ audio: [Float], language: Language, decoding: Decoding = .beam) throws -> Transcription {
+        let (hotwords, cleanup) = lexiconLock.withLock { lexicon }
         let clock = ContinuousClock()
         var t = clock.now
         func lap() -> Double {
@@ -90,7 +97,7 @@ public final class Transcriber: @unchecked Sendable {
         // The service's "standard" mode: blank bias -1.0, -2.5 for clips under 2 s, and -4.0 if nothing came out.
         let seconds = Double(audio.count) / Double(MelFeaturizer.sampleRate)
         let useBeam = decoding == .beam && language == .thaiEnglishMix && seconds >= 2 && !hotwords.isEmpty
-        var tokens = try useBeam ? beamSearch(encoded) : greedy(encoded, blankBias: seconds < 2 ? -2.5 : -1.0)
+        var tokens = try useBeam ? beamSearch(encoded, hotwords: hotwords) : greedy(encoded, blankBias: seconds < 2 ? -2.5 : -1.0)
         if useBeam, let share = beam.deletionGuard {
             let greedyTokens = try greedy(encoded, blankBias: -1.0)
             if Double(tokens.count) < share * Double(greedyTokens.count) { tokens = greedyTokens }
@@ -174,14 +181,14 @@ public final class Transcriber: @unchecked Sendable {
 
     /// Every hypothesis ends each frame with one blank, so it may emit up to `symbolsPerFrame` pieces first,
     /// but only while it can still make the beam.
-    private func beamSearch(_ frames: [ArraySlice<Float>]) throws -> [Int] {
+    private func beamSearch(_ frames: [ArraySlice<Float>], hotwords: Hotwords) throws -> [Int] {
         let zeros = [Float](repeating: 0, count: Self.lstmLayers * Self.lstmWidth)
         var hyps = [Hypothesis(tokens: [], last: vocabulary.blankID, state1: zeros, state2: zeros, score: 0, match: .init())]
         for frame in frames {
             var ended: [Hypothesis] = []
             var active = hyps
             for step in 0..<beam.symbolsPerFrame where !active.isEmpty {
-                let (stayed, emitted) = try expand(frame, active)
+                let (stayed, emitted) = try expand(frame, active, hotwords: hotwords)
                 ended = Self.mergeAndPrune(ended + stayed, width: beam.width)
                 let floor = ended.count >= beam.width ? ended[beam.width - 1].score : -.infinity
                 active = Self.mergeAndPrune(emitted.filter { $0.score > floor }, width: beam.width)
@@ -201,7 +208,7 @@ public final class Transcriber: @unchecked Sendable {
 
     /// One batched decoder call for all `hyps` on `frame`. Per hypothesis: the blank extension (same state), and
     /// the `width` best pieces (new state). Scores are log-softmax.
-    private func expand(_ frame: ArraySlice<Float>, _ hyps: [Hypothesis]) throws -> (stayed: [Hypothesis], emitted: [Hypothesis]) {
+    private func expand(_ frame: ArraySlice<Float>, _ hyps: [Hypothesis], hotwords: Hotwords) throws -> (stayed: [Hypothesis], emitted: [Hypothesis]) {
         let b = hyps.count
         let width = Self.lstmWidth
         let blank = vocabulary.blankID
