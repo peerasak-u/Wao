@@ -76,7 +76,7 @@ final class KeyboardModel: ObservableObject {
         if !isLive {
             launchApp()
         } else {
-            let command = Command(kind: .start(layout.language))
+            let command = Command(kind: .start(.thaiEnglishMix))
             write(command)
             mode = .dictation(.starting(command.id))
             startTimer?.invalidate()
@@ -129,7 +129,7 @@ final class KeyboardModel: ObservableObject {
             return
         }
         switch state {
-        case .listening(let id, _) where id == dictation.id:
+        case .listening(let id, _, _) where id == dictation.id:
             startTimer?.invalidate()
             mode = .dictation(.listening(id))
             startLevels()

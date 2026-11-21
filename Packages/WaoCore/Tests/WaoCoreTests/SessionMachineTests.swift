@@ -59,12 +59,46 @@ final class SessionMachineTests: XCTestCase {
         let first = Command(kind: .start(.thai)), second = Command(kind: .start(.thai))
         let (state, _) = run([.begin(now: t0), .command(first, now: t0), .command(Command(kind: .stop), now: t0),
                               .transcribed(id: first.id, text: "a", now: t0), .command(second, now: t0)])
-        XCTAssertEqual(state, .listening(id: second.id, language: .thai))
+        XCTAssertEqual(state, .listening(id: second.id, language: .thai, heard: nil))
     }
 
     func testEndAlwaysClosesTheMic() {
         let (state, effects) = run([.begin(now: t0), .command(Command(kind: .start(.thai)), now: t0), .end])
         XCTAssertEqual(state, .off)
         XCTAssertEqual(effects.suffix(2), [.discardCapture, .closeMic])
+    }
+
+    func testHeardUpdatesTheRecordingItBelongsTo() {
+        let start = Command(kind: .start(.thaiEnglishMix))
+        let first = Heard(text: "สวัส", clipped: false), second = Heard(text: "ดีครับ", clipped: true)
+        let (state, effects) = run([.begin(now: t0), .command(start, now: t0),
+                                    .heard(id: start.id, first), .heard(id: start.id, second)])
+        XCTAssertEqual(state, .listening(id: start.id, language: .thaiEnglishMix, heard: second))
+        XCTAssertEqual(effects, [.armIdleTimer(fireAt: t0 + 300), .beginCapture])
+    }
+
+    func testHeardFromAnEarlierRecordingIsDropped() {
+        let first = Command(kind: .start(.thaiEnglishMix)), second = Command(kind: .start(.thaiEnglishMix))
+        let (state, _) = run([
+            .begin(now: t0), .command(first, now: t0), .command(Command(kind: .stop), now: t0),
+            .transcribed(id: first.id, text: "a", now: t0), .command(second, now: t0),
+            .heard(id: first.id, Heard(text: "late", clipped: false)),
+        ])
+        XCTAssertEqual(state, .listening(id: second.id, language: .thaiEnglishMix, heard: nil))
+    }
+
+    func testHeardAfterStopDoesNotChangeTheState() {
+        let start = Command(kind: .start(.thaiEnglishMix))
+        let (state, effects) = run([.begin(now: t0), .command(start, now: t0), .command(Command(kind: .stop), now: t0),
+                                    .heard(id: start.id, Heard(text: "late", clipped: false))])
+        XCTAssertEqual(state, .transcribing(id: start.id))
+        XCTAssertEqual(effects.last, .transcribe(id: start.id, language: .thaiEnglishMix))
+    }
+
+    func testHeardAfterCancelDoesNotChangeTheState() {
+        let start = Command(kind: .start(.thaiEnglishMix))
+        let (state, _) = run([.begin(now: t0), .command(start, now: t0), .command(Command(kind: .cancel), now: t0),
+                              .heard(id: start.id, Heard(text: "late", clipped: false))])
+        XCTAssertEqual(state, .idle(expiresAt: t0 + 300))
     }
 }

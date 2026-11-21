@@ -189,7 +189,7 @@ extension SessionState {
         switch self {
         case .off: "off"
         case .idle(let expiresAt): "idle until \(expiresAt.formatted(date: .omitted, time: .standard))"
-        case .listening(_, let language): "listening (\(language.rawValue))"
+        case .listening(_, let language, _): "listening (\(language.rawValue))"
         case .transcribing: "transcribing"
         case .done(_, let text): "done: \(text)"
         case .failed(_, let reason): "failed: \(reason)"

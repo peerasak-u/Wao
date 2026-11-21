@@ -1,6 +1,6 @@
 import Foundation
 
-/// The transcription language, chosen by the keyboard layout in use.
+/// The transcription language. The keyboard always asks for `.thaiEnglishMix`; the app's test panel can pick either.
 public enum Language: String, Codable, Sendable, CaseIterable {
     case thai = "th-TH"
     case thaiEnglishMix = "th-mix"
@@ -32,12 +32,24 @@ public struct Command: Codable, Equatable, Sendable {
     }
 }
 
+/// A live preview of the utterance so far. `clipped` means only its end was transcribed, so the text
+/// should be shown after a leading "…" rather than as the whole utterance.
+public struct Heard: Codable, Equatable, Sendable {
+    public let text: String
+    public let clipped: Bool
+
+    public init(text: String, clipped: Bool) {
+        self.text = text
+        self.clipped = clipped
+    }
+}
+
 /// Written only by the app's `DictationSession`, to `state.json`.
 /// The `id` of listening, transcribing, done and failed is the id of the start command.
 public enum SessionState: Codable, Equatable, Sendable {
     case off
     case idle(expiresAt: Date)
-    case listening(id: UUID, language: Language)
+    case listening(id: UUID, language: Language, heard: Heard?)
     case transcribing(id: UUID)
     case done(id: UUID, text: String)
     case failed(id: UUID, reason: String)

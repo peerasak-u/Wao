@@ -12,14 +12,6 @@ public enum KeyboardLayout: String, CaseIterable, Sendable {
     case thai
     case english
 
-    /// The dictation language follows the layout on screen.
-    public var language: Language {
-        switch self {
-        case .thai: .thai
-        case .english: .thaiEnglishMix
-        }
-    }
-
     /// Caption of the key that switches to the other layout.
     public var switchLabel: String {
         switch self {

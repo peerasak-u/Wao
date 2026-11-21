@@ -4,6 +4,8 @@ public enum SessionEvent: Equatable, Sendable {
     /// The app opened the mic (it can only do so in the foreground) and the session is live.
     case begin(now: Date)
     case command(Command, now: Date)
+    /// A live preview of the utterance `id`; only the current recording takes it.
+    case heard(id: UUID, Heard)
     case transcribed(id: UUID, text: String, now: Date)
     case transcriptionFailed(id: UUID, reason: String, now: Date)
     /// The single armed idle timer fired.
@@ -32,9 +34,12 @@ public enum SessionMachine {
 
         case (.idle, .command(let c, _)), (.done, .command(let c, _)), (.failed, .command(let c, _)):
             guard case .start(let language) = c.kind else { return (state, []) }
-            return (.listening(id: c.id, language: language), [.beginCapture])
+            return (.listening(id: c.id, language: language, heard: nil), [.beginCapture])
 
-        case (.listening(let id, let language), .command(let c, let now)):
+        case (.listening(let current, let language, _), .heard(let id, let heard)) where current == id:
+            return (.listening(id: id, language: language, heard: heard), [])
+
+        case (.listening(let id, let language, _), .command(let c, let now)):
             switch c.kind {
             case .stop: return (.transcribing(id: id), [.transcribe(id: id, language: language)])
             case .cancel: return idle(now, [.discardCapture])

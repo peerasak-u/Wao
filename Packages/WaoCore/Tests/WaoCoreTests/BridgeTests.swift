@@ -14,7 +14,8 @@ final class BridgeTests: XCTestCase {
         let id = UUID()
         let states: [SessionState] = [
             .off, .idle(expiresAt: Date(timeIntervalSince1970: 1_800_000_000)),
-            .listening(id: id, language: .thai), .listening(id: id, language: .thaiEnglishMix),
+            .listening(id: id, language: .thai, heard: nil),
+            .listening(id: id, language: .thaiEnglishMix, heard: Heard(text: "สวัสดี hello", clipped: true)),
             .transcribing(id: id), .done(id: id, text: "สวัสดีครับ"), .failed(id: id, reason: "no model"),
         ]
         for state in states {

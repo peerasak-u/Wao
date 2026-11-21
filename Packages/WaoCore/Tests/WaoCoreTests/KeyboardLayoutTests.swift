@@ -7,9 +7,4 @@ final class KeyboardLayoutTests: XCTestCase {
         let consonants = (0x0E01...0x0E2E).compactMap { Unicode.Scalar($0).map { String($0) } }
         XCTAssertEqual(consonants.filter { !typed.contains($0) }, [])
     }
-
-    func testLayoutPicksTheDictationLanguage() {
-        XCTAssertEqual(KeyboardLayout.thai.language, .thai)
-        XCTAssertEqual(KeyboardLayout.english.language, .thaiEnglishMix)
-    }
 }
