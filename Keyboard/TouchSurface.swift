@@ -33,6 +33,7 @@ final class TouchSurface: UIView {
             lastDown = touch.timestamp
             live = (touch, interval)
             onEvent(.press(clamped(touch), interval: interval))
+            KeyFeedback.shared.keyDown()
         }
     }
 
