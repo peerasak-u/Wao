@@ -156,6 +156,13 @@ final class AudioCapture: @unchecked Sendable {
             chunk.withUnsafeBufferPointer { self.append($0) }
         }
         timer.schedule(deadline: .now(), repeating: .milliseconds(100))
+        // A file is not audio IO, so iOS would suspend the app in the background and the keyboard's commands
+        // would wait. The engine renders silence to keep it running, as the real microphone does.
+        let session = AVAudioSession.sharedInstance()
+        try session.setCategory(.playback, options: [.mixWithOthers])
+        try session.setActive(true)
+        _ = engine.mainMixerNode
+        try engine.start()
         timer.resume()
         fakeMic = timer
     }
