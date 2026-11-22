@@ -56,7 +56,9 @@ struct KeyArea: View {
             TouchSurfaceView { event in
                 switch event {
                 case .press(let point, let interval):
-                    pressed = model.resolve(point, in: grid, interval: interval)
+                    // A press comes on every finger move; the keys redraw only when it lands on another key.
+                    let key = model.resolve(point, in: grid, interval: interval)
+                    if key != pressed { pressed = key }
                 case .release(let point, let interval):
                     pressed = nil
                     if case .character(let character) = model.resolve(point, in: grid, interval: interval)?.kind {
