@@ -398,14 +398,14 @@ private struct HapticsCard: View {
                 .foregroundStyle(on ? .white : Palette.secondary)
                 .frame(width: 28)
             VStack(alignment: .leading, spacing: 4) {
-                Text("สั่นเมื่อแตะแป้น").font(.system(size: 16, weight: .medium))
+                Text("สั่นเมื่อแตะแป้นและคำแนะนำ").font(.system(size: 16, weight: .medium))
                 Text("ต้องเปิดการเข้าถึงแบบเต็มให้คีย์บอร์ดเว่า")
                     .font(.system(size: 13))
                     .foregroundStyle(Palette.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            Toggle("สั่นเมื่อแตะแป้น", isOn: $on)
+            Toggle("สั่นเมื่อแตะแป้นและคำแนะนำ", isOn: $on)
                 .toggleStyle(GlowSwitch())
                 .labelsHidden()
                 .accessibilityIdentifier("haptics-toggle")

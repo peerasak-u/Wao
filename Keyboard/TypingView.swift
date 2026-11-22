@@ -335,6 +335,7 @@ private struct SuggestionBar: View {
                                 .contentShape(Rectangle())
                         }
                         .buttonStyle(.plain)
+                        .feedbackOnKeyDown()
                     } else {
                         Color.clear
                     }
