@@ -8,7 +8,7 @@ struct EmojiSearchView: View {
     @ObservedObject var model: KeyboardModel
     let query: String
     let globe: () -> UIView?
-    /// A `@StateObject` builds it once; a `@State` initial value decoded the history again on every letter.
+    /// Built once per search: the parent view rebuilds on every letter, and decoding the history each time adds up.
     @StateObject private var search = SearchResults()
 
     var body: some View {

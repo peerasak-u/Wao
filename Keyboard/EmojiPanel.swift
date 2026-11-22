@@ -507,9 +507,9 @@ private final class EmojiCell: UICollectionViewCell {
 
 /// The font the emoji page draws with. CoreText keeps the image of every emoji a font has drawn for as long as the
 /// font lives, and the system font's emoji fallback lives as long as the keyboard's process, which iOS keeps across
-/// host apps: a walk through every category left 30 MB behind after the page closed. A font made from the emoji
-/// file's own `CGFont` belongs to the page alone; the controller drops it when the page closes, and its images go with
-/// the page's views. Falls back to the system font if the file won't open.
+/// host apps: a walk through every category left about 30 MB of images behind after the page closed. A font made
+/// from the emoji file's own `CGFont` belongs to the page alone; the controller drops it when the page closes, and its
+/// images go with the page's views. Falls back to the system font if the file won't open.
 @MainActor
 enum EmojiFace {
     /// The font, and the system font's line for one emoji with how far that line's ink sits from this font's. Every
