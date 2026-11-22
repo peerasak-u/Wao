@@ -221,6 +221,252 @@ final class CursorWalkTests: XCTestCase {
     }
 }
 
+/// A host that cuts what it shows the way the hosts in the iOS 26.4 simulator did (build/verify-evidence/trackpad-v3).
+/// Adjusts past either end of the text are clamped, reads can lag the adjusts, and an adjust can be dropped.
+private struct CuttingHost {
+    enum Cut {
+        /// Messages and UITextView: the sentence before the cursor's and the cursor's own up to it, then the rest of
+        /// the cursor's sentence up to its line break. A sentence ends after `.`, `?` or `!` and the spaces after it,
+        /// so Thai text runs on. At most 300 UTF-16 units a side.
+        case sentences
+        /// Safari: about this many characters before the cursor, from a word start, and the rest of the sentence after.
+        case limited(Int)
+    }
+
+    let text: String
+    let cut: Cut
+    /// Reads show the cursor as it was this many adjusts ago.
+    var lag = 0
+    /// The adjust, counted from 0, that the host drops.
+    var drops: Int?
+    /// As Safari did: an adjust counts caret stops, not UTF-16 units. Each character is a stop, and a SARA AM after
+    /// other marks is one more: น้ำ is น้ then ำ.
+    var countsCaretStops = false
+    private(set) var cursor: Int
+    private var history: [Int]
+    private(set) var splitACharacter = false
+
+    init(_ text: String, _ cut: Cut, cursorAfter characters: Int, lag: Int = 0) {
+        self.text = text
+        self.cut = cut
+        self.lag = lag
+        cursor = text.prefix(characters).utf16.count
+        history = [cursor]
+    }
+
+    /// Characters before the cursor, or nil when it sits inside one.
+    var column: Int? {
+        let units = Array(text.utf16)
+        let before = String(decoding: units[..<cursor], as: UTF16.self)
+        let after = String(decoding: units[cursor...], as: UTF16.self)
+        return before.count + after.count == text.count ? before.count : nil
+    }
+
+    mutating func adjust(_ offset: Int) {
+        defer { history.append(cursor) }
+        if drops == history.count - 1 { return }
+        if countsCaretStops {
+            let stops = caretStops
+            var at = stops.lastIndex { $0 <= cursor } ?? 0
+            if offset < 0, stops[at] < cursor { at += 1 }
+            cursor = stops[min(max(at + offset, 0), stops.count - 1)]
+        } else {
+            cursor = min(max(cursor + offset, 0), text.utf16.count)
+        }
+        if column == nil { splitACharacter = true }
+    }
+
+    /// Where Safari's caret can stop, in UTF-16 units.
+    private var caretStops: [Int] {
+        var stops = [0]
+        var at = 0
+        for character in text {
+            let scalars = character.unicodeScalars
+            if let am = scalars.dropFirst().firstIndex(of: "\u{0E33}") {
+                stops.append(at + scalars[..<am].reduce(0) { $0 + $1.utf16.count })
+            }
+            at += character.utf16.count
+            stops.append(at)
+        }
+        return stops
+    }
+
+    /// What a read shows now, `lag` adjusts behind.
+    var shown: CursorText { shown(at: history[max(0, history.count - 1 - lag)]) }
+
+    func shown(at cursor: Int) -> CursorText {
+        let units = Array(text.utf16)
+        let all = Array(String(decoding: units[..<cursor], as: UTF16.self)) + Array(String(decoding: units[cursor...], as: UTF16.self))
+        let at = String(decoding: units[..<cursor], as: UTF16.self).count
+        func endsSentence(_ i: Int) -> Bool {
+            guard i > 0, all[i - 1] == " " || all[i - 1].isNewline else { return false }
+            var j = i - 1
+            while j > 0, all[j] == " " || all[j].isNewline { j -= 1 }
+            return ".?!".contains(all[j])
+        }
+        func sentenceStart(_ i: Int) -> Int {
+            var i = i
+            while i > 0, !endsSentence(i) { i -= 1 }
+            return i
+        }
+        var start: Int
+        switch cut {
+        case .sentences:
+            let own = sentenceStart(at)
+            start = own > 0 ? sentenceStart(own - 1) : 0
+        case .limited(let count):
+            start = max(0, at - count)
+            while start > 0, start < at, !all[start - 1].isWhitespace { start += 1 }
+        }
+        var end = at
+        while end < all.count, !all[end].isNewline, end == at || !endsSentence(end) { end += 1 }
+        let before = Array(String(all[start..<at]).utf16).suffix(300)
+        let after = Array(String(all[at..<end]).utf16).prefix(300)
+        return CursorText(before: String(decoding: before, as: UTF16.self), after: String(decoding: after, as: UTF16.self))
+    }
+
+    mutating func run(_ commands: [CursorWalk.Command], _ walk: inout CursorWalk) {
+        for command in commands {
+            switch command {
+            case .adjust(let offset): adjust(offset)
+            case .read: run(walk.read(shown), &walk)
+            }
+        }
+    }
+
+    /// The finger moves `steps` times by `columns` and `lines`.
+    mutating func drag(_ walk: inout CursorWalk, columns: Int = 0, lines: Int = 0, steps: Int = 1) {
+        for _ in 0..<steps { run(walk.move(columns: columns, lines: lines), &walk) }
+    }
+}
+
+final class RealHostTests: XCTestCase {
+    /// One paragraph, as typed in Messages: sentences end in English, run on in Thai.
+    private let paragraph = (0..<8).map { i in
+        ["S0\(i) สวัสดีครับ วันนี้อากาศดีมาก", "S0\(i) กินข้าวกันไหมครับ", "S0\(i) ผมชอบน้ำใจของคนไทย", "S0\(i) พรุ่งนี้จะไปเที่ยวเชียงใหม่"][i % 4]
+            + [" The quick brown fox jumps over the lazy dog.", " Meet me at 10 am near the station.", " Keyboards should feel smooth."][i % 3]
+    }.joined(separator: " ")
+
+    /// Hard lines longer than Safari shows before the cursor.
+    private let lines = (0..<6).map { "P0\($0) กินข้าวกันไหมครับ Keyboards should feel smooth. ผมชอบน้ำใจของคนไทย" }.joined(separator: "\n")
+
+    private func walk(_ host: CuttingHost) -> CursorWalk { CursorWalk(host.shown) }
+
+    /// Measured in Messages: a one-line drag up moved the cursor 79 UTF-16 units back, past the shown sentence.
+    func testUpAndDownInAParagraphStayPut() {
+        for cut in [CuttingHost.Cut.sentences, .limited(40)] {
+            for lines in [-1, 1, -2, 2] {
+                var host = CuttingHost(paragraph, cut, cursorAfter: 300)
+                var walk = walk(host)
+                host.drag(&walk, lines: lines)
+                XCTAssertEqual(host.column, 300, "\(cut) \(lines)")
+            }
+        }
+    }
+
+    func testASidewaysDragAcrossWhatTheHostShowsLandsOnEveryCharacter() {
+        for cut in [CuttingHost.Cut.sentences, .limited(40)] {
+            for lag in [0, 1, 3] {
+                var host = CuttingHost(paragraph, cut, cursorAfter: 10, lag: lag)
+                var walk = walk(host)
+                host.drag(&walk, columns: 3, steps: 50)
+                XCTAssertEqual(host.column, 160, "\(cut) lag \(lag)")
+                host.drag(&walk, columns: -4, steps: 40)
+                XCTAssertEqual(host.column, 0, "\(cut) lag \(lag)")
+                XCTAssertFalse(host.splitACharacter, "\(cut) lag \(lag)")
+            }
+        }
+    }
+
+    func testTheEndsOfTheTextHoldTheCursor() {
+        let count = paragraph.count
+        for cut in [CuttingHost.Cut.sentences, .limited(40)] {
+            for lag in [0, 2] {
+                var host = CuttingHost(paragraph, cut, cursorAfter: count - 5, lag: lag)
+                var walk = walk(host)
+                host.drag(&walk, columns: 2, steps: 6)
+                XCTAssertEqual(host.column, count, "\(cut) lag \(lag)")
+                host.drag(&walk, columns: -1, steps: 3)
+                XCTAssertEqual(host.column, count - 3, "\(cut) lag \(lag)")
+
+                var start = CuttingHost(paragraph, cut, cursorAfter: 4, lag: lag)
+                walk = self.walk(start)
+                start.drag(&walk, columns: -2, steps: 5)
+                XCTAssertEqual(start.column, 0, "\(cut) lag \(lag)")
+                start.drag(&walk, columns: 1, steps: 2)
+                XCTAssertEqual(start.column, 2, "\(cut) lag \(lag)")
+            }
+        }
+    }
+
+    /// The host drops one adjust. The walk must move on from where the host's cursor really is, over Thai without
+    /// splitting it.
+    func testADroppedAdjustIsCaughtWhenTheHostSettles() {
+        for cut in [CuttingHost.Cut.sentences, .limited(40)] {
+            var host = CuttingHost(paragraph, cut, cursorAfter: 0)
+            host.drops = 1
+            var walk = walk(host)
+            host.drag(&walk, columns: 1, steps: 3)
+            XCTAssertEqual(host.column, 2, "\(cut)")
+            host.drag(&walk, columns: 1, steps: 6)
+            XCTAssertEqual(host.column, 8, "\(cut)")
+            XCTAssertFalse(host.splitACharacter, "\(cut)")
+        }
+    }
+
+    /// Measured in Safari: an adjust of 3 over น้ำ moved the cursor 4 UTF-16 units, and one of 2 over ดี moved 3.
+    /// Safari counts caret stops, so a walk in UTF-16 units runs ahead of the finger on every Thai character with
+    /// marks, and can land inside one.
+    func testAHostThatCountsCaretStopsMovesOneCharacterAtATime() {
+        let text = String(repeating: "น้ำใจ ดีที่ ก่ำ ทำ ", count: 8)
+        var host = CuttingHost(text, .limited(40), cursorAfter: 0)
+        host.countsCaretStops = true
+        var walk = walk(host)
+        var landed: [Int?] = []
+        for _ in 0..<40 {
+            host.drag(&walk, columns: 1)
+            landed.append(host.column)
+        }
+        // Past the first step, which shows how the host counts, each step lands one character on.
+        XCTAssertEqual(Array(landed.dropFirst()), (2...40).map { $0 })
+        host.drag(&walk, columns: -1, steps: 40)
+        XCTAssertEqual(host.column, 0)
+        XCTAssertFalse(host.splitACharacter)
+    }
+
+    func testUpFromAHardLineLandsOnTheLineAbove() {
+        let starts = lines.split(separator: "\n").reduce(into: [0]) { $0.append($0.last! + $1.count + 1) }
+        var host = CuttingHost(lines, .sentences, cursorAfter: starts[3] + 10)
+        var walk = walk(host)
+        host.drag(&walk, lines: -1)
+        XCTAssertEqual(host.column, starts[2] + 10)
+    }
+
+    /// Safari showed 40 to 68 UTF-16 units before the cursor, less than these lines, so a column can count only from
+    /// the start of the shown text. The cursor lands on the right line.
+    func testWhereTheHostHidesTheLineStartALineMoveStaysOnTheNextLine() {
+        let starts = lines.split(separator: "\n").reduce(into: [0]) { $0.append($0.last! + $1.count + 1) }
+        var up = CuttingHost(lines, .limited(40), cursorAfter: starts[3] + 10)
+        var walk = walk(up)
+        up.drag(&walk, lines: -1)
+        XCTAssert((starts[2]..<starts[3]).contains(up.column ?? -1), "up: \(up.column ?? -1)")
+        var down = CuttingHost(lines, .limited(40), cursorAfter: starts[2] - 1)
+        walk = self.walk(down)
+        down.drag(&walk, lines: 1)
+        XCTAssert((starts[2]..<starts[3]).contains(down.column ?? -1), "down: \(down.column ?? -1)")
+    }
+
+    /// Measured in a UITextView: past the line break the host showed only the new line's first sentence, and the
+    /// cursor stopped at its end, 18 characters short of the column.
+    func testDownFromTheEndOfALineCrossesTheBreakTheHostHides() {
+        let starts = lines.split(separator: "\n").reduce(into: [0]) { $0.append($0.last! + $1.count + 1) }
+        var host = CuttingHost(lines, .sentences, cursorAfter: starts[2] - 1)
+        var walk = walk(host)
+        host.drag(&walk, lines: 1)
+        XCTAssertEqual(host.column, starts[3] - 1)
+    }
+}
+
 final class SpaceTrackpadTests: XCTestCase {
     private let key = CGPoint(x: 100, y: 20)
 
