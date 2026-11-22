@@ -1,3 +1,4 @@
+import Combine
 import SwiftUI
 import UIKit
 import WaoCore
@@ -5,6 +6,7 @@ import WaoCore
 final class KeyboardViewController: UIInputViewController {
     private let model = KeyboardModel()
     private var host: UIHostingController<KeyboardView>?
+    private var heightFollowsMode: AnyCancellable?
 
     override func loadView() {
         view = ClickingInputView(frame: .zero, inputViewStyle: .keyboard)
@@ -42,11 +44,20 @@ final class KeyboardViewController: UIInputViewController {
             host.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             host.view.topAnchor.constraint(equalTo: view.topAnchor),
             host.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            // As tall as the system keyboard on this screen, so switching keyboards does not move the host app.
-            view.heightAnchor.constraint(equalToConstant: KeyMetrics(width: UIScreen.main.bounds.width).height),
         ])
         host.didMove(toParent: self)
         self.host = host
+
+        // As tall as the system keyboard on this screen, so switching keyboards does not move the host app; the
+        // emoji page is taller, as Apple's is. `mode` publishes before it changes, so the new height and the new
+        // page land in the same layout pass.
+        let width = UIScreen.main.bounds.width
+        let height = view.heightAnchor.constraint(equalToConstant: KeyMetrics(width: width).height)
+        height.isActive = true
+        heightFollowsMode = model.$mode
+            .map { $0 == .emoji ? EmojiMetrics(width: width).height : KeyMetrics(width: width).height }
+            .removeDuplicates()
+            .sink { height.constant = $0 }
     }
 
     override func viewWillAppear(_ animated: Bool) {
