@@ -37,7 +37,7 @@ Wao writes the English words in Latin letters. The speech model runs on the phon
 | 🎙️ | **Offline Thai–English dictation.** [OpenThai2.0-ASR](https://huggingface.co/iapp/OpenThai2.0-ASR-Streaming) runs on the device with ONNX Runtime. |
 | ✓ | **One tap to talk, one tap back.** Tap the mic, speak, and tap ✓. The keyboard returns to typing at once and inserts the text when it is ready. |
 | ⌨️ | **Thai Kedmanee.** The key layout and fonts match Apple's own keyboard. English words come from dictation, or from the system keyboard through the globe. |
-| 😀 | **Emoji.** The emoji key opens a panel like iOS's: categories, frequently used and skin tones. |
+| 😀 | **Emoji.** The emoji key opens a panel like iOS's: categories, frequently used, skin tones and search in Thai. |
 | 🎯 | **Tap decoding.** A near miss types the key you meant. Fast typing leans more on context. Slow, careful taps count where they land. |
 | 💬 | **Word suggestions.** The strip above the keys completes the word you are typing. |
 | ↔️ | **Space-bar trackpad.** Hold space and drag to move the cursor, one Thai character at a time. |
@@ -156,6 +156,8 @@ cd Packages/WaoCore && swift build -c release --product wao-typing-eval
   National Corpus frequencies. The keyboard's language model and word suggestions are built from them.
 - **[Unicode Emoji 15.0](https://www.unicode.org/Public/emoji/15.0/emoji-test.txt)** (Unicode, Inc., Unicode
   License V3). The emoji keyboard's emoji, their names and skin tones are built from its `emoji-test.txt`.
+- **[Unicode CLDR 47](https://github.com/unicode-org/cldr)** (Unicode, Inc., Unicode License V3). Emoji search
+  matches the Thai names and keywords in its `annotations/th.xml` and `annotationsDerived/th.xml`.
 
 The app shows all of this, with each licence in full, under เครดิตและสัญญาอนุญาต at the foot of its main screen.
 The texts live in `Packages/WaoCore/Sources/WaoInference/Resources` (the model's notice of origin with OpenMDW-1.1,
