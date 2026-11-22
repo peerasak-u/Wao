@@ -16,6 +16,13 @@ enum CreditsRoute: Hashable {
 /// On the main screen itself, so the model's makers are credited without anyone opening a menu.
 struct CreditsFooter: View {
     var body: some View {
+        VStack(spacing: 4) {
+            link
+            AppVersionLabel()
+        }
+    }
+
+    private var link: some View {
         NavigationLink(value: CreditsRoute.credits) {
             VStack(spacing: 6) {
                 Text("ถอดเสียงด้วย OpenThai2.0-ASR · iApp Technology")
@@ -32,6 +39,53 @@ struct CreditsFooter: View {
         }
         .buttonStyle(Pressable())
         .accessibilityIdentifier("credits-footer")
+    }
+}
+
+struct AppVersion {
+    let marketing: String
+    let build: String
+
+    static let current = AppVersion(
+        marketing: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "?",
+        build: Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "?"
+    )
+
+    /// What a tester pastes into the bug form's "Wao build" field.
+    var short: String { "\(marketing) (\(build))" }
+    var display: String { "เวอร์ชัน \(short)" }
+    var spoken: String { "เวอร์ชัน \(marketing) build \(build)" }
+}
+
+/// Copies on tap so a tester can paste the exact build into a bug report.
+struct AppVersionLabel: View {
+    private let version = AppVersion.current
+    @State private var copied = false
+
+    var body: some View {
+        Button {
+            UIPasteboard.general.string = version.short
+            copied = true
+            AccessibilityNotification.Announcement("คัดลอกแล้ว").post()
+            Task {
+                try? await Task.sleep(for: .seconds(1.5))
+                copied = false
+            }
+        } label: {
+            Text(copied ? "คัดลอกแล้ว" : version.display)
+                .font(.loopless(13).monospacedDigit())
+                .foregroundStyle(Palette.secondary)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 8)
+                .contentShape(Rectangle())
+                .contentTransition(.opacity)
+                .animation(.snappy, value: copied)
+        }
+        .buttonStyle(Pressable())
+        .sensoryFeedback(.success, trigger: copied) { _, now in now }
+        .accessibilityLabel(version.spoken)
+        .accessibilityHint("แตะเพื่อคัดลอก")
+        .accessibilityIdentifier("app-version")
     }
 }
 
@@ -69,6 +123,7 @@ private struct CreditsScreen: View {
                         .web("PyThaiNLP", "https://github.com/PyThaiNLP/pythainlp"),
                     ]
                 )
+                AppVersionLabel()
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 40)
