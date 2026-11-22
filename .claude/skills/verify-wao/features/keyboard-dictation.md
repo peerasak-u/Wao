@@ -1,6 +1,6 @@
 # Keyboard dictation
 
-With Full Access, the เว่า keyboard opens on a large mic. With a live session in the app, the user taps the mic, speaks while the words show live, then taps ✓ to insert the text into whatever field they are typing in, or ✕ to discard.
+With Full Access, the เว่า keyboard opens on typing and its `Dictation` key (mic, next to space) leads to a large mic. With a live session in the app, the user taps the mic, speaks while the words show live, then taps ✓ to insert the text into whatever field they are typing in, or ✕ to discard.
 
 ## Sub-features
 
@@ -15,7 +15,7 @@ With Full Access, the เว่า keyboard opens on a large mic. With a live se
 
 - Settings › General › Keyboard › Keyboards › Add New Keyboard… › เว่า, then เว่า › Allow Full Access.
 - Open เว่า and turn on the keyboard session.
-- In any app with a text field, switch to เว่า with the globe and tap the mic.
+- In any app with a text field, switch to เว่า with the globe, tap the `Dictation` key, then tap the mic.
 
 ## Driving it with agent-device
 
@@ -25,7 +25,7 @@ Preconditions:
 - เว่า added as a keyboard with Full Access on this simulator. Do it once through Settings with `$AD open com.apple.Preferences` and labels from `$AD snapshot -i`; accept the Full Access alert with `$AD alert accept`.
 - Session on: in เว่า, `$AD press 'id=session-toggle'`; `$S state $U` shows `idle`.
 
-- **Host field.** Open a host app with a plain text field, for example `$AD open com.apple.mobilesafari` and tap the address bar. Take `$AD screenshot $E/01-keyboard.png` and confirm the เว่า mic layout (big mic, `แตะเพื่อพูด`). If another keyboard shows, long-press the globe and pick เว่า.
+- **Host field.** Open a host app with a plain text field, for example `$AD open com.apple.mobilesafari` and tap the address bar. The keyboard opens on Kedmanee. Tap the `Dictation` key (mic, left of space) by coordinates, take `$AD screenshot $E/01-keyboard.png` and confirm the เว่า mic layout (big mic, `แตะเพื่อพูด`). If another keyboard shows, long-press the globe and pick เว่า.
 - **Start.** Tap the mic at its point coordinates from the screenshot (`$AD press <x> <y>`). `$S state $U` moves to `listening` with the start command's id; `command.json` holds a `start` with the same id.
 - **Live words.** After 4 s capture `02-listening.png`; the keyboard shows the words heard so far.
 - **Insert.** Tap ✓ (`Done`) by coordinates. `state.json` passes through `transcribing` to `done` with that id. The host field contains `สวัสดีครับวันนี้อากาศดีมาก` (`$AD snapshot -i` of the host shows the field value).

@@ -2,7 +2,7 @@ import CoreText
 import SwiftUI
 import WaoCore
 
-/// Thai Kedmanee, QWERTY and symbols. Without Full Access this is the whole keyboard; with it, a detour from the mic.
+/// Thai Kedmanee, QWERTY and symbols: the page the keyboard opens on. With Full Access its mic key leads to voice.
 struct TypingView: View {
     @ObservedObject var model: KeyboardModel
     let globe: () -> UIView?
