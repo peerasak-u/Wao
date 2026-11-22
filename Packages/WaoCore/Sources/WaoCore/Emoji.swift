@@ -76,6 +76,42 @@ public struct EmojiCatalog: Sendable {
 
     /// The emoji a typed glyph came from, and which tone it was typed in.
     public func lookup(_ glyph: String) -> (emoji: Emoji, tone: Int?)? { index[glyph] }
+
+    /// How well a query matches an emoji; a lower tier ranks first. The Thai name says what the emoji is, a keyword
+    /// only what it may stand for, so `แมว` puts the cat before every face that keeps a cat among its keywords.
+    enum Match: Int, Comparable {
+        case name, namePrefix, keyword, keywordPrefix, substring
+
+        static func < (a: Match, b: Match) -> Bool { a.rawValue < b.rawValue }
+
+        /// Compared by scalars, not characters: a Thai mark joins the consonant before it into one character, so
+        /// `ก` is not a character prefix of `กิน`, yet it is what the user has typed so far.
+        init?(_ query: [Unicode.Scalar], in keyword: String, isName: Bool) {
+            let scalars = Array(keyword.unicodeScalars)
+            if scalars == query {
+                self = isName ? .name : .keyword
+            } else if scalars.starts(with: query) {
+                self = isName ? .namePrefix : .keywordPrefix
+            } else if scalars.count > query.count,
+                      (1...(scalars.count - query.count)).contains(where: { scalars[$0...].starts(with: query) }) {
+                self = .substring
+            } else {
+                return nil
+            }
+        }
+    }
+
+    /// The emoji whose Thai name or keywords hold `query`, best `Match` first, each tier in the panel's order.
+    public func search(_ query: String) -> [Emoji] {
+        let query = Array(query.trimmingCharacters(in: .whitespacesAndNewlines).unicodeScalars)
+        guard !query.isEmpty else { return [] }
+        var tiers: [Match: [Emoji]] = [:]
+        for emoji in sections.lazy.flatMap(\.emoji) {
+            let best = emoji.keywords.enumerated().compactMap { Match(query, in: $1, isName: $0 == 0) }.min()
+            if let best { tiers[best, default: []].append(emoji) }
+        }
+        return tiers.keys.sorted().flatMap { tiers[$0]! }
+    }
 }
 
 /// What the user typed from the panel: the recent emoji, newest first, and the tone last picked for each emoji.
