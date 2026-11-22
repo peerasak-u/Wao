@@ -305,6 +305,39 @@ final class SpaceTrackpadTests: XCTestCase {
         XCTAssertEqual(host.beforeCursor, String(line.prefix(10)))
     }
 
+    func testSlowAndPreciseMovesOneCharacter() {
+        var pad = held()
+        XCTAssertEqual(drag(CGVector(dx: 10, dy: 0), over: 0.5, on: &pad).columns, 1)
+        var left = held()
+        XCTAssertEqual(drag(CGVector(dx: -10, dy: 0), over: 0.5, on: &left).columns, -1)
+    }
+
+    func testMotionTooSmallForACharacterAddsUp() {
+        var pad = held()
+        XCTAssertEqual(drag(CGVector(dx: 91, dy: 0), over: 3, on: &pad).columns, 10)
+    }
+
+    func testASlowDragAcrossTheKeyboardCrossesALongLine() {
+        var pad = held()
+        XCTAssertGreaterThanOrEqual(drag(CGVector(dx: -380, dy: 0), over: 3, on: &pad).columns, -60)
+        var again = held()
+        XCTAssertLessThanOrEqual(drag(CGVector(dx: -380, dy: 0), over: 3, on: &again).columns, -40)
+    }
+
+    func testAFastFlickMovesFar() {
+        var pad = held()
+        XCTAssertGreaterThanOrEqual(drag(CGVector(dx: 150, dy: 0), over: 0.15, on: &pad).columns, 30)
+    }
+
+    func testTheSameDistanceGoesFurtherFaster() {
+        var slow = held()
+        let near = drag(CGVector(dx: 150, dy: 0), over: 3, on: &slow).columns
+        var fast = held()
+        let far = drag(CGVector(dx: 150, dy: 0), over: 0.15, on: &fast).columns
+        XCTAssertEqual(near, 16)
+        XCTAssertGreaterThanOrEqual(far, 2 * near)
+    }
+
     func testADeliberateVerticalDragMovesLines() {
         var pad = held()
         XCTAssertEqual(drag(CGVector(dx: 0, dy: -29), over: 0.4, on: &pad).lines, 0)

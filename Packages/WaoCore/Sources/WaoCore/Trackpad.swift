@@ -136,8 +136,14 @@ public struct SpaceTrackpad: Equatable, Sendable {
 
     /// The system keyboard's, measured from a recording of a held space in the iOS 26.4 simulator.
     public static let holdDelay: TimeInterval = 0.65
-    /// About one character of 17 pt text.
+    /// About one character of 17 pt text, below `precisionSpeed`.
     public static let pointsPerCharacter: CGFloat = 9
+    /// Pointer acceleration in the shape of libinput's adaptive profile: one to one below `precisionSpeed` (pt/s),
+    /// then each `accelerationSpan` faster adds one more, up to `maxGain`. A slow 380 pt drag across the keyboard
+    /// moves about 53 characters, and a 150 pt flick in 0.15 s about 45.
+    static let precisionSpeed: CGFloat = 60
+    static let accelerationSpan: CGFloat = 240
+    static let maxGain: CGFloat = 3
     /// Vertical travel that starts a run of line moves, and then moves each further line: about one line of 17 pt text.
     /// The first is larger so a drag has to mean it.
     public static let lineThreshold: CGFloat = 30
@@ -203,7 +209,8 @@ public struct SpaceTrackpad: Equatable, Sendable {
         drag.point = point
         drag.time = time
 
-        drag.columns += dx / pointsPerCharacter
+        let gain = min(maxGain, 1 + max(0, abs(drag.velocity.dx) - precisionSpeed) / accelerationSpan)
+        drag.columns += dx / pointsPerCharacter * gain
         let columns = Int(drag.columns)
         drag.columns -= CGFloat(columns)
 
