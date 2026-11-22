@@ -12,9 +12,9 @@ struct SpaceKey: View {
         Color.clear
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .overlay(alignment: .bottomTrailing) {
-                let hint = model.typing.spaceHint
-                Text(hint)
-                    .font(hint == "A" ? .system(size: 12, weight: .light).width(.compressed) : .custom("Thonburi", size: 12))
+                // The faint letter in the corner of the blank space bar, as on the iOS 26.4 Thai keyboard.
+                Text("ก")
+                    .font(.custom("Thonburi", size: 12))
                     .foregroundStyle(Color(.tertiaryLabel))
                     .padding(.trailing, 6)
                     .padding(.bottom, 3)

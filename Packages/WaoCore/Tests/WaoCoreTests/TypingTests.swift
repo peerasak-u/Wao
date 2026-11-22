@@ -11,13 +11,9 @@ final class TypingTests: XCTestCase {
 
     func testNoRowIsWiderThanTwelveKeys() {
         var typing = Typing()
-        for _ in 0..<2 {
-            XCTAssertLessThanOrEqual(typing.rows.map(\.count).max() ?? 0, 12)
-            typing.togglePage()
-            XCTAssertLessThanOrEqual(typing.rows.map(\.count).max() ?? 0, 12)
-            typing.togglePage()
-            typing.toggleLanguage()
-        }
+        XCTAssertLessThanOrEqual(typing.rows.map(\.count).max() ?? 0, 12)
+        typing.togglePage()
+        XCTAssertLessThanOrEqual(typing.rows.map(\.count).max() ?? 0, 12)
     }
 
     func testShiftLastsOneLetter() {
@@ -38,32 +34,17 @@ final class TypingTests: XCTestCase {
         XCTAssertEqual(typing.shiftLabel, "123")
     }
 
-    func testEnglishCapitals() {
+    func testTheNumbersPageReturnsToTheThaiLetters() {
         var typing = Typing()
-        typing.toggleLanguage()
-        XCTAssertEqual(typing.languageLabel, "ไทย")
-        typing.toggleShift()
-        XCTAssertEqual(typing.type(typing.rows[1][0]), "A")
-        XCTAssertEqual(typing.type(typing.rows[1][0]), "a")
-    }
-
-    func testNumbersPageReturnsToTheSameLanguage() {
-        var typing = Typing()
-        typing.toggleLanguage()
+        XCTAssertEqual(typing.pageLabel, "123")
         typing.togglePage()
-        XCTAssertEqual(typing.pageLabel, "ABC")
+        XCTAssertEqual(typing.pageLabel, "กขค")
         XCTAssertEqual(typing.type(typing.rows[0][0]), "1")
-        typing.togglePage()
-        XCTAssertEqual(typing.language, .english)
-        XCTAssertEqual(typing.page, .letters)
-    }
-
-    func testSwitchingLanguageDropsShiftAndNumbers() {
-        var typing = Typing()
-        typing.togglePage()
+        XCTAssertFalse(typing.decodes)
         typing.toggleShift()
-        typing.toggleLanguage()
+        typing.togglePage()
         XCTAssertEqual(typing.page, .letters)
         XCTAssertFalse(typing.shifted)
+        XCTAssertEqual(typing.type(typing.rows[0][0]), "ๅ")
     }
 }

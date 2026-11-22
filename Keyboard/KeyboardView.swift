@@ -10,6 +10,8 @@ struct KeyboardView: View {
             switch model.mode {
             case .typing:
                 TypingView(model: model, globe: globe)
+            case .emoji:
+                EmojiPanel(model: model)
             case .dictation(let dictation):
                 DictationView(model: model, dictation: dictation)
             }

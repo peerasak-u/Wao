@@ -6,7 +6,7 @@ final class KeyLayoutTests: XCTestCase {
     private let widths: [CGFloat] = [390, 393, 440]
 
     private func pages() -> [(String, [[CharacterKey]])] {
-        [("kedmanee", Typing.kedmanee), ("qwerty", Typing.qwerty), ("numbers", Typing.numbers)]
+        [("kedmanee", Typing.kedmanee), ("numbers", Typing.numbers)]
     }
 
     private func row(_ layout: KeyLayout, _ r: Int) -> [PlacedKey] {
@@ -44,12 +44,8 @@ final class KeyLayoutTests: XCTestCase {
     func testCapsSitWhereTheSystemKeyboardDrawsThem() {
         let measured: [(CGFloat, [[CharacterKey]], Int, [(CGFloat, CGFloat)])] = [
             (390, Typing.kedmanee, 0, [(8.7, 25.2), (40.0, 25.3), (356.0, 25.3)]),
-            (390, Typing.qwerty, 1, [(27.3, 32.0), (330.7, 32.0)]),
-            (390, Typing.qwerty, 2, [(8.7, 43.0), (65.3, 32.0), (292.7, 32.0), (338.3, 43.3)]),
             (390, Typing.numbers, 2, [(8.7, 43.0), (65.3, 47.0), (277.7, 47.0), (338.3, 43.3)]),
             (440, Typing.kedmanee, 3, [(6.7, 30.0), (42.7, 30.0), (403.3, 30.3)]),
-            (440, Typing.qwerty, 0, [(6.7, 37.0), (396.3, 37.3)]),
-            (440, Typing.qwerty, 2, [(6.7, 50.0), (71.3, 37.3), (383.3, 50.3)]),
             (440, Typing.numbers, 2, [(6.7, 50.0), (71.3, 54.7), (314.0, 54.7), (383.3, 50.3)]),
         ]
         for (width, rows, r, expected) in measured {
@@ -62,14 +58,17 @@ final class KeyLayoutTests: XCTestCase {
         }
     }
 
-    func testSpaceAndReturnLineUpWithTheSecondQwertyRow() {
+    /// iOS lines space and return up with the third and eighth keys of its QWERTY middle row, nine keys indented by
+    /// half a key: x = 27.3 + 37.87 · column at 390 pt, measured.
+    func testSpaceAndReturnSitWhereTheSystemKeyboardDrawsThem() {
+        let measured: [CGFloat: (space: CGFloat, enter: CGFloat)] = [390: (103.0, 292.4), 440: (114.8, 331.2)]
         for width in widths {
-            let qwerty = KeyLayout(width: width, rows: Typing.qwerty)
-            let second = row(qwerty, 1).map(\.cap)
-            for rows in [Typing.kedmanee, Typing.qwerty, Typing.numbers] {
+            for rows in [Typing.kedmanee, Typing.numbers] {
                 let bottom = KeyLayout(width: width, rows: rows).bottomRow(leading: 2)
-                XCTAssertEqual(bottom.space.cap.minX, second[2].minX, accuracy: 1e-9)
-                XCTAssertEqual(bottom.enter.cap.minX, second[7].minX, accuracy: 1e-9)
+                if let x = measured[width] {
+                    XCTAssertEqual(bottom.space.cap.minX, x.space, accuracy: 1, "space at \(width)")
+                    XCTAssertEqual(bottom.enter.cap.minX, x.enter, accuracy: 1, "return at \(width)")
+                }
                 XCTAssertEqual(bottom.enter.cap.maxX, width - KeyMetrics(width: width).margin, accuracy: 1e-9)
                 XCTAssertEqual(bottom.leading[0].cap.width, bottom.leading[1].cap.width, accuracy: 1e-9)
             }
