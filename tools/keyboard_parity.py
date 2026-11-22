@@ -15,10 +15,14 @@ size of a key. Caps pair up row by row, then by nearest centre. Positions are sc
 taller than Apple's shows up as every cap sitting higher.
 
 Prints, per page, each pair's offset and size difference in points, the same for its label's ink box relative
-to the cap (font size, weight and baseline; reported, not gated), the panel top difference (the keyboard
-height difference), the worst error with and without that difference and any cap that has no partner. Writes DIR/<page>-overlay.png: Apple's
-screenshot and ours blended half and half, Apple's caps outlined green and ours magenta, cropped to the panel.
-Exits 1 when any page is off by more than --tolerance points or has unpaired caps.
+to the cap (font size, weight and baseline), the share of label ink that differs between the two caps once their
+corners are lined up (`ink%`: pixels that are ink in one cap and not the other, over pixels that are ink in
+either), the panel top difference (the keyboard height difference), the worst error with and without that
+difference and any cap that has no partner. Writes DIR/<page>-overlay.png: Apple's screenshot and ours blended half
+and half, Apple's caps outlined green and ours magenta, cropped to the panel.
+Exits 1 when any page is off by more than --tolerance points or has unpaired caps; with --label-tolerance, also when
+a label's ink box is off by more than that many points or only one of the two caps has a label; with
+--ink-tolerance, also when a cap's ink% is above it.
 """
 
 from __future__ import annotations
@@ -55,13 +59,20 @@ class Keyboard:
     caps: list[Cap]
     ink: list[Cap | None]
     """Per cap, the box of its label: pixels far from the cap's own fill, in points relative to the cap."""
+    img: np.ndarray
+
+
+def ink(img: np.ndarray, cap: Cap, scale: float) -> np.ndarray:
+    """The cap's pixels, two in from its edge, that are far from the cap's own fill: its label."""
+    x0, y0 = int(round(cap.x * scale)) + 2, int(round(cap.y * scale)) + 2
+    x1, y1 = int(round((cap.x + cap.w) * scale)) - 2, int(round((cap.y + cap.h) * scale)) - 2
+    grey = img[y0:y1, x0:x1].mean(axis=2)
+    return np.abs(grey - np.median(grey)) > 90
 
 
 def label(img: np.ndarray, cap: Cap, scale: float) -> Cap | None:
     x0, y0 = int(round(cap.x * scale)) + 2, int(round(cap.y * scale)) + 2
-    x1, y1 = int(round((cap.x + cap.w) * scale)) - 2, int(round((cap.y + cap.h) * scale)) - 2
-    grey = img[y0:y1, x0:x1].mean(axis=2)
-    ys, xs = np.nonzero(np.abs(grey - np.median(grey)) > 90)
+    ys, xs = np.nonzero(ink(img, cap, scale))
     if len(ys) == 0:
         return None
     return Cap((xs.min() + x0) / scale - cap.x, (ys.min() + y0) / scale - cap.y,
@@ -146,7 +157,16 @@ def detect(path: Path, scale: float, threshold: int) -> Keyboard:
         if 18 <= w <= 330 and 30 <= h <= 70 and y0 > top and not touches_edge:
             caps.append(Cap(x0 / scale, y0 / scale, w, h))
     caps.sort(key=lambda c: (round(c.cy / 10), c.x))
-    return Keyboard(top / scale, caps, [label(img, c, scale) for c in caps])
+    return Keyboard(top / scale, caps, [label(img, c, scale) for c in caps], img)
+
+
+def ink_miss(apple: Keyboard, a: Cap, wao: Keyboard, w: Cap, scale: float) -> float:
+    """Percent of the two labels' ink that only one of them has, caps lined up by their top-left corners."""
+    ai, wi = ink(apple.img, a, scale), ink(wao.img, w, scale)
+    h, wd = min(ai.shape[0], wi.shape[0]), min(ai.shape[1], wi.shape[1])
+    ai, wi = ai[:h, :wd], wi[:h, :wd]
+    either = np.count_nonzero(ai | wi)
+    return 100 * np.count_nonzero(ai ^ wi) / either if either else 0.0
 
 
 def rows(caps: list[Cap]) -> list[list[Cap]]:
@@ -207,8 +227,10 @@ def compare(name: str, apple_path: Path, wao_path: Path, args: argparse.Namespac
     print(f"## {name}")
     print(f"panel top  apple {apple.top:.1f}  wao {wao.top:.1f}  diff {wao.top - apple.top:+.1f} pt")
     print("row  apple x      y     w     h |   wao x      y     w     h |    dx    dy    dw    dh |"
-          " label dx    dy    dw    dh")
-    worst = worst_label = worst_shape = 0.0
+          " label dx    dy    dw    dh |  ink%")
+    worst = worst_label = worst_shape = worst_ink = 0.0
+    misses: list[float] = []
+    lone_label = 0
     shift = wao.top - apple.top
     a_ink = dict(zip(apple.caps, apple.ink))
     w_ink = dict(zip(wao.caps, wao.ink))
@@ -224,14 +246,34 @@ def compare(name: str, apple_path: Path, wao_path: Path, args: argparse.Namespac
             worst_label = max(worst_label, *map(abs, ld))
             line += " |     " + " ".join(f"{v:+5.1f}" for v in ld)
         elif ai or wi:
+            lone_label += 1
             line += f" |     label only in {'apple' if ai else 'wao'}"
+        if ai or wi:
+            miss = ink_miss(apple, a, wao, w, args.scale)
+            misses.append(miss)
+            worst_ink = max(worst_ink, miss)
+            line += f" | {miss:5.1f}"
         print(line)
     for c in lone_apple:
         print(f"only apple  {fmt(c)}")
     for c in lone_wao:
         print(f"only wao    {fmt(c)}")
     ok = worst <= args.tolerance and not lone_apple and not lone_wao and abs(wao.top - apple.top) <= args.tolerance
-    print(f"worst label offset or size difference {worst_label:.1f} pt (reported, not gated)")
+    if args.label_tolerance is None:
+        print(f"worst label offset or size difference {worst_label:.1f} pt (reported, not gated)")
+    else:
+        labels_ok = worst_label <= args.label_tolerance and not lone_label
+        ok = ok and labels_ok
+        print(f"worst label offset or size difference {worst_label:.1f} pt, {lone_label} label(s) on one side only, "
+              f"{'PASS' if labels_ok else 'FAIL'} at {args.label_tolerance} pt")
+    mean_ink = sum(misses) / len(misses) if misses else 0.0
+    if args.ink_tolerance is None:
+        print(f"ink differs on {mean_ink:.1f}% on average, worst {worst_ink:.1f}% (reported, not gated)")
+    else:
+        ink_ok = worst_ink <= args.ink_tolerance
+        ok = ok and ink_ok
+        print(f"ink differs on {mean_ink:.1f}% on average, worst {worst_ink:.1f}%, "
+              f"{'PASS' if ink_ok else 'FAIL'} at {args.ink_tolerance}%")
     print(f"worst {worst_shape:.1f} pt once the panel top difference is taken out of dy (reported, not gated)")
     print(f"worst {worst:.1f} pt over {len(pairs)} pairs, unpaired {len(lone_apple)} apple / {len(lone_wao)} wao, "
           f"{'PASS' if ok else 'FAIL'} at {args.tolerance} pt\n")
@@ -249,6 +291,8 @@ def main() -> int:
     p.add_argument("--scale", type=float, default=3)
     p.add_argument("--threshold", type=int, default=12, help="summed RGB distance from the panel colour")
     p.add_argument("--tolerance", type=float, default=1)
+    p.add_argument("--label-tolerance", type=float, help="also gate each label's ink box offset and size, points")
+    p.add_argument("--ink-tolerance", type=float, help="also gate each cap's ink%%")
     args = p.parse_args()
     if args.wao is None:
         kb = detect(args.apple, args.scale, args.threshold)
