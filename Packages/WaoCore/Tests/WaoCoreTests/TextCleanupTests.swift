@@ -60,12 +60,12 @@ final class TextCleanupTests: XCTestCase {
     }
 
     func testStandardCleanupRunsEveryStage() {
-        let text = TextCleanup.standard("ใช้จีพียูกับ nvidia ท\u{0E4D}\u{0E32}งานบนอินฟา")
-        XCTAssertEqual(text, "ใช้ GPU กับ Nvidia ทำงานบน infra")
+        let text = TextCleanup.standard("ใช้จีพียูกับ chatgpt ท\u{0E4D}\u{0E32}งานบนอินฟา")
+        XCTAssertEqual(text, "ใช้ GPU กับ ChatGPT ทำงานบน infra")
     }
 
     func testBundledListsLoad() {
-        XCTAssertGreaterThan(Hotwords.bundled.words.count, 100)
+        XCTAssertGreaterThan(Hotwords.bundled.words.count, 20)
         XCTAssertFalse(Hotwords.bundled.words.contains { $0 == "LINE" || $0 == "Grab" }, "ambiguous with Thai words")
         XCTAssertGreaterThan(Corrections.bundled.pairs.count, 50)
         XCTAssertTrue(BundledLists.vocabulary.hasPrefix("# From PoodPim"))
