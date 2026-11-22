@@ -153,16 +153,18 @@ cd Packages/WaoCore && swift build -c release --product wao-typing-eval
   biasing, the text clean-up and the default vocabulary and corrections lists are adapted from it.
 - **Typing data** (CC0). Common Voice Thai sentences, wisesight-sentiment and PyThaiNLP's word list and Thai
   National Corpus frequencies. The keyboard's language model and word suggestions are built from them.
+- **[Unicode Emoji 15.0](https://www.unicode.org/Public/emoji/15.0/emoji-test.txt)** (Unicode, Inc., Unicode
+  License V3). The emoji keyboard's emoji, their names and skin tones are built from its `emoji-test.txt`.
 
 The app shows all of this, with each licence in full, under เครดิตและสัญญาอนุญาต at the foot of its main screen.
 The texts live in `Packages/WaoCore/Sources/WaoInference/Resources` (the model's notice of origin with OpenMDW-1.1,
 and ONNX Runtime's LICENSE and ThirdPartyNotices, which `tools/fetch_onnxruntime.sh` copies from the NuGet package)
-and `Packages/WaoCore/Sources/WaoCore/Resources/THIRD_PARTY_NOTICES` (PoodPim).
+and `Packages/WaoCore/Sources/WaoCore/Resources/THIRD_PARTY_NOTICES` (PoodPim, the typing data and Unicode).
 
 ## License
 
-The code is [MIT](LICENSE). The model, the ONNX Runtime binaries and the typing data keep their own licences,
-listed under Credits.
+The code is [MIT](LICENSE). The model, the ONNX Runtime binaries, the typing data and the emoji data keep their
+own licences, listed under Credits.
 
 <br>
 

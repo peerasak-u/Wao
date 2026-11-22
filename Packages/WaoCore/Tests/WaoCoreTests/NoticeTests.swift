@@ -8,6 +8,9 @@ final class NoticeTests: XCTestCase {
         XCTAssertTrue(Notice.onnxRuntime.text().contains("Copyright (c) Microsoft Corporation"))
         XCTAssertTrue(Notice.onnxRuntimeThirdParty.text().contains("THIRD PARTY SOFTWARE NOTICES"))
         XCTAssertTrue(Notice.poodPim.text().contains("Copyright (c) 2026 Thirawat Sutalungka"))
+        XCTAssertTrue(Notice.unicode.text().contains("UNICODE LICENSE V3"))
+        XCTAssertTrue(Notice.unicode.text().contains("emoji-test.txt"))
+        XCTAssertFalse(Notice.unicode.text().contains("PoodPim"))
     }
 
     func testLineEndingsAreUnix() {
