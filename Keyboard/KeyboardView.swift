@@ -12,6 +12,8 @@ struct KeyboardView: View {
                 TypingView(model: model, globe: globe)
             case .emoji:
                 EmojiPanel(model: model)
+            case .emojiSearch(let query):
+                EmojiSearchView(model: model, query: query, globe: globe)
             case .dictation(let dictation):
                 DictationView(model: model, dictation: dictation)
             }

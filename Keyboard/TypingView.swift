@@ -6,7 +6,6 @@ import WaoCore
 struct TypingView: View {
     @ObservedObject var model: KeyboardModel
     let globe: () -> UIView?
-    @State private var pressed: PlacedKey?
     @State private var explaining = false
 
     var body: some View {
@@ -30,34 +29,7 @@ struct TypingView: View {
                     }
                 }
                 .frame(height: strip)
-                ZStack(alignment: .topLeading) {
-                    TouchSurfaceView { event in
-                        switch event {
-                        case .press(let point, let interval):
-                            pressed = model.resolve(point, in: grid, interval: interval)
-                        case .release(let point, let interval):
-                            pressed = nil
-                            if case .character(let character) = model.resolve(point, in: grid, interval: interval)?.kind {
-                                model.type(character)
-                            }
-                        case .cancel:
-                            pressed = nil
-                        }
-                    }
-                    .frame(width: grid.characterArea.width, height: grid.characterArea.height)
-                    .position(x: grid.characterArea.midX, y: grid.characterArea.midY)
-                    ForEach(grid.keys) { key in
-                        keyView(key, in: grid).placed(key.slot)
-                    }
-                    bottomRow(grid)
-                    if let pressed, case .character(let character) = pressed.kind {
-                        KeyPopup(label: model.typing.caption(of: character), font: popupFont)
-                            .frame(width: max(pressed.cap.width * 1.5, 44), height: 50)
-                            .position(popupCenter(for: pressed.cap, width: geo.size.width, strip: strip))
-                            .allowsHitTesting(false)
-                    }
-                }
-                .frame(width: grid.size.width, height: grid.size.height, alignment: .topLeading)
+                KeyArea(model: model, globe: globe, grid: grid, popupRoom: strip)
             }
         }
         .cursorTracking(model)
@@ -67,12 +39,56 @@ struct TypingView: View {
             }
         }
     }
+}
+
+/// The Thai and symbol keys with the bottom row, for the typing page and emoji search. In search the keys type into
+/// the query (the model routes them), space has no trackpad, return and the emoji key go back to the grid, and the
+/// mic is gone.
+struct KeyArea: View {
+    @ObservedObject var model: KeyboardModel
+    let globe: () -> UIView?
+    let grid: KeyLayout
+    /// How far above the keys the top row's popup may reach.
+    let popupRoom: CGFloat
+    @State private var pressed: PlacedKey?
+
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            TouchSurfaceView { event in
+                switch event {
+                case .press(let point, let interval):
+                    pressed = model.resolve(point, in: grid, interval: interval)
+                case .release(let point, let interval):
+                    pressed = nil
+                    if case .character(let character) = model.resolve(point, in: grid, interval: interval)?.kind {
+                        model.type(character)
+                    }
+                case .cancel:
+                    pressed = nil
+                }
+            }
+            .frame(width: grid.characterArea.width, height: grid.characterArea.height)
+            .position(x: grid.characterArea.midX, y: grid.characterArea.midY)
+            ForEach(grid.keys) { key in
+                keyView(key).placed(key.slot)
+            }
+            bottomRow
+            if let pressed, case .character(let character) = pressed.kind {
+                KeyPopup(label: model.typing.caption(of: character), font: popupFont)
+                    .frame(width: max(pressed.cap.width * 1.5, 44), height: 50)
+                    .position(popupCenter(for: pressed.cap))
+                    .allowsHitTesting(false)
+            }
+        }
+        .frame(width: grid.size.width, height: grid.size.height, alignment: .topLeading)
+    }
 
     /// The system keyboard's 123 and emoji; the globe (on home-button iPhones) and the mic (with Full Access) come out
     /// of the space bar.
     @ViewBuilder
-    private func bottomRow(_ grid: KeyLayout) -> some View {
-        let row = grid.bottomRow(leading: 2 + (model.showsGlobe ? 1 : 0) + (model.hasFullAccess ? 1 : 0))
+    private var bottomRow: some View {
+        let mic = model.hasFullAccess && !model.isSearchingEmoji
+        let row = grid.bottomRow(leading: 2 + (model.showsGlobe ? 1 : 0) + (mic ? 1 : 0))
         let typing = model.typing
         SpecialKey(title: typing.pageLabel, style: KeyFont.label(typing.pageLabel), insets: row.leading[0].insets) { model.typing.togglePage() }
             .placed(row.leading[0])
@@ -82,20 +98,20 @@ struct TypingView: View {
         if model.showsGlobe {
             GlobeKey(make: globe).padded(row.leading[2].insets).placed(row.leading[2])
         }
-        if model.hasFullAccess, let slot = row.leading.last {
+        if mic, let slot = row.leading.last {
             SpecialKey(systemImage: "mic", font: KeyFont.icon(narrow: false), insets: slot.insets, action: model.micTapped)
                 .accessibilityLabel("Dictation")
                 .placed(slot)
         }
-        SpaceKey(model: model, insets: row.space.insets)
+        SpaceKey(model: model, insets: row.space.insets, trackpad: !model.isSearchingEmoji)
             .placed(row.space)
-        SpecialKey(systemImage: "return.left", font: KeyFont.icon(narrow: false), insets: row.enter.insets) { model.insert("\n") }
+        SpecialKey(systemImage: "return.left", font: KeyFont.icon(narrow: false), insets: row.enter.insets, action: model.returnKey)
             .accessibilityLabel("Return")
             .placed(row.enter)
     }
 
     @ViewBuilder
-    private func keyView(_ key: PlacedKey, in grid: KeyLayout) -> some View {
+    private func keyView(_ key: PlacedKey) -> some View {
         let cap = key.cap.offsetBy(dx: -key.hit.minX, dy: -key.hit.minY)
         let narrow = grid.keys.count > 30
         switch key.kind {
@@ -147,11 +163,11 @@ struct TypingView: View {
         model.typing.page == .letters ? .loopless(30) : .system(size: 30)
     }
 
-    /// Sits above the key; on the top row it is pushed down into the suggestion strip rather than cut off.
-    private func popupCenter(for cap: CGRect, width: CGFloat, strip: CGFloat) -> CGPoint {
+    /// Sits above the key; on the top row it is pushed down into the room above the keys rather than cut off.
+    private func popupCenter(for cap: CGRect) -> CGPoint {
         let halfWidth = max(cap.width * 1.5, 44) / 2
-        let x = min(max(cap.midX, halfWidth), width - halfWidth)
-        let top = max(cap.minY - 46, -strip)
+        let x = min(max(cap.midX, halfWidth), grid.size.width - halfWidth)
+        let top = max(cap.minY - 46, -popupRoom)
         return CGPoint(x: x, y: top + 25)
     }
 }

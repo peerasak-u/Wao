@@ -119,8 +119,8 @@ struct EmojiMetrics {
     var rowsBelowHeader: CGFloat { rowsTop - gridTop }
 }
 
-/// Where the user picks an emoji: a grid that scrolls sideways through the categories over a bar of category icons,
-/// กขค back to the letters and delete, as on the iOS emoji keyboard.
+/// Where the user picks an emoji: the search field, a grid that scrolls sideways through the categories over a bar of
+/// category icons, กขค back to the letters and delete, as on the iOS emoji keyboard.
 struct EmojiPanel: View {
     @ObservedObject var model: KeyboardModel
     @State private var current: EmojiTab = .frequent
@@ -132,8 +132,12 @@ struct EmojiPanel: View {
             let inset = (screen - geo.size.width) / 2
             let metrics = EmojiMetrics(width: screen)
             VStack(spacing: 0) {
-                EmojiGrid(metrics: metrics, inset: inset, jump: jump, type: model.insert, scrolled: { current = $0 })
-                    .padding(.top, metrics.gridTop)
+                EmojiSearchField(query: nil, tap: model.showEmojiSearch)
+                    .frame(height: EmojiMetrics.search)
+                    .padding(.horizontal, EmojiMetrics.searchMargin - inset)
+                    .padding(.top, EmojiMetrics.searchTop)
+                EmojiGrid(metrics: metrics, inset: inset, jump: jump, type: model.pick, scrolled: { current = $0 })
+                    .padding(.top, metrics.gridTop - EmojiMetrics.searchTop - EmojiMetrics.search)
                 bar(margin: KeyMetrics(width: screen).margin - inset)
                     .frame(height: EmojiMetrics.bar)
                     .padding(.bottom, metrics.barMid - EmojiMetrics.bar / 2)
@@ -204,7 +208,7 @@ private struct EmojiGrid: UIViewRepresentable {
 }
 
 /// An emoji cell: which emoji, and in which tone.
-private struct EmojiItem {
+struct EmojiItem {
     let emoji: Emoji
     let tone: Int?
 
