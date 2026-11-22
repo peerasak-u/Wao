@@ -176,7 +176,8 @@ actor DictationSession {
     }
 
     /// Re-transcribes the end of the utterance while it is being recorded. One preview runs at a time, started
-    /// at most every `previewEvery`, at a lower priority than the final transcription.
+    /// at most every `previewEvery`, at a lower priority than the final transcription. On a phone too slow to
+    /// preview within `previewEvery`, the loop rests as long as the last preview took instead of pinning a core.
     private func previewLoop(id: UUID, language: Language) -> Task<Void, Never> {
         Task.detached(priority: .utility) { [capture, weak self] in
             guard let transcriber = try? await self?.model() else { return }
@@ -191,7 +192,8 @@ actor DictationSession {
                    !result.text.isEmpty, !Task.isCancelled {
                     await self?.send(.heard(id: id, Heard(text: result.text, clipped: clipped)))
                 }
-                try? await clock.sleep(until: started + Self.previewEvery)
+                let took = clock.now - started
+                try? await clock.sleep(for: max(Self.previewEvery - took, took))
             }
         }
     }
