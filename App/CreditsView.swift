@@ -123,6 +123,15 @@ private struct CreditsScreen: View {
                         .web("PyThaiNLP", "https://github.com/PyThaiNLP/pythainlp"),
                     ]
                 )
+                Credit(
+                    title: "Unicode Emoji 15.0",
+                    byline: "Unicode, Inc. · Unicode License V3",
+                    detail: "รายการอีโมจิ ชื่อ และสีผิวในแป้นอีโมจิ สร้างจาก emoji-test.txt ของ Unicode",
+                    links: [
+                        .web("emoji-test.txt", "https://www.unicode.org/Public/emoji/15.0/emoji-test.txt"),
+                        .licence("Unicode License V3", .unicode),
+                    ]
+                )
                 AppVersionLabel()
             }
             .padding(.horizontal, 20)
@@ -318,6 +327,7 @@ private extension Notice {
         case .onnxRuntime: "ONNX Runtime · MIT"
         case .onnxRuntimeThirdParty: "ONNX Runtime · Third-party"
         case .poodPim: "PoodPim · MIT"
+        case .unicode: "Unicode · License V3"
         }
     }
 }

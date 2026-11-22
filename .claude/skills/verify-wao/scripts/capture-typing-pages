@@ -3,9 +3,8 @@
 #
 #   capture-typing-pages <agent-device path> <out dir> [prefix]
 #
-# Start with เว่า showing its Thai letters page, unshifted, in the host field. Writes thai-letters, thai-shifted,
-# thai-numbers, english-letters, english-shifted and english-numbers (each prefixed, e.g. dark-) and leaves the
-# keyboard back on Thai letters. Keys are found by the parity tool's own cap detection, not fixed coordinates.
+# Start with เว่า showing its Thai letters page, unshifted, in the host field. Writes thai-letters, thai-shifted and
+# thai-numbers (each prefixed, e.g. dark-) and leaves the keyboard back on Thai letters. Keys are found by the parity tool's own cap detection, not fixed coordinates.
 set -euo pipefail
 AD=$1 OUT=$2 PREFIX=${3:-}
 ROOT=$(git -C "$(dirname "$0")" rev-parse --show-toplevel)
@@ -26,10 +25,4 @@ tap "$OUT/${PREFIX}thai-letters.png" 3 0; shot thai-shifted
 tap "$OUT/${PREFIX}thai-shifted.png" 3 0
 tap "$OUT/${PREFIX}thai-letters.png" 4 0; shot thai-numbers
 tap "$OUT/${PREFIX}thai-numbers.png" 3 0
-tap "$OUT/${PREFIX}thai-letters.png" 4 1; shot english-letters
-tap "$OUT/${PREFIX}english-letters.png" 2 0; shot english-shifted
-tap "$OUT/${PREFIX}english-shifted.png" 2 0
-tap "$OUT/${PREFIX}english-letters.png" 3 0; shot english-numbers
-tap "$OUT/${PREFIX}english-numbers.png" 3 0
-tap "$OUT/${PREFIX}english-letters.png" 3 1
 echo "captured $(ls "$OUT"/"$PREFIX"*.png | wc -l | tr -d ' ') pages in $OUT"

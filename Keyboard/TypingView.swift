@@ -2,7 +2,7 @@ import CoreText
 import SwiftUI
 import WaoCore
 
-/// Thai Kedmanee, QWERTY and symbols: the page the keyboard opens on. With Full Access its mic key starts dictation.
+/// Thai Kedmanee and symbols: the page the keyboard opens on. With Full Access its mic key starts dictation.
 struct TypingView: View {
     @ObservedObject var model: KeyboardModel
     let globe: () -> UIView?
@@ -68,15 +68,16 @@ struct TypingView: View {
         }
     }
 
-    /// The system keyboard's 123 and emoji, with the language key in the emoji's place; the globe (on home-button
-    /// iPhones) and the mic (with Full Access) come out of the space bar.
+    /// The system keyboard's 123 and emoji; the globe (on home-button iPhones) and the mic (with Full Access) come out
+    /// of the space bar.
     @ViewBuilder
     private func bottomRow(_ grid: KeyLayout) -> some View {
         let row = grid.bottomRow(leading: 2 + (model.showsGlobe ? 1 : 0) + (model.hasFullAccess ? 1 : 0))
         let typing = model.typing
         SpecialKey(title: typing.pageLabel, style: KeyFont.label(typing.pageLabel), insets: row.leading[0].insets) { model.typing.togglePage() }
             .placed(row.leading[0])
-        SpecialKey(title: typing.languageLabel, style: KeyFont.label(typing.languageLabel), insets: row.leading[1].insets) { model.typing.toggleLanguage() }
+        SpecialKey(systemImage: "face.smiling", font: KeyFont.icon(narrow: false), insets: row.leading[1].insets, action: model.showEmoji)
+            .accessibilityLabel("Emoji")
             .placed(row.leading[1])
         if model.showsGlobe {
             GlobeKey(make: globe).padded(row.leading[2].insets).placed(row.leading[2])
@@ -143,7 +144,7 @@ struct TypingView: View {
     }
 
     private var popupFont: Font {
-        model.typing.language == .thai && model.typing.page == .letters ? .loopless(30) : .system(size: 30)
+        model.typing.page == .letters ? .loopless(30) : .system(size: 30)
     }
 
     /// Sits above the key; on the top row it is pushed down into the suggestion strip rather than cut off.
@@ -158,26 +159,24 @@ struct TypingView: View {
 /// The system keyboard's label faces and sizes, matched to its screenshots by the label boxes that
 /// tools/keyboard_parity.py prints.
 enum KeyFont {
-    /// A character cap: Thai in Thonburi Light, lower-case Latin larger than capitals and figures, as iOS draws them.
+    /// A character cap: Thai in Thonburi Light, figures and symbols in the system font, as iOS draws them.
     /// `lift` moves the label from the cap's centre to where the system keyboard's sits.
     static func letter(_ text: String) -> (font: Font, lift: CGFloat) {
         if text.isThai { return (.custom("Thonburi-Light", size: 24), -4.5) }
-        let lowercase = text.lowercased() == text && text.uppercased() != text
-        if lowercase { return (.system(size: 25), -2.3) }
         return (figures, -1.2 + (sunk[text] ?? 0))
     }
 
     /// How much lower than the figures' baseline iOS sets these, measured on its numbers page.
     private static let sunk: [String: CGFloat] = [".": 3, ",": 3, ":": 2.8]
 
-    /// Capitals, figures and symbols, with the case-sensitive forms that raise dashes and brackets to the figures.
+    /// Figures and symbols, with the case-sensitive forms that raise dashes and brackets to the figures.
     private static let figures: Font = {
         let feature: [UIFontDescriptor.FeatureKey: Int] = [.type: kCaseSensitiveLayoutType, .selector: kCaseSensitiveLayoutOnSelector]
         let font = UIFont.systemFont(ofSize: 22)
         return Font(UIFont(descriptor: font.fontDescriptor.addingAttributes([.featureSettings: [feature]]), size: 22))
     }()
 
-    /// 123, ABC, กขค, #+= and the like.
+    /// 123, กขค, #+= and the like.
     static func label(_ text: String) -> (font: Font, lift: CGFloat) {
         if text.isThai { return (.custom("Thonburi", size: 16), -1.5) }
         return (text.count > 2 && text.allSatisfy({ !$0.isLetter && !$0.isNumber }) ? .system(size: 13) : .system(size: 18.5), 0)

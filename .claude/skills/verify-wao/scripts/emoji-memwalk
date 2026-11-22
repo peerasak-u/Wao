@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# emoji-memwalk <agent-device> <udid>: restarts the เว่า keyboard in Safari's address bar, opens the emoji panel, walks
+# every category with three pans each and prints the extension's footprint at each step. iPhone 17 Pro Max points.
+set -euo pipefail
+AD=$1 U=$2
+fp() {
+  local pid out
+  pid=$(pgrep -f "$U.*WaoKeyboard.appex/WaoKeyboard" | head -1)
+  out=$(footprint "$pid" 2>&1)
+  printf '%-34s footprint %-7s CoreAnimation %-8s MALLOC_SMALL %s\n' "$1" \
+    "$(echo "$out" | grep -m1 Footprint | sed 's/.*Footprint: //;s/ (.*//')" \
+    "$(echo "$out" | awk '/CoreAnimation/ {print $1$2; exit}')" "$(echo "$out" | awk '/MALLOC_SMALL/ {print $1$2; exit}')"
+}
+pkill -f "$U.*WaoKeyboard.appex/WaoKeyboard" || true
+sleep 1
+"$AD" open com.apple.mobilesafari --relaunch >/dev/null; sleep 1.5
+"$AD" press 210 898 >/dev/null; sleep 3
+fp "typing, panel never opened"
+"$AD" press 85 861 >/dev/null; sleep 1.5
+fp "panel open"
+names=(smileys animals food activity travel objects symbols flags)
+i=0
+for x in 114 149 184 220 255 291 326 362; do
+  "$AD" press $x 856 >/dev/null; sleep 0.4
+  for _ in 1 2 3; do "$AD" gesture pan 400 740 -380 0 400 >/dev/null; sleep 0.2; done
+  sleep 0.5; fp "after ${names[$i]} + 3 pans"; i=$((i + 1))
+done
+"$AD" press 32 856 >/dev/null; sleep 2
+fp "back on letters"

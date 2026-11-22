@@ -8,48 +8,35 @@ public struct CharacterKey: Equatable, Hashable, Sendable {
     public func text(shifted isShifted: Bool) -> String { isShifted ? shifted : output }
 }
 
-/// The typing keyboard's state: which language, whether the numbers page is up, and shift. It only exists so the
-/// keyboard still types without Full Access (App Review 4.4.1).
+/// The typing keyboard's state: whether the numbers page is up, and shift. It only exists so the keyboard still types
+/// without Full Access (App Review 4.4.1). The letters are Thai only; English comes from dictation or the system's
+/// own keyboard through the globe.
 public struct Typing: Equatable, Sendable {
-    public enum Language: Sendable { case thai, english }
     public enum Page: Sendable { case letters, numbers }
 
-    public private(set) var language: Language = .thai
     public private(set) var page: Page = .letters
     public private(set) var shifted = false
 
     public init() {}
 
     public var rows: [[CharacterKey]] {
-        switch (page, language) {
-        case (.numbers, _): Self.numbers
-        case (.letters, .thai): Self.kedmanee
-        case (.letters, .english): Self.qwerty
+        switch page {
+        case .letters: Self.kedmanee
+        case .numbers: Self.numbers
         }
     }
 
-    /// Only the Thai letters page reads taps through the language model; English and the symbols stay geometric.
-    public var decodes: Bool { language == .thai && page == .letters }
-
-    /// Caption of the key that switches language.
-    public var languageLabel: String { language == .thai ? "ABC" : "ไทย" }
+    /// Only the letters page reads taps through the language model; the symbols stay geometric.
+    public var decodes: Bool { page == .letters }
 
     /// Caption of the key that flips between letters and the numbers page.
-    public var pageLabel: String {
-        switch page {
-        case .letters: "123"
-        case .numbers: language == .thai ? "กขค" : "ABC"
-        }
-    }
+    public var pageLabel: String { page == .letters ? "123" : "กขค" }
 
     /// On the numbers page shift is the way to the second symbols page, so it reads as such.
     public var shiftLabel: String? {
         guard page == .numbers else { return nil }
         return shifted ? "123" : "#+="
     }
-
-    /// The faint letter in the corner of the otherwise blank space bar, as on the iOS 26.4 system keyboard.
-    public var spaceHint: String { language == .thai ? "ก" : "A" }
 
     /// Shift on letters lasts one character, like the system keyboard; on the numbers page it stays put.
     public mutating func type(_ key: CharacterKey) -> String {
@@ -59,12 +46,6 @@ public struct Typing: Equatable, Sendable {
     }
 
     public mutating func toggleShift() { shifted.toggle() }
-
-    public mutating func toggleLanguage() {
-        language = language == .thai ? .english : .thai
-        page = .letters
-        shifted = false
-    }
 
     public mutating func togglePage() {
         page = page == .letters ? .numbers : .letters
@@ -87,12 +68,6 @@ public struct Typing: Equatable, Sendable {
         row("ๆ ไ ำ พ ะ ั ี ร น ย บ ล", "๐ \" ฎ ฑ ธ ํ ๊ ณ ฯ ญ ฐ ,"),
         row("ฟ ห ก ด เ ้ ่ า ส ว ง ฃ", "ฤ ฆ ฏ โ ฌ ็ ๋ ษ ศ ซ . ฅ"),
         row("ผ ป แ อ ิ ื ท ม ใ ฝ", "( ) ฉ ฮ ฺ ์ ? ฒ ฬ ฦ"),
-    ]
-
-    static let qwerty: [[CharacterKey]] = [
-        row("q w e r t y u i o p", "Q W E R T Y U I O P"),
-        row("a s d f g h j k l", "A S D F G H J K L"),
-        row("z x c v b n m", "Z X C V B N M"),
     ]
 
     static let numbers: [[CharacterKey]] = [

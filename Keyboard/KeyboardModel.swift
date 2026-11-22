@@ -6,6 +6,7 @@ import WaoCore
 /// utterance this keyboard started, so a stale `done` from an earlier session is never inserted.
 enum KeyboardMode: Equatable {
     case typing
+    case emoji
     case dictation(Dictation)
 
     struct Dictation: Equatable {
@@ -75,12 +76,23 @@ final class KeyboardModel: ObservableObject {
 
     /// The host's field is gone, so text still on its way has nowhere to land.
     func deactivate() {
-        if pending != nil || mode != .typing { send(.cancel) }
+        let dictating = if case .dictation = mode { true } else { false }
+        if pending != nil || dictating { send(.cancel) }
         pending = nil
         mode = .typing
         startTimer?.invalidate()
         stateObserver = nil
         stopLevels()
+    }
+
+    func showEmoji() {
+        mode = .emoji
+    }
+
+    /// Back from the emoji panel to the Thai letters, whichever page the panel was opened from.
+    func showLetters() {
+        typing = Typing()
+        mode = .typing
     }
 
     func type(_ key: CharacterKey) {

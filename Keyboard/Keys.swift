@@ -87,6 +87,8 @@ struct SpecialKey: View {
 struct DeleteKey: View {
     var font: Font = .body
     var insets = Key.gapInsets
+    /// No cap, as on the emoji keyboard's bar; the cap shows only while held.
+    var bare = false
     let action: () -> Void
     @State private var timer: Timer?
 
@@ -94,7 +96,7 @@ struct DeleteKey: View {
         Image(systemName: "delete.left")
             .font(font)
             .keyLabel()
-            .keyCap(timer == nil ? Key.fill : Key.pressedFill, insets: insets)
+            .keyCap(timer != nil ? Key.pressedFill : bare ? .clear : Key.fill, insets: insets)
             .gesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { _ in
