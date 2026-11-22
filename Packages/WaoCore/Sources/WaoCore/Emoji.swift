@@ -7,6 +7,15 @@ public struct Emoji: Equatable, Hashable, Sendable {
     public let name: String
     /// The five skin-tone variants, lightest first, or none.
     public let tones: [String]
+    /// CLDR's Thai short name, then its Thai keywords: what search matches.
+    public let keywords: [String]
+
+    public init(glyph: String, name: String, tones: [String], keywords: [String] = []) {
+        self.glyph = glyph
+        self.name = name
+        self.tones = tones
+        self.keywords = keywords
+    }
 
     public static let toneNames = ["light skin tone", "medium-light skin tone", "medium skin tone",
                                    "medium-dark skin tone", "dark skin tone"]
@@ -44,7 +53,7 @@ public struct EmojiCatalog: Sendable {
         var emoji: [Emoji] = []
         var index: [String: (emoji: Emoji, tone: Int?)] = [:]
         for line in text.split(separator: "\n") where !line.hasPrefix("#") {
-            let fields = line.split(separator: "\t").map(String.init)
+            let fields = line.split(separator: "\t", omittingEmptySubsequences: false).map(String.init)
             if fields.count == 1 {
                 if let category { sections.append(Section(category: category, emoji: emoji)) }
                 guard let next = EmojiCategory(rawValue: fields[0]) else { return nil }
@@ -52,8 +61,9 @@ public struct EmojiCatalog: Sendable {
                 emoji = []
                 continue
             }
-            guard category != nil, fields.count == 2 || fields.count == 7 else { return nil }
-            let entry = Emoji(glyph: fields[0], name: fields[1], tones: Array(fields.dropFirst(2)))
+            guard category != nil, fields.count == 3 || fields.count == 8 else { return nil }
+            let keywords = fields[2].split(separator: "|").map(String.init)
+            let entry = Emoji(glyph: fields[0], name: fields[1], tones: Array(fields.dropFirst(3)), keywords: keywords)
             emoji.append(entry)
             index[entry.glyph] = (entry, nil)
             for (tone, glyph) in entry.tones.enumerated() { index[glyph] = (entry, tone) }

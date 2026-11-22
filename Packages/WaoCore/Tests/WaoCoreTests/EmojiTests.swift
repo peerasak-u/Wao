@@ -25,6 +25,23 @@ final class EmojiTests: XCTestCase {
         XCTAssertEqual(catalog.lookup("❤️")?.emoji.tones, [])
     }
 
+    func testEmojiCarryTheirThaiNameThenKeywords() throws {
+        let catalog = try XCTUnwrap(EmojiCatalog.bundled)
+        let cat = try XCTUnwrap(catalog.lookup("🐱")?.emoji)
+        XCTAssertEqual(cat.keywords.first, "หน้าแมว")
+        XCTAssertTrue(cat.keywords.contains("แมว"))
+        XCTAssertEqual(catalog.lookup("👋🏽")?.emoji.keywords.first, "โบกมือ")
+    }
+
+    func testAnEmojiWithoutThaiKeywordsStillParses() throws {
+        let text = EmojiCategory.allCases.map(\.rawValue).joined(separator: "\n")
+            .replacingOccurrences(of: "smileys", with: "smileys\n😀\tgrinning face\t\n👋\twaving hand\tโบกมือ\t👋🏻\t👋🏼\t👋🏽\t👋🏾\t👋🏿")
+        let catalog = try XCTUnwrap(EmojiCatalog(text))
+        XCTAssertEqual(catalog.lookup("😀")?.emoji.keywords, [])
+        XCTAssertEqual(catalog.lookup("👋🏿")?.tone, 4)
+        XCTAssertNil(EmojiCatalog("smileys\n😀\tgrinning face"), "the keyword field is required")
+    }
+
     func testEveryGlyphIsOneCharacter() throws {
         let catalog = try XCTUnwrap(EmojiCatalog.bundled)
         for emoji in catalog.sections.flatMap(\.emoji) {

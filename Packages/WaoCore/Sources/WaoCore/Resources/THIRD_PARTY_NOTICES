@@ -43,10 +43,13 @@ from these sources, each dedicated to the public domain under CC0 1.0
 
 ----
 
-emoji.txt in this folder, the emoji keyboard's list of emoji, their names and
-skin-tone variants, is built by tools/build_emoji.py from emoji-test.txt of
-Unicode Emoji 15.0 (https://www.unicode.org/Public/emoji/15.0/emoji-test.txt)
-under this licence:
+emoji.txt in this folder, the emoji keyboard's list of emoji, their names,
+skin-tone variants and Thai search keywords, is built by tools/build_emoji.py
+from emoji-test.txt of Unicode Emoji 15.0
+(https://www.unicode.org/Public/emoji/15.0/emoji-test.txt) and the Thai
+annotations of the Unicode Common Locale Data Repository (CLDR) release 47,
+common/annotations/th.xml and common/annotationsDerived/th.xml
+(https://github.com/unicode-org/cldr), under this licence:
 
 UNICODE LICENSE V3
 
