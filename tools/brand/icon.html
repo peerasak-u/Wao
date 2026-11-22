@@ -1,0 +1,11 @@
+<!doctype html><meta charset="utf-8">
+<style>
+html,body{margin:0;width:1024px;height:1024px;overflow:hidden}
+body{background:var(--paper);position:relative}
+body::before{content:"";position:absolute;inset:0;background:radial-gradient(circle,var(--dot) 3.2px,transparent 4.6px) 32px 32px/64px 64px;-webkit-mask-image:linear-gradient(180deg,#000 0,#000 12%,transparent 62%)}
+img{position:absolute;height:560px;left:50%;top:50%;transform:translate(-50%,-50%);filter:var(--f)}
+.light{--paper:#fbfaf6;--dot:rgba(22,22,20,.16);--f:none}
+.dark{--paper:#151514;--dot:rgba(243,241,234,.2);--f:invert(.95)}
+</style>
+<body><img src="../../App/Assets.xcassets/Ink/MaiEk.imageset/MaiEk.svg">
+<script>document.body.className=location.search.slice(1)</script>

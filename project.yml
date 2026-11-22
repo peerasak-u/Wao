@@ -35,9 +35,11 @@ targets:
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         CFBundleDevelopmentRegion: th
-        UILaunchScreen: {}
+        UILaunchScreen:
+          UIColorName: Paper
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
         UIBackgroundModes: [audio]
+        UIAppFonts: [Anuphan-Regular.ttf, Anuphan-Medium.ttf, Anuphan-SemiBold.ttf, Anuphan-Bold.ttf, Itim-Regular.ttf]
         NSMicrophoneUsageDescription: เว่าใช้ไมโครโฟนเพื่อถอดเสียงพูดเป็นข้อความบนเครื่องนี้เท่านั้น เสียงไม่ถูกส่งออกนอกเครื่อง
         ITSAppUsesNonExemptEncryption: false
         CFBundleURLTypes:
