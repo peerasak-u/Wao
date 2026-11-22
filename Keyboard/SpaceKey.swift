@@ -83,8 +83,16 @@ final class SpaceTouch: UIView {
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let finger, touches.contains(finger) else { return }
-        let point = finger.location(in: self)
-        send(pad.moved(to: point, onKey: bounds.insetBy(dx: -16, dy: -16).contains(point)))
+        var columns = 0, lines = 0
+        for sample in event?.coalescedTouches(for: finger) ?? [finger] {
+            let point = sample.location(in: self)
+            let onKey = bounds.insetBy(dx: -16, dy: -16).contains(point)
+            if case .move(let c, let l) = pad.moved(to: point, at: sample.timestamp, onKey: onKey) {
+                columns += c
+                lines += l
+            }
+        }
+        send(columns != 0 || lines != 0 ? .move(columns: columns, lines: lines) : nil)
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {

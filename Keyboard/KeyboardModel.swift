@@ -29,6 +29,8 @@ final class KeyboardModel: ObservableObject {
     /// How long the app gets to answer a start command before we assume its session is gone.
     static let startTimeout: TimeInterval = 1.5
     static let contextSettle: TimeInterval = 0.15
+    /// The host's text caught up with a cursor move within 25 ms in the iOS 26.4 simulator.
+    static let cursorSettle: TimeInterval = 0.06
     static let fullAccessNotice = "เปิด \"อนุญาตการเข้าถึงแบบเต็ม\" ให้เว่าก่อน: การตั้งค่า > ทั่วไป > แป้นพิมพ์ > แป้นพิมพ์ > เว่า"
 
     @Published private(set) var mode: KeyboardMode = .typing
@@ -52,10 +54,7 @@ final class KeyboardModel: ObservableObject {
     var readCursorText: () -> CursorText = { CursorText(before: "", after: "") }
     var openApp: () -> Bool = { false }
 
-    /// The host's context lags a cursor move (about 50 ms in the simulator), so a drag steps through its own copy
-    /// of the text.
-    private var cursorText: CursorText?
-    private var lastCursorAdjust = Date.distantPast
+    private var cursorWalk: CursorWalk?
     private var bridge: Bridge?
     private var stateObserver: DarwinObserver?
     private var levelTimer: Timer?
@@ -87,39 +86,31 @@ final class KeyboardModel: ObservableObject {
     }
 
     func beginCursorTracking() {
-        cursorText = readCursorText()
+        cursorWalk = CursorWalk(readCursorText())
         tracksCursor = true
     }
 
-    /// Without the line above or below in view, up and down stop at the start or end of the line.
     func moveCursor(columns: Int, lines: Int) {
-        if lines != 0 { stepCursor(forward: lines > 0) { $0.moveLines(by: lines) ?? $0.moveToLineEdge(down: lines > 0) } }
-        if columns != 0 { stepCursor(forward: columns > 0) { $0.move(by: columns) } }
+        perform(cursorWalk?.move(columns: columns, lines: lines) ?? [])
     }
 
-    /// The host shows only part of the text, often just the cursor's line. At the edge of the copy, a host that has
-    /// caught up with the last move is asked again; when it still shows nothing that way, the cursor is at a line
-    /// break the host hides, and one UTF-16 unit crosses it.
-    private func stepCursor(forward: Bool, _ move: (inout CursorText) -> Int) {
-        guard var text = cursorText else { return }
-        var offset = move(&text)
-        if offset == 0, Date().timeIntervalSince(lastCursorAdjust) > Self.contextSettle {
-            text = readCursorText()
-            offset = move(&text)
-            if offset == 0, forward ? text.after.isEmpty : text.before.isEmpty {
-                offset = forward ? 1 : -1
-                text = CursorText(before: "", after: "")
+    private func perform(_ commands: [CursorWalk.Command]) {
+        for command in commands {
+            switch command {
+            case .adjust(let offset):
+                adjustCursor(offset)
+            case .read:
+                DispatchQueue.main.asyncAfter(deadline: .now() + Self.cursorSettle) { [weak self] in
+                    guard let self else { return }
+                    perform(cursorWalk?.read(readCursorText()) ?? [])
+                }
             }
         }
-        cursorText = text
-        guard offset != 0 else { return }
-        adjustCursor(offset)
-        lastCursorAdjust = Date()
     }
 
     func endCursorTracking() {
         guard tracksCursor else { return }
-        cursorText = nil
+        cursorWalk = nil
         tracksCursor = false
         DispatchQueue.main.asyncAfter(deadline: .now() + Self.contextSettle) { [weak self] in self?.refreshContext() }
     }
