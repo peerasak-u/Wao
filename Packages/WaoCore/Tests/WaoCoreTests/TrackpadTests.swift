@@ -40,15 +40,15 @@ final class CursorTextTests: XCTestCase {
     }
 
     func testUpKeepsTheColumn() {
-        var text = CursorText(before: "สวัสดีครับ\nกิน", after: "ข้าว")
+        var text = CursorText(before: "\nสวัสดีครับ\nกิน", after: "ข้าว")
         XCTAssertEqual(text.moveLines(by: -1), -("สดีครับ\nกิน".utf16.count))
-        XCTAssertEqual(text.before, "สวั")
+        XCTAssertEqual(text.before, "\nสวั")
     }
 
     func testUpOntoAShorterLineLandsAtItsEnd() {
-        var text = CursorText(before: "ab\nabcdef", after: "")
+        var text = CursorText(before: "\nab\nabcdef", after: "")
         XCTAssertEqual(text.moveLines(by: -1), -7)
-        XCTAssertEqual(text.before, "ab")
+        XCTAssertEqual(text.before, "\nab")
     }
 
     func testDownKeepsTheColumn() {
@@ -65,9 +65,9 @@ final class CursorTextTests: XCTestCase {
     }
 
     func testSeveralLinesAtOnce() {
-        var text = CursorText(before: "a\nb\nc", after: "")
+        var text = CursorText(before: "\na\nb\nc", after: "")
         XCTAssertEqual(text.moveLines(by: -2), -4)
-        XCTAssertEqual(text.before, "a")
+        XCTAssertEqual(text.before, "\na")
     }
 
     func testNoLineThereLeavesTheCursorAlone() {
@@ -87,6 +87,34 @@ final class CursorTextTests: XCTestCase {
         XCTAssertEqual(text, CursorText(before: "\nสวั", after: "สดี"))
     }
 
+    /// Hosts cut what they show at a sentence end or a length limit, so its start is not a line start.
+    func testTheStartOfTheKnownTextIsNoLineStart() {
+        var text = CursorText(before: "ครับ\nP05 กิน", after: "")
+        XCTAssertNil(text.moveLines(by: -1))
+        XCTAssertEqual(text.before, "ครับ\nP05 กิน")
+        XCTAssertEqual(text.crossLine(down: false), .crossed(-"\nP05 กิน".utf16.count))
+        var paragraph = CursorText(before: "station. S05 กิน", after: "ข้าว Keyboards should feel smooth. ")
+        XCTAssertNil(paragraph.crossLine(down: false))
+        XCTAssertNil(paragraph.crossLine(down: true))
+        XCTAssertEqual(paragraph.before, "station. S05 กิน")
+    }
+
+    /// Hosts stop after the cursor at a line break they hide, so a run-on line ends where the known text does.
+    func testARunOnLineEndsAtTheEdgeOfTheKnownText() {
+        var text = CursorText(before: "กิน", after: "ข้าวเย็น")
+        XCTAssertEqual(text.crossLine(down: true), .edge("ข้าวเย็น".utf16.count))
+        var long = CursorText(before: "", after: String(repeating: "ก", count: 300))
+        XCTAssertNil(long.crossLine(down: true))
+    }
+
+    func testAReportMergesOnlyWhereItAgrees() {
+        var text = CursorText(before: "station. S05 กิน", after: "ข้าว")
+        XCTAssertTrue(text.merge(CursorText(before: "near the station. S05 กินข้", after: "าวกัน"), at: 2))
+        XCTAssertEqual(text, CursorText(before: "near the station. S05 กิน", after: "ข้าวกัน"))
+        XCTAssertFalse(text.merge(CursorText(before: "the station. S05 กิ", after: "นข้าว"), at: 0))
+        XCTAssertEqual(text, CursorText(before: "near the station. S05 กิน", after: "ข้าวกัน"))
+    }
+
     func testALastLineThatMayGoOnIsUnknownPastItsEnd() {
         var text = CursorText(before: "abcdef", after: "\nab")
         XCTAssertNil(text.moveLines(by: 1))
@@ -100,61 +128,25 @@ final class CursorTextTests: XCTestCase {
     }
 }
 
-/// A host as the iOS 26.4 simulator showed one: the cursor's line, with the line break before it, and nothing more.
-private struct Host {
-    let text: String
-    var cursor: Int
-    var reads = 0
-
-    init(_ text: String, cursorAfter prefix: String) {
-        self.text = text
-        cursor = prefix.utf16.count
-    }
-
-    var beforeCursor: String { String(decoding: Array(text.utf16)[..<cursor], as: UTF16.self) }
-
-    var shown: CursorText {
-        let before = beforeCursor
-        let after = String(decoding: Array(text.utf16)[cursor...], as: UTF16.self)
-        return CursorText(before: before.lastIndex(where: \.isNewline).map { String(before[$0...]) } ?? before,
-                          after: String(after.prefix { !$0.isNewline }))
-    }
-
-    mutating func run(_ commands: [CursorWalk.Command], _ walk: inout CursorWalk) {
-        for command in commands {
-            switch command {
-            case .adjust(let offset): cursor = min(max(cursor + offset, 0), text.utf16.count)
-            case .read:
-                reads += 1
-                run(walk.read(shown), &walk)
-            }
-        }
-    }
-
-    mutating func move(_ walk: inout CursorWalk, columns: Int = 0, lines: Int = 0) {
-        run(walk.move(columns: columns, lines: lines), &walk)
-    }
-}
-
 final class CursorWalkTests: XCTestCase {
     private let text = "สวัสดีครับ\nกินข้าวเย็น\nab"
 
     func testDownOntoAHiddenLineKeepsTheColumn() {
-        var host = Host(text, cursorAfter: "สวั")
+        var host = CuttingHost(text, cursorAfter: "สวั")
         var walk = CursorWalk(host.shown)
         host.move(&walk, lines: 1)
         XCTAssertEqual(host.beforeCursor, "สวัสดีครับ\nกิน")
     }
 
     func testUpOntoAHiddenLineKeepsTheColumn() {
-        var host = Host(text, cursorAfter: "สวัสดีครับ\nกินข้าว")
+        var host = CuttingHost(text, cursorAfter: "สวัสดีครับ\nกินข้าว")
         var walk = CursorWalk(host.shown)
         host.move(&walk, lines: -1)
         XCTAssertEqual(host.beforeCursor, String("สวัสดีครับ".prefix("กินข้าว".count)))
     }
 
     func testAShorterLineOnTheWayKeepsTheColumnForTheNext() {
-        var host = Host(text, cursorAfter: "สวัสดีค")
+        var host = CuttingHost(text, cursorAfter: "สวัสดีค")
         var walk = CursorWalk(host.shown)
         host.move(&walk, lines: 2)
         XCTAssertEqual(host.beforeCursor, text)
@@ -168,24 +160,27 @@ final class CursorWalkTests: XCTestCase {
     }
 
     func testWithNoLineThereTheCursorStaysPut() {
-        var host = Host(text, cursorAfter: "สวัสดีครับ\nกินข้าวเย็น\na")
+        var host = CuttingHost(text, cursorAfter: "สวัสดีครับ\nกินข้าวเย็น\na")
         var walk = CursorWalk(host.shown)
         host.move(&walk, lines: 1)
         XCTAssertEqual(host.beforeCursor, "สวัสดีครับ\nกินข้าวเย็น\na")
-        var top = Host(text, cursorAfter: "สวั")
+        var top = CuttingHost(text, cursorAfter: "สวั")
         walk = CursorWalk(top.shown)
         top.move(&walk, lines: -1)
         XCTAssertEqual(top.beforeCursor, "สวั")
     }
 
     func testAHostThatShowsNothingLeavesTheCursorAlone() {
-        var walk = CursorWalk(CursorText(before: "", after: ""))
-        XCTAssertEqual(walk.move(columns: 0, lines: 1), [])
-        XCTAssertEqual(walk.move(columns: 0, lines: -1), [])
+        var host = CuttingHost("", cursorAfter: "")
+        var walk = CursorWalk(host.shown)
+        host.move(&walk, lines: 1)
+        host.move(&walk, lines: -1)
+        host.move(&walk, columns: 3)
+        XCTAssertEqual(host.cursor, 0)
     }
 
     func testSidewaysCrossesALineBreakTheHostHides() {
-        var host = Host(text, cursorAfter: "สวัสดีค")
+        var host = CuttingHost(text, cursorAfter: "สวัสดีค")
         var walk = CursorWalk(host.shown)
         host.move(&walk, columns: 4)
         XCTAssertEqual(host.beforeCursor, "สวัสดีครับ\nกิ")
@@ -194,7 +189,7 @@ final class CursorWalkTests: XCTestCase {
     }
 
     func testTheEndOfTheTextStopsASidewaysWalk() {
-        var host = Host(text, cursorAfter: "สวัสดีครับ\nกินข้าวเย็น\na")
+        var host = CuttingHost(text, cursorAfter: "สวัสดีครับ\nกินข้าวเย็น\na")
         var walk = CursorWalk(host.shown)
         host.move(&walk, columns: 5)
         XCTAssertEqual(host.beforeCursor, text)
@@ -203,26 +198,27 @@ final class CursorWalkTests: XCTestCase {
     }
 
     func testMovesWhileTheHostCatchesUpAreKept() {
-        var host = Host(text, cursorAfter: "สวั")
+        var host = CuttingHost(text, cursorAfter: "สวั")
+        host.lag = 5
         var walk = CursorWalk(host.shown)
-        let crossing = walk.move(columns: 0, lines: 1)
-        XCTAssertEqual(walk.move(columns: 2, lines: 0), [])
-        host.run(crossing, &walk)
+        host.move(&walk, lines: 1, rest: false)
+        host.move(&walk, columns: 2)
         XCTAssertEqual(host.beforeCursor, "สวัสดีครับ\nกินข้า")
     }
 
-    func testWithinTheShownLineNoReadIsNeeded() {
-        var host = Host(text, cursorAfter: "สวั")
+    func testWithinTheShownTextAMoveNeverWaitsForTheHost() {
+        var host = CuttingHost(text, cursorAfter: "สวั")
+        host.lag = 100
         var walk = CursorWalk(host.shown)
-        host.move(&walk, columns: 3)
-        host.move(&walk, columns: -1)
+        host.move(&walk, columns: 3, rest: false)
+        host.move(&walk, columns: -1, rest: false)
         XCTAssertEqual(host.beforeCursor, "สวัสดี")
-        XCTAssertEqual(host.reads, 0)
     }
 }
 
 /// A host that cuts what it shows the way the hosts in the iOS 26.4 simulator did (build/verify-evidence/trackpad-v3).
-/// Adjusts past either end of the text are clamped, reads can lag the adjusts, and an adjust can be dropped.
+/// It reports its text after every adjust, `lag` finger moves late, and once more when the finger stops. Adjusts past
+/// either end of the text are clamped, and it can drop one.
 private struct CuttingHost {
     enum Cut {
         /// Messages and UITextView: the sentence before the cursor's and the cursor's own up to it, then the rest of
@@ -230,12 +226,14 @@ private struct CuttingHost {
         /// so Thai text runs on. At most 300 UTF-16 units a side.
         case sentences
         /// Safari: about this many characters before the cursor, from a word start, and the rest of the sentence after.
+        /// It reports each adjust twice, first with the cursor where it was.
         case limited(Int)
+        /// The cursor's line, with the line break before it.
+        case lines
     }
 
     let text: String
     let cut: Cut
-    /// Reads show the cursor as it was this many adjusts ago.
     var lag = 0
     /// The adjust, counted from 0, that the host drops.
     var drops: Int?
@@ -243,16 +241,24 @@ private struct CuttingHost {
     /// other marks is one more: น้ำ is น้ then ำ.
     var countsCaretStops = false
     private(set) var cursor: Int
-    private var history: [Int]
     private(set) var splitACharacter = false
+    private var adjusts = 0
+    private var tick = 0
+    /// Reports not yet delivered: when, and where the cursor was.
+    private var reports: [(tick: Int, cursor: Int)] = []
 
     init(_ text: String, _ cut: Cut, cursorAfter characters: Int, lag: Int = 0) {
         self.text = text
         self.cut = cut
         self.lag = lag
         cursor = text.prefix(characters).utf16.count
-        history = [cursor]
     }
+
+    init(_ text: String, _ cut: Cut = .lines, cursorAfter prefix: String) {
+        self.init(text, cut, cursorAfter: prefix.count)
+    }
+
+    var beforeCursor: String { String(decoding: Array(text.utf16)[..<cursor], as: UTF16.self) }
 
     /// Characters before the cursor, or nil when it sits inside one.
     var column: Int? {
@@ -262,19 +268,7 @@ private struct CuttingHost {
         return before.count + after.count == text.count ? before.count : nil
     }
 
-    mutating func adjust(_ offset: Int) {
-        defer { history.append(cursor) }
-        if drops == history.count - 1 { return }
-        if countsCaretStops {
-            let stops = caretStops
-            var at = stops.lastIndex { $0 <= cursor } ?? 0
-            if offset < 0, stops[at] < cursor { at += 1 }
-            cursor = stops[min(max(at + offset, 0), stops.count - 1)]
-        } else {
-            cursor = min(max(cursor + offset, 0), text.utf16.count)
-        }
-        if column == nil { splitACharacter = true }
-    }
+    var shown: CursorText { shown(at: cursor) }
 
     /// Where Safari's caret can stop, in UTF-16 units.
     private var caretStops: [Int] {
@@ -290,9 +284,6 @@ private struct CuttingHost {
         }
         return stops
     }
-
-    /// What a read shows now, `lag` adjusts behind.
-    var shown: CursorText { shown(at: history[max(0, history.count - 1 - lag)]) }
 
     func shown(at cursor: Int) -> CursorText {
         let units = Array(text.utf16)
@@ -317,27 +308,64 @@ private struct CuttingHost {
         case .limited(let count):
             start = max(0, at - count)
             while start > 0, start < at, !all[start - 1].isWhitespace { start += 1 }
+        case .lines:
+            start = at
+            while start > 0, !all[start - 1].isNewline { start -= 1 }
+            start = max(0, start - 1)
         }
         var end = at
-        while end < all.count, !all[end].isNewline, end == at || !endsSentence(end) { end += 1 }
+        while end < all.count, !all[end].isNewline, end == at || cut.endsAtNewline || !endsSentence(end) { end += 1 }
         let before = Array(String(all[start..<at]).utf16).suffix(300)
         let after = Array(String(all[at..<end]).utf16).prefix(300)
         return CursorText(before: String(decoding: before, as: UTF16.self), after: String(decoding: after, as: UTF16.self))
     }
 
-    mutating func run(_ commands: [CursorWalk.Command], _ walk: inout CursorWalk) {
-        for command in commands {
-            switch command {
-            case .adjust(let offset): adjust(offset)
-            case .read: run(walk.read(shown), &walk)
+    mutating func adjust(_ offset: Int, _ walk: inout CursorWalk) {
+        guard offset != 0 else { return }
+        if case .limited = cut { reports.append((tick, cursor)) }
+        if drops != adjusts {
+            if countsCaretStops {
+                let stops = caretStops
+                var at = stops.lastIndex { $0 <= cursor } ?? 0
+                if offset < 0, stops[at] < cursor { at += 1 }
+                cursor = stops[min(max(at + offset, 0), stops.count - 1)]
+            } else {
+                cursor = min(max(cursor + offset, 0), text.utf16.count)
             }
+        }
+        adjusts += 1
+        if column == nil { splitACharacter = true }
+        reports.append((tick, cursor))
+        deliver(&walk)
+    }
+
+    private mutating func deliver(_ walk: inout CursorWalk) {
+        while let report = reports.first, report.tick <= tick - lag {
+            reports.removeFirst()
+            adjust(walk.read(shown(at: report.cursor)), &walk)
         }
     }
 
-    /// The finger moves `steps` times by `columns` and `lines`.
-    mutating func drag(_ walk: inout CursorWalk, columns: Int = 0, lines: Int = 0, steps: Int = 1) {
-        for _ in 0..<steps { run(walk.move(columns: columns, lines: lines), &walk) }
+    /// The finger moves `steps` times by `columns` and `lines`, then rests until the host settles.
+    mutating func move(_ walk: inout CursorWalk, columns: Int = 0, lines: Int = 0, steps: Int = 1, rest: Bool = true) {
+        for _ in 0..<steps {
+            tick += 1
+            deliver(&walk)
+            adjust(walk.move(columns: columns, lines: lines), &walk)
+        }
+        if rest { self.rest(&walk) }
     }
+
+    /// The finger stops: every report arrives, then the settled one.
+    mutating func rest(_ walk: inout CursorWalk) {
+        tick += lag + 1
+        deliver(&walk)
+        for _ in 0..<4 { adjust(walk.settle(shown), &walk) }
+    }
+}
+
+private extension CuttingHost.Cut {
+    var endsAtNewline: Bool { if case .lines = self { true } else { false } }
 }
 
 final class RealHostTests: XCTestCase {
@@ -358,7 +386,7 @@ final class RealHostTests: XCTestCase {
             for lines in [-1, 1, -2, 2] {
                 var host = CuttingHost(paragraph, cut, cursorAfter: 300)
                 var walk = walk(host)
-                host.drag(&walk, lines: lines)
+                host.move(&walk, lines: lines)
                 XCTAssertEqual(host.column, 300, "\(cut) \(lines)")
             }
         }
@@ -369,12 +397,37 @@ final class RealHostTests: XCTestCase {
             for lag in [0, 1, 3] {
                 var host = CuttingHost(paragraph, cut, cursorAfter: 10, lag: lag)
                 var walk = walk(host)
-                host.drag(&walk, columns: 3, steps: 50)
+                host.move(&walk, columns: 3, steps: 50)
                 XCTAssertEqual(host.column, 160, "\(cut) lag \(lag)")
-                host.drag(&walk, columns: -4, steps: 40)
+                host.move(&walk, columns: -4, steps: 40)
                 XCTAssertEqual(host.column, 0, "\(cut) lag \(lag)")
                 XCTAssertFalse(host.splitACharacter, "\(cut) lag \(lag)")
             }
+        }
+    }
+
+    /// Measured in Safari: an adjust of 3 over น้ำ moved the cursor 4 UTF-16 units, and one of 2 over ดี moved 3.
+    /// Safari counts caret stops, so a walk in UTF-16 units runs ahead of the finger on every Thai character with
+    /// marks, and can land inside one.
+    func testAHostThatCountsCaretStopsMovesOneCharacterAtATime() {
+        let text = String(repeating: "น้ำใจ ดีที่ ก่ำ ทำ ", count: 8)
+        for lag in [0, 1] {
+            var host = CuttingHost(text, .limited(40), cursorAfter: 0, lag: lag)
+            host.countsCaretStops = true
+            var walk = walk(host)
+            var landed: [Int?] = []
+            for _ in 0..<40 {
+                host.move(&walk, columns: 1, rest: false)
+                landed.append(host.column)
+            }
+            // Past the first step, which shows how the host counts, each step lands one character on.
+            if lag == 0 { XCTAssertEqual(Array(landed.dropFirst()), (2...40).map { $0 }) }
+            host.rest(&walk)
+            XCTAssertEqual(host.column, 40, "lag \(lag)")
+            for _ in 0..<40 { host.move(&walk, columns: -1, rest: false) }
+            host.rest(&walk)
+            XCTAssertEqual(host.column, 0, "lag \(lag)")
+            XCTAssertFalse(host.splitACharacter, "lag \(lag)")
         }
     }
 
@@ -384,61 +437,41 @@ final class RealHostTests: XCTestCase {
             for lag in [0, 2] {
                 var host = CuttingHost(paragraph, cut, cursorAfter: count - 5, lag: lag)
                 var walk = walk(host)
-                host.drag(&walk, columns: 2, steps: 6)
+                host.move(&walk, columns: 2, steps: 6)
                 XCTAssertEqual(host.column, count, "\(cut) lag \(lag)")
-                host.drag(&walk, columns: -1, steps: 3)
+                host.move(&walk, columns: -1, steps: 3)
                 XCTAssertEqual(host.column, count - 3, "\(cut) lag \(lag)")
 
                 var start = CuttingHost(paragraph, cut, cursorAfter: 4, lag: lag)
                 walk = self.walk(start)
-                start.drag(&walk, columns: -2, steps: 5)
+                start.move(&walk, columns: -2, steps: 5)
                 XCTAssertEqual(start.column, 0, "\(cut) lag \(lag)")
-                start.drag(&walk, columns: 1, steps: 2)
+                start.move(&walk, columns: 1, steps: 2)
                 XCTAssertEqual(start.column, 2, "\(cut) lag \(lag)")
             }
         }
     }
 
-    /// The host drops one adjust. The walk must move on from where the host's cursor really is, over Thai without
-    /// splitting it.
+    /// The host drops one adjust. A report cannot tell a host one step behind from a late report, so the walk learns
+    /// it once the host settles, and moves on from where the host's cursor really is, over Thai without splitting it.
     func testADroppedAdjustIsCaughtWhenTheHostSettles() {
         for cut in [CuttingHost.Cut.sentences, .limited(40)] {
             var host = CuttingHost(paragraph, cut, cursorAfter: 0)
             host.drops = 1
             var walk = walk(host)
-            host.drag(&walk, columns: 1, steps: 3)
+            host.move(&walk, columns: 1, steps: 3)
             XCTAssertEqual(host.column, 2, "\(cut)")
-            host.drag(&walk, columns: 1, steps: 6)
+            host.move(&walk, columns: 1, steps: 6)
             XCTAssertEqual(host.column, 8, "\(cut)")
             XCTAssertFalse(host.splitACharacter, "\(cut)")
         }
-    }
-
-    /// Measured in Safari: an adjust of 3 over น้ำ moved the cursor 4 UTF-16 units, and one of 2 over ดี moved 3.
-    /// Safari counts caret stops, so a walk in UTF-16 units runs ahead of the finger on every Thai character with
-    /// marks, and can land inside one.
-    func testAHostThatCountsCaretStopsMovesOneCharacterAtATime() {
-        let text = String(repeating: "น้ำใจ ดีที่ ก่ำ ทำ ", count: 8)
-        var host = CuttingHost(text, .limited(40), cursorAfter: 0)
-        host.countsCaretStops = true
-        var walk = walk(host)
-        var landed: [Int?] = []
-        for _ in 0..<40 {
-            host.drag(&walk, columns: 1)
-            landed.append(host.column)
-        }
-        // Past the first step, which shows how the host counts, each step lands one character on.
-        XCTAssertEqual(Array(landed.dropFirst()), (2...40).map { $0 })
-        host.drag(&walk, columns: -1, steps: 40)
-        XCTAssertEqual(host.column, 0)
-        XCTAssertFalse(host.splitACharacter)
     }
 
     func testUpFromAHardLineLandsOnTheLineAbove() {
         let starts = lines.split(separator: "\n").reduce(into: [0]) { $0.append($0.last! + $1.count + 1) }
         var host = CuttingHost(lines, .sentences, cursorAfter: starts[3] + 10)
         var walk = walk(host)
-        host.drag(&walk, lines: -1)
+        host.move(&walk, lines: -1)
         XCTAssertEqual(host.column, starts[2] + 10)
     }
 
@@ -446,25 +479,30 @@ final class RealHostTests: XCTestCase {
     /// the start of the shown text. The cursor lands on the right line.
     func testWhereTheHostHidesTheLineStartALineMoveStaysOnTheNextLine() {
         let starts = lines.split(separator: "\n").reduce(into: [0]) { $0.append($0.last! + $1.count + 1) }
-        var up = CuttingHost(lines, .limited(40), cursorAfter: starts[3] + 10)
-        var walk = walk(up)
-        up.drag(&walk, lines: -1)
-        XCTAssert((starts[2]..<starts[3]).contains(up.column ?? -1), "up: \(up.column ?? -1)")
-        var down = CuttingHost(lines, .limited(40), cursorAfter: starts[2] - 1)
-        walk = self.walk(down)
-        down.drag(&walk, lines: 1)
-        XCTAssert((starts[2]..<starts[3]).contains(down.column ?? -1), "down: \(down.column ?? -1)")
+        for lag in [0, 1] {
+            var up = CuttingHost(lines, .limited(40), cursorAfter: starts[3] + 10, lag: lag)
+            var walk = walk(up)
+            up.move(&walk, lines: -1)
+            XCTAssert((starts[2]..<starts[3]).contains(up.column ?? -1), "up lag \(lag): \(up.column ?? -1)")
+            var down = CuttingHost(lines, .limited(40), cursorAfter: starts[2] - 1, lag: lag)
+            walk = self.walk(down)
+            down.move(&walk, lines: 1)
+            XCTAssert((starts[2]..<starts[3]).contains(down.column ?? -1), "down lag \(lag): \(down.column ?? -1)")
+        }
     }
 
     /// Measured in a UITextView: past the line break the host showed only the new line's first sentence, and the
     /// cursor stopped at its end, 18 characters short of the column.
     func testDownFromTheEndOfALineCrossesTheBreakTheHostHides() {
         let starts = lines.split(separator: "\n").reduce(into: [0]) { $0.append($0.last! + $1.count + 1) }
-        var host = CuttingHost(lines, .sentences, cursorAfter: starts[2] - 1)
-        var walk = walk(host)
-        host.drag(&walk, lines: 1)
-        XCTAssertEqual(host.column, starts[3] - 1)
+        for lag in [0, 1] {
+            var host = CuttingHost(lines, .sentences, cursorAfter: starts[2] - 1, lag: lag)
+            var walk = walk(host)
+            host.move(&walk, lines: 1)
+            XCTAssertEqual(host.column, starts[3] - 1, "lag \(lag)")
+        }
     }
+
 }
 
 final class SpaceTrackpadTests: XCTestCase {
@@ -543,7 +581,7 @@ final class SpaceTrackpadTests: XCTestCase {
 
     func testADriftingDragWalksAlongItsLineAndNeverJumps() {
         let line = "สวัสดีครับ วันนี้อากาศดีมาก"
-        var host = Host(line + "\nกินข้าวเย็น\nab", cursorAfter: "")
+        var host = CuttingHost(line + "\nกินข้าวเย็น\nab", cursorAfter: "")
         var walk = CursorWalk(host.shown)
         var pad = held()
         let moved = drag(CGVector(dx: 92, dy: 0), over: 3, on: &pad) { CGVector(dx: 0, dy: 40 * $0) }

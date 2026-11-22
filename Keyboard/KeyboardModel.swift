@@ -1,5 +1,6 @@
 import CoreGraphics
 import Foundation
+import os
 import WaoCore
 
 /// Everything the keyboard shows. Dictation phases are derived from the app's `state.json`, matched against the
@@ -29,8 +30,11 @@ final class KeyboardModel: ObservableObject {
     /// How long the app gets to answer a start command before we assume its session is gone.
     static let startTimeout: TimeInterval = 1.5
     static let contextSettle: TimeInterval = 0.15
-    /// The host's text caught up with a cursor move within 25 ms in the iOS 26.4 simulator.
-    static let cursorSettle: TimeInterval = 0.06
+    /// Every host in the iOS 26.4 simulator reported a cursor move within 25 ms. After this long without one, the
+    /// host's text is where its cursor really is.
+    static let hostSettle: TimeInterval = 0.2
+    /// Lengths and offsets only: the text is the user's typing.
+    private static let trackpadLog = Logger(subsystem: "com.peerasak.wao.keyboard", category: "trackpad")
     static let fullAccessNotice = "เปิด \"อนุญาตการเข้าถึงแบบเต็ม\" ให้เว่าก่อน: การตั้งค่า > ทั่วไป > แป้นพิมพ์ > แป้นพิมพ์ > เว่า"
 
     @Published private(set) var mode: KeyboardMode = .typing
@@ -58,6 +62,7 @@ final class KeyboardModel: ObservableObject {
     var openApp: () -> Bool = { false }
 
     private var cursorWalk: CursorWalk?
+    private var hostSettled: DispatchWorkItem?
     private var bridge: Bridge?
     private var stateObserver: DarwinObserver?
     private var levelTimer: Timer?
@@ -104,31 +109,53 @@ final class KeyboardModel: ObservableObject {
     }
 
     func beginCursorTracking() {
-        cursorWalk = CursorWalk(readCursorText())
+        let shown = readCursorText()
+        Self.trackpadLog.debug("begin before=\(shown.before.utf16.count) after=\(shown.after.utf16.count)")
+        cursorWalk = CursorWalk(shown)
         tracksCursor = true
     }
 
     func moveCursor(columns: Int, lines: Int) {
-        perform(cursorWalk?.move(columns: columns, lines: lines) ?? [])
+        guard var walk = cursorWalk else { return }
+        let offset = walk.move(columns: columns, lines: lines)
+        cursorWalk = walk
+        adjust(offset, after: "move \(columns),\(lines)")
     }
 
-    private func perform(_ commands: [CursorWalk.Command]) {
-        for command in commands {
-            switch command {
-            case .adjust(let offset):
-                adjustCursor(offset)
-            case .read:
-                DispatchQueue.main.asyncAfter(deadline: .now() + Self.cursorSettle) { [weak self] in
-                    guard let self else { return }
-                    perform(cursorWalk?.read(readCursorText()) ?? [])
-                }
-            }
-        }
+    /// The host reported a change. While the cursor tracks, that is only news for the walk: the suggestions wait
+    /// for the drag to end, so the keyboard does not redraw on every step.
+    func hostChanged() {
+        guard var walk = cursorWalk else { return refreshContext() }
+        let shown = readCursorText()
+        let offset = walk.read(shown)
+        cursorWalk = walk
+        adjust(offset, after: "read before=\(shown.before.utf16.count) after=\(shown.after.utf16.count)")
+    }
+
+    private func hostSettledDown() {
+        guard var walk = cursorWalk else { return }
+        let shown = readCursorText()
+        let offset = walk.settle(shown)
+        cursorWalk = walk
+        adjust(offset, after: "settle before=\(shown.before.utf16.count) after=\(shown.after.utf16.count)")
+    }
+
+    private func adjust(_ offset: Int, after event: String) {
+        Self.trackpadLog.debug("\(event, privacy: .public) adjust=\(offset)")
+        guard offset != 0 else { return }
+        adjustCursor(offset)
+        hostSettled?.cancel()
+        let settled = DispatchWorkItem { [weak self] in self?.hostSettledDown() }
+        hostSettled = settled
+        DispatchQueue.main.asyncAfter(deadline: .now() + Self.hostSettle, execute: settled)
     }
 
     func endCursorTracking() {
         guard tracksCursor else { return }
+        Self.trackpadLog.debug("end")
         cursorWalk = nil
+        hostSettled?.cancel()
+        hostSettled = nil
         tracksCursor = false
         DispatchQueue.main.asyncAfter(deadline: .now() + Self.contextSettle) { [weak self] in self?.refreshContext() }
     }
