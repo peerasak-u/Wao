@@ -2,8 +2,7 @@ import SwiftUI
 import WaoCore
 
 enum Key {
-    static let capHeight: CGFloat = 42
-    /// Around each cap in the voice page's row; the typing pages place their caps with `KeyLayout`.
+    /// The default room around a cap; the typing pages place their caps with `KeyLayout` and pass their own.
     static let gap = CGSize(width: 5, height: 8)
     static let gapInsets = EdgeInsets(top: gap.height / 2, leading: gap.width / 2, bottom: gap.height / 2, trailing: gap.width / 2)
     /// The system keyboard draws every key, letters and specials alike, in one flat colour without a shadow.
@@ -28,25 +27,6 @@ extension View {
             .background(fill, in: RoundedRectangle(cornerRadius: Key.cornerRadius))
             .padding(insets)
             .contentShape(Rectangle())
-    }
-}
-
-struct KeyCap: View {
-    let label: String
-    var font: Font = .loopless(17)
-    var insets = Key.gapInsets
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            Text(label)
-                .font(font)
-                .minimumScaleFactor(0.5)
-                .lineLimit(1)
-                .keyLabel()
-        }
-        .buttonStyle(KeyPress(insets: insets))
-        .feedbackOnKeyDown()
     }
 }
 

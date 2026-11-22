@@ -8,8 +8,6 @@ struct KeyboardView: View {
     var body: some View {
         ZStack {
             switch model.mode {
-            case .voice:
-                VoiceView(model: model, globe: globe)
             case .typing:
                 TypingView(model: model, globe: globe)
             case .dictation(let dictation):
@@ -33,47 +31,6 @@ struct KeyboardView: View {
     }
 }
 
-private struct VoiceView: View {
-    @ObservedObject var model: KeyboardModel
-    let globe: () -> UIView?
-
-    var body: some View {
-        VStack(spacing: 8) {
-            Spacer()
-            Button(action: model.micTapped) {
-                Image(systemName: "mic.fill")
-                    .font(.system(size: 40, weight: .semibold))
-                    .frame(width: 112, height: 112)
-                    .foregroundStyle(Color(.systemBackground))
-                    .background(Color(.label), in: Circle())
-                    .shadow(color: .black.opacity(0.25), radius: 0, y: 1)
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Dictation")
-            Text("แตะเพื่อพูด")
-                .font(.loopless(15))
-                .foregroundStyle(Color(.secondaryLabel))
-            Spacer()
-            HStack(spacing: 0) {
-                if model.showsGlobe {
-                    GlobeKey(make: globe).padded().frame(width: 46)
-                }
-                SpecialKey(systemImage: "keyboard", action: model.showTyping)
-                    .frame(width: 52)
-                    .accessibilityLabel("Keyboard")
-                KeyCap(label: "เว้นวรรค") { model.insert(" ") }
-                DeleteKey(action: model.deleteBackward)
-                    .frame(width: 56)
-                SpecialKey(systemImage: "return") { model.insert("\n") }
-                    .frame(width: 68)
-            }
-            .frame(height: Key.capHeight + Key.gap.height)
-        }
-        .padding(.top, 6)
-        .padding(.bottom, 2)
-    }
-}
-
 /// ✕ / waveform / ✓ over what has been heard so far, in the style of the reference screenshot.
 private struct DictationView: View {
     @ObservedObject var model: KeyboardModel
@@ -84,7 +41,7 @@ private struct DictationView: View {
         VStack(spacing: 0) {
             Group {
                 if let heard = dictation.heard, !heard.text.isEmpty {
-                    HeardText(heard: heard, settled: !isListening)
+                    HeardText(heard: heard, settled: false)
                 } else {
                     HStack(spacing: 8) {
                         if !isListening { ProgressView() }
@@ -132,9 +89,8 @@ private struct DictationView: View {
 
     private var caption: String {
         switch dictation.phase {
-        case .starting: "กำลังเริ่ม..."
+        case .queued, .starting: "กำลังเริ่ม..."
         case .listening: "กำลังฟัง..."
-        case .transcribing: "กำลังถอดเสียง..."
         }
     }
 }

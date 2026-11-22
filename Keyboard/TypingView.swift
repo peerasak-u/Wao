@@ -2,7 +2,7 @@ import CoreText
 import SwiftUI
 import WaoCore
 
-/// Thai Kedmanee, QWERTY and symbols: the page the keyboard opens on. With Full Access its mic key leads to voice.
+/// Thai Kedmanee, QWERTY and symbols: the page the keyboard opens on. With Full Access its mic key starts dictation.
 struct TypingView: View {
     @ObservedObject var model: KeyboardModel
     let globe: () -> UIView?
@@ -16,7 +16,10 @@ struct TypingView: View {
             let grid = KeyLayout(width: geo.size.width, screenWidth: screen, rows: model.typing.rows)
             VStack(spacing: 0) {
                 let completions = model.completions
-                Group {
+                HStack(spacing: 0) {
+                    if model.pending != nil {
+                        TranscribingMark(captioned: completions.isEmpty)
+                    }
                     if !completions.isEmpty {
                         SuggestionBar(completions: completions, choose: { model.insert($0.remainder) },
                                       explain: model.hasFullAccess ? nil : { explaining = true })
@@ -79,7 +82,7 @@ struct TypingView: View {
             GlobeKey(make: globe).padded(row.leading[2].insets).placed(row.leading[2])
         }
         if model.hasFullAccess, let slot = row.leading.last {
-            SpecialKey(systemImage: "mic", font: KeyFont.icon(narrow: false), insets: slot.insets, action: model.showVoice)
+            SpecialKey(systemImage: "mic", font: KeyFont.icon(narrow: false), insets: slot.insets, action: model.micTapped)
                 .accessibilityLabel("Dictation")
                 .placed(slot)
         }
@@ -272,6 +275,26 @@ private struct KeyPopup: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color(.systemGray4), in: RoundedRectangle(cornerRadius: 8))
             .shadow(color: .black.opacity(0.35), radius: 4, y: 2)
+    }
+}
+
+/// Text confirmed with ✓ is still on its way. It sits beside the suggestions, and gives up its caption to them.
+private struct TranscribingMark: View {
+    let captioned: Bool
+
+    var body: some View {
+        HStack(spacing: 6) {
+            ProgressView().controlSize(.small)
+            if captioned {
+                Text("กำลังถอดเสียง")
+                    .font(.loopless(13))
+                    .foregroundStyle(Color(.secondaryLabel))
+            }
+        }
+        .padding(.leading, 10)
+        .padding(.trailing, captioned ? 0 : 4)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("กำลังถอดเสียง")
     }
 }
 
