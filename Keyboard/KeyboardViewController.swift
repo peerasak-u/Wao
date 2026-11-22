@@ -20,6 +20,14 @@ final class KeyboardViewController: UIInputViewController {
             self?.textDocumentProxy.deleteBackward()
             self?.model.refreshContext()
         }
+        model.adjustCursor = { [weak self] in
+            self?.textDocumentProxy.adjustTextPosition(byCharacterOffset: $0)
+            self?.model.refreshContext()
+        }
+        model.readCursorText = { [weak self] in
+            CursorText(before: self?.textDocumentProxy.documentContextBeforeInput ?? "",
+                       after: self?.textDocumentProxy.documentContextAfterInput ?? "")
+        }
         model.readContext = { [weak self] in self?.textDocumentProxy.documentContextBeforeInput ?? "" }
         model.openApp = { [weak self] in self?.openContainingApp() ?? false }
         model.screenWidth = UIScreen.main.bounds.width

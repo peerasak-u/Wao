@@ -57,6 +57,7 @@ struct TypingView: View {
                 .frame(width: grid.size.width, height: grid.size.height, alignment: .topLeading)
             }
         }
+        .cursorTracking(model)
         .overlay {
             if explaining {
                 FullAccessHelp { explaining = false }
@@ -82,7 +83,7 @@ struct TypingView: View {
                 .accessibilityLabel("Dictation")
                 .placed(slot)
         }
-        SpaceBar(hint: typing.spaceHint, insets: row.space.insets) { model.insert(" ") }
+        SpaceKey(model: model, insets: row.space.insets)
             .placed(row.space)
         SpecialKey(systemImage: "return.left", font: KeyFont.icon(narrow: false), insets: row.enter.insets) { model.insert("\n") }
             .accessibilityLabel("Return")
@@ -112,6 +113,7 @@ struct TypingView: View {
                                 .offset(y: style.lift)
                         }
                     }
+                    .keyLabel()
                     .frame(width: cap.width, height: cap.height)
                     .background(pressed?.id == key.id ? Key.pressedFill : Key.fill, in: RoundedRectangle(cornerRadius: Key.cornerRadius))
                     .offset(x: cap.minX, y: cap.minY)
@@ -234,28 +236,6 @@ struct LoneMark: Shape {
     func path(in rect: CGRect) -> Path {
         let ink = outline.boundingRect
         return outline.offsetBy(dx: rect.midX - ink.midX, dy: rect.midY + drop * rect.height - ink.midY)
-    }
-}
-
-private struct SpaceBar: View {
-    let hint: String
-    let insets: EdgeInsets
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            Color.clear
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .overlay(alignment: .bottomTrailing) {
-                    Text(hint)
-                        .font(hint == "A" ? .system(size: 12, weight: .light).width(.compressed) : .custom("Thonburi", size: 12))
-                        .foregroundStyle(Color(.tertiaryLabel))
-                        .padding(.trailing, 6)
-                        .padding(.bottom, 3)
-                }
-        }
-        .buttonStyle(KeyPress(insets: insets))
-        .accessibilityLabel("space")
     }
 }
 
