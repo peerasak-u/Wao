@@ -20,10 +20,7 @@ final class KeyboardViewController: UIInputViewController {
             self?.textDocumentProxy.deleteBackward()
             self?.model.refreshContext()
         }
-        model.adjustCursor = { [weak self] in
-            self?.textDocumentProxy.adjustTextPosition(byCharacterOffset: $0)
-            self?.model.refreshContext()
-        }
+        model.adjustCursor = { [weak self] in self?.textDocumentProxy.adjustTextPosition(byCharacterOffset: $0) }
         model.readCursorText = { [weak self] in
             CursorText(before: self?.textDocumentProxy.documentContextBeforeInput ?? "",
                        after: self?.textDocumentProxy.documentContextAfterInput ?? "")
@@ -63,7 +60,7 @@ final class KeyboardViewController: UIInputViewController {
     /// The cursor moved, or the host changed the text.
     override func textDidChange(_ textInput: UITextInput?) {
         super.textDidChange(textInput)
-        model.refreshContext()
+        model.hostChanged()
     }
 
     /// `needsInputModeSwitchKey` is only reliable once layout starts; on devices where iOS draws its own globe

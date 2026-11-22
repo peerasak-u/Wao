@@ -3,6 +3,10 @@ import Foundation
 
 /// The text either side of the cursor, as far as the host shows it. Positions count characters (grapheme clusters),
 /// so the cursor never lands between a Thai consonant and the vowel or tone mark sitting on it.
+///
+/// Where the shown text stops says nothing about lines. In the iOS 26.4 simulator Messages and UITextView stopped at
+/// a sentence end, at a line break they did not show, or after 300 UTF-16 units; Safari after about 50 characters.
+/// So a line starts or ends only at a line break the text shows.
 public struct CursorText: Equatable, Sendable {
     public private(set) var before: String
     public private(set) var after: String
@@ -20,7 +24,8 @@ public struct CursorText: Equatable, Sendable {
         return jump(to: min(max(cursor + count, 0), characters.count), in: characters)
     }
 
-    /// Characters between the start of the cursor's line and the cursor.
+    /// Characters between the start of the cursor's line and the cursor, counted from the start of the known text
+    /// when it shows no line break before the cursor.
     public var column: Int {
         let characters = self.characters
         return before.count - lineStart(of: before.count, in: characters)
@@ -28,7 +33,7 @@ public struct CursorText: Equatable, Sendable {
 
     /// Moves `lines` lines down, or up when negative, to `column` or the end of a shorter target line.
     /// Only hard line breaks count: a host's soft wrapping is invisible to a keyboard. `nil` when the known text does
-    /// not show where that column is, and nothing moves; `crossLine` then gets there through the host.
+    /// not show the line breaks on the way and where the column lands, and nothing moves.
     public mutating func moveLines(by lines: Int, toColumn column: Int? = nil) -> Int? {
         let characters = self.characters
         let cursor = before.count
@@ -36,9 +41,10 @@ public struct CursorText: Equatable, Sendable {
         let column = column ?? cursor - start
         for _ in 0..<abs(lines) {
             if lines < 0 {
-                // At 1 the known text opens on the line break above the cursor's line, and the line before it is hidden.
                 guard start > 1 else { return nil }
                 start = lineStart(of: start - 1, in: characters)
+                // The known text may open partway along the line above.
+                guard start > 0 else { return nil }
             } else {
                 guard let end = lineEnd(of: start, in: characters), end < characters.count else { return nil }
                 start = end + 1
@@ -51,20 +57,29 @@ public struct CursorText: Equatable, Sendable {
         return jump(to: start + min(column, length), in: characters)
     }
 
-    /// Moves past the known text onto the next line down, or up, through the line break the host hides, and returns
-    /// that UTF-16 offset. Once the host shows the new line, `moveToColumn` finishes the move. At either end of the
-    /// text there is no line to reach, and the column puts the cursor back where it was. `nil` when the host shows
-    /// no text at all, so the column is unknown.
-    public mutating func crossLine(down: Bool) -> Int? {
+    public enum Crossing: Equatable, Sendable {
+        /// Stepped over a line break the known text shows; hand over this UTF-16 offset.
+        case crossed(Int)
+        /// Walked this UTF-16 offset to the edge of the known text, where the host hides what comes next: most likely
+        /// a line break, else the end of the text. Only stepping one unit further shows which.
+        case edge(Int)
+    }
+
+    /// Moves onto the next line down, or up, past the line break that ends or starts the cursor's line. `nil` when
+    /// the known text does not show where that is, and nothing moves.
+    public mutating func crossLine(down: Bool) -> Crossing? {
         let characters = self.characters
-        guard !characters.isEmpty else { return nil }
         let cursor = before.count
-        let start = lineStart(of: cursor, in: characters)
         if down {
-            if let end = lineEnd(of: cursor, in: characters) { return jump(to: end + 1, in: characters) }
-            return jump(to: characters.count, in: characters) + 1
+            if let end = lineEnd(of: cursor, in: characters) { return .crossed(jump(to: end + 1, in: characters)) }
+            // The hosts measured end what they show after the cursor at a sentence end with the spaces after it, at a
+            // line break they hide, at the end of the text, or after 300 UTF-16 units.
+            guard after.last.map({ !$0.isWhitespace }) ?? true, after.utf16.count < 300 else { return nil }
+            return .edge(jump(to: characters.count, in: characters))
         }
-        return start > 0 ? jump(to: start - 1, in: characters) : jump(to: 0, in: characters) - 1
+        let start = lineStart(of: cursor, in: characters)
+        if start > 0 { return .crossed(jump(to: start - 1, in: characters)) }
+        return before.isEmpty ? .edge(0) : nil
     }
 
     /// Moves along the cursor's line to `column`, or its end when the line is shorter.
@@ -74,6 +89,56 @@ public struct CursorText: Equatable, Sendable {
         let start = lineStart(of: cursor, in: characters)
         let end = lineEnd(of: cursor, in: characters) ?? characters.count
         return jump(to: start + min(column, end - start), in: characters)
+    }
+
+    /// Takes in what the host shows with its cursor `offset` UTF-16 units from this cursor, where the two agree on
+    /// every unit both show and touch or overlap. Returns false, changing nothing, otherwise: the host showed an
+    /// older cursor, or other text.
+    public mutating func merge(_ shown: CursorText, at offset: Int) -> Bool {
+        guard agrees(with: shown, at: offset) else { return false }
+        let before = Array(before.utf16), after = Array(after.utf16)
+        let known = before + after
+        let seen = Array(shown.before.utf16) + Array(shown.after.utf16)
+        let from = before.count + offset - shown.before.utf16.count
+        let to = from + seen.count
+        let head = from < 0 ? seen[..<(-from)] : []
+        let tail = to > known.count ? seen[(known.count - from)...] : []
+        self.before = String(decoding: head + before, as: UTF16.self)
+        self.after = String(decoding: after + tail, as: UTF16.self)
+        return true
+    }
+
+    /// Whether what the host shows, with its cursor `offset` UTF-16 units from this cursor, matches every unit both
+    /// show and touches or overlaps this text.
+    public func agrees(with shown: CursorText, at offset: Int) -> Bool {
+        let before = Array(before.utf16)
+        let known = before + Array(after.utf16)
+        let seen = Array(shown.before.utf16) + Array(shown.after.utf16)
+        let from = before.count + offset - shown.before.utf16.count
+        let to = from + seen.count
+        guard from <= known.count, to >= 0 else { return false }
+        return (max(from, 0)..<min(to, known.count)).allSatisfy { known[$0] == seen[$0 - from] }
+    }
+
+    /// The caret stops in the `units` UTF-16 units the cursor just crossed, signed like `units`. Safari stops at each
+    /// character, and again before a SARA AM that follows other marks: น้ำ is two stops, น้ and ำ.
+    func caretStops(over units: Int) -> Int {
+        let known = Array(before.utf16) + Array(after.utf16)
+        let cursor = before.utf16.count
+        let range = units > 0 ? max(cursor - units, 0)..<cursor : cursor..<min(cursor - units, known.count)
+        let crossed = String(decoding: known[range], as: UTF16.self)
+        let stops = crossed.reduce(0) { stops, character in
+            stops + 1 + character.unicodeScalars.dropFirst().filter { $0 == "\u{0E33}" || $0 == "\u{0EB3}" }.count
+        }
+        return units.signum() * stops
+    }
+
+    /// Moves the cursor `units` UTF-16 units, where the host put it.
+    mutating func shift(by units: Int) {
+        let known = Array(before.utf16) + Array(after.utf16)
+        let cursor = min(max(before.utf16.count + units, 0), known.count)
+        before = String(decoding: known[..<cursor], as: UTF16.self)
+        after = String(decoding: known[cursor...], as: UTF16.self)
     }
 
     /// The two sides are kept apart so a mark the host left right after the cursor cannot merge into the
