@@ -45,6 +45,7 @@ struct KeyCap: View {
                 .lineLimit(1)
         }
         .buttonStyle(KeyPress(insets: insets))
+        .feedbackOnKeyDown()
     }
 }
 
@@ -96,6 +97,7 @@ struct SpecialKey: View {
             .font(font)
         }
         .buttonStyle(KeyPress(insets: insets))
+        .feedbackOnKeyDown()
     }
 }
 
@@ -114,9 +116,9 @@ struct DeleteKey: View {
                 DragGesture(minimumDistance: 0)
                     .onChanged { _ in
                         guard timer == nil else { return }
-                        action()
+                        press()
                         timer = Timer.scheduledTimer(withTimeInterval: 0.45, repeats: false) { _ in
-                            timer = Timer.scheduledTimer(withTimeInterval: 0.08, repeats: true) { _ in action() }
+                            timer = Timer.scheduledTimer(withTimeInterval: 0.08, repeats: true) { _ in press() }
                         }
                     }
                     .onEnded { _ in stop() }
@@ -126,6 +128,12 @@ struct DeleteKey: View {
             .accessibilityLabel("Delete")
             .accessibilityAddTraits(.isKeyboardKey)
             .accessibilityAction { action() }
+    }
+
+    /// Each repeat clicks, as the system keyboard's delete does.
+    private func press() {
+        KeyFeedback.shared.keyDown()
+        action()
     }
 
     private func stop() {

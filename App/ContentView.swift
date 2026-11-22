@@ -69,6 +69,7 @@ struct ContentView: View {
                 VStack(spacing: 32) {
                     Hero { withAnimation(.snappy) { proxy.scrollTo(SetupCard.anchor, anchor: .top) } }
                     SessionCard()
+                    HapticsCard()
                     SetupCard().id(SetupCard.anchor)
                     VocabularyCard()
                     CreditsFooter()
@@ -383,6 +384,34 @@ private struct SessionCard: View {
         case .off, .done, .failed:
             return "พร้อมฟัง"
         }
+    }
+}
+
+/// The keyboard reads this switch from the App Group each time it appears, and only with Full Access.
+private struct HapticsCard: View {
+    @AppStorage(KeyHaptics.key, store: KeyHaptics.store) private var on = false
+
+    var body: some View {
+        HStack(alignment: .center, spacing: 14) {
+            Image(systemName: "hand.tap")
+                .font(.system(size: 15, weight: .medium))
+                .foregroundStyle(on ? .white : Palette.secondary)
+                .frame(width: 28)
+            VStack(alignment: .leading, spacing: 4) {
+                Text("สั่นเมื่อแตะแป้น").font(.loopless(16, .medium))
+                Text("ต้องเปิดการเข้าถึงแบบเต็มให้คีย์บอร์ดเว่า")
+                    .font(.loopless(13))
+                    .foregroundStyle(Palette.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            Toggle("สั่นเมื่อแตะแป้น", isOn: $on)
+                .toggleStyle(GlowSwitch())
+                .labelsHidden()
+                .accessibilityIdentifier("haptics-toggle")
+        }
+        .padding(18)
+        .card()
     }
 }
 

@@ -30,7 +30,7 @@ final class KeyboardModel: ObservableObject {
     static let startTimeout: TimeInterval = 1.5
     static let fullAccessNotice = "เปิด \"อนุญาตการเข้าถึงแบบเต็ม\" ให้เว่าก่อน: การตั้งค่า > ทั่วไป > แป้นพิมพ์ > แป้นพิมพ์ > เว่า"
 
-    @Published private(set) var mode: KeyboardMode = .voice
+    @Published private(set) var mode: KeyboardMode = .typing
     @Published var typing = Typing()
     @Published private(set) var levels: [Float] = Array(repeating: 0, count: 24)
     @Published var notice: String?
@@ -51,9 +51,10 @@ final class KeyboardModel: ObservableObject {
     private var levelTimer: Timer?
     private var startTimer: Timer?
 
-    /// Without Full Access there is no mic, so the keyboard opens on the typing layout (App Review 4.4.1).
+    /// The keyboard always opens on the typing layout, as the system keyboard does. With Full Access the mic key
+    /// in its bottom row leads to voice; without it there is no mic (App Review 4.4.1).
     func activate() {
-        mode = hasFullAccess ? .voice : .typing
+        mode = .typing
         guard hasFullAccess, stateObserver == nil else { return }
         bridge = try? Bridge.shared()
         stateObserver = DarwinObserver(.state) { [weak self] in

@@ -6,6 +6,10 @@ final class KeyboardViewController: UIInputViewController {
     private let model = KeyboardModel()
     private var host: UIHostingController<KeyboardView>?
 
+    override func loadView() {
+        view = ClickingInputView(frame: .zero, inputViewStyle: .keyboard)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         model.insert = { [weak self] in
@@ -43,6 +47,7 @@ final class KeyboardViewController: UIInputViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         model.hasFullAccess = hasFullAccess
+        KeyFeedback.shared.refresh(hasFullAccess: hasFullAccess)
         model.activate()
         model.refreshContext()
     }

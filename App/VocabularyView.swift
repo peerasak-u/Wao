@@ -555,7 +555,7 @@ private struct SearchField: View {
 }
 
 /// The system switch's white knob vanishes on a white track; this one inverts the knob when on.
-private struct GlowSwitch: ToggleStyle {
+struct GlowSwitch: ToggleStyle {
     func makeBody(configuration: Configuration) -> some View {
         Button { configuration.isOn.toggle() } label: {
             Capsule()

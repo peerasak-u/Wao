@@ -1,6 +1,6 @@
 # Typing layouts
 
-The เว่า keyboard types without the mic: Thai Kedmanee, English QWERTY and a symbols page. Without Full Access this is the whole keyboard, with a banner explaining how to enable voice; with Full Access it is a detour from the mic layout (App Review 4.4.1 requires typing to work without Full Access).
+The เว่า keyboard types without the mic: Thai Kedmanee, English QWERTY and a symbols page. The keyboard always opens here. Without Full Access this is the whole keyboard, with a banner explaining how to enable voice; with Full Access a `Dictation` key leads to the mic layout (App Review 4.4.1 requires typing to work without Full Access).
 
 ## Sub-features
 
@@ -16,7 +16,7 @@ The เว่า keyboard types without the mic: Thai Kedmanee, English QWERTY a
 ## How to get to it (user POV)
 
 - Without Full Access: switch to เว่า in any text field; it opens on Kedmanee.
-- With Full Access: switch to เว่า, tap the `Keyboard` key next to space.
+- With Full Access: switch to เว่า; it also opens on Kedmanee. From the mic layout, the `Keyboard` key next to space comes back.
 
 ## Driving it with agent-device
 
@@ -30,7 +30,7 @@ Preconditions:
 - **QWERTY.** Tap the language key, type `hi`. The field ends with `hi`.
 - **Symbols.** Tap `123`, type `1`; tap `ABC` to return.
 - **Banner.** Tap the banner, capture the explanation, tap `แตะเพื่อกลับไปพิมพ์`.
-- **Full Access path.** Turn Full Access on, reopen the keyboard: it opens on the mic; tap `Keyboard`, then the `Dictation` key to return.
+- **Full Access path.** Turn Full Access on, reopen the keyboard: it opens on Kedmanee with a `Dictation` key left of space; tap it for the mic layout, then `Keyboard` to return.
 - **Proof.** Screenshot per layout plus the host field's final value in a snapshot.
 - **Decode.** On an iPhone 16e (390 pt wide, iOS 26.1) the first row of caps starts at y = 559 and rows repeat every 43.2 pt. Key centres are x = 21.4 + 31.56·column (shift takes column 0 of the bottom letter row), y = 577.7 + 43.2·row. Type `แล้` with centre taps (แ (116.3, 707.3), ล (368.6, 620.9), ้ (179.2, 664.1)), then tap (287.5, 664.1), which sits on ส 2.5 pt from the ว border: the field must end `แล้ว`. Then type `แล้ส` with centre taps: the field must end `แล้ส`, because a tap in the middle of a key is never second-guessed. `.build/release/wao-typing-eval` prints more border taps.
 - **Apple parity.** In the same host field, switch to Apple's ภาษาไทย keyboard and capture its pages at `--pixel-density 3` as thai-letters, thai-shifted, thai-numbers, english-letters, english-shifted and english-numbers in `$E/apple/`. Switch to เว่า on its Thai letters page and run `scripts/capture-typing-pages $AD $E/wao`, then `uv run tools/keyboard_parity.py $E/apple $E/wao --out $E/overlays`. Every cap must be within 1 pt; the table also prints each label's offset, which is reported, not gated.
