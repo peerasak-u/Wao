@@ -1,3 +1,4 @@
+import CoreText
 import SwiftUI
 import UIKit
 import WaoCore
@@ -504,19 +505,72 @@ private final class EmojiCell: UICollectionViewCell {
     }
 }
 
-/// One emoji, drawn at no more than 64 pixels a side, 2x for the 32 pt grid even on a 3x screen. CoreText keeps the
-/// image of every emoji it has drawn for the life of the process, from the font's bitmap one size up: 48 KB each at
-/// 32 pt and 3x, 16 KB at 2x, measured in the iOS 26.4 simulator. At 3x, scrolling through every category kept about
-/// 90 MB, more than a keyboard should hold; at 64 pixels the whole catalog stays near 30. iOS 27's 40.7 pt glyphs at
-/// 2x took the next bitmap up and a walk through every category added 71 MB, so they draw at 64 pixels too.
+/// The font the emoji page draws with. CoreText keeps the image of every emoji a font has drawn for as long as the
+/// font lives, and the system font's emoji fallback lives as long as the keyboard's process, which iOS keeps across
+/// host apps: a walk through every category left 30 MB behind after the page closed. A font made from the emoji
+/// file's own `CGFont` belongs to the page alone; the controller drops it when the page closes, and its images go with
+/// the page's views. Falls back to the system font if the file won't open.
+@MainActor
+enum EmojiFace {
+    /// The font, and the system font's line for one emoji with how far that line's ink sits from this font's. Every
+    /// emoji has the same advance, so one measures them all.
+    struct Face {
+        let font: UIFont
+        fileprivate let width: CGFloat
+        fileprivate let ascent: CGFloat
+        fileprivate let descent: CGFloat
+        fileprivate let shift: CGPoint
+
+        /// Where the line starts, in a flipped context, for its ink to land where UIKit's centred system font line
+        /// would put it. UIKit's string drawing puts the baseline on a whole pixel.
+        func origin(in box: CGSize, scale: CGFloat) -> CGPoint {
+            let baseline = (box.height - ascent - descent) / 2 + descent + shift.y
+            return CGPoint(x: (box.width - width) / 2 + shift.x, y: (baseline * scale).rounded() / scale)
+        }
+    }
+
+    private static var faces: [CGFloat: Face] = [:]
+
+    static func face(_ size: CGFloat) -> Face {
+        if let face = faces[size] { return face }
+        let system = UIFont.systemFont(ofSize: size)
+        let font = file(size) ?? system
+        let placed = line("😀", font: system)
+        var ascent: CGFloat = 0
+        var descent: CGFloat = 0
+        let width = CTLineGetTypographicBounds(placed, &ascent, &descent, nil)
+        let ink = CTLineGetImageBounds(placed, nil)
+        let own = CTLineGetImageBounds(line("😀", font: font), nil)
+        let face = Face(font: font, width: width, ascent: ascent, descent: descent,
+                        shift: CGPoint(x: ink.midX - own.midX, y: ink.midY - own.midY))
+        faces[size] = face
+        return face
+    }
+
+    static func drop() { faces = [:] }
+
+    static func line(_ glyph: String, font: UIFont) -> CTLine {
+        CTLineCreateWithAttributedString(NSAttributedString(string: glyph, attributes: [.font: font]))
+    }
+
+    private static func file(_ size: CGFloat) -> UIFont? {
+        let system = CTFontCreateWithName("AppleColorEmoji" as CFString, size, nil)
+        guard let url = CTFontCopyAttribute(system, kCTFontURLAttribute) as? URL,
+              let provider = CGDataProvider(url: url as CFURL),
+              let file = CGFont(provider) else { return nil }
+        return CTFontCreateWithGraphicsFont(file, size, nil, nil) as UIFont
+    }
+}
+
+/// One emoji, drawn at no more than 64 pixels a side, 2x for the 32 pt grid even on a 3x screen. CoreText keeps each
+/// image from the font's bitmap one size up: 48 KB at 32 pt and 3x, 16 KB at 2x, measured in the iOS 26.4 simulator.
+/// iOS 27's 40.7 pt glyphs at 2x took the next bitmap up, so they draw at 64 pixels too.
 final class GlyphView: UIView {
     private static let pixels: CGFloat = 64
-    private var font = UIFont.systemFont(ofSize: 32)
 
     var size: CGFloat = 32 {
         didSet {
             guard size != oldValue else { return }
-            font = UIFont.systemFont(ofSize: size)
             layer.contentsScale = scale
             setNeedsDisplay()
         }
@@ -544,10 +598,13 @@ final class GlyphView: UIView {
     }
 
     override func draw(_ rect: CGRect) {
-        let text = glyph as NSString
-        let attributes: [NSAttributedString.Key: Any] = [.font: font]
-        let size = text.size(withAttributes: attributes)
-        text.draw(at: CGPoint(x: (bounds.width - size.width) / 2, y: (bounds.height - size.height) / 2), withAttributes: attributes)
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        let face = EmojiFace.face(size)
+        context.textMatrix = .identity
+        context.translateBy(x: 0, y: bounds.height)
+        context.scaleBy(x: 1, y: -1)
+        context.textPosition = face.origin(in: bounds.size, scale: layer.contentsScale)
+        CTLineDraw(EmojiFace.line(glyph, font: face.font), context)
     }
 }
 
