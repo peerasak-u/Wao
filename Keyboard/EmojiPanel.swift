@@ -46,19 +46,49 @@ enum EmojiTab: Hashable, CaseIterable {
     }
 }
 
-/// The iPhone emoji keyboard's grid, measured on an iPhone 17 Pro Max (iOS 26.4): 42 pt columns and 40 pt rows, the bar
-/// 21 pt above the bottom. Its panel is taller than the typing keyboard, and ours keeps the keyboard's height, so the
-/// rows are 39 pt and the header band is tighter.
-enum EmojiMetrics {
-    static let cell = CGSize(width: 42, height: 39)
+/// The iPhone emoji keyboard (iOS 26.4), read off screenshots with tools/emoji_metrics.py on an iPhone 17e (390 pt)
+/// and an iPhone 17 Pro Max (440 pt). It is taller than the typing keyboard, so the extension grows while it shows.
+/// Apple's top band holds a search field; ours leaves that band empty, since search needs letters we do not have.
+struct EmojiMetrics {
+    /// The extension's height on this page.
+    let height: CGFloat
+    let cell: CGSize
+    /// From the top of the page to the section header's frame, where Apple's search field band ends.
+    let headerTop: CGFloat
+    /// From the top of the page to the first row of cells.
+    let rowsTop: CGFloat
+    /// From the screen's edge to the first column's cells.
+    let leading: CGFloat
+    /// From the bottom of the page to the middle of the category bar.
+    let barMid: CGFloat
+
     static let rows = 5
     static let header: CGFloat = 13
     static let sectionGap: CGFloat = 20
     static let glyph: CGFloat = 32
-    /// The grid's first column, from the screen's edge to the cell's.
-    static let leading: CGFloat = 7.2
     static let bar: CGFloat = 41
-    static let belowBar: CGFloat = 4
+
+    /// A Pro Max class width gets the second set, as in `KeyMetrics`.
+    init(width: CGFloat) {
+        if width >= 428 {
+            height = 324
+            cell = CGSize(width: 42, height: 40)
+            headerTop = 59.7
+            rowsTop = 74.3
+            leading = 5.6
+            barMid = 26
+        } else {
+            height = 313
+            cell = CGSize(width: 46, height: 38.5)
+            headerTop = 62
+            rowsTop = 79.3
+            leading = 4.9
+            barMid = 21
+        }
+    }
+
+    /// From the top of the grid's frame, which starts at the header, to the first row of cells.
+    var rowsBelowHeader: CGFloat { rowsTop - headerTop }
 }
 
 /// Where the user picks an emoji: a grid that scrolls sideways through the categories over a bar of category icons,
@@ -72,11 +102,13 @@ struct EmojiPanel: View {
         GeometryReader { geo in
             let screen = model.screenWidth ?? geo.size.width
             let inset = (screen - geo.size.width) / 2
+            let metrics = EmojiMetrics(width: screen)
             VStack(spacing: 0) {
-                EmojiGrid(inset: inset, jump: jump, type: model.insert, scrolled: { current = $0 })
+                EmojiGrid(metrics: metrics, inset: inset, jump: jump, type: model.insert, scrolled: { current = $0 })
+                    .padding(.top, metrics.headerTop)
                 bar(margin: KeyMetrics(width: screen).margin - inset)
                     .frame(height: EmojiMetrics.bar)
-                    .padding(.bottom, EmojiMetrics.belowBar)
+                    .padding(.bottom, metrics.barMid - EmojiMetrics.bar / 2)
             }
         }
     }
@@ -122,17 +154,18 @@ struct EmojiPanel: View {
 /// The grid is UIKit: a collection view reuses its cells, so only the emoji on screen are drawn, and its highlight,
 /// selection and scrolling already share touches the way a keyboard needs.
 private struct EmojiGrid: UIViewRepresentable {
+    let metrics: EmojiMetrics
     let inset: CGFloat
     let jump: (tab: EmojiTab, serial: Int)?
     let type: (String) -> Void
     let scrolled: (EmojiTab) -> Void
 
     func makeUIView(context: Context) -> EmojiGridView {
-        EmojiGridView(catalog: EmojiCatalog.bundled, history: .stored)
+        EmojiGridView(catalog: EmojiCatalog.bundled, history: .stored, metrics: metrics)
     }
 
     func updateUIView(_ view: EmojiGridView, context: Context) {
-        view.leadingInset = EmojiMetrics.leading - inset
+        view.leadingInset = metrics.leading - inset
         view.onType = type
         view.onScroll = scrolled
         if let jump, jump.serial != view.jumpSerial {
@@ -174,7 +207,7 @@ private final class EmojiGridView: UIView, UICollectionViewDataSource, UICollect
     private var pickerItem: IndexPath?
     private var lastTab: EmojiTab?
 
-    init(catalog: EmojiCatalog?, history: EmojiHistory) {
+    init(catalog: EmojiCatalog?, history: EmojiHistory, metrics: EmojiMetrics) {
         self.catalog = catalog
         self.history = history
         let frequent = history.recent.compactMap { catalog?.lookup($0) }.map { EmojiItem(emoji: $0.emoji, tone: $0.tone) }
@@ -182,7 +215,8 @@ private final class EmojiGridView: UIView, UICollectionViewDataSource, UICollect
             (tab: EmojiTab.category(section.category), items: section.emoji.map { EmojiItem(emoji: $0, tone: nil) })
         }
         sections = (frequent.isEmpty ? [] : [(tab: EmojiTab.frequent, items: frequent)]) + categories
-        layout = EmojiGridLayout(counts: sections.map(\.items.count), titles: sections.map { $0.tab.title.uppercased() })
+        layout = EmojiGridLayout(counts: sections.map(\.items.count), titles: sections.map { $0.tab.title.uppercased() },
+                                 metrics: metrics)
         collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         super.init(frame: .zero)
 
@@ -347,17 +381,19 @@ private final class EmojiGridLayout: UICollectionViewLayout {
     private var headers: [UICollectionViewLayoutAttributes] = []
     private var starts: [CGFloat] = []
     private var width: CGFloat = 0
+    private let height: CGFloat
 
-    init(counts: [Int], titles: [String]) {
+    init(counts: [Int], titles: [String], metrics: EmojiMetrics) {
+        let cell = metrics.cell, rows = EmojiMetrics.rows
+        height = metrics.rowsBelowHeader + CGFloat(rows) * cell.height
         super.init()
-        let cell = EmojiMetrics.cell, rows = EmojiMetrics.rows
         let font = EmojiHeader.font
         var x: CGFloat = 0
         for (section, count) in counts.enumerated() {
             starts.append(x)
             items.append((0..<count).map { i in
                 let attributes = UICollectionViewLayoutAttributes(forCellWith: IndexPath(item: i, section: section))
-                attributes.frame = CGRect(x: x + CGFloat(i / rows) * cell.width, y: EmojiMetrics.header + CGFloat(i % rows) * cell.height,
+                attributes.frame = CGRect(x: x + CGFloat(i / rows) * cell.width, y: metrics.rowsBelowHeader + CGFloat(i % rows) * cell.height,
                                           width: cell.width, height: cell.height)
                 return attributes
             })
@@ -380,7 +416,8 @@ private final class EmojiGridLayout: UICollectionViewLayout {
     func section(at x: CGFloat) -> Int { max(starts.lastIndex { $0 <= x } ?? 0, 0) }
 
     override var collectionViewContentSize: CGSize {
-        CGSize(width: width, height: EmojiMetrics.header + CGFloat(EmojiMetrics.rows) * EmojiMetrics.cell.height)
+        // Only sideways: the last row's cell may run a fraction of a point past the bar's top.
+        CGSize(width: width, height: min(height, collectionView?.bounds.height ?? height))
     }
 
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
