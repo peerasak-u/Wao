@@ -11,6 +11,7 @@ let package = Package(
         .library(name: "WaoCore", targets: ["WaoCore"]),
         .library(name: "WaoInference", targets: ["WaoInference"]),
         .executable(name: "wao-transcribe", targets: ["wao-transcribe"]),
+        .executable(name: "wao-typing-eval", targets: ["wao-typing-eval"]),
     ],
     targets: [
         .target(name: "WaoCore", resources: [.process("Resources")], swiftSettings: optimizedInDebug),
@@ -29,9 +30,10 @@ let package = Package(
             ]
         ),
         .executableTarget(name: "wao-transcribe", dependencies: ["WaoCore", "WaoInference"]),
+        .executableTarget(name: "wao-typing-eval", dependencies: ["WaoCore"]),
         .testTarget(
             name: "WaoCoreTests",
-            dependencies: ["WaoCore", "WaoInference"],
+            dependencies: ["WaoCore", "WaoInference", "wao-typing-eval"],
             exclude: ["Fixtures"]
         ),
     ]

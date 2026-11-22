@@ -10,6 +10,8 @@ The เว่า keyboard types without the mic: Thai Kedmanee, English QWERTY a
 - `typing-shift` shows the shifted Thai or upper-case row.
 - `typing-banner` (no Full Access) shows `เปิดการเข้าถึงแบบเต็มเพื่อพิมพ์ด้วยเสียง`; tapping it explains the steps, `แตะเพื่อกลับไปพิมพ์` closes it.
 - `typing-to-voice` (Full Access) shows a `Dictation` key that returns to the mic layout.
+- `typing-decode` types the key the context makes likely when a Thai tap lands near a key border; a tap in the middle of a key always types that key.
+- `typing-suggestions` shows up to three word completions in the strip above the keys; tapping one inserts the rest of the word.
 
 ## How to get to it (user POV)
 
@@ -30,10 +32,12 @@ Preconditions:
 - **Banner.** Tap the banner, capture the explanation, tap `แตะเพื่อกลับไปพิมพ์`.
 - **Full Access path.** Turn Full Access on, reopen the keyboard: it opens on the mic; tap `Keyboard`, then the `Dictation` key to return.
 - **Proof.** Screenshot per layout plus the host field's final value in a snapshot.
+- **Decode.** On an iPhone 16e (390 pt wide) the key grid starts at y = 527 and a row is 48.4 pt tall. Key centres are x = 16.25 + 32.5·column (the bottom letter row starts one key further right), y = 527 + 24.2 + 48.4·row. Type `แล้` with centre taps, then tap (290, 527 + 130.9), which sits on ส 2.5 pt from the ว border: the field must end `แล้ว`. Then type `แล้ส` with centre taps: the field must end `แล้ส`, because a tap in the middle of a key is never second-guessed. `.build/release/wao-typing-eval` prints more border taps.
+- **Suggestions.** Type `สวัส`: the strip shows สวัสดี in the middle. Tap it: the field ends `สวัสดี`.
 
 ## Gotchas
 
-- Not yet driven by this skill; keyboard coordinates must be measured from a screenshot on the first run.
+- iOS gives a touch on a fully transparent part of a third-party keyboard to the app behind it. If key taps reach nothing while shift and `123` still work, look for a transparent view that should catch touches.
 - The key layouts come from WaoCore's `Typing`; `swift test` covers their logic, not the touch targets, so the simulator run is what proves hit areas.
 - Our own globe key only shows where iOS does not draw one (home-button devices). No iPhone 17-family simulator shows it.
 - Typing does not need the app, a session or the model.

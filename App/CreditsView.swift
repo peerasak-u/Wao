@@ -59,6 +59,16 @@ private struct CreditsScreen: View {
                         .licence("สัญญาอนุญาต MIT", .poodPim),
                     ]
                 )
+                Credit(
+                    title: "ข้อความภาษาไทยสำหรับแป้นพิมพ์",
+                    byline: "Common Voice · wisesight-sentiment · PyThaiNLP · CC0",
+                    detail: "แป้นพิมพ์ใช้สถิติตัวอักษรและรายการคำจากข้อความเหล่านี้ เพื่อเดาปุ่มที่ตั้งใจกดและแนะนำคำ",
+                    links: [
+                        .web("Common Voice", "https://github.com/common-voice/common-voice"),
+                        .web("wisesight-sentiment", "https://github.com/PyThaiNLP/wisesight-sentiment"),
+                        .web("PyThaiNLP", "https://github.com/PyThaiNLP/pythainlp"),
+                    ]
+                )
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 40)
