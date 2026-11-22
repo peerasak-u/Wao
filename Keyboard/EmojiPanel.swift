@@ -94,11 +94,11 @@ struct EmojiMetrics {
         // iOS 27 on a 393 pt iPhone, from a downscaled screenshot (±0.5 pt). The glyph's ink is 37 pt tall.
         case (.ios27, false):
             self.init(height: 313, barMid: 21, cell: CGSize(width: 54.2, height: 54.2), rows: 4, header: 0,
-                      gridTop: 58.3, rowsTop: 58.3, leading: 12.95, glyph: 40)
+                      gridTop: 59.2, rowsTop: 59.2, leading: 13.65, glyph: 40.7)
         // Unmeasured: the 393 pt grid, raised by the 5 pt the iOS 26 rows rise between the two classes.
         case (.ios27, true):
             self.init(height: 324, barMid: 26, cell: CGSize(width: 54.2, height: 54.2), rows: 4, header: 0,
-                      gridTop: 53.3, rowsTop: 53.3, leading: 12.95, glyph: 40)
+                      gridTop: 54.2, rowsTop: 54.2, leading: 13.65, glyph: 40.7)
         }
     }
 
@@ -500,20 +500,25 @@ private final class EmojiCell: UICollectionViewCell {
     }
 }
 
-/// One emoji, drawn at 2x even on a 3x screen. CoreText keeps the image of every emoji it has drawn for the life of
-/// the process: 48 KB each at 32 pt and 3x, 16 KB at 2x, measured in the iOS 26.4 simulator. At 3x, scrolling
-/// through every category kept about 90 MB, more than a keyboard should hold; at 2x the whole catalog stays near 30.
+/// One emoji, drawn at no more than 64 pixels a side, 2x for the 32 pt grid even on a 3x screen. CoreText keeps the
+/// image of every emoji it has drawn for the life of the process, from the font's bitmap one size up: 48 KB each at
+/// 32 pt and 3x, 16 KB at 2x, measured in the iOS 26.4 simulator. At 3x, scrolling through every category kept about
+/// 90 MB, more than a keyboard should hold; at 64 pixels the whole catalog stays near 30. iOS 27's 40.7 pt glyphs at
+/// 2x took the next bitmap up and a walk through every category added 71 MB, so they draw at 64 pixels too.
 final class GlyphView: UIView {
-    private static let scale = min(UIScreen.main.scale, 2)
+    private static let pixels: CGFloat = 64
     private var font = UIFont.systemFont(ofSize: 32)
 
     var size: CGFloat = 32 {
         didSet {
             guard size != oldValue else { return }
             font = UIFont.systemFont(ofSize: size)
+            layer.contentsScale = scale
             setNeedsDisplay()
         }
     }
+
+    private var scale: CGFloat { min(UIScreen.main.scale, Self.pixels / size) }
 
     var glyph = "" {
         didSet { if glyph != oldValue { setNeedsDisplay() } }
@@ -531,7 +536,7 @@ final class GlyphView: UIView {
     /// UIKit sets the screen's scale when the view joins a window, so it is put back after.
     override func didMoveToWindow() {
         super.didMoveToWindow()
-        layer.contentsScale = Self.scale
+        layer.contentsScale = scale
     }
 
     override func draw(_ rect: CGRect) {
