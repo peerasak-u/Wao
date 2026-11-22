@@ -4,7 +4,7 @@ import XCTest
 
 /// Taps decoded with the shipped model and tuning, the way the Thai letters page types them.
 final class TapTypingTests: XCTestCase {
-    private let layout = KeyLayout(size: CGSize(width: 390, height: 242), rows: Typing().rows)
+    private let layout = KeyLayout(width: 390, rows: Typing().rows)
 
     private func type(_ taps: [(CGPoint, TimeInterval)], after context: String) throws -> String {
         let model = try XCTUnwrap(TypingModel.bundled)

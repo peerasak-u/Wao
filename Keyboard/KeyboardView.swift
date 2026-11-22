@@ -67,7 +67,7 @@ private struct VoiceView: View {
                 SpecialKey(systemImage: "return") { model.insert("\n") }
                     .frame(width: 68)
             }
-            .frame(height: Key.capHeight + KeyLayout.gap.height)
+            .frame(height: Key.capHeight + Key.gap.height)
         }
         .padding(.top, 6)
         .padding(.bottom, 2)

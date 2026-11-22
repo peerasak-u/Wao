@@ -39,6 +39,8 @@ final class KeyboardModel: ObservableObject {
 
     var hasFullAccess = false
     @Published var showsGlobe = true
+    /// iOS 26 gives the keyboard a view a little narrower than the screen; the system keyboard's caps span the screen.
+    var screenWidth: CGFloat?
     var insert: (String) -> Void = { _ in }
     var deleteBackward: () -> Void = {}
     var readContext: () -> String = { "" }

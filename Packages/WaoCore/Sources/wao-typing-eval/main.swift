@@ -5,7 +5,7 @@ import WaoCore
 let usage = """
     wao-typing-eval [fixed|speed|sweep|latency|examples|all] [--model FILE] [--seeds N] [--sigma PT...]
 
-    Replays the held-out lines in Tests/WaoCoreTests/Fixtures as noisy taps on a 390 x 242 pt Kedmanee grid and
+    Replays the held-out lines in Tests/WaoCoreTests/Fixtures as noisy taps on the Kedmanee grid a 390 pt iPhone shows and
     prints JSON lines comparing the geometric keyboard with tap decoders:
       fixed     fixed touch noise (--sigma, default 7), the research simulation's decoder table
       speed     noise that grows with typing speed, per speed bucket: fixed-sigma decoders against TapTuning.shipped

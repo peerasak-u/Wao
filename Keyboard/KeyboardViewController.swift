@@ -18,6 +18,7 @@ final class KeyboardViewController: UIInputViewController {
         }
         model.readContext = { [weak self] in self?.textDocumentProxy.documentContextBeforeInput ?? "" }
         model.openApp = { [weak self] in self?.openContainingApp() ?? false }
+        model.screenWidth = UIScreen.main.bounds.width
 
         let host = UIHostingController(rootView: KeyboardView(model: model, globe: { [weak self] in self?.globeButton() }))
         // iOS hands a touch on a fully transparent part of a keyboard to the app behind it, so the touch surface
@@ -32,7 +33,8 @@ final class KeyboardViewController: UIInputViewController {
             host.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             host.view.topAnchor.constraint(equalTo: view.topAnchor),
             host.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            view.heightAnchor.constraint(equalToConstant: 282),
+            // As tall as the system keyboard on this screen, so switching keyboards does not move the host app.
+            view.heightAnchor.constraint(equalToConstant: KeyMetrics(width: UIScreen.main.bounds.width).height),
         ])
         host.didMove(toParent: self)
         self.host = host

@@ -48,7 +48,8 @@ public struct Typing: Equatable, Sendable {
         return shifted ? "123" : "#+="
     }
 
-    public var spaceLabel: String { language == .thai ? "เว้นวรรค" : "space" }
+    /// The faint letter in the corner of the otherwise blank space bar, as on the iOS 26.4 system keyboard.
+    public var spaceHint: String { language == .thai ? "ก" : "A" }
 
     /// Shift on letters lasts one character, like the system keyboard; on the numbers page it stays put.
     public mutating func type(_ key: CharacterKey) -> String {
