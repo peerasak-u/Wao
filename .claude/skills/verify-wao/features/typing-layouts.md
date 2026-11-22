@@ -12,6 +12,7 @@ The เว่า keyboard types without the mic: Thai Kedmanee, a symbols page a
 - `typing-dictation-key` (Full Access) shows a `Dictation` key left of space; one tap starts dictation (see `keyboard-dictation.md`).
 - `typing-pending` shows a small spinner and `กำลังถอดเสียง` in the strip while text confirmed with ✓ is on its way; with suggestions showing, only the spinner, beside them. Typing works meanwhile.
 - `typing-decode` types the key the context makes likely when a Thai tap lands near a key border; a tap in the middle of a key always types that key.
+- `typing-retype` retypes the word being typed when a hurried tap left letters no dictionary word covers and the keys around the touches spell one; slow taps stay as typed, and delete right after a retype puts back what was typed.
 - `typing-suggestions` shows up to three word completions in the strip above the keys; tapping one inserts the rest of the word.
 
 ## How to get to it (user POV)
@@ -36,7 +37,8 @@ Preconditions:
 - **Proof.** Screenshot per layout plus the host field's final value in a snapshot.
 - **Decode.** On an iPhone 16e (390 pt wide, iOS 26.1) the first row of caps starts at y = 559 and rows repeat every 43.2 pt. Key centres are x = 21.4 + 31.56·column (shift takes column 0 of the bottom letter row), y = 577.7 + 43.2·row. Type `แล้` with centre taps (แ (116.3, 707.3), ล (368.6, 620.9), ้ (179.2, 664.1)), then tap (287.5, 664.1), which sits on ส 2.5 pt from the ว border: the field must end `แล้ว`. Then type `แล้ส` with centre taps: the field must end `แล้ส`, because a tap in the middle of a key is never second-guessed. `.build/release/wao-typing-eval` prints more border taps.
 - **Apple parity.** In the same host field, switch to Apple's ภาษาไทย keyboard and capture its pages at `--pixel-density 3` as thai-letters, thai-shifted and thai-numbers in `$E/apple/`. Switch to เว่า on its Thai letters page and run `scripts/capture-typing-pages $AD $E/wao`, then `uv run tools/keyboard_parity.py $E/apple $E/wao --out $E/overlays`. Every cap must be within 1 pt; the table also prints each label's offset, which is reported, not gated.
-- **Suggestions.** Type `สวัส`: the strip shows สวัสดี in the middle. Tap it: the field ends `สวัสดี`.
+- **Suggestions.** Type `สวัส`: the strip shows สวัสดี in the middle. Tap it: the field ends `สวัสดี`. Type `ไม่ร`: รู้ is in the middle, not ไม่รู้จบรู้สิ้น.
+- **Retype.** agent-device presses land about 0.7 s apart, which counts as slow, so the same taps one press at a time must stay as typed: on the 16e, ไ (53, 620.9), ท (242.3, 707.3), ่ (210.8, 664.1) leave `ไท่`. For a hurried tap, `$AD gesture tap 52.96 620.9 242.3 707.3` lands ไ and ท in one event, so ท comes 0 s after ไ; the order of the two is up to iOS, so clear and repeat until the field reads `ไท`. Then press ่: the field reads `ไม่`. Press delete once: it reads `ไท่` again. Stream `log stream --level debug --predicate 'subsystem == "com.peerasak.wao.keyboard" AND category == "retype"'` with `simctl spawn` to see each rewrite's lengths and how many deletes the host needed.
 
 ## Gotchas
 

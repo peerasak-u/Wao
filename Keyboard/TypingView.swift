@@ -38,7 +38,7 @@ struct TypingView: View {
                         case .release(let point, let interval):
                             pressed = nil
                             if case .character(let character) = model.resolve(point, in: grid, interval: interval)?.kind {
-                                model.type(character)
+                                model.tap(character, at: point, interval: interval, in: grid)
                             }
                         case .cancel:
                             pressed = nil
@@ -139,7 +139,7 @@ struct TypingView: View {
                 }
             }
         case .delete:
-            DeleteKey(font: KeyFont.icon(narrow: narrow), insets: key.slot.insets, action: model.deleteBackward)
+            DeleteKey(font: KeyFont.icon(narrow: narrow), insets: key.slot.insets, action: model.delete)
         }
     }
 

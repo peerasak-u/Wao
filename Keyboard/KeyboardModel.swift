@@ -35,6 +35,8 @@ final class KeyboardModel: ObservableObject {
     static let hostSettle: TimeInterval = 0.2
     /// Lengths and offsets only: the text is the user's typing.
     private static let trackpadLog = Logger(subsystem: "com.peerasak.wao.keyboard", category: "trackpad")
+    /// Lengths only, as above.
+    private static let retypeLog = Logger(subsystem: "com.peerasak.wao.keyboard", category: "retype")
     static let fullAccessNotice = "เปิด \"อนุญาตการเข้าถึงแบบเต็ม\" ให้เว่าก่อน: การตั้งค่า > ทั่วไป > แป้นพิมพ์ > แป้นพิมพ์ > เว่า"
 
     @Published private(set) var mode: KeyboardMode = .typing
@@ -61,6 +63,8 @@ final class KeyboardModel: ObservableObject {
     var readCursorText: () -> CursorText = { CursorText(before: "", after: "") }
     var openApp: () -> Bool = { false }
 
+    /// The touches behind the word being typed, which a hurried mistap is retyped from.
+    private var trail = TouchTrail()
     private var cursorWalk: CursorWalk?
     private var hostSettled: DispatchWorkItem?
     private var bridge: Bridge?
@@ -104,6 +108,34 @@ final class KeyboardModel: ObservableObject {
         insert(typing.type(key))
     }
 
+    /// A touch at `point` on `layout` typed `key`. On the Thai letters the latest word is then retyped when the
+    /// keys around the touches spell a word the dictionary knows and what was typed is not one.
+    func tap(_ key: CharacterKey, at point: CGPoint, interval: TimeInterval, in layout: KeyLayout) {
+        let shifted = typing.shifted, retypes = typing.decodes
+        trail.follow(context)
+        let text = typing.type(key)
+        insert(text)
+        guard retypes, let model = TypingModel.bundled else { return trail.reset() }
+        trail.record(Touch(point: point, interval: interval, shifted: shifted, text: text))
+        if let rewrite = trail.retype(before: context, model: model, layout: layout) { rewriteHost(rewrite) }
+    }
+
+    /// Right after a retype, delete puts back what the touches typed, as the system keyboard undoes an
+    /// autocorrection.
+    func delete() {
+        if let rewrite = trail.undoRetype(before: context) { return rewriteHost(rewrite) }
+        deleteBackward()
+        trail.deleted(leaving: context)
+    }
+
+    private func rewriteHost(_ rewrite: Rewrite) {
+        var deletes = 0
+        let landed = rewrite.apply(before: readContext, deleteBackward: { deletes += 1; self.deleteBackward() }, insert: insert)
+        Self.retypeLog.debug("old=\(rewrite.old.unicodeScalars.count) new=\(rewrite.new.unicodeScalars.count) deletes=\(deletes) landed=\(landed)")
+        if !landed { trail.reset() }
+        refreshContext()
+    }
+
     func refreshContext() {
         context = readContext()
     }
@@ -113,6 +145,7 @@ final class KeyboardModel: ObservableObject {
         Self.trackpadLog.debug("begin before=\(shown.before.utf16.count) after=\(shown.after.utf16.count)")
         cursorWalk = CursorWalk(shown)
         tracksCursor = true
+        trail.reset()
     }
 
     func moveCursor(columns: Int, lines: Int) {
