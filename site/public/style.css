@@ -88,6 +88,12 @@ nav .brand img { width: 28px; height: 28px; border-radius: 7px; }
   text-decoration: none;
   box-shadow: 0 0 32px rgba(255, 255, 255, 0.25);
 }
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-top: 0.5rem; }
+.actions .cta { margin-top: 0; }
+.cta.secondary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: transparent; color: var(--ink); border: 1px solid var(--hairline); box-shadow: none;
+}
 .cta.muted { background: transparent; color: var(--secondary); border: 1px solid var(--hairline); box-shadow: none; }
 
 .cards { display: grid; gap: 0.9rem; margin: 2rem 0; }
