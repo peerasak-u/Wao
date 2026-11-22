@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# Screenshots every typing page of the เว่า keyboard for tools/keyboard_parity.py.
+#
+#   capture-typing-pages <agent-device path> <out dir> [prefix]
+#
+# Start with เว่า showing its Thai letters page, unshifted, in the host field. Writes thai-letters, thai-shifted,
+# thai-numbers, english-letters, english-shifted and english-numbers (each prefixed, e.g. dark-) and leaves the
+# keyboard back on Thai letters. Keys are found by the parity tool's own cap detection, not fixed coordinates.
+set -euo pipefail
+AD=$1 OUT=$2 PREFIX=${3:-}
+ROOT=$(git -C "$(dirname "$0")" rev-parse --show-toplevel)
+mkdir -p "$OUT"
+
+shot() { sleep 0.8; "$AD" screenshot "$OUT/$PREFIX$1.png" --pixel-density 3 >/dev/null; }
+
+# tap <screenshot> <row> <index>: the centre of that cap, counted from 0 within its row.
+tap() {
+  local point
+  point=$(uv run -q "$ROOT/tools/keyboard_parity.py" "$1" | awk -v r="$2" -v i="$3" '$1 == r { if (n++ == i) print $2 + $4 / 2, $3 + $5 / 2 }')
+  [ -n "$point" ] || { echo "no cap $2.$3 in $1" >&2; exit 1; }
+  "$AD" press $point >/dev/null
+}
+
+shot thai-letters
+tap "$OUT/${PREFIX}thai-letters.png" 3 0; shot thai-shifted
+tap "$OUT/${PREFIX}thai-shifted.png" 3 0
+tap "$OUT/${PREFIX}thai-letters.png" 4 0; shot thai-numbers
+tap "$OUT/${PREFIX}thai-numbers.png" 3 0
+tap "$OUT/${PREFIX}thai-letters.png" 4 1; shot english-letters
+tap "$OUT/${PREFIX}english-letters.png" 2 0; shot english-shifted
+tap "$OUT/${PREFIX}english-shifted.png" 2 0
+tap "$OUT/${PREFIX}english-letters.png" 3 0; shot english-numbers
+tap "$OUT/${PREFIX}english-numbers.png" 3 0
+tap "$OUT/${PREFIX}english-letters.png" 3 1
+echo "captured $(ls "$OUT"/"$PREFIX"*.png | wc -l | tr -d ' ') pages in $OUT"
