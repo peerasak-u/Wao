@@ -75,7 +75,7 @@ struct EmojiMetrics {
             cell = CGSize(width: 42, height: 40)
             headerTop = 59.7
             rowsTop = 74.3
-            leading = 2.9
+            leading = 5.6
             barMid = 26
         } else {
             height = 313
