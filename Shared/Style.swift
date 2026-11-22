@@ -48,19 +48,24 @@ struct Waveform: View {
 /// words being spoken stay in view.
 struct HeardText: View {
     static let size: CGFloat = 21
-    static let lineHeight = UIFont.systemFont(ofSize: size, weight: .medium).lineHeight
+    static let lineHeight = lineHeight(fontName: nil)
+
+    static func lineHeight(fontName: String?) -> CGFloat {
+        (fontName.flatMap { UIFont(name: $0, size: size) } ?? .systemFont(ofSize: size, weight: .medium)).lineHeight
+    }
 
     let heard: Heard
     let settled: Bool
+    var fontName: String?
 
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             Text((heard.clipped ? "…" : "") + heard.text)
-                .font(.system(size: Self.size, weight: .medium))
+                .font(fontName.map { .custom($0, fixedSize: Self.size) } ?? .system(size: Self.size, weight: .medium))
                 .foregroundStyle(Color(.label).opacity(settled ? 0.4 : 1))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .fixedSize(horizontal: false, vertical: true)
-                .frame(maxHeight: Self.lineHeight * 3, alignment: .bottom)
+                .frame(maxHeight: Self.lineHeight(fontName: fontName) * 3, alignment: .bottom)
                 // Without this the cap takes the whole offered height and short text sinks to the bottom.
                 .fixedSize(horizontal: false, vertical: true)
                 .clipped()
