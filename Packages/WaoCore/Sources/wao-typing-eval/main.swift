@@ -3,7 +3,7 @@ import Foundation
 import WaoCore
 
 let usage = """
-    wao-typing-eval [fixed|speed|sweep|latency|examples|all] [--model FILE] [--seeds N] [--sigma PT...]
+    wao-typing-eval [fixed|speed|sweep|latency|examples|suggest|all] [--model FILE] [--seeds N] [--sigma PT...]
 
     Replays the held-out lines in Tests/WaoCoreTests/Fixtures as noisy taps on the Kedmanee grid a 390 pt iPhone shows and
     prints JSON lines comparing the geometric keyboard with tap decoders:
@@ -12,6 +12,7 @@ let usage = """
       sweep     the speed mix over a grid of tunings, best first
       latency   time per decoded tap and per suggestion lookup
       examples  taps that land on the wrong key and come out right even when typed slowly
+      suggest   how often the suggestion bar, read after each Thai letter of a line, offers what the line types next
     `all` (the default) runs everything but the sweep. Run it built for release.
     """
 
@@ -41,7 +42,7 @@ while let arg = args.popFirst() {
             sigmas.append(CGFloat(value))
             args.removeFirst()
         }
-    case "fixed", "speed", "sweep", "latency", "examples", "all": command = arg
+    case "fixed", "speed", "sweep", "latency", "examples", "suggest", "all": command = arg
     default: fail("unknown argument \(arg)")
     }
 }
@@ -262,7 +263,38 @@ func runExamples() {
     }
 }
 
+/// A suggestion is right when what tapping it inserts is how the line goes on, so a shorter word that the line
+/// continues past still counts; `saved` is the letters the right suggestions would have typed.
+func runSuggest() {
+    for test in tests {
+        var reads = 0, top1 = 0, top3 = 0, saved = 0
+        for line in test.lines {
+            let scalars = Array(line.unicodeScalars)
+            for i in 1..<max(1, scalars.count) where (0x0E01...0x0E5B).contains(scalars[i - 1].value) {
+                let typed = String(String.UnicodeScalarView(scalars[..<i]))
+                let rest = String(String.UnicodeScalarView(scalars[i...]))
+                let offered = model.completions(after: typed)
+                guard !offered.isEmpty else { continue }
+                reads += 1
+                let right = offered.map { rest.unicodeScalars.starts(with: $0.remainder.unicodeScalars) }
+                if right.first == true {
+                    top1 += 1
+                    saved += offered[0].remainder.unicodeScalars.count
+                }
+                if right.contains(true) { top3 += 1 }
+            }
+        }
+        emit([
+            "mode": "suggest", "test": test.name, "reads": reads,
+            "top1_pct": round(100 * Double(top1) / Double(max(reads, 1)), 2),
+            "top3_pct": round(100 * Double(top3) / Double(max(reads, 1)), 2),
+            "top1_saved_letters_per_read": round(Double(saved) / Double(max(reads, 1)), 3),
+        ])
+    }
+}
+
 switch command {
+case "suggest": runSuggest()
 case "fixed": runFixed()
 case "speed": runSpeed()
 case "sweep": runSweep()
