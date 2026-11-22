@@ -83,8 +83,10 @@ class Transcriber:
         opts = ort.SessionOptions()
         opts.intra_op_num_threads = threads
         opts.inter_op_num_threads = 1
-        self.encoder = ort.InferenceSession(str(model_dir / "encoder.int8.onnx"), opts, providers=["CPUExecutionProvider"])
         self.decoder = ort.InferenceSession(str(model_dir / "decoder_joint.onnx"), opts, providers=["CPUExecutionProvider"])
+        # As the app runs it (Transcriber.swift); prepacking changes the encoder's arithmetic, and now and then a token.
+        opts.add_session_config_entry("session.disable_prepacking", "1")
+        self.encoder = ort.InferenceSession(str(model_dir / "encoder.int8.onnx"), opts, providers=["CPUExecutionProvider"])
         self.tokens = (model_dir / "tokens.txt").read_text(encoding="utf-8").split("\n")[:-1]
         self.blank = len(self.tokens)
 

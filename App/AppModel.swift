@@ -26,8 +26,8 @@ final class AppModel: ObservableObject {
     private let downloader = AppDelegate.downloader
     private var dictation: DictationSession!
     private var interruptionObserver: NSObjectProtocol?
+    private var memoryWarningObserver: NSObjectProtocol?
     private var vocabularyCommit: AnyCancellable?
-    private var isModelLoaded = false
     private var testID: UUID?
     private var testStartedAt = Date()
 
@@ -47,6 +47,11 @@ final class AppModel: ObservableObject {
             guard let raw = note.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt,
                   AVAudioSession.InterruptionType(rawValue: raw) == .began else { return }
             Task { await self?.dictation.end() }
+        }
+        memoryWarningObserver = NotificationCenter.default.addObserver(
+            forName: UIApplication.didReceiveMemoryWarningNotification, object: nil, queue: .main
+        ) { [weak self] _ in
+            Task { await self?.dictation.releaseModel() }
         }
         if bridge == nil { error = "App Group container unavailable; the keyboard cannot reach the app." }
         vocabularyCommit = $vocabulary.dropFirst().removeDuplicates()
@@ -87,15 +92,11 @@ final class AppModel: ObservableObject {
     }
 
     func loadModel() async {
-        guard case .ready(let directory) = model, !isModelLoaded, !isLoading else { return }
+        guard case .ready(let directory) = model, !isLoading, await !dictation.isModelLoaded else { return }
         isLoading = true
         defer { isLoading = false }
         do {
-            let transcriber = try await Task.detached(priority: .userInitiated) {
-                try Transcriber(modelDirectory: directory, threads: 1)
-            }.value
-            await dictation.use(transcriber)
-            isModelLoaded = true
+            try await dictation.load(from: directory)
         } catch {
             self.error = "Model load failed: \(error)"
         }
