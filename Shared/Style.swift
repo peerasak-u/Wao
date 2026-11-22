@@ -48,8 +48,7 @@ struct Waveform: View {
 /// words being spoken stay in view.
 struct HeardText: View {
     static let size: CGFloat = 21
-    /// Sukhumvit Set's lines are taller than the system font's; a box sized for those cut the top line in half.
-    static let lineHeight = UIFont(name: "SukhumvitSet-Medium", size: size)?.lineHeight ?? 36
+    static let lineHeight = UIFont.systemFont(ofSize: size, weight: .medium).lineHeight
 
     let heard: Heard
     let settled: Bool
@@ -57,7 +56,7 @@ struct HeardText: View {
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             Text((heard.clipped ? "…" : "") + heard.text)
-                .font(.loopless(Self.size, .medium))
+                .font(.system(size: Self.size, weight: .medium))
                 .foregroundStyle(Color(.label).opacity(settled ? 0.4 : 1))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .fixedSize(horizontal: false, vertical: true)
@@ -68,14 +67,5 @@ struct HeardText: View {
                 .frame(maxHeight: .infinity, alignment: .top)
             if settled { ProgressView() }
         }
-    }
-}
-
-extension Font {
-    enum Face: String { case thin = "Thin", light = "Light", text = "Text", medium = "Medium", semibold = "SemiBold", bold = "Bold" }
-
-    /// Sukhumvit Set ships with iOS and has no loops (หัว); the system's Thai fallback, Thonburi, does.
-    static func loopless(_ size: CGFloat, _ face: Face = .text) -> Font {
-        .custom("SukhumvitSet-\(face.rawValue)", size: size)
     }
 }

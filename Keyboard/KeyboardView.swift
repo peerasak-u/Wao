@@ -22,7 +22,7 @@ struct KeyboardView: View {
             if let notice = model.notice {
                 // Floats over the top of the keyboard: its height is fixed, so a notice in the stack pushed keys out.
                 Text(notice)
-                    .font(.loopless(13))
+                    .font(.system(size: 13))
                     .multilineTextAlignment(.center)
                     .lineLimit(3)
                     .frame(maxWidth: .infinity)
@@ -50,7 +50,7 @@ private struct DictationView: View {
                     HStack(spacing: 8) {
                         if !isListening { ProgressView() }
                         Text(caption)
-                            .font(.loopless(17, .medium))
+                            .font(.system(size: 17, weight: .medium))
                             .foregroundStyle(Color(.secondaryLabel))
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)

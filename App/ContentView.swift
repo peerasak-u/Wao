@@ -12,10 +12,10 @@ struct WaoApp: App {
     init() {
         let bar = UINavigationBarAppearance()
         bar.configureWithTransparentBackground()
-        let title: [NSAttributedString.Key: Any] = [.font: UIFont(name: "SukhumvitSet-SemiBold", size: 17)!, .foregroundColor: UIColor.white]
+        let title: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: 17, weight: .semibold), .foregroundColor: UIColor.white]
         bar.titleTextAttributes = title
-        bar.largeTitleTextAttributes = [.font: UIFont(name: "SukhumvitSet-Bold", size: 32)!, .foregroundColor: UIColor.white]
-        bar.backButtonAppearance.normal.titleTextAttributes = [.font: UIFont(name: "SukhumvitSet-Text", size: 17)!]
+        bar.largeTitleTextAttributes = [.font: UIFont.systemFont(ofSize: 32, weight: .bold), .foregroundColor: UIColor.white]
+        bar.backButtonAppearance.normal.titleTextAttributes = [.font: UIFont.systemFont(ofSize: 17)]
         let scrolled = bar.copy()
         scrolled.backgroundColor = UIColor(white: 0.039, alpha: 0.92)
         scrolled.shadowColor = UIColor(white: 1, alpha: 0.08)
@@ -100,7 +100,7 @@ struct ContentView: View {
 
 extension View {
     func screenBackground() -> some View {
-        font(.loopless(16))
+        font(.system(size: 16))
             .foregroundStyle(.white)
             .background {
                 ZStack(alignment: .top) {
@@ -120,10 +120,10 @@ private struct Hero: View {
     var body: some View {
         VStack(spacing: 14) {
             Text("เว่า")
-                .font(.loopless(72, .bold))
+                .font(.system(size: 72, weight: .bold))
                 .shadow(color: .white.opacity(0.25), radius: 24)
             Text("พูดไทยปนอังกฤษ พิมพ์ได้ทุกแอป\nถอดเสียงบนเครื่อง ไม่ส่งเสียงออกนอกเครื่อง")
-                .font(.loopless(15))
+                .font(.system(size: 15))
                 .multilineTextAlignment(.center)
                 .foregroundStyle(Palette.secondary)
                 .lineSpacing(2)
@@ -167,7 +167,7 @@ private struct TestPanel: View {
             .accessibilityLabel(model.test.isRecording ? "หยุดและถอดเสียง" : "ลองพูด")
             .accessibilityIdentifier("mic-test")
             caption
-                .font(.loopless(14))
+                .font(.system(size: 14))
                 .foregroundStyle(Palette.secondary)
             output
                 .transition(.opacity)
@@ -189,7 +189,7 @@ private struct TestPanel: View {
                 Text(blocker.reason)
                 if let step = blocker.step {
                     Button("ไปที่ขั้นที่ \(step)", action: showSetup)
-                        .font(.loopless(14, .medium))
+                        .font(.system(size: 14, weight: .medium))
                         .foregroundStyle(.white)
                         .underline()
                 }
@@ -205,7 +205,7 @@ private struct TestPanel: View {
                     LiveDot()
                     Text("กำลังฟัง · แตะเพื่อหยุด")
                     Text(since, style: .timer)
-                        .font(.loopless(14, .medium).monospacedDigit())
+                        .font(.system(size: 14, weight: .medium).monospacedDigit())
                         .foregroundStyle(.white)
                 }
             case .transcribing:
@@ -227,7 +227,7 @@ private struct TestPanel: View {
                     HeardText(heard: heard, settled: model.test.isTranscribing)
                 } else {
                     Text(model.test.isTranscribing ? "" : "พูดได้เลย…")
-                        .font(.loopless(HeardText.size, .medium))
+                        .font(.system(size: HeardText.size, weight: .medium))
                         .foregroundStyle(Palette.tertiary)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 }
@@ -248,7 +248,7 @@ private struct TestResult: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             Text(result.text.isEmpty ? "(ไม่ได้ยินเสียงพูด)" : result.text)
-                .font(.loopless(24, .medium))
+                .font(.system(size: 24, weight: .medium))
                 .foregroundStyle(result.text.isEmpty ? Palette.tertiary : .white)
                 .lineSpacing(2)
                 .textSelection(.enabled)
@@ -257,7 +257,7 @@ private struct TestResult: View {
                 .accessibilityIdentifier("result-text")
             HStack {
                 Text(String(format: "%.1f วินาที · ถอดใน %.2f วินาที", result.audioSeconds, result.totalSeconds))
-                    .font(.loopless(13).monospacedDigit())
+                    .font(.system(size: 13).monospacedDigit())
                     .foregroundStyle(Palette.tertiary)
                 Spacer()
                 Button {
@@ -269,7 +269,7 @@ private struct TestResult: View {
                     }
                 } label: {
                     Label(copied ? "คัดลอกแล้ว" : "คัดลอก", systemImage: copied ? "checkmark" : "doc.on.doc")
-                        .font(.loopless(13, .medium))
+                        .font(.system(size: 13, weight: .medium))
                         .padding(.horizontal, 12)
                         .frame(minHeight: 30)
                         .background(.white.opacity(0.1), in: Capsule())
@@ -339,9 +339,9 @@ private struct SessionCard: View {
                 .foregroundStyle(on ? .white : Palette.secondary)
                 .frame(width: 28)
             VStack(alignment: .leading, spacing: 4) {
-                Text("เซสชันคีย์บอร์ด").font(.loopless(16, .medium))
+                Text("เซสชันคีย์บอร์ด").font(.system(size: 16, weight: .medium))
                 Text(model.model.isReady || on ? "เปิดไมค์ค้างไว้ให้คีย์บอร์ดใช้ในแอปอื่น" : "ต้องดาวน์โหลดโมเดลก่อน จึงจะเปิดได้")
-                    .font(.loopless(13))
+                    .font(.system(size: 13))
                     .foregroundStyle(Palette.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 if on {
@@ -352,7 +352,7 @@ private struct SessionCard: View {
                                 .frame(width: 6, height: 6)
                                 .shadow(color: .white.opacity(0.8), radius: 4)
                             Text(status(at: context.date))
-                                .font(.loopless(13, .medium).monospacedDigit())
+                                .font(.system(size: 13, weight: .medium).monospacedDigit())
                         }
                     }
                     .padding(.top, 2)
@@ -398,14 +398,14 @@ private struct HapticsCard: View {
                 .foregroundStyle(on ? .white : Palette.secondary)
                 .frame(width: 28)
             VStack(alignment: .leading, spacing: 4) {
-                Text("สั่นเมื่อแตะแป้น").font(.loopless(16, .medium))
+                Text("สั่นเมื่อแตะแป้นและคำแนะนำ").font(.system(size: 16, weight: .medium))
                 Text("ต้องเปิดการเข้าถึงแบบเต็มให้คีย์บอร์ดเว่า")
-                    .font(.loopless(13))
+                    .font(.system(size: 13))
                     .foregroundStyle(Palette.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            Toggle("สั่นเมื่อแตะแป้น", isOn: $on)
+            Toggle("สั่นเมื่อแตะแป้นและคำแนะนำ", isOn: $on)
                 .toggleStyle(GlowSwitch())
                 .labelsHidden()
                 .accessibilityIdentifier("haptics-toggle")
@@ -433,9 +433,9 @@ private struct SetupCard: View {
                 Button { withAnimation(.snappy) { expanded = true } } label: {
                     HStack(spacing: 14) {
                         StepMark(done: true, number: 0)
-                        Text("ตั้งค่าครบแล้ว").font(.loopless(16, .medium))
+                        Text("ตั้งค่าครบแล้ว").font(.system(size: 16, weight: .medium))
                         Spacer()
-                        Text("ใช้ได้ทุกแอป").font(.loopless(14)).foregroundStyle(Palette.tertiary)
+                        Text("ใช้ได้ทุกแอป").font(.system(size: 14)).foregroundStyle(Palette.tertiary)
                     }
                     .padding(18)
                     .contentShape(Rectangle())
@@ -443,7 +443,7 @@ private struct SetupCard: View {
                 .buttonStyle(.plain)
             } else {
                 Text("ตั้งค่า")
-                    .font(.loopless(13, .medium))
+                    .font(.system(size: 13, weight: .medium))
                     .foregroundStyle(Palette.tertiary)
                     .padding([.horizontal, .top], 18)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -480,7 +480,7 @@ private struct SetupCard: View {
             switch model.model {
             case .missing:
                 Text("แนะนำให้ต่อ Wi-Fi · ดาวน์โหลดครั้งเดียว")
-                    .font(.loopless(13))
+                    .font(.system(size: 13))
                     .foregroundStyle(Palette.tertiary)
             case .downloading(let progress), .paused(let progress):
                 ProgressBar(value: progress.fraction)
@@ -559,9 +559,9 @@ private struct Step<Action: View, Footer: View>: View {
             HStack(alignment: .top, spacing: 14) {
                 StepMark(done: done, number: number)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(title).font(.loopless(16, .medium))
+                    Text(title).font(.system(size: 16, weight: .medium))
                     Text(detail)
-                        .font(.loopless(13))
+                        .font(.system(size: 13))
                         .foregroundStyle(Palette.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -589,7 +589,7 @@ private struct StepMark: View {
             } else {
                 Circle().strokeBorder(.white.opacity(0.25), lineWidth: 1)
                 Text("\(number)")
-                    .font(.loopless(13, .medium))
+                    .font(.system(size: 13, weight: .medium))
                     .foregroundStyle(Palette.secondary)
             }
         }
@@ -605,7 +605,7 @@ struct PillButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(.loopless(14, prominent ? .semibold : .medium))
+                .font(.system(size: 14, weight: prominent ? .semibold : .medium))
                 .foregroundStyle(prominent ? Palette.canvas : .white)
                 .padding(.horizontal, prominent ? 18 : 14)
                 .frame(minHeight: 32)
