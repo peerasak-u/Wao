@@ -2,10 +2,12 @@ import SwiftUI
 import UIKit
 import WaoCore
 
-/// Space types a space on a tap. Held, the keyboard becomes a trackpad for the cursor, as on the system keyboard.
+/// Space types a space on a tap. Held, the keyboard becomes a trackpad for the cursor, as on the system keyboard,
+/// unless `trackpad` is off: the emoji search query has no cursor to move.
 struct SpaceKey: View {
     @ObservedObject var model: KeyboardModel
     let insets: EdgeInsets
+    let trackpad: Bool
     @State private var down = false
 
     var body: some View {
@@ -22,7 +24,7 @@ struct SpaceKey: View {
             }
             .keyCap(down && !model.tracksCursor ? Key.pressedFill : Key.fill, insets: insets)
             .overlay {
-                SpaceTouchView(tracking: model.tracksCursor, down: { down = $0 }) { effect in
+                SpaceTouchView(tracking: model.tracksCursor, holds: trackpad, down: { down = $0 }) { effect in
                     switch effect {
                     case .space: model.insert(" ")
                     case .begin:
@@ -44,6 +46,7 @@ struct SpaceKey: View {
 final class SpaceTouch: UIView {
     var onEffect: (SpaceTrackpad.Effect) -> Void = { _ in }
     var onDown: (Bool) -> Void = { _ in }
+    var holds = true
     private var pad = SpaceTrackpad()
     private var finger: UITouch?
     private var hold: DispatchWorkItem?
@@ -69,6 +72,7 @@ final class SpaceTouch: UIView {
                 onDown(true)
                 KeyFeedback.shared.keyDown()
                 send(pad.down(at: touch.location(in: self)))
+                guard holds else { continue }
                 let hold = DispatchWorkItem { [weak self] in
                     guard let self else { return }
                     self.send(self.pad.held())
@@ -120,6 +124,7 @@ final class SpaceTouch: UIView {
 
 private struct SpaceTouchView: UIViewRepresentable {
     let tracking: Bool
+    let holds: Bool
     let down: (Bool) -> Void
     let onEffect: (SpaceTrackpad.Effect) -> Void
 
@@ -128,6 +133,7 @@ private struct SpaceTouchView: UIViewRepresentable {
     func updateUIView(_ view: SpaceTouch, context: Context) {
         view.onEffect = onEffect
         view.onDown = down
+        view.holds = holds
         if !tracking { view.interrupt() }
     }
 }

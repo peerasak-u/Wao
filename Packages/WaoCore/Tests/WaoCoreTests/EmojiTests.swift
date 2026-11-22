@@ -25,6 +25,23 @@ final class EmojiTests: XCTestCase {
         XCTAssertEqual(catalog.lookup("❤️")?.emoji.tones, [])
     }
 
+    func testEmojiCarryTheirThaiNameThenKeywords() throws {
+        let catalog = try XCTUnwrap(EmojiCatalog.bundled)
+        let cat = try XCTUnwrap(catalog.lookup("🐱")?.emoji)
+        XCTAssertEqual(cat.keywords.first, "หน้าแมว")
+        XCTAssertTrue(cat.keywords.contains("แมว"))
+        XCTAssertEqual(catalog.lookup("👋🏽")?.emoji.keywords.first, "โบกมือ")
+    }
+
+    func testAnEmojiWithoutThaiKeywordsStillParses() throws {
+        let text = EmojiCategory.allCases.map(\.rawValue).joined(separator: "\n")
+            .replacingOccurrences(of: "smileys", with: "smileys\n😀\tgrinning face\t\n👋\twaving hand\tโบกมือ\t👋🏻\t👋🏼\t👋🏽\t👋🏾\t👋🏿")
+        let catalog = try XCTUnwrap(EmojiCatalog(text))
+        XCTAssertEqual(catalog.lookup("😀")?.emoji.keywords, [])
+        XCTAssertEqual(catalog.lookup("👋🏿")?.tone, 4)
+        XCTAssertNil(EmojiCatalog("smileys\n😀\tgrinning face"), "the keyword field is required")
+    }
+
     func testEveryGlyphIsOneCharacter() throws {
         let catalog = try XCTUnwrap(EmojiCatalog.bundled)
         for emoji in catalog.sections.flatMap(\.emoji) {
@@ -32,6 +49,36 @@ final class EmojiTests: XCTestCase {
                 XCTAssertEqual(glyph.count, 1, emoji.name)
             }
         }
+    }
+
+    func testSearchFindsEmojiByTheirThaiWords() throws {
+        let catalog = try XCTUnwrap(EmojiCatalog.bundled)
+        let hearts = catalog.search("หัวใจ").map(\.glyph)
+        XCTAssertTrue(hearts.prefix(10).contains("❤️"), "\(hearts.prefix(10))")
+        XCTAssertEqual(catalog.search("แมว").first?.glyph, "🐈")
+        XCTAssertTrue(catalog.search("แมว").contains { $0.glyph == "🐱" })
+        XCTAssertEqual(catalog.search("  แมว \n").map(\.glyph), catalog.search("แมว").map(\.glyph))
+        XCTAssertTrue(catalog.search("ไทย").contains { $0.glyph == "🇹🇭" })
+    }
+
+    func testSearchRanksNamesBeforeKeywordsAndWholeWordsBeforeParts() throws {
+        let catalog = try XCTUnwrap(EmojiCatalog.bundled)
+        let results = catalog.search("แมว").map(\.glyph)
+        let order = try ["🐈", "😺", "🐱", "🦉"].map { glyph in try XCTUnwrap(results.firstIndex(of: glyph), glyph) }
+        XCTAssertEqual(order, order.sorted(), "named แมว, named แมวยิ้ม…, keyword แมว, a keyword holding แมว")
+    }
+
+    func testSearchMatchesAConsonantBeforeItsVowelIsTyped() throws {
+        let catalog = try XCTUnwrap(EmojiCatalog.bundled)
+        XCTAssertFalse(catalog.search("ก").isEmpty)
+        XCTAssertTrue(catalog.search("ก").contains { $0.keywords.contains { $0.hasPrefix("กิ") } })
+    }
+
+    func testSearchWithNothingToFindReturnsNothing() throws {
+        let catalog = try XCTUnwrap(EmojiCatalog.bundled)
+        XCTAssertEqual(catalog.search(""), [])
+        XCTAssertEqual(catalog.search("   "), [])
+        XCTAssertEqual(catalog.search("ฏฏฏฏฏ"), [])
     }
 
     func testRecentEmojiComeNewestFirstWithoutRepeats() {

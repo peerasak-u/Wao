@@ -7,6 +7,15 @@ public struct Emoji: Equatable, Hashable, Sendable {
     public let name: String
     /// The five skin-tone variants, lightest first, or none.
     public let tones: [String]
+    /// CLDR's Thai short name, then its Thai keywords: what search matches.
+    public let keywords: [String]
+
+    public init(glyph: String, name: String, tones: [String], keywords: [String] = []) {
+        self.glyph = glyph
+        self.name = name
+        self.tones = tones
+        self.keywords = keywords
+    }
 
     public static let toneNames = ["light skin tone", "medium-light skin tone", "medium skin tone",
                                    "medium-dark skin tone", "dark skin tone"]
@@ -44,7 +53,7 @@ public struct EmojiCatalog: Sendable {
         var emoji: [Emoji] = []
         var index: [String: (emoji: Emoji, tone: Int?)] = [:]
         for line in text.split(separator: "\n") where !line.hasPrefix("#") {
-            let fields = line.split(separator: "\t").map(String.init)
+            let fields = line.split(separator: "\t", omittingEmptySubsequences: false).map(String.init)
             if fields.count == 1 {
                 if let category { sections.append(Section(category: category, emoji: emoji)) }
                 guard let next = EmojiCategory(rawValue: fields[0]) else { return nil }
@@ -52,8 +61,9 @@ public struct EmojiCatalog: Sendable {
                 emoji = []
                 continue
             }
-            guard category != nil, fields.count == 2 || fields.count == 7 else { return nil }
-            let entry = Emoji(glyph: fields[0], name: fields[1], tones: Array(fields.dropFirst(2)))
+            guard category != nil, fields.count == 3 || fields.count == 8 else { return nil }
+            let keywords = fields[2].split(separator: "|").map(String.init)
+            let entry = Emoji(glyph: fields[0], name: fields[1], tones: Array(fields.dropFirst(3)), keywords: keywords)
             emoji.append(entry)
             index[entry.glyph] = (entry, nil)
             for (tone, glyph) in entry.tones.enumerated() { index[glyph] = (entry, tone) }
@@ -66,6 +76,42 @@ public struct EmojiCatalog: Sendable {
 
     /// The emoji a typed glyph came from, and which tone it was typed in.
     public func lookup(_ glyph: String) -> (emoji: Emoji, tone: Int?)? { index[glyph] }
+
+    /// How well a query matches an emoji; a lower tier ranks first. The Thai name says what the emoji is, a keyword
+    /// only what it may stand for, so `แมว` puts the cat before every face that keeps a cat among its keywords.
+    enum Match: Int, Comparable {
+        case name, namePrefix, keyword, keywordPrefix, substring
+
+        static func < (a: Match, b: Match) -> Bool { a.rawValue < b.rawValue }
+
+        /// Compared by scalars, not characters: a Thai mark joins the consonant before it into one character, so
+        /// `ก` is not a character prefix of `กิน`, yet it is what the user has typed so far.
+        init?(_ query: [Unicode.Scalar], in keyword: String, isName: Bool) {
+            let scalars = Array(keyword.unicodeScalars)
+            if scalars == query {
+                self = isName ? .name : .keyword
+            } else if scalars.starts(with: query) {
+                self = isName ? .namePrefix : .keywordPrefix
+            } else if scalars.count > query.count,
+                      (1...(scalars.count - query.count)).contains(where: { scalars[$0...].starts(with: query) }) {
+                self = .substring
+            } else {
+                return nil
+            }
+        }
+    }
+
+    /// The emoji whose Thai name or keywords hold `query`, best `Match` first, each tier in the panel's order.
+    public func search(_ query: String) -> [Emoji] {
+        let query = Array(query.trimmingCharacters(in: .whitespacesAndNewlines).unicodeScalars)
+        guard !query.isEmpty else { return [] }
+        var tiers: [Match: [Emoji]] = [:]
+        for emoji in sections.lazy.flatMap(\.emoji) {
+            let best = emoji.keywords.enumerated().compactMap { Match(query, in: $1, isName: $0 == 0) }.min()
+            if let best { tiers[best, default: []].append(emoji) }
+        }
+        return tiers.keys.sorted().flatMap { tiers[$0]! }
+    }
 }
 
 /// What the user typed from the panel: the recent emoji, newest first, and the tone last picked for each emoji.
