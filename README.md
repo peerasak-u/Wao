@@ -50,29 +50,25 @@ weights. So the keyboard is UI only. The container app holds the mic and runs th
 Darwin notification tells the other side to re-read. Each file has exactly one writer.
 
 ```mermaid
-flowchart LR
+flowchart TB
     subgraph KB["Keyboard extension (UI only)"]
-        direction TB
-        touch["Touch"] --> decoder["TapDecoder + TypingModel<br/>(character 6-gram)"]
-        decoder --> text["Text in the host app"]
-        mic["Mic key / ✓"]
+        touch["Touch"] --> decoder["TapDecoder + TypingModel<br/>character 6-gram"] --> text["Text in the host app"]
+        mic["Mic key and ✓"]
     end
 
     subgraph AG["App Group"]
-        direction TB
         cmd[("command.json<br/>start · stop · cancel")]
         state[("state.json<br/>listening · transcribing · done")]
     end
 
     subgraph APP["Container app"]
-        direction TB
-        session["DictationSession<br/>microphone"] --> asr["OpenThai2.0-ASR<br/>int8 ONNX on the CPU"]
+        session["DictationSession<br/>holds the microphone"] --> asr["OpenThai2.0-ASR<br/>int8 ONNX on the CPU"]
     end
 
     mic -- writes --> cmd
     cmd -. "Darwin notification" .-> session
     session -- writes --> state
-    state -. "Darwin notification" .-> KB
+    state -. "Darwin notification" .-> mic
 ```
 
 The keyboard writes `command.json`. The app's `DictationSession` writes `state.json` and the audio `level`. Both
