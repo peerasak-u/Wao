@@ -1,5 +1,5 @@
 import CoreGraphics
-import WaoCore
+import WaoTyping
 import XCTest
 
 /// Taps decoded with the shipped model and tuning, the way the Thai letters page types them.

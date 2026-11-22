@@ -12,7 +12,7 @@ prunes it until the whole file fits in --max-bytes. The word list is PyThaiNLP's
 word occurs in the training lines (segmented with newmm) and in PyThaiNLP's Thai National Corpus frequencies.
 
 Writes, relative to the repo root:
-  Packages/WaoCore/Sources/WaoCore/Resources/thai-typing.bin
+  Packages/WaoCore/Sources/WaoTyping/Resources/thai-typing.bin
   Packages/WaoCore/Tests/WaoCoreTests/Fixtures/typing-holdout-{chat,formal}.txt   lines never trained on
   Packages/WaoCore/Tests/WaoCoreTests/Fixtures/typing-golden.jsonl                ln P from the unquantised model
 
@@ -44,7 +44,7 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
-RESOURCE = ROOT / "Packages/WaoCore/Sources/WaoCore/Resources/thai-typing.bin"
+RESOURCE = ROOT / "Packages/WaoCore/Sources/WaoTyping/Resources/thai-typing.bin"
 FIXTURES = ROOT / "Packages/WaoCore/Tests/WaoCoreTests/Fixtures"
 
 CV_COMMIT = "3acf94e65c97ea1409a070ade72f379e7caea7da"

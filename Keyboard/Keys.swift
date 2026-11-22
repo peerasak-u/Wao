@@ -1,5 +1,5 @@
 import SwiftUI
-import WaoCore
+import WaoTyping
 
 enum Key {
     /// The default room around a cap; the typing pages place their caps with `KeyLayout` and pass their own.

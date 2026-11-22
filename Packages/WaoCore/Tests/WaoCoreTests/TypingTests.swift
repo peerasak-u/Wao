@@ -1,4 +1,4 @@
-import WaoCore
+import WaoTyping
 import XCTest
 
 final class TypingTests: XCTestCase {

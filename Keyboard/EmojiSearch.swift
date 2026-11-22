@@ -1,6 +1,6 @@
 import SwiftUI
 import UIKit
-import WaoCore
+import WaoTyping
 
 /// Apple's emoji search: the field over a row of results, over the Thai keys that type the query. It keeps the emoji
 /// page's height, so the host stays put.
@@ -8,9 +8,8 @@ struct EmojiSearchView: View {
     @ObservedObject var model: KeyboardModel
     let query: String
     let globe: () -> UIView?
-    @State private var history = EmojiHistory.stored
-    /// Frequently used as it was when search opened, so nothing moves under the finger while picking.
-    @State private var frequent: [String] = EmojiHistory.stored.recent
+    /// Built once per search: the parent view rebuilds on every letter, and decoding the history each time adds up.
+    @StateObject private var search = SearchResults()
 
     var body: some View {
         GeometryReader { geo in
@@ -23,7 +22,7 @@ struct EmojiSearchView: View {
                     .frame(height: EmojiMetrics.search)
                     .padding(.horizontal, EmojiMetrics.searchMargin - inset)
                     .padding(.top, EmojiMetrics.searchTop)
-                EmojiResults(items: items, empty: query.isEmpty ? "" : "ไม่พบอีโมจิ", pick: pick)
+                EmojiResults(items: search.items(for: query), empty: query.isEmpty ? "" : "ไม่พบอีโมจิ", pick: pick)
                     .id(query)
                     .padding(.horizontal, EmojiMetrics.searchMargin - inset)
                     .frame(height: max(results, 0))
@@ -32,8 +31,37 @@ struct EmojiSearchView: View {
         }
     }
 
+    private func pick(_ item: EmojiItem) {
+        model.pick(item.glyph)
+        search.history.use(item.emoji, tone: item.tone)
+        search.history.store()
+    }
+}
+
+/// What search shows for a query, worked out once per query rather than on every body pass.
+private final class SearchResults: ObservableObject {
+    @Published var history: EmojiHistory {
+        didSet { last = nil }
+    }
+    /// Frequently used as it was when search opened, so nothing moves under the finger while picking.
+    let frequent: [String]
+    private var last: (query: String, items: [EmojiItem])?
+
+    init() {
+        let stored = EmojiHistory.stored
+        history = stored
+        frequent = stored.recent
+    }
+
     /// Each emoji in the tone last picked for it, as the grid shows it.
-    private var items: [EmojiItem] {
+    func items(for query: String) -> [EmojiItem] {
+        if let last, last.query == query { return last.items }
+        let items = search(query)
+        last = (query, items)
+        return items
+    }
+
+    private func search(_ query: String) -> [EmojiItem] {
         guard let catalog = EmojiCatalog.bundled else { return [] }
         if query.trimmingCharacters(in: .whitespaces).isEmpty {
             return frequent.compactMap(catalog.lookup).map { EmojiItem(emoji: $0.emoji, tone: $0.tone) }
@@ -41,12 +69,6 @@ struct EmojiSearchView: View {
         return catalog.search(query).map { emoji in
             EmojiItem(emoji: emoji, tone: catalog.lookup(history.shown(emoji))?.tone)
         }
-    }
-
-    private func pick(_ item: EmojiItem) {
-        model.pick(item.glyph)
-        history.use(item.emoji, tone: item.tone)
-        history.store()
     }
 }
 

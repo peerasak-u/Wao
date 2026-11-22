@@ -17,6 +17,8 @@ actor DictationSession {
     private(set) var state: SessionState = .off
     private var lastResult: Transcription?
     private var transcriber: Transcriber?
+    private var loading: Task<Transcriber, Error>?
+    private var modelDirectory: URL?
     private var hotwords: Hotwords
     private var idleTimer: Task<Void, Never>?
     private var preview: Task<Void, Never>?
@@ -46,9 +48,46 @@ actor DictationSession {
         }
     }
 
-    func use(_ transcriber: Transcriber?) {
-        self.transcriber = transcriber
-        use(hotwords: hotwords)
+    var isModelLoaded: Bool { transcriber != nil }
+
+    func load(from directory: URL) async throws {
+        modelDirectory = directory
+        _ = try await model()
+    }
+
+    /// The model costs hundreds of MB while iOS keeps the app alive in the background, so it is dropped when the
+    /// session closes or memory runs low, and the next utterance or session loads it again.
+    func releaseModel() {
+        switch state {
+        case .listening, .transcribing: break
+        case .off, .idle, .done, .failed:
+            transcriber = nil
+            loading = nil
+        }
+    }
+
+    private func model() async throws -> Transcriber {
+        if let transcriber { return transcriber }
+        guard let modelDirectory else { throw SessionError.modelNotLoaded }
+        let hotwords = hotwords
+        let task = loading ?? Task.detached(priority: .userInitiated) {
+            try Transcriber(
+                modelDirectory: modelDirectory, threads: 1, hotwords: hotwords,
+                cleanup: TextCleanup(hotwords: hotwords, corrections: .bundled))
+        }
+        loading = task
+        do {
+            let loaded = try await task.value
+            if loading == task {
+                loading = nil
+                transcriber = loaded
+                use(hotwords: hotwords)
+            }
+            return loaded
+        } catch {
+            if loading == task { loading = nil }
+            throw error
+        }
     }
 
     /// Reaches the loaded model without reloading it; a transcription already running finishes with the old list.
@@ -89,6 +128,7 @@ actor DictationSession {
                 preview?.cancel()
                 preview = nil
             }
+            if next == .off { releaseModel() }
             try? bridge?.write(next)
             BridgeSignal.state.post()
             onChange(Snapshot(state: next, lastResult: lastResult))
@@ -106,27 +146,24 @@ actor DictationSession {
             idleTimer?.cancel()
             capture.beginUtterance()
             preview?.cancel()
-            preview = transcriber.map { previewLoop(id: id, language: language, transcriber: $0) }
+            preview = previewLoop(id: id, language: language)
         case .discardCapture:
             _ = capture.endUtterance()
             bridge?.writeLevel(0)
         case .transcribe(let id, let language):
             let audio = capture.endUtterance()
             bridge?.writeLevel(0)
-            guard let transcriber else {
-                send(.transcriptionFailed(id: id, reason: SessionError.modelNotLoaded.localizedDescription, now: Date()))
-                return
-            }
             Task.detached(priority: .userInitiated) { [weak self] in
+                guard let self else { return }
                 let event: SessionEvent
                 do {
-                    let result = try transcriber.transcribe(audio, language: language)
-                    await self?.record(result)
+                    let result = try await model().transcribe(audio, language: language)
+                    await record(result)
                     event = .transcribed(id: id, text: result.text, now: Date())
                 } catch {
                     event = .transcriptionFailed(id: id, reason: String(describing: error), now: Date())
                 }
-                await self?.send(event)
+                await send(event)
             }
         case .armIdleTimer(let fireAt):
             idleTimer?.cancel()
@@ -139,9 +176,11 @@ actor DictationSession {
     }
 
     /// Re-transcribes the end of the utterance while it is being recorded. One preview runs at a time, started
-    /// at most every `previewEvery`, at a lower priority than the final transcription.
-    private func previewLoop(id: UUID, language: Language, transcriber: Transcriber) -> Task<Void, Never> {
+    /// at most every `previewEvery`, at a lower priority than the final transcription. On a phone too slow to
+    /// preview within `previewEvery`, the loop rests as long as the last preview took instead of pinning a core.
+    private func previewLoop(id: UUID, language: Language) -> Task<Void, Never> {
         Task.detached(priority: .utility) { [capture, weak self] in
+            guard let transcriber = try? await self?.model() else { return }
             let clock = ContinuousClock()
             while !Task.isCancelled {
                 let started = clock.now
@@ -153,7 +192,8 @@ actor DictationSession {
                    !result.text.isEmpty, !Task.isCancelled {
                     await self?.send(.heard(id: id, Heard(text: result.text, clipped: clipped)))
                 }
-                try? await clock.sleep(until: started + Self.previewEvery)
+                let took = clock.now - started
+                try? await clock.sleep(for: max(Self.previewEvery - took, took))
             }
         }
     }

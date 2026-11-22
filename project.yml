@@ -77,3 +77,5 @@ targets:
     dependencies:
       - package: WaoCore
         product: WaoCore
+      - package: WaoCore
+        product: WaoTyping

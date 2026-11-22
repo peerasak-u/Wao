@@ -27,8 +27,8 @@ SOFTWARE.
 
 ----
 
-thai-typing.bin in this folder, the Thai language model and word list behind
-tap decoding and word suggestions, is built by tools/build_typing_model.py
+thai-typing.bin in the keyboard's WaoTyping resources, the Thai language model
+and word list behind tap decoding and word suggestions, is built by tools/build_typing_model.py
 from these sources, each dedicated to the public domain under CC0 1.0
 (https://creativecommons.org/publicdomain/zero/1.0/):
 
@@ -43,7 +43,7 @@ from these sources, each dedicated to the public domain under CC0 1.0
 
 ----
 
-emoji.txt in this folder, the emoji keyboard's list of emoji, their names,
+emoji.txt in the keyboard's WaoTyping resources, the emoji keyboard's list of emoji, their names,
 skin-tone variants and Thai search keywords, is built by tools/build_emoji.py
 from emoji-test.txt of Unicode Emoji 15.0
 (https://www.unicode.org/Public/emoji/15.0/emoji-test.txt) and the Thai

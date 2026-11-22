@@ -1,5 +1,5 @@
 import SwiftUI
-import WaoCore
+import WaoTyping
 
 struct KeyboardView: View {
     @ObservedObject var model: KeyboardModel
@@ -70,7 +70,7 @@ private struct DictationView: View {
                 }
                 .accessibilityLabel("Cancel")
                 Spacer()
-                Waveform(levels: model.levels, active: isListening)
+                LiveWaveform(levels: model.levels, active: isListening)
                     .frame(height: 56)
                 Spacer()
                 Button(action: model.confirm) {
@@ -96,5 +96,14 @@ private struct DictationView: View {
         case .queued, .starting: "กำลังเริ่ม..."
         case .listening: "กำลังฟัง..."
         }
+    }
+}
+
+private struct LiveWaveform: View {
+    @ObservedObject var levels: Levels
+    let active: Bool
+
+    var body: some View {
+        Waveform(levels: levels.values, active: active)
     }
 }

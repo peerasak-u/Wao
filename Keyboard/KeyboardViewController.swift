@@ -1,12 +1,13 @@
 import Combine
 import SwiftUI
 import UIKit
-import WaoCore
+import WaoTyping
 
 final class KeyboardViewController: UIInputViewController {
     private let model = KeyboardModel()
     private var host: UIHostingController<KeyboardView>?
     private var heightFollowsMode: AnyCancellable?
+    private var emojiFaceFollowsPage: AnyCancellable?
 
     override func loadView() {
         view = ClickingInputView(frame: .zero, inputViewStyle: .keyboard)
@@ -58,6 +59,11 @@ final class KeyboardViewController: UIInputViewController {
             .map { $0.isEmojiPage ? EmojiMetrics(width: width).height : KeyMetrics(width: width).height }
             .removeDuplicates()
             .sink { height.constant = $0 }
+        emojiFaceFollowsPage = model.$mode
+            .map(\.isEmojiPage)
+            .removeDuplicates()
+            .filter { !$0 }
+            .sink { _ in EmojiFace.drop() }
     }
 
     override func viewWillAppear(_ animated: Bool) {

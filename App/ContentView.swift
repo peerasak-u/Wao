@@ -1,4 +1,3 @@
-import Combine
 import SwiftUI
 import WaoCore
 import WaoInference
@@ -307,13 +306,18 @@ private struct TestWaveform: View {
     let look: Look
     @State private var levels = Array(repeating: Float(0), count: Waveform.barsPerSide + 1)
     @State private var bridge = try? Bridge.shared()
-    private let tick = Timer.publish(every: 0.05, on: .main, in: .common).autoconnect()
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         Waveform(levels: levels, active: true, lit: look == .live)
             .animation(.easeOut(duration: 0.3), value: look)
-            .onReceive(tick) { now in
-                levels = Array(levels.dropFirst()) + [nextLevel(at: now)]
+            // The app stays alive in the background through every dictation, where nobody sees this.
+            .task(id: scenePhase) {
+                guard scenePhase == .active else { return }
+                while !Task.isCancelled {
+                    levels = Array(levels.dropFirst()) + [nextLevel(at: Date())]
+                    try? await Task.sleep(for: .milliseconds(50))
+                }
             }
     }
 

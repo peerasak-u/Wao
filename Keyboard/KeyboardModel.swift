@@ -2,6 +2,7 @@ import CoreGraphics
 import Foundation
 import os
 import WaoCore
+import WaoTyping
 
 /// Everything the keyboard shows. Dictation phases are derived from the app's `state.json`, matched against the
 /// utterance this keyboard started, so a stale `done` from an earlier session is never inserted.
@@ -54,7 +55,8 @@ final class KeyboardModel: ObservableObject {
     /// this outlives the dictation view; its `done` is inserted wherever the cursor is then.
     @Published private(set) var pending: UUID?
     @Published var typing = Typing()
-    @Published private(set) var levels: [Float] = Array(repeating: 0, count: 24)
+    /// Polled at 20 Hz while listening, so only the waveform observes it, not the whole keyboard.
+    let levels = Levels()
     @Published var notice: String?
     /// The text before the cursor as the host last reported it: what tap decoding and suggestions read.
     @Published private(set) var context = ""
@@ -75,6 +77,7 @@ final class KeyboardModel: ObservableObject {
 
     /// The touches behind the word being typed, which a hurried mistap is retyped from.
     private var trail = TouchTrail()
+    private var lastCompletions: (context: String, completions: [Completion])?
     private var cursorWalk: CursorWalk?
     private var hostSettled: DispatchWorkItem?
     private var bridge: Bridge?
@@ -154,7 +157,15 @@ final class KeyboardModel: ObservableObject {
     }
 
     func type(_ key: CharacterKey) {
-        insert(typing.type(key))
+        insert(typeKey(key))
+    }
+
+    /// Typing a letter changes `typing` only when it ends a shift, so most keys leave the view alone.
+    private func typeKey(_ key: CharacterKey) -> String {
+        var next = typing
+        let text = next.type(key)
+        if next != typing { typing = next }
+        return text
     }
 
     /// A touch at `point` on `layout` typed `key`. On the Thai letters the latest word is then retyped when the
@@ -162,7 +173,7 @@ final class KeyboardModel: ObservableObject {
     func tap(_ key: CharacterKey, at point: CGPoint, interval: TimeInterval, in layout: KeyLayout) {
         let shifted = typing.shifted, retypes = typing.decodes && !isSearchingEmoji
         trail.follow(context)
-        let text = typing.type(key)
+        let text = typeKey(key)
         insert(text)
         guard retypes, let model = TypingModel.bundled else { return trail.reset() }
         trail.record(Touch(point: point, interval: interval, shifted: shifted, text: text))
@@ -185,8 +196,10 @@ final class KeyboardModel: ObservableObject {
         refreshContext()
     }
 
+    /// The host reports every change twice, after the insert and again in `textDidChange`.
     func refreshContext() {
-        context = readContext()
+        let text = readContext()
+        if text != context { context = text }
     }
 
     func beginCursorTracking() {
@@ -254,9 +267,13 @@ final class KeyboardModel: ObservableObject {
         return key
     }
 
+    /// Read on every body pass, so it is worked out once per context.
     var completions: [Completion] {
         guard typing.decodes, let model = TypingModel.bundled else { return [] }
-        return model.completions(after: context)
+        if let last = lastCompletions, last.context == context { return last.completions }
+        let completions = model.completions(after: context)
+        lastCompletions = (context, completions)
+        return completions
     }
 
     func micTapped() {
@@ -379,7 +396,7 @@ final class KeyboardModel: ObservableObject {
         levelTimer = Timer.scheduledTimer(withTimeInterval: 1.0 / 20, repeats: true) { [weak self] _ in
             MainActor.assumeIsolated {
                 guard let self, let bridge = self.bridge else { return }
-                self.levels = Array(self.levels.dropFirst()) + [bridge.readLevel()]
+                self.levels.values = Array(self.levels.values.dropFirst()) + [bridge.readLevel()]
             }
         }
     }
@@ -387,6 +404,10 @@ final class KeyboardModel: ObservableObject {
     private func stopLevels() {
         levelTimer?.invalidate()
         levelTimer = nil
-        levels = Array(repeating: 0, count: levels.count)
+        levels.values = Array(repeating: 0, count: levels.values.count)
     }
+}
+
+final class Levels: ObservableObject {
+    @Published var values: [Float] = Array(repeating: 0, count: 24)
 }

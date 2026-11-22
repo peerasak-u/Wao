@@ -1,6 +1,6 @@
 import SwiftUI
 import UIKit
-import WaoCore
+import WaoTyping
 
 /// Space types a space on a tap. Held, the keyboard becomes a trackpad for the cursor, as on the system keyboard,
 /// unless `trackpad` is off: the emoji search query has no cursor to move.

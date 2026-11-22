@@ -64,7 +64,11 @@ public final class Transcriber: @unchecked Sendable {
         modelDirectory: URL, threads: Int = 2, hotwords: Hotwords = .bundled, cleanup: TextCleanup = .standard,
         beam: BeamSettings = .poodPim
     ) throws {
-        encoder = try Session(path: modelDirectory.appendingPathComponent("encoder.int8.onnx"), threads: threads)
+        // Prepacking keeps a second, repacked copy of the encoder's weights: ~520 MB of footprint on an M4 Mac, enough
+        // for iOS to kill the app while it dictates in the background. Without it the encoder runs about twice as
+        // long (~0.12 s more per 3 s clip). The decoder keeps prepacking; without it the decode ran 3.5x slower.
+        encoder = try Session(
+            path: modelDirectory.appendingPathComponent("encoder.int8.onnx"), threads: threads, prepack: false)
         decoder = try Session(path: modelDirectory.appendingPathComponent("decoder_joint.onnx"), threads: threads)
         vocabulary = try Vocabulary(contentsOf: modelDirectory.appendingPathComponent("tokens.txt"))
         lexicon = (hotwords, cleanup)

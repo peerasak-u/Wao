@@ -121,7 +121,7 @@ the Swift beam's exactly (`wao-transcribe` prints `tokens` too).
 
 The Thai letters page types the key a touch most likely meant, from where the finger landed, how fast the typing is
 and what came before, and the strip above the keys offers completions of the word being typed. Both read
-`Packages/WaoCore/Sources/WaoCore/Resources/thai-typing.bin`, a pruned character 6-gram and word list memory-mapped
+`Packages/WaoCore/Sources/WaoTyping/Resources/thai-typing.bin`, a pruned character 6-gram and word list memory-mapped
 by `TypingModel`. Every tunable lives in `TapTuning.shipped`.
 
 ```sh
