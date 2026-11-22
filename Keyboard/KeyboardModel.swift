@@ -154,7 +154,15 @@ final class KeyboardModel: ObservableObject {
     }
 
     func type(_ key: CharacterKey) {
-        insert(typing.type(key))
+        insert(typeKey(key))
+    }
+
+    /// Typing a letter changes `typing` only when it ends a shift, so most keys leave the view alone.
+    private func typeKey(_ key: CharacterKey) -> String {
+        var next = typing
+        let text = next.type(key)
+        if next != typing { typing = next }
+        return text
     }
 
     /// A touch at `point` on `layout` typed `key`. On the Thai letters the latest word is then retyped when the
@@ -162,7 +170,7 @@ final class KeyboardModel: ObservableObject {
     func tap(_ key: CharacterKey, at point: CGPoint, interval: TimeInterval, in layout: KeyLayout) {
         let shifted = typing.shifted, retypes = typing.decodes && !isSearchingEmoji
         trail.follow(context)
-        let text = typing.type(key)
+        let text = typeKey(key)
         insert(text)
         guard retypes, let model = TypingModel.bundled else { return trail.reset() }
         trail.record(Touch(point: point, interval: interval, shifted: shifted, text: text))
@@ -185,8 +193,10 @@ final class KeyboardModel: ObservableObject {
         refreshContext()
     }
 
+    /// The host reports every change twice, after the insert and again in `textDidChange`.
     func refreshContext() {
-        context = readContext()
+        let text = readContext()
+        if text != context { context = text }
     }
 
     func beginCursorTracking() {
