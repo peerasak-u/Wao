@@ -1,5 +1,5 @@
 import Foundation
-@testable import WaoCore
+@testable import WaoTyping
 import XCTest
 
 final class EmojiTests: XCTestCase {
@@ -113,7 +113,7 @@ final class EmojiTests: XCTestCase {
     }
 
     func testParsingTheCatalogTakesMilliseconds() throws {
-        let url = Paths.repo.appendingPathComponent("Packages/WaoCore/Sources/WaoCore/Resources/emoji.txt")
+        let url = Paths.repo.appendingPathComponent("Packages/WaoCore/Sources/WaoTyping/Resources/emoji.txt")
         let text = try String(contentsOf: url, encoding: .utf8)
         let start = Date()
         XCTAssertNotNil(EmojiCatalog(text))

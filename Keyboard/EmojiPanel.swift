@@ -1,7 +1,7 @@
 import CoreText
 import SwiftUI
 import UIKit
-import WaoCore
+import WaoTyping
 
 /// A run of emoji under one header, and the bar icon that jumps to it.
 enum EmojiTab: Hashable, CaseIterable {

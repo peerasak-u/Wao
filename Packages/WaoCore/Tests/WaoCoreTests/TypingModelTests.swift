@@ -1,5 +1,5 @@
 import Foundation
-import WaoCore
+import WaoTyping
 import XCTest
 
 final class TypingModelTests: XCTestCase {
@@ -38,7 +38,7 @@ final class TypingModelTests: XCTestCase {
     }
 
     func testFitsTheKeyboardsMemoryBudget() throws {
-        let url = Paths.repo.appendingPathComponent("Packages/WaoCore/Sources/WaoCore/Resources/thai-typing.bin")
+        let url = Paths.repo.appendingPathComponent("Packages/WaoCore/Sources/WaoTyping/Resources/thai-typing.bin")
         let size = try XCTUnwrap(try FileManager.default.attributesOfItem(atPath: url.path)[.size] as? Int)
         XCTAssertLessThanOrEqual(size, 8_000_000)
         XCTAssertTrue(try model.buildInfo.contains("sentence-collector.txt"))

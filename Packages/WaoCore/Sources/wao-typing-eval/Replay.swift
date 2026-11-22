@@ -1,6 +1,6 @@
 import CoreGraphics
 import Foundation
-import WaoCore
+import WaoTyping
 
 /// Seeded so every run of the eval, and the regression test, sees the same taps.
 struct SplitMix64: RandomNumberGenerator {

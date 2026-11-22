@@ -9,12 +9,15 @@ let package = Package(
     platforms: [.iOS(.v17), .macOS(.v14)],
     products: [
         .library(name: "WaoCore", targets: ["WaoCore"]),
+        .library(name: "WaoTyping", targets: ["WaoTyping"]),
         .library(name: "WaoInference", targets: ["WaoInference"]),
         .executable(name: "wao-transcribe", targets: ["wao-transcribe"]),
         .executable(name: "wao-typing-eval", targets: ["wao-typing-eval"]),
     ],
     targets: [
         .target(name: "WaoCore", resources: [.process("Resources")], swiftSettings: optimizedInDebug),
+        // Keyboard-only, so the app does not ship the typing model and emoji data a second time.
+        .target(name: "WaoTyping", resources: [.process("Resources")], swiftSettings: optimizedInDebug),
         // Built by tools/fetch_onnxruntime.sh; only the app links it, never the keyboard.
         .binaryTarget(name: "onnxruntime", path: "Vendor/onnxruntime.xcframework"),
         .target(
@@ -30,10 +33,10 @@ let package = Package(
             ]
         ),
         .executableTarget(name: "wao-transcribe", dependencies: ["WaoCore", "WaoInference"]),
-        .executableTarget(name: "wao-typing-eval", dependencies: ["WaoCore"]),
+        .executableTarget(name: "wao-typing-eval", dependencies: ["WaoTyping"]),
         .testTarget(
             name: "WaoCoreTests",
-            dependencies: ["WaoCore", "WaoInference", "wao-typing-eval"],
+            dependencies: ["WaoCore", "WaoTyping", "WaoInference", "wao-typing-eval"],
             exclude: ["Fixtures"]
         ),
     ]

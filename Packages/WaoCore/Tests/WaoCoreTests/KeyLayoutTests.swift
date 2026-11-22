@@ -1,5 +1,5 @@
 import CoreGraphics
-@testable import WaoCore
+@testable import WaoTyping
 import XCTest
 
 final class KeyLayoutTests: XCTestCase {

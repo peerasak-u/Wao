@@ -1,5 +1,5 @@
 import CoreGraphics
-import WaoCore
+import WaoTyping
 import XCTest
 
 /// Taps typed the way the Thai letters page types them: each decoded on its own, then the latest word retyped.

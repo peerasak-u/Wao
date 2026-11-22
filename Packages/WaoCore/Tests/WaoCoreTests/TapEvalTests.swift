@@ -1,5 +1,5 @@
 @testable import wao_typing_eval
-import WaoCore
+import WaoTyping
 import XCTest
 
 /// Guards the shipped model and tuning against a rebuild or retune that quietly stops helping.

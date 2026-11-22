@@ -15,7 +15,7 @@ categories of the iOS emoji keyboard, in its order: Smileys & Emotion and People
 activity comes before travel. An emoji in one skin tone, the same tone on every person in it, is filed under its
 base emoji as one of five variants, lightest first. Mixed tones (two people, two tones) are left out.
 
-Writes Packages/WaoCore/Sources/WaoCore/Resources/emoji.txt, UTF-8:
+Writes Packages/WaoCore/Sources/WaoTyping/Resources/emoji.txt, UTF-8:
   # comment lines           where the data came from
   <category>                a line without a tab starts a category: smileys, animals, food, ...
   <glyph>\t<name>\t<thai keywords>[\t<tone 1>\t...\t<tone 5>]
@@ -40,7 +40,7 @@ ANNOTATIONS = [
 
 ROOT = Path(__file__).resolve().parent.parent
 CACHE_DIR = ROOT / ".model-cache" / "emoji"
-OUT = ROOT / "Packages/WaoCore/Sources/WaoCore/Resources/emoji.txt"
+OUT = ROOT / "Packages/WaoCore/Sources/WaoTyping/Resources/emoji.txt"
 
 GROUPS = {
     "Smileys & Emotion": "smileys",

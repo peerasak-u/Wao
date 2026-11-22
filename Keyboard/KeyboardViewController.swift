@@ -1,7 +1,7 @@
 import Combine
 import SwiftUI
 import UIKit
-import WaoCore
+import WaoTyping
 
 final class KeyboardViewController: UIInputViewController {
     private let model = KeyboardModel()

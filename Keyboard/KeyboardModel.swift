@@ -2,6 +2,7 @@ import CoreGraphics
 import Foundation
 import os
 import WaoCore
+import WaoTyping
 
 /// Everything the keyboard shows. Dictation phases are derived from the app's `state.json`, matched against the
 /// utterance this keyboard started, so a stale `done` from an earlier session is never inserted.
