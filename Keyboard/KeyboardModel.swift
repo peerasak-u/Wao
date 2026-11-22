@@ -75,6 +75,7 @@ final class KeyboardModel: ObservableObject {
 
     /// The touches behind the word being typed, which a hurried mistap is retyped from.
     private var trail = TouchTrail()
+    private var lastCompletions: (context: String, completions: [Completion])?
     private var cursorWalk: CursorWalk?
     private var hostSettled: DispatchWorkItem?
     private var bridge: Bridge?
@@ -264,9 +265,13 @@ final class KeyboardModel: ObservableObject {
         return key
     }
 
+    /// Read on every body pass, so it is worked out once per context.
     var completions: [Completion] {
         guard typing.decodes, let model = TypingModel.bundled else { return [] }
-        return model.completions(after: context)
+        if let last = lastCompletions, last.context == context { return last.completions }
+        let completions = model.completions(after: context)
+        lastCompletions = (context, completions)
+        return completions
     }
 
     func micTapped() {
