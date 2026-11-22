@@ -80,6 +80,22 @@ final class CursorTextTests: XCTestCase {
         XCTAssertEqual(two.before, "a\nb")
     }
 
+    func testLineEdgesStopAtLineBreaks() {
+        var text = CursorText(before: "ab\nกิน", after: "ข้าว\ncd")
+        XCTAssertEqual(text.moveToLineEdge(down: true), "ข้าว".utf16.count)
+        XCTAssertEqual(text.after, "\ncd")
+        XCTAssertEqual(text.moveToLineEdge(down: false), -"กินข้าว".utf16.count)
+        XCTAssertEqual(text.before, "ab\n")
+        XCTAssertEqual(text.moveToLineEdge(down: false), 0)
+    }
+
+    /// After a move iOS shows only the cursor's line; at its start the text before is just the line break.
+    func testFromALineStartUpLandsAtTheEndOfTheLineAbove() {
+        var text = CursorText(before: "\n", after: "สวัสดี")
+        XCTAssertEqual(text.moveLines(by: -1), -1)
+        XCTAssertEqual(text.before, "")
+    }
+
     func testAnEmptyLineIsALine() {
         var text = CursorText(before: "abc\n\nab", after: "")
         XCTAssertEqual(text.moveLines(by: -1), -3)

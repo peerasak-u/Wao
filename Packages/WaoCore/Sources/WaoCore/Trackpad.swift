@@ -42,6 +42,14 @@ public struct CursorText: Equatable, Sendable {
         return jump(to: target + min(column, length), in: characters)
     }
 
+    /// Moves to the end of the line, or its start, as far as the known text shows it.
+    public mutating func moveToLineEdge(down: Bool) -> Int {
+        let characters = self.characters
+        let cursor = before.count
+        let target = down ? lineEnd(of: cursor, in: characters) ?? characters.count : lineStart(of: cursor, in: characters)
+        return jump(to: target, in: characters)
+    }
+
     /// The two sides are kept apart so a mark the host left right after the cursor cannot merge into the
     /// character before it.
     private var characters: [Character] { Array(before) + Array(after) }
@@ -87,8 +95,9 @@ public struct SpaceTrackpad: Equatable, Sendable {
         case end
     }
 
-    public static let holdDelay: TimeInterval = 0.5
-    /// Finger travel per character and per line.
+    /// The system keyboard's, measured from a recording of a held space in the iOS 26.4 simulator.
+    public static let holdDelay: TimeInterval = 0.65
+    /// Finger travel per character and per line: about one character and one line of 17 pt text.
     public static let step = CGSize(width: 9, height: 22)
 
     public private(set) var phase: Phase = .idle
