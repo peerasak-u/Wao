@@ -28,10 +28,10 @@ struct CreditsFooter: View {
                 Text("ถอดเสียงด้วย OpenThai2.0-ASR · iApp Technology")
                     .foregroundStyle(Palette.secondary)
                 Text("เครดิตและสัญญาอนุญาต")
-                    .foregroundStyle(.white)
+                    .foregroundStyle(Palette.ink)
                     .underline()
             }
-            .font(.system(size: 13))
+            .font(.ink(13))
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 8)
@@ -73,7 +73,7 @@ struct AppVersionLabel: View {
             }
         } label: {
             Text(copied ? "คัดลอกแล้ว" : version.display)
-                .font(.system(size: 13).monospacedDigit())
+                .font(.ink(13).monospacedDigit())
                 .foregroundStyle(Palette.secondary)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 8)
@@ -141,6 +141,16 @@ private struct CreditsScreen: View {
                         .licence("Unicode License V3", .unicode),
                     ]
                 )
+                Credit(
+                    title: "ฟอนต์ Anuphan และ Itim",
+                    byline: "Cadson Demak · SIL Open Font License 1.1",
+                    detail: "Anuphan เป็นตัวอักษรหลักของแอป Itim ใช้กับโน้ตลายมือ",
+                    links: [
+                        .web("Anuphan · GitHub", "https://github.com/cadsondemak/Anuphan"),
+                        .web("Itim · GitHub", "https://github.com/cadsondemak/itim"),
+                        .web("SIL Open Font License 1.1", "https://scripts.sil.org/OFL"),
+                    ]
+                )
                 AppVersionLabel()
             }
             .padding(.horizontal, 20)
@@ -158,17 +168,16 @@ private struct ModelCredit: View {
         VStack(alignment: .leading, spacing: 18) {
             VStack(alignment: .leading, spacing: 6) {
                 Text("โมเดลถอดเสียง")
-                    .font(.system(size: 13, weight: .medium))
+                    .font(.ink(13, .medium))
                     .foregroundStyle(Palette.tertiary)
                 Text("OpenThai2.0-ASR-Streaming")
-                    .font(.system(size: 24, weight: .bold))
-                    .shadow(color: .white.opacity(0.25), radius: 16)
+                    .font(.ink(24, .bold))
                 Text("โดย iApp Technology")
-                    .font(.system(size: 15, weight: .medium))
+                    .font(.ink(15, .medium))
                     .foregroundStyle(Palette.secondary)
             }
             Text("ขอบคุณ iApp Technology และ AIEAT ที่เปิดโมเดลถอดเสียงภาษาไทยให้ใช้ฟรี")
-                .font(.system(size: 17, weight: .medium))
+                .font(.ink(17, .medium))
                 .lineSpacing(3)
                 .fixedSize(horizontal: false, vertical: true)
             VStack(alignment: .leading, spacing: 10) {
@@ -205,10 +214,10 @@ private struct Fact: View {
                 .foregroundStyle(Palette.secondary)
                 .frame(width: 92, alignment: .leading)
             Text(value)
-                .foregroundStyle(.white.opacity(0.85))
+                .foregroundStyle(Palette.ink.opacity(0.85))
                 .fixedSize(horizontal: false, vertical: true)
         }
-        .font(.system(size: 14))
+        .font(.ink(14))
     }
 }
 
@@ -221,11 +230,11 @@ private struct Credit: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             VStack(alignment: .leading, spacing: 4) {
-                Text(title).font(.system(size: 17, weight: .semibold))
-                Text(byline).font(.system(size: 14)).foregroundStyle(Palette.secondary)
+                Text(title).font(.ink(17, .semibold))
+                Text(byline).font(.ink(14)).foregroundStyle(Palette.secondary)
             }
             Text(detail)
-                .font(.system(size: 14))
+                .font(.ink(14))
                 .foregroundStyle(Palette.secondary)
                 .fixedSize(horizontal: false, vertical: true)
             Links(links: links)
@@ -262,10 +271,10 @@ private struct Links: View {
 
     private func row(_ title: String, symbol: String) -> some View {
         HStack {
-            Text(title).font(.system(size: 15, weight: .medium))
+            Text(title).font(.ink(15, .medium))
             Spacer()
             Image(systemName: symbol)
-                .font(.system(size: 13, weight: .semibold))
+                .font(.ink(13, .semibold))
                 .foregroundStyle(Palette.tertiary)
         }
         .padding(.vertical, 13)
@@ -285,7 +294,7 @@ private struct LicenceScreen: View {
                     ForEach(paragraphs.indices, id: \.self) { i in
                         Text(paragraphs[i])
                             .font(.system(size: 12, design: .monospaced))
-                            .foregroundStyle(.white.opacity(0.8))
+                            .foregroundStyle(Palette.ink.opacity(0.8))
                             .lineSpacing(2)
                             .textSelection(.enabled)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -294,7 +303,7 @@ private struct LicenceScreen: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 40)
             } else {
-                ProgressView().tint(.white).padding(.top, 60)
+                ProgressView().tint(Palette.ink).padding(.top, 60)
             }
         }
         .screenBackground()
