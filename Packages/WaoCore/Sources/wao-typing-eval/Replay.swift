@@ -36,7 +36,8 @@ enum Decoder {
 
 /// Replays held-out Thai lines as noisy taps on the shipped key grid and decodes them with the shipped code.
 struct Replay {
-    let layout = KeyLayout(size: CGSize(width: 390, height: 242), rows: Typing().rows)
+    /// What a 390 pt iPhone gives the extension on iOS 26: a 381 pt view centred on the screen.
+    let layout = KeyLayout(width: 381, screenWidth: 390, rows: Typing().rows)
     let model: TypingModel
     private let keyFor: [String: (PlacedKey, Bool)]
 
@@ -58,7 +59,7 @@ struct Replay {
             let c = String(scalar)
             guard let (key, shifted) = keyFor[c] else { return nil }
             let (interval, sigma) = touch(&rng)
-            let x = min(390 - 1e-6, max(0, key.cap.midX + sigma * rng.gaussian()))
+            let x = min(layout.size.width - 1e-6, max(0, key.cap.midX + sigma * rng.gaussian()))
             let y = min(layout.characterArea.maxY - 1e-6, max(0, key.cap.midY + sigma * rng.gaussian()))
             return Tap(intended: c, shifted: shifted, point: CGPoint(x: x, y: y), interval: interval)
         }

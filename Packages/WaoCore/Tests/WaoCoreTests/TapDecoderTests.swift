@@ -3,7 +3,7 @@ import WaoCore
 import XCTest
 
 final class TapDecoderTests: XCTestCase {
-    private let layout = KeyLayout(size: CGSize(width: 390, height: 242), rows: Typing().rows)
+    private let layout = KeyLayout(width: 390, rows: Typing().rows)
     private let fast: TimeInterval = 0.1
     private let slow: TimeInterval = 1
 
@@ -30,7 +30,7 @@ final class TapDecoderTests: XCTestCase {
         var geometric = TapTuning.shipped
         geometric.lambda = 0
         geometric.anchor = 0
-        for y in stride(from: 0.13, to: 4 * layout.rowHeight, by: 1.1) {
+        for y in stride(from: 0.13, to: layout.characterArea.maxY, by: 1.1) {
             for x in stride(from: 0.17, to: 390, by: 0.71) {
                 let point = CGPoint(x: x, y: y)
                 guard case .character(let under) = layout.key(at: point)?.kind else { continue }

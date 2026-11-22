@@ -3,53 +3,84 @@ import WaoCore
 
 enum Key {
     static let capHeight: CGFloat = 42
-    static let letterFill = Color(.systemGray4)
-    static let specialFill = Color(.systemGray3)
+    /// Around each cap in the voice page's row; the typing pages place their caps with `KeyLayout`.
+    static let gap = CGSize(width: 5, height: 8)
+    static let gapInsets = EdgeInsets(top: gap.height / 2, leading: gap.width / 2, bottom: gap.height / 2, trailing: gap.width / 2)
+    /// The system keyboard draws every key, letters and specials alike, in one flat colour without a shadow.
+    static let fillColor = UIColor { $0.userInterfaceStyle == .dark ? UIColor(white: 60 / 255, alpha: 1) : .white }
+    static let fill = Color(fillColor)
+    static let pressedFill = Color(UIColor { $0.userInterfaceStyle == .dark ? UIColor(white: 0.42, alpha: 1) : UIColor(white: 0.82, alpha: 1) })
+    static let cornerRadius: CGFloat = 8
+}
+
+extension KeySlot {
+    /// Where the cap sits inside the hit area.
+    var insets: EdgeInsets {
+        EdgeInsets(top: cap.minY - hit.minY, leading: cap.minX - hit.minX, bottom: hit.maxY - cap.maxY, trailing: hit.maxX - cap.maxX)
+    }
 }
 
 extension View {
     /// The gap around a cap belongs to the key, so a tap between two keys still lands on one of them.
-    func keyCap(_ fill: Color) -> some View {
+    func keyCap(_ fill: Color, insets: EdgeInsets = Key.gapInsets) -> some View {
         frame(maxWidth: .infinity, maxHeight: .infinity)
             .foregroundStyle(Color(.label))
-            .background(fill, in: RoundedRectangle(cornerRadius: 5))
-            .shadow(color: .black.opacity(0.25), radius: 0, y: 1)
-            .padding(.horizontal, KeyLayout.gap.width / 2)
-            .padding(.vertical, KeyLayout.gap.height / 2)
+            .background(fill, in: RoundedRectangle(cornerRadius: Key.cornerRadius))
+            .padding(insets)
             .contentShape(Rectangle())
     }
 }
 
 struct KeyCap: View {
     let label: String
+    var font: Font = .loopless(17)
+    var insets = Key.gapInsets
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
             Text(label)
-                .font(.loopless(17))
+                .font(font)
                 .minimumScaleFactor(0.5)
                 .lineLimit(1)
-                .keyCap(Key.letterFill)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(KeyPress(insets: insets))
+    }
+}
+
+/// Draws the button as a cap that darkens while held.
+struct KeyPress: ButtonStyle {
+    var insets = Key.gapInsets
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label.keyCap(configuration.isPressed ? Key.pressedFill : Key.fill, insets: insets)
     }
 }
 
 struct SpecialKey: View {
     private let systemImage: String?
     private let title: String?
+    private let font: Font
+    private let lift: CGFloat
+    private let insets: EdgeInsets
     private let action: () -> Void
 
-    init(systemImage: String, action: @escaping () -> Void) {
+    init(systemImage: String, font: Font = .body, insets: EdgeInsets = Key.gapInsets, action: @escaping () -> Void) {
         self.systemImage = systemImage
         self.title = nil
+        self.font = font
+        self.lift = 0
+        self.insets = insets
         self.action = action
     }
 
-    init(title: String, action: @escaping () -> Void) {
+    /// `style.lift` moves the title up or down from the cap's centre.
+    init(title: String, style: (font: Font, lift: CGFloat), insets: EdgeInsets = Key.gapInsets, action: @escaping () -> Void) {
         self.systemImage = nil
         self.title = title
+        self.font = style.font
+        self.lift = style.lift
+        self.insets = insets
         self.action = action
     }
 
@@ -59,23 +90,26 @@ struct SpecialKey: View {
                 if let systemImage {
                     Image(systemName: systemImage)
                 } else {
-                    Text(title ?? "").font(.loopless(15)).minimumScaleFactor(0.6).lineLimit(1)
+                    Text(title ?? "").minimumScaleFactor(0.6).lineLimit(1).offset(y: lift)
                 }
             }
-            .keyCap(Key.specialFill)
+            .font(font)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(KeyPress(insets: insets))
     }
 }
 
 /// Deletes on touch down, then repeats while held, like the system keyboard.
 struct DeleteKey: View {
+    var font: Font = .body
+    var insets = Key.gapInsets
     let action: () -> Void
     @State private var timer: Timer?
 
     var body: some View {
-        Image(systemName: timer == nil ? "delete.left" : "delete.left.fill")
-            .keyCap(Key.specialFill)
+        Image(systemName: "delete.left")
+            .font(font)
+            .keyCap(timer == nil ? Key.fill : Key.pressedFill, insets: insets)
             .gesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { _ in
@@ -106,8 +140,8 @@ struct GlobeKey: UIViewRepresentable {
 
     func makeUIView(context: Context) -> UIView {
         let view = make() ?? UIView()
-        view.backgroundColor = .systemGray3
-        view.layer.cornerRadius = 5
+        view.backgroundColor = Key.fillColor
+        view.layer.cornerRadius = Key.cornerRadius
         return view
     }
 
@@ -115,7 +149,7 @@ struct GlobeKey: UIViewRepresentable {
 }
 
 extension GlobeKey {
-    func padded() -> some View {
-        padding(.horizontal, KeyLayout.gap.width / 2).padding(.vertical, KeyLayout.gap.height / 2)
+    func padded(_ insets: EdgeInsets = Key.gapInsets) -> some View {
+        padding(insets)
     }
 }

@@ -1,31 +1,32 @@
+import CoreText
 import SwiftUI
 import WaoCore
 
 /// Thai Kedmanee, QWERTY and symbols. Without Full Access this is the whole keyboard; with it, a detour from the mic.
 struct TypingView: View {
-    static let stripHeight: CGFloat = 40
-
     @ObservedObject var model: KeyboardModel
     let globe: () -> UIView?
     @State private var pressed: PlacedKey?
     @State private var explaining = false
 
     var body: some View {
-        VStack(spacing: 0) {
-            let completions = model.completions
-            Group {
-                if !completions.isEmpty {
-                    SuggestionBar(completions: completions, choose: { model.insert($0.remainder) },
-                                  explain: model.hasFullAccess ? nil : { explaining = true })
-                } else if model.hasFullAccess {
-                    Color.clear
-                } else {
-                    FullAccessBanner { explaining = true }
+        GeometryReader { geo in
+            let screen = model.screenWidth ?? geo.size.width
+            let strip = KeyLayout.stripHeight(width: screen)
+            let grid = KeyLayout(width: geo.size.width, screenWidth: screen, rows: model.typing.rows)
+            VStack(spacing: 0) {
+                let completions = model.completions
+                Group {
+                    if !completions.isEmpty {
+                        SuggestionBar(completions: completions, choose: { model.insert($0.remainder) },
+                                      explain: model.hasFullAccess ? nil : { explaining = true })
+                    } else if model.hasFullAccess {
+                        Color.clear
+                    } else {
+                        FullAccessBanner { explaining = true }
+                    }
                 }
-            }
-            .frame(height: Self.stripHeight)
-            GeometryReader { geo in
-                let grid = KeyLayout(size: geo.size, rows: model.typing.rows)
+                .frame(height: strip)
                 ZStack(alignment: .topLeading) {
                     TouchSurfaceView { event in
                         switch event {
@@ -43,20 +44,17 @@ struct TypingView: View {
                     .frame(width: grid.characterArea.width, height: grid.characterArea.height)
                     .position(x: grid.characterArea.midX, y: grid.characterArea.midY)
                     ForEach(grid.keys) { key in
-                        keyView(key)
-                            .frame(width: key.hit.width, height: key.hit.height)
-                            .position(x: key.hit.midX, y: key.hit.midY)
+                        keyView(key, in: grid).placed(key.slot)
                     }
-                    bottomRow
-                        .frame(width: geo.size.width, height: grid.rowHeight)
-                        .position(x: geo.size.width / 2, y: geo.size.height - grid.rowHeight / 2)
+                    bottomRow(grid)
                     if let pressed, case .character(let character) = pressed.kind {
-                        KeyPopup(label: model.typing.caption(of: character), font: capFont(popup: true))
+                        KeyPopup(label: model.typing.caption(of: character), font: popupFont)
                             .frame(width: max(pressed.cap.width * 1.5, 44), height: 50)
-                            .position(popupCenter(for: pressed.cap, width: geo.size.width))
+                            .position(popupCenter(for: pressed.cap, width: geo.size.width, strip: strip))
                             .allowsHitTesting(false)
                     }
                 }
+                .frame(width: grid.size.width, height: grid.size.height, alignment: .topLeading)
             }
         }
         .overlay {
@@ -66,44 +64,57 @@ struct TypingView: View {
         }
     }
 
-    private var bottomRow: some View {
-        HStack(spacing: 0) {
-            SpecialKey(title: model.typing.pageLabel) { model.typing.togglePage() }
-                .frame(width: 50)
-            if model.showsGlobe {
-                GlobeKey(make: globe).padded().frame(width: 46)
-            }
-            SpecialKey(title: model.typing.languageLabel) { model.typing.toggleLanguage() }
-                .frame(width: 50)
-            if model.hasFullAccess {
-                SpecialKey(systemImage: "mic.fill", action: model.showVoice)
-                    .frame(width: 46)
-                    .accessibilityLabel("Dictation")
-            }
-            KeyCap(label: model.typing.spaceLabel) { model.insert(" ") }
-            SpecialKey(systemImage: "return") { model.insert("\n") }
-                .frame(width: 76)
+    /// The system keyboard's 123 and emoji, with the language key in the emoji's place; the globe (on home-button
+    /// iPhones) and the mic (with Full Access) come out of the space bar.
+    @ViewBuilder
+    private func bottomRow(_ grid: KeyLayout) -> some View {
+        let row = grid.bottomRow(leading: 2 + (model.showsGlobe ? 1 : 0) + (model.hasFullAccess ? 1 : 0))
+        let typing = model.typing
+        SpecialKey(title: typing.pageLabel, style: KeyFont.label(typing.pageLabel), insets: row.leading[0].insets) { model.typing.togglePage() }
+            .placed(row.leading[0])
+        SpecialKey(title: typing.languageLabel, style: KeyFont.label(typing.languageLabel), insets: row.leading[1].insets) { model.typing.toggleLanguage() }
+            .placed(row.leading[1])
+        if model.showsGlobe {
+            GlobeKey(make: globe).padded(row.leading[2].insets).placed(row.leading[2])
         }
+        if model.hasFullAccess, let slot = row.leading.last {
+            SpecialKey(systemImage: "mic", font: KeyFont.icon(narrow: false), insets: slot.insets, action: model.showVoice)
+                .accessibilityLabel("Dictation")
+                .placed(slot)
+        }
+        SpaceBar(hint: typing.spaceHint, insets: row.space.insets) { model.insert(" ") }
+            .placed(row.space)
+        SpecialKey(systemImage: "return.left", font: KeyFont.icon(narrow: false), insets: row.enter.insets) { model.insert("\n") }
+            .accessibilityLabel("Return")
+            .placed(row.enter)
     }
 
     @ViewBuilder
-    private func keyView(_ key: PlacedKey) -> some View {
+    private func keyView(_ key: PlacedKey, in grid: KeyLayout) -> some View {
         let cap = key.cap.offsetBy(dx: -key.hit.minX, dy: -key.hit.minY)
+        let narrow = grid.keys.count > 30
         switch key.kind {
         case .character(let character):
             let label = model.typing.text(of: character)
             // Drawn only: the touch surface beneath decides what a touch types.
             Color.clear
                 .overlay(alignment: .topLeading) {
-                    model.typing.caption(of: character)
-                        .font(capFont(popup: false))
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.7)
-                        .foregroundStyle(Color(.label))
-                        .frame(width: cap.width, height: cap.height)
-                        .background(pressed?.id == key.id ? Key.specialFill : Key.letterFill, in: RoundedRectangle(cornerRadius: 5))
-                        .shadow(color: .black.opacity(0.25), radius: 0, y: 1)
-                        .offset(x: cap.minX, y: cap.minY)
+                    let style = KeyFont.letter(label)
+                    Group {
+                        if let mark = LoneMark(label) {
+                            mark.fill(Color(.label))
+                        } else {
+                            Text(label)
+                                .font(style.font)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.7)
+                                .foregroundStyle(Color(.label))
+                                .offset(y: style.lift)
+                        }
+                    }
+                    .frame(width: cap.width, height: cap.height)
+                    .background(pressed?.id == key.id ? Key.pressedFill : Key.fill, in: RoundedRectangle(cornerRadius: Key.cornerRadius))
+                    .offset(x: cap.minX, y: cap.minY)
                 }
                 .allowsHitTesting(false)
                 .accessibilityElement()
@@ -113,37 +124,156 @@ struct TypingView: View {
         case .shift:
             Group {
                 if let label = model.typing.shiftLabel {
-                    SpecialKey(title: label) { model.typing.toggleShift() }
+                    SpecialKey(title: label, style: KeyFont.label(label), insets: key.slot.insets) { model.typing.toggleShift() }
                 } else {
-                    SpecialKey(systemImage: model.typing.shifted ? "shift.fill" : "shift") { model.typing.toggleShift() }
-                        .accessibilityLabel("Shift")
+                    SpecialKey(systemImage: model.typing.shifted ? "shift.fill" : "shift", font: KeyFont.icon(narrow: narrow), insets: key.slot.insets) {
+                        model.typing.toggleShift()
+                    }
+                    .accessibilityLabel("Shift")
                 }
             }
         case .delete:
-            DeleteKey(action: model.deleteBackward)
+            DeleteKey(font: KeyFont.icon(narrow: narrow), insets: key.slot.insets, action: model.deleteBackward)
         }
     }
 
-    private func capFont(popup: Bool) -> Font {
-        let thai = model.typing.language == .thai && model.typing.page == .letters
-        let size: CGFloat = popup ? 30 : 21
-        return thai ? .loopless(size) : .system(size: size)
+    private var popupFont: Font {
+        model.typing.language == .thai && model.typing.page == .letters ? .loopless(30) : .system(size: 30)
     }
 
     /// Sits above the key; on the top row it is pushed down into the suggestion strip rather than cut off.
-    private func popupCenter(for cap: CGRect, width: CGFloat) -> CGPoint {
+    private func popupCenter(for cap: CGRect, width: CGFloat, strip: CGFloat) -> CGPoint {
         let halfWidth = max(cap.width * 1.5, 44) / 2
         let x = min(max(cap.midX, halfWidth), width - halfWidth)
-        let top = max(cap.minY - 46, -Self.stripHeight)
+        let top = max(cap.minY - 46, -strip)
         return CGPoint(x: x, y: top + 25)
     }
+}
+
+/// The system keyboard's label faces and sizes, matched to its screenshots by the label boxes that
+/// tools/keyboard_parity.py prints.
+enum KeyFont {
+    /// A character cap: Thai in Thonburi Light, lower-case Latin larger than capitals and figures, as iOS draws them.
+    /// `lift` moves the label from the cap's centre to where the system keyboard's sits.
+    static func letter(_ text: String) -> (font: Font, lift: CGFloat) {
+        if text.isThai { return (.custom("Thonburi-Light", size: 24), -4.5) }
+        let lowercase = text.lowercased() == text && text.uppercased() != text
+        if lowercase { return (.system(size: 25), -2.3) }
+        return (figures, -1.2 + (sunk[text] ?? 0))
+    }
+
+    /// How much lower than the figures' baseline iOS sets these, measured on its numbers page.
+    private static let sunk: [String: CGFloat] = [".": 3, ",": 3, ":": 2.8]
+
+    /// Capitals, figures and symbols, with the case-sensitive forms that raise dashes and brackets to the figures.
+    private static let figures: Font = {
+        let feature: [UIFontDescriptor.FeatureKey: Int] = [.type: kCaseSensitiveLayoutType, .selector: kCaseSensitiveLayoutOnSelector]
+        let font = UIFont.systemFont(ofSize: 22)
+        return Font(UIFont(descriptor: font.fontDescriptor.addingAttributes([.featureSettings: [feature]]), size: 22))
+    }()
+
+    /// 123, ABC, กขค, #+= and the like.
+    static func label(_ text: String) -> (font: Font, lift: CGFloat) {
+        if text.isThai { return (.custom("Thonburi", size: 16), -1.5) }
+        return (text.count > 2 && text.allSatisfy({ !$0.isLetter && !$0.isNumber }) ? .system(size: 13) : .system(size: 18.5), 0)
+    }
+
+    /// Shift, delete, return and the mic; smaller on the twelve-column Thai rows.
+    static func icon(narrow: Bool) -> Font { .system(size: narrow ? 15 : 19, weight: .regular) }
+}
+
+/// A vowel or tone mark drawn alone, as the system keyboard draws it. As text, Thonburi seats a lone mark on a dotted
+/// circle, and on a consonant it fuses the two into one glyph; so the pair อ + mark is shaped and the outline's
+/// pieces that overlap a lone อ are dropped. ำ counts as a mark: it carries a nikhahit.
+struct LoneMark: Shape {
+    private let outline: Path
+    /// The mark's centre as a fraction of the cap's height from its middle, measured on the system keyboard.
+    private let drop: CGFloat
+
+    init?(_ text: String) {
+        guard let first = text.unicodeScalars.first else { return nil }
+        let below: Set<Unicode.Scalar> = ["\u{0E38}", "\u{0E39}", "\u{0E3A}"]
+        if first == "\u{0E33}" {
+            (outline, drop) = (Self.mark(text, size: 22), -0.07)
+        } else if first.properties.generalCategory == .nonspacingMark {
+            // The system keyboard draws lone marks about a third larger than its letters.
+            (outline, drop) = (Self.mark(text, size: 32), below.contains(first) ? 0.116 : -0.196)
+        } else {
+            return nil
+        }
+    }
+
+    private static func mark(_ text: String, size: CGFloat) -> Path {
+        let font = CTFontCreateWithName("Thonburi-Light" as CFString, size, nil)
+        let base = glyphs("อ", font).boundingBoxOfPath.insetBy(dx: 1, dy: 1)
+        let kept = glyphs("อ" + text, font).componentsSeparated().filter { !$0.boundingBoxOfPath.intersects(base) }
+        var path = Path()
+        // CoreText outlines are y-up from the baseline.
+        for piece in kept { path.addPath(Path(piece), transform: CGAffineTransform(scaleX: 1, y: -1)) }
+        return path
+    }
+
+    private static func glyphs(_ text: String, _ font: CTFont) -> CGPath {
+        let line = CTLineCreateWithAttributedString(NSAttributedString(string: text, attributes: [.font: font]))
+        let path = CGMutablePath()
+        for run in CTLineGetGlyphRuns(line) as? [CTRun] ?? [] {
+            let count = CTRunGetGlyphCount(run)
+            var glyphs = [CGGlyph](repeating: 0, count: count)
+            var positions = [CGPoint](repeating: .zero, count: count)
+            CTRunGetGlyphs(run, CFRange(), &glyphs)
+            CTRunGetPositions(run, CFRange(), &positions)
+            for (glyph, position) in zip(glyphs, positions) {
+                if let outline = CTFontCreatePathForGlyph(font, glyph, nil) {
+                    path.addPath(outline, transform: CGAffineTransform(translationX: position.x, y: position.y))
+                }
+            }
+        }
+        return path
+    }
+
+    func path(in rect: CGRect) -> Path {
+        let ink = outline.boundingRect
+        return outline.offsetBy(dx: rect.midX - ink.midX, dy: rect.midY + drop * rect.height - ink.midY)
+    }
+}
+
+private struct SpaceBar: View {
+    let hint: String
+    let insets: EdgeInsets
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Color.clear
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .overlay(alignment: .bottomTrailing) {
+                    Text(hint)
+                        .font(hint == "A" ? .system(size: 12, weight: .light).width(.compressed) : .custom("Thonburi", size: 12))
+                        .foregroundStyle(Color(.tertiaryLabel))
+                        .padding(.trailing, 6)
+                        .padding(.bottom, 3)
+                }
+        }
+        .buttonStyle(KeyPress(insets: insets))
+        .accessibilityLabel("space")
+    }
+}
+
+extension View {
+    func placed(_ slot: KeySlot) -> some View {
+        frame(width: slot.hit.width, height: slot.hit.height).position(x: slot.hit.midX, y: slot.hit.midY)
+    }
+}
+
+private extension String {
+    var isThai: Bool { unicodeScalars.contains { (0x0E00...0x0E7F).contains($0.value) } }
 }
 
 extension Typing {
     func text(of key: CharacterKey) -> String { key.text(shifted: shifted) }
 
-    /// A vowel or tone mark alone has nothing to sit on and draws as an empty key. Neither Sukhumvit Set nor the
-    /// system font seats it on a dotted circle, so it sits on a faint อ instead.
+    /// The popup's label. A vowel or tone mark alone has nothing to sit on and draws as an empty key. Neither
+    /// Sukhumvit Set nor the system font seats it on a dotted circle, so it sits on a faint อ instead.
     func caption(of key: CharacterKey) -> Text {
         let text = text(of: key)
         guard text.unicodeScalars.first?.properties.generalCategory == .nonspacingMark else { return Text(text) }
@@ -160,7 +290,7 @@ private struct KeyPopup: View {
             .font(font)
             .foregroundStyle(Color(.label))
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Key.letterFill, in: RoundedRectangle(cornerRadius: 8))
+            .background(Color(.systemGray4), in: RoundedRectangle(cornerRadius: 8))
             .shadow(color: .black.opacity(0.35), radius: 4, y: 2)
     }
 }
