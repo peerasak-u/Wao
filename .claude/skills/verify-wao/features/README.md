@@ -33,6 +33,6 @@ Each feature file starts with an H1 title and one paragraph describing the user-
 - [Mic test](./mic-test.md) — tap the hero waveform, speak, tap, read the transcription in the app. Proven by this skill's first run.
 - [Keyboard session](./keyboard-session.md) — open the mic in the app so the keyboard can use it from other apps; idle timeout.
 - [Keyboard dictation](./keyboard-dictation.md) — dictate into another app's text field through the เว่า keyboard.
-- [Typing layouts](./typing-layouts.md) — Kedmanee, QWERTY and symbols, with and without Full Access.
+- [Typing layouts](./typing-layouts.md) — Kedmanee, symbols and the emoji panel, with and without Full Access.
 - [Model download](./model-download.md) — fresh install, download, pause, resume, ready.
 - [Vocabulary](./vocabulary.md) — groups, words, bulk import, reset; biases transcription toward English spellings.
