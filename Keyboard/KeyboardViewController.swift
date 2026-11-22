@@ -14,11 +14,11 @@ final class KeyboardViewController: UIInputViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        model.insert = { [weak self] in
+        model.hostInsert = { [weak self] in
             self?.textDocumentProxy.insertText($0)
             self?.model.refreshContext()
         }
-        model.deleteBackward = { [weak self] in
+        model.hostDelete = { [weak self] in
             self?.textDocumentProxy.deleteBackward()
             self?.model.refreshContext()
         }
@@ -49,13 +49,13 @@ final class KeyboardViewController: UIInputViewController {
         self.host = host
 
         // As tall as the system keyboard on this screen, so switching keyboards does not move the host app; the
-        // emoji page is taller, as Apple's is. `mode` publishes before it changes, so the new height and the new
-        // page land in the same layout pass.
+        // emoji page, search included, is taller, as Apple's is. `mode` publishes before it changes, so the new
+        // height and the new page land in the same layout pass.
         let width = UIScreen.main.bounds.width
         let height = view.heightAnchor.constraint(equalToConstant: KeyMetrics(width: width).height)
         height.isActive = true
         heightFollowsMode = model.$mode
-            .map { $0 == .emoji ? EmojiMetrics(width: width).height : KeyMetrics(width: width).height }
+            .map { $0.isEmojiPage ? EmojiMetrics(width: width).height : KeyMetrics(width: width).height }
             .removeDuplicates()
             .sink { height.constant = $0 }
     }

@@ -8,7 +8,17 @@ import WaoCore
 enum KeyboardMode: Equatable {
     case typing
     case emoji
+    /// The Thai letters type into this query instead of the host's field.
+    case emojiSearch(String)
     case dictation(Dictation)
+
+    /// The grid and search share the emoji page's height, so the host does not jump between them.
+    var isEmojiPage: Bool {
+        switch self {
+        case .emoji, .emojiSearch: true
+        case .typing, .dictation: false
+        }
+    }
 
     struct Dictation: Equatable {
         enum Phase: Equatable {
@@ -55,8 +65,8 @@ final class KeyboardModel: ObservableObject {
     @Published var showsGlobe = true
     /// iOS 26 gives the keyboard a view a little narrower than the screen; the system keyboard's caps span the screen.
     var screenWidth: CGFloat?
-    var insert: (String) -> Void = { _ in }
-    var deleteBackward: () -> Void = {}
+    var hostInsert: (String) -> Void = { _ in }
+    var hostDelete: () -> Void = {}
     /// Moves the host's cursor by this many UTF-16 units.
     var adjustCursor: (Int) -> Void = { _ in }
     var readContext: () -> String = { "" }
@@ -94,8 +104,47 @@ final class KeyboardModel: ObservableObject {
         stopLevels()
     }
 
+    /// From the letters, or back from search to the grid.
     func showEmoji() {
         mode = .emoji
+    }
+
+    func showEmojiSearch() {
+        typing = Typing()
+        trail.reset()
+        mode = .emojiSearch("")
+    }
+
+    var isSearchingEmoji: Bool {
+        if case .emojiSearch = mode { true } else { false }
+    }
+
+    /// Keys type into the search query while it shows, into the host otherwise.
+    func insert(_ text: String) {
+        if case .emojiSearch(let query) = mode {
+            mode = .emojiSearch(query + text)
+        } else {
+            hostInsert(text)
+        }
+    }
+
+    /// The query loses one scalar per delete, a Thai mark before its consonant, as the host's text does.
+    func deleteBackward() {
+        if case .emojiSearch(let query) = mode {
+            mode = .emojiSearch(String(String.UnicodeScalarView(query.unicodeScalars.dropLast())))
+        } else {
+            hostDelete()
+        }
+    }
+
+    /// Return leaves search for the grid, as on iOS.
+    func returnKey() {
+        if isSearchingEmoji { mode = .emoji } else { insert("\n") }
+    }
+
+    /// An emoji always goes to the host, from the grid or from search.
+    func pick(_ glyph: String) {
+        hostInsert(glyph)
     }
 
     /// Back from the emoji panel to the Thai letters, whichever page the panel was opened from.
@@ -111,7 +160,7 @@ final class KeyboardModel: ObservableObject {
     /// A touch at `point` on `layout` typed `key`. On the Thai letters the latest word is then retyped when the
     /// keys around the touches spell a word the dictionary knows and what was typed is not one.
     func tap(_ key: CharacterKey, at point: CGPoint, interval: TimeInterval, in layout: KeyLayout) {
-        let shifted = typing.shifted, retypes = typing.decodes
+        let shifted = typing.shifted, retypes = typing.decodes && !isSearchingEmoji
         trail.follow(context)
         let text = typing.type(key)
         insert(text)
@@ -130,7 +179,7 @@ final class KeyboardModel: ObservableObject {
 
     private func rewriteHost(_ rewrite: Rewrite) {
         var deletes = 0
-        let landed = rewrite.apply(before: readContext, deleteBackward: { deletes += 1; self.deleteBackward() }, insert: insert)
+        let landed = rewrite.apply(before: readContext, deleteBackward: { deletes += 1; self.hostDelete() }, insert: hostInsert)
         Self.retypeLog.debug("old=\(rewrite.old.unicodeScalars.count) new=\(rewrite.new.unicodeScalars.count) deletes=\(deletes) landed=\(landed)")
         if !landed { trail.reset() }
         refreshContext()
@@ -195,8 +244,9 @@ final class KeyboardModel: ObservableObject {
 
     /// The character key a touch on the key rows types, or `nil` when it ended on shift or delete.
     func resolve(_ point: CGPoint, in layout: KeyLayout, interval: TimeInterval) -> PlacedKey? {
+        let before = if case .emojiSearch(let query) = mode { query } else { context }
         let key = if typing.decodes, let model = TypingModel.bundled {
-            model.key(at: point, in: layout, shifted: typing.shifted, before: context, interval: interval)
+            model.key(at: point, in: layout, shifted: typing.shifted, before: before, interval: interval)
         } else {
             layout.key(at: point)
         }
@@ -305,7 +355,7 @@ final class KeyboardModel: ObservableObject {
     private func settle(_ id: UUID, by state: SessionState) {
         switch state {
         case .done(id, let text):
-            if text.isEmpty { notice = "ไม่ได้ยินเสียงพูด ลองอีกครั้ง" } else { insert(text) }
+            if text.isEmpty { notice = "ไม่ได้ยินเสียงพูด ลองอีกครั้ง" } else { hostInsert(text) }
         case .failed(id, let reason):
             notice = reason
         case .listening(id, _, _), .transcribing(id):

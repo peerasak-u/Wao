@@ -1,1880 +1,1881 @@
 # Emoji 15.0, from https://www.unicode.org/Public/emoji/15.0/emoji-test.txt
 # sha256 8445f23ac8388e096be19d0262e14fceff856ff52093f2356dc89485f1a853db. Unicode License V3, see THIRD_PARTY_NOTICES. Built by tools/build_emoji.py.
+# Thai keywords from CLDR release-47: https://raw.githubusercontent.com/unicode-org/cldr/release-47/common/annotations/th.xml sha256 cdfb8f1e99253114875873d329984233cdd54d9cde8d2c83d3cba21c25d6386a, https://raw.githubusercontent.com/unicode-org/cldr/release-47/common/annotationsDerived/th.xml sha256 660b95961d0c25fc7ef3ffd1076f5086ca46f60f54d3a7148f55bac94df7ce2a
 smileys
-😀	grinning face
-😃	grinning face with big eyes
-😄	grinning face with smiling eyes
-😁	beaming face with smiling eyes
-😆	grinning squinting face
-😅	grinning face with sweat
-🤣	rolling on the floor laughing
-😂	face with tears of joy
-🙂	slightly smiling face
-🙃	upside-down face
-🫠	melting face
-😉	winking face
-😊	smiling face with smiling eyes
-😇	smiling face with halo
-🥰	smiling face with hearts
-😍	smiling face with heart-eyes
-🤩	star-struck
-😘	face blowing a kiss
-😗	kissing face
-☺️	smiling face
-😚	kissing face with closed eyes
-😙	kissing face with smiling eyes
-🥲	smiling face with tear
-😋	face savoring food
-😛	face with tongue
-😜	winking face with tongue
-🤪	zany face
-😝	squinting face with tongue
-🤑	money-mouth face
-🤗	smiling face with open hands
-🤭	face with hand over mouth
-🫢	face with open eyes and hand over mouth
-🫣	face with peeking eye
-🤫	shushing face
-🤔	thinking face
-🫡	saluting face
-🤐	zipper-mouth face
-🤨	face with raised eyebrow
-😐	neutral face
-😑	expressionless face
-😶	face without mouth
-🫥	dotted line face
-😶‍🌫️	face in clouds
-😏	smirking face
-😒	unamused face
-🙄	face with rolling eyes
-😬	grimacing face
-😮‍💨	face exhaling
-🤥	lying face
-🫨	shaking face
-😌	relieved face
-😔	pensive face
-😪	sleepy face
-🤤	drooling face
-😴	sleeping face
-😷	face with medical mask
-🤒	face with thermometer
-🤕	face with head-bandage
-🤢	nauseated face
-🤮	face vomiting
-🤧	sneezing face
-🥵	hot face
-🥶	cold face
-🥴	woozy face
-😵	face with crossed-out eyes
-😵‍💫	face with spiral eyes
-🤯	exploding head
-🤠	cowboy hat face
-🥳	partying face
-🥸	disguised face
-😎	smiling face with sunglasses
-🤓	nerd face
-🧐	face with monocle
-😕	confused face
-🫤	face with diagonal mouth
-😟	worried face
-🙁	slightly frowning face
-☹️	frowning face
-😮	face with open mouth
-😯	hushed face
-😲	astonished face
-😳	flushed face
-🥺	pleading face
-🥹	face holding back tears
-😦	frowning face with open mouth
-😧	anguished face
-😨	fearful face
-😰	anxious face with sweat
-😥	sad but relieved face
-😢	crying face
-😭	loudly crying face
-😱	face screaming in fear
-😖	confounded face
-😣	persevering face
-😞	disappointed face
-😓	downcast face with sweat
-😩	weary face
-😫	tired face
-🥱	yawning face
-😤	face with steam from nose
-😡	enraged face
-😠	angry face
-🤬	face with symbols on mouth
-😈	smiling face with horns
-👿	angry face with horns
-💀	skull
-☠️	skull and crossbones
-💩	pile of poo
-🤡	clown face
-👹	ogre
-👺	goblin
-👻	ghost
-👽	alien
-👾	alien monster
-🤖	robot
-😺	grinning cat
-😸	grinning cat with smiling eyes
-😹	cat with tears of joy
-😻	smiling cat with heart-eyes
-😼	cat with wry smile
-😽	kissing cat
-🙀	weary cat
-😿	crying cat
-😾	pouting cat
-🙈	see-no-evil monkey
-🙉	hear-no-evil monkey
-🙊	speak-no-evil monkey
-💌	love letter
-💘	heart with arrow
-💝	heart with ribbon
-💖	sparkling heart
-💗	growing heart
-💓	beating heart
-💞	revolving hearts
-💕	two hearts
-💟	heart decoration
-❣️	heart exclamation
-💔	broken heart
-❤️‍🔥	heart on fire
-❤️‍🩹	mending heart
-❤️	red heart
-🩷	pink heart
-🧡	orange heart
-💛	yellow heart
-💚	green heart
-💙	blue heart
-🩵	light blue heart
-💜	purple heart
-🤎	brown heart
-🖤	black heart
-🩶	grey heart
-🤍	white heart
-💋	kiss mark
-💯	hundred points
-💢	anger symbol
-💥	collision
-💫	dizzy
-💦	sweat droplets
-💨	dashing away
-🕳️	hole
-💬	speech balloon
-👁️‍🗨️	eye in speech bubble
-🗨️	left speech bubble
-🗯️	right anger bubble
-💭	thought balloon
-💤	ZZZ
-👋	waving hand	👋🏻	👋🏼	👋🏽	👋🏾	👋🏿
-🤚	raised back of hand	🤚🏻	🤚🏼	🤚🏽	🤚🏾	🤚🏿
-🖐️	hand with fingers splayed	🖐🏻	🖐🏼	🖐🏽	🖐🏾	🖐🏿
-✋	raised hand	✋🏻	✋🏼	✋🏽	✋🏾	✋🏿
-🖖	vulcan salute	🖖🏻	🖖🏼	🖖🏽	🖖🏾	🖖🏿
-🫱	rightwards hand	🫱🏻	🫱🏼	🫱🏽	🫱🏾	🫱🏿
-🫲	leftwards hand	🫲🏻	🫲🏼	🫲🏽	🫲🏾	🫲🏿
-🫳	palm down hand	🫳🏻	🫳🏼	🫳🏽	🫳🏾	🫳🏿
-🫴	palm up hand	🫴🏻	🫴🏼	🫴🏽	🫴🏾	🫴🏿
-🫷	leftwards pushing hand	🫷🏻	🫷🏼	🫷🏽	🫷🏾	🫷🏿
-🫸	rightwards pushing hand	🫸🏻	🫸🏼	🫸🏽	🫸🏾	🫸🏿
-👌	OK hand	👌🏻	👌🏼	👌🏽	👌🏾	👌🏿
-🤌	pinched fingers	🤌🏻	🤌🏼	🤌🏽	🤌🏾	🤌🏿
-🤏	pinching hand	🤏🏻	🤏🏼	🤏🏽	🤏🏾	🤏🏿
-✌️	victory hand	✌🏻	✌🏼	✌🏽	✌🏾	✌🏿
-🤞	crossed fingers	🤞🏻	🤞🏼	🤞🏽	🤞🏾	🤞🏿
-🫰	hand with index finger and thumb crossed	🫰🏻	🫰🏼	🫰🏽	🫰🏾	🫰🏿
-🤟	love-you gesture	🤟🏻	🤟🏼	🤟🏽	🤟🏾	🤟🏿
-🤘	sign of the horns	🤘🏻	🤘🏼	🤘🏽	🤘🏾	🤘🏿
-🤙	call me hand	🤙🏻	🤙🏼	🤙🏽	🤙🏾	🤙🏿
-👈	backhand index pointing left	👈🏻	👈🏼	👈🏽	👈🏾	👈🏿
-👉	backhand index pointing right	👉🏻	👉🏼	👉🏽	👉🏾	👉🏿
-👆	backhand index pointing up	👆🏻	👆🏼	👆🏽	👆🏾	👆🏿
-🖕	middle finger	🖕🏻	🖕🏼	🖕🏽	🖕🏾	🖕🏿
-👇	backhand index pointing down	👇🏻	👇🏼	👇🏽	👇🏾	👇🏿
-☝️	index pointing up	☝🏻	☝🏼	☝🏽	☝🏾	☝🏿
-🫵	index pointing at the viewer	🫵🏻	🫵🏼	🫵🏽	🫵🏾	🫵🏿
-👍	thumbs up	👍🏻	👍🏼	👍🏽	👍🏾	👍🏿
-👎	thumbs down	👎🏻	👎🏼	👎🏽	👎🏾	👎🏿
-✊	raised fist	✊🏻	✊🏼	✊🏽	✊🏾	✊🏿
-👊	oncoming fist	👊🏻	👊🏼	👊🏽	👊🏾	👊🏿
-🤛	left-facing fist	🤛🏻	🤛🏼	🤛🏽	🤛🏾	🤛🏿
-🤜	right-facing fist	🤜🏻	🤜🏼	🤜🏽	🤜🏾	🤜🏿
-👏	clapping hands	👏🏻	👏🏼	👏🏽	👏🏾	👏🏿
-🙌	raising hands	🙌🏻	🙌🏼	🙌🏽	🙌🏾	🙌🏿
-🫶	heart hands	🫶🏻	🫶🏼	🫶🏽	🫶🏾	🫶🏿
-👐	open hands	👐🏻	👐🏼	👐🏽	👐🏾	👐🏿
-🤲	palms up together	🤲🏻	🤲🏼	🤲🏽	🤲🏾	🤲🏿
-🤝	handshake	🤝🏻	🤝🏼	🤝🏽	🤝🏾	🤝🏿
-🙏	folded hands	🙏🏻	🙏🏼	🙏🏽	🙏🏾	🙏🏿
-✍️	writing hand	✍🏻	✍🏼	✍🏽	✍🏾	✍🏿
-💅	nail polish	💅🏻	💅🏼	💅🏽	💅🏾	💅🏿
-🤳	selfie	🤳🏻	🤳🏼	🤳🏽	🤳🏾	🤳🏿
-💪	flexed biceps	💪🏻	💪🏼	💪🏽	💪🏾	💪🏿
-🦾	mechanical arm
-🦿	mechanical leg
-🦵	leg	🦵🏻	🦵🏼	🦵🏽	🦵🏾	🦵🏿
-🦶	foot	🦶🏻	🦶🏼	🦶🏽	🦶🏾	🦶🏿
-👂	ear	👂🏻	👂🏼	👂🏽	👂🏾	👂🏿
-🦻	ear with hearing aid	🦻🏻	🦻🏼	🦻🏽	🦻🏾	🦻🏿
-👃	nose	👃🏻	👃🏼	👃🏽	👃🏾	👃🏿
-🧠	brain
-🫀	anatomical heart
-🫁	lungs
-🦷	tooth
-🦴	bone
-👀	eyes
-👁️	eye
-👅	tongue
-👄	mouth
-🫦	biting lip
-👶	baby	👶🏻	👶🏼	👶🏽	👶🏾	👶🏿
-🧒	child	🧒🏻	🧒🏼	🧒🏽	🧒🏾	🧒🏿
-👦	boy	👦🏻	👦🏼	👦🏽	👦🏾	👦🏿
-👧	girl	👧🏻	👧🏼	👧🏽	👧🏾	👧🏿
-🧑	person	🧑🏻	🧑🏼	🧑🏽	🧑🏾	🧑🏿
-👱	person: blond hair	👱🏻	👱🏼	👱🏽	👱🏾	👱🏿
-👨	man	👨🏻	👨🏼	👨🏽	👨🏾	👨🏿
-🧔	person: beard	🧔🏻	🧔🏼	🧔🏽	🧔🏾	🧔🏿
-🧔‍♂️	man: beard	🧔🏻‍♂️	🧔🏼‍♂️	🧔🏽‍♂️	🧔🏾‍♂️	🧔🏿‍♂️
-🧔‍♀️	woman: beard	🧔🏻‍♀️	🧔🏼‍♀️	🧔🏽‍♀️	🧔🏾‍♀️	🧔🏿‍♀️
-👨‍🦰	man: red hair	👨🏻‍🦰	👨🏼‍🦰	👨🏽‍🦰	👨🏾‍🦰	👨🏿‍🦰
-👨‍🦱	man: curly hair	👨🏻‍🦱	👨🏼‍🦱	👨🏽‍🦱	👨🏾‍🦱	👨🏿‍🦱
-👨‍🦳	man: white hair	👨🏻‍🦳	👨🏼‍🦳	👨🏽‍🦳	👨🏾‍🦳	👨🏿‍🦳
-👨‍🦲	man: bald	👨🏻‍🦲	👨🏼‍🦲	👨🏽‍🦲	👨🏾‍🦲	👨🏿‍🦲
-👩	woman	👩🏻	👩🏼	👩🏽	👩🏾	👩🏿
-👩‍🦰	woman: red hair	👩🏻‍🦰	👩🏼‍🦰	👩🏽‍🦰	👩🏾‍🦰	👩🏿‍🦰
-🧑‍🦰	person: red hair	🧑🏻‍🦰	🧑🏼‍🦰	🧑🏽‍🦰	🧑🏾‍🦰	🧑🏿‍🦰
-👩‍🦱	woman: curly hair	👩🏻‍🦱	👩🏼‍🦱	👩🏽‍🦱	👩🏾‍🦱	👩🏿‍🦱
-🧑‍🦱	person: curly hair	🧑🏻‍🦱	🧑🏼‍🦱	🧑🏽‍🦱	🧑🏾‍🦱	🧑🏿‍🦱
-👩‍🦳	woman: white hair	👩🏻‍🦳	👩🏼‍🦳	👩🏽‍🦳	👩🏾‍🦳	👩🏿‍🦳
-🧑‍🦳	person: white hair	🧑🏻‍🦳	🧑🏼‍🦳	🧑🏽‍🦳	🧑🏾‍🦳	🧑🏿‍🦳
-👩‍🦲	woman: bald	👩🏻‍🦲	👩🏼‍🦲	👩🏽‍🦲	👩🏾‍🦲	👩🏿‍🦲
-🧑‍🦲	person: bald	🧑🏻‍🦲	🧑🏼‍🦲	🧑🏽‍🦲	🧑🏾‍🦲	🧑🏿‍🦲
-👱‍♀️	woman: blond hair	👱🏻‍♀️	👱🏼‍♀️	👱🏽‍♀️	👱🏾‍♀️	👱🏿‍♀️
-👱‍♂️	man: blond hair	👱🏻‍♂️	👱🏼‍♂️	👱🏽‍♂️	👱🏾‍♂️	👱🏿‍♂️
-🧓	older person	🧓🏻	🧓🏼	🧓🏽	🧓🏾	🧓🏿
-👴	old man	👴🏻	👴🏼	👴🏽	👴🏾	👴🏿
-👵	old woman	👵🏻	👵🏼	👵🏽	👵🏾	👵🏿
-🙍	person frowning	🙍🏻	🙍🏼	🙍🏽	🙍🏾	🙍🏿
-🙍‍♂️	man frowning	🙍🏻‍♂️	🙍🏼‍♂️	🙍🏽‍♂️	🙍🏾‍♂️	🙍🏿‍♂️
-🙍‍♀️	woman frowning	🙍🏻‍♀️	🙍🏼‍♀️	🙍🏽‍♀️	🙍🏾‍♀️	🙍🏿‍♀️
-🙎	person pouting	🙎🏻	🙎🏼	🙎🏽	🙎🏾	🙎🏿
-🙎‍♂️	man pouting	🙎🏻‍♂️	🙎🏼‍♂️	🙎🏽‍♂️	🙎🏾‍♂️	🙎🏿‍♂️
-🙎‍♀️	woman pouting	🙎🏻‍♀️	🙎🏼‍♀️	🙎🏽‍♀️	🙎🏾‍♀️	🙎🏿‍♀️
-🙅	person gesturing NO	🙅🏻	🙅🏼	🙅🏽	🙅🏾	🙅🏿
-🙅‍♂️	man gesturing NO	🙅🏻‍♂️	🙅🏼‍♂️	🙅🏽‍♂️	🙅🏾‍♂️	🙅🏿‍♂️
-🙅‍♀️	woman gesturing NO	🙅🏻‍♀️	🙅🏼‍♀️	🙅🏽‍♀️	🙅🏾‍♀️	🙅🏿‍♀️
-🙆	person gesturing OK	🙆🏻	🙆🏼	🙆🏽	🙆🏾	🙆🏿
-🙆‍♂️	man gesturing OK	🙆🏻‍♂️	🙆🏼‍♂️	🙆🏽‍♂️	🙆🏾‍♂️	🙆🏿‍♂️
-🙆‍♀️	woman gesturing OK	🙆🏻‍♀️	🙆🏼‍♀️	🙆🏽‍♀️	🙆🏾‍♀️	🙆🏿‍♀️
-💁	person tipping hand	💁🏻	💁🏼	💁🏽	💁🏾	💁🏿
-💁‍♂️	man tipping hand	💁🏻‍♂️	💁🏼‍♂️	💁🏽‍♂️	💁🏾‍♂️	💁🏿‍♂️
-💁‍♀️	woman tipping hand	💁🏻‍♀️	💁🏼‍♀️	💁🏽‍♀️	💁🏾‍♀️	💁🏿‍♀️
-🙋	person raising hand	🙋🏻	🙋🏼	🙋🏽	🙋🏾	🙋🏿
-🙋‍♂️	man raising hand	🙋🏻‍♂️	🙋🏼‍♂️	🙋🏽‍♂️	🙋🏾‍♂️	🙋🏿‍♂️
-🙋‍♀️	woman raising hand	🙋🏻‍♀️	🙋🏼‍♀️	🙋🏽‍♀️	🙋🏾‍♀️	🙋🏿‍♀️
-🧏	deaf person	🧏🏻	🧏🏼	🧏🏽	🧏🏾	🧏🏿
-🧏‍♂️	deaf man	🧏🏻‍♂️	🧏🏼‍♂️	🧏🏽‍♂️	🧏🏾‍♂️	🧏🏿‍♂️
-🧏‍♀️	deaf woman	🧏🏻‍♀️	🧏🏼‍♀️	🧏🏽‍♀️	🧏🏾‍♀️	🧏🏿‍♀️
-🙇	person bowing	🙇🏻	🙇🏼	🙇🏽	🙇🏾	🙇🏿
-🙇‍♂️	man bowing	🙇🏻‍♂️	🙇🏼‍♂️	🙇🏽‍♂️	🙇🏾‍♂️	🙇🏿‍♂️
-🙇‍♀️	woman bowing	🙇🏻‍♀️	🙇🏼‍♀️	🙇🏽‍♀️	🙇🏾‍♀️	🙇🏿‍♀️
-🤦	person facepalming	🤦🏻	🤦🏼	🤦🏽	🤦🏾	🤦🏿
-🤦‍♂️	man facepalming	🤦🏻‍♂️	🤦🏼‍♂️	🤦🏽‍♂️	🤦🏾‍♂️	🤦🏿‍♂️
-🤦‍♀️	woman facepalming	🤦🏻‍♀️	🤦🏼‍♀️	🤦🏽‍♀️	🤦🏾‍♀️	🤦🏿‍♀️
-🤷	person shrugging	🤷🏻	🤷🏼	🤷🏽	🤷🏾	🤷🏿
-🤷‍♂️	man shrugging	🤷🏻‍♂️	🤷🏼‍♂️	🤷🏽‍♂️	🤷🏾‍♂️	🤷🏿‍♂️
-🤷‍♀️	woman shrugging	🤷🏻‍♀️	🤷🏼‍♀️	🤷🏽‍♀️	🤷🏾‍♀️	🤷🏿‍♀️
-🧑‍⚕️	health worker	🧑🏻‍⚕️	🧑🏼‍⚕️	🧑🏽‍⚕️	🧑🏾‍⚕️	🧑🏿‍⚕️
-👨‍⚕️	man health worker	👨🏻‍⚕️	👨🏼‍⚕️	👨🏽‍⚕️	👨🏾‍⚕️	👨🏿‍⚕️
-👩‍⚕️	woman health worker	👩🏻‍⚕️	👩🏼‍⚕️	👩🏽‍⚕️	👩🏾‍⚕️	👩🏿‍⚕️
-🧑‍🎓	student	🧑🏻‍🎓	🧑🏼‍🎓	🧑🏽‍🎓	🧑🏾‍🎓	🧑🏿‍🎓
-👨‍🎓	man student	👨🏻‍🎓	👨🏼‍🎓	👨🏽‍🎓	👨🏾‍🎓	👨🏿‍🎓
-👩‍🎓	woman student	👩🏻‍🎓	👩🏼‍🎓	👩🏽‍🎓	👩🏾‍🎓	👩🏿‍🎓
-🧑‍🏫	teacher	🧑🏻‍🏫	🧑🏼‍🏫	🧑🏽‍🏫	🧑🏾‍🏫	🧑🏿‍🏫
-👨‍🏫	man teacher	👨🏻‍🏫	👨🏼‍🏫	👨🏽‍🏫	👨🏾‍🏫	👨🏿‍🏫
-👩‍🏫	woman teacher	👩🏻‍🏫	👩🏼‍🏫	👩🏽‍🏫	👩🏾‍🏫	👩🏿‍🏫
-🧑‍⚖️	judge	🧑🏻‍⚖️	🧑🏼‍⚖️	🧑🏽‍⚖️	🧑🏾‍⚖️	🧑🏿‍⚖️
-👨‍⚖️	man judge	👨🏻‍⚖️	👨🏼‍⚖️	👨🏽‍⚖️	👨🏾‍⚖️	👨🏿‍⚖️
-👩‍⚖️	woman judge	👩🏻‍⚖️	👩🏼‍⚖️	👩🏽‍⚖️	👩🏾‍⚖️	👩🏿‍⚖️
-🧑‍🌾	farmer	🧑🏻‍🌾	🧑🏼‍🌾	🧑🏽‍🌾	🧑🏾‍🌾	🧑🏿‍🌾
-👨‍🌾	man farmer	👨🏻‍🌾	👨🏼‍🌾	👨🏽‍🌾	👨🏾‍🌾	👨🏿‍🌾
-👩‍🌾	woman farmer	👩🏻‍🌾	👩🏼‍🌾	👩🏽‍🌾	👩🏾‍🌾	👩🏿‍🌾
-🧑‍🍳	cook	🧑🏻‍🍳	🧑🏼‍🍳	🧑🏽‍🍳	🧑🏾‍🍳	🧑🏿‍🍳
-👨‍🍳	man cook	👨🏻‍🍳	👨🏼‍🍳	👨🏽‍🍳	👨🏾‍🍳	👨🏿‍🍳
-👩‍🍳	woman cook	👩🏻‍🍳	👩🏼‍🍳	👩🏽‍🍳	👩🏾‍🍳	👩🏿‍🍳
-🧑‍🔧	mechanic	🧑🏻‍🔧	🧑🏼‍🔧	🧑🏽‍🔧	🧑🏾‍🔧	🧑🏿‍🔧
-👨‍🔧	man mechanic	👨🏻‍🔧	👨🏼‍🔧	👨🏽‍🔧	👨🏾‍🔧	👨🏿‍🔧
-👩‍🔧	woman mechanic	👩🏻‍🔧	👩🏼‍🔧	👩🏽‍🔧	👩🏾‍🔧	👩🏿‍🔧
-🧑‍🏭	factory worker	🧑🏻‍🏭	🧑🏼‍🏭	🧑🏽‍🏭	🧑🏾‍🏭	🧑🏿‍🏭
-👨‍🏭	man factory worker	👨🏻‍🏭	👨🏼‍🏭	👨🏽‍🏭	👨🏾‍🏭	👨🏿‍🏭
-👩‍🏭	woman factory worker	👩🏻‍🏭	👩🏼‍🏭	👩🏽‍🏭	👩🏾‍🏭	👩🏿‍🏭
-🧑‍💼	office worker	🧑🏻‍💼	🧑🏼‍💼	🧑🏽‍💼	🧑🏾‍💼	🧑🏿‍💼
-👨‍💼	man office worker	👨🏻‍💼	👨🏼‍💼	👨🏽‍💼	👨🏾‍💼	👨🏿‍💼
-👩‍💼	woman office worker	👩🏻‍💼	👩🏼‍💼	👩🏽‍💼	👩🏾‍💼	👩🏿‍💼
-🧑‍🔬	scientist	🧑🏻‍🔬	🧑🏼‍🔬	🧑🏽‍🔬	🧑🏾‍🔬	🧑🏿‍🔬
-👨‍🔬	man scientist	👨🏻‍🔬	👨🏼‍🔬	👨🏽‍🔬	👨🏾‍🔬	👨🏿‍🔬
-👩‍🔬	woman scientist	👩🏻‍🔬	👩🏼‍🔬	👩🏽‍🔬	👩🏾‍🔬	👩🏿‍🔬
-🧑‍💻	technologist	🧑🏻‍💻	🧑🏼‍💻	🧑🏽‍💻	🧑🏾‍💻	🧑🏿‍💻
-👨‍💻	man technologist	👨🏻‍💻	👨🏼‍💻	👨🏽‍💻	👨🏾‍💻	👨🏿‍💻
-👩‍💻	woman technologist	👩🏻‍💻	👩🏼‍💻	👩🏽‍💻	👩🏾‍💻	👩🏿‍💻
-🧑‍🎤	singer	🧑🏻‍🎤	🧑🏼‍🎤	🧑🏽‍🎤	🧑🏾‍🎤	🧑🏿‍🎤
-👨‍🎤	man singer	👨🏻‍🎤	👨🏼‍🎤	👨🏽‍🎤	👨🏾‍🎤	👨🏿‍🎤
-👩‍🎤	woman singer	👩🏻‍🎤	👩🏼‍🎤	👩🏽‍🎤	👩🏾‍🎤	👩🏿‍🎤
-🧑‍🎨	artist	🧑🏻‍🎨	🧑🏼‍🎨	🧑🏽‍🎨	🧑🏾‍🎨	🧑🏿‍🎨
-👨‍🎨	man artist	👨🏻‍🎨	👨🏼‍🎨	👨🏽‍🎨	👨🏾‍🎨	👨🏿‍🎨
-👩‍🎨	woman artist	👩🏻‍🎨	👩🏼‍🎨	👩🏽‍🎨	👩🏾‍🎨	👩🏿‍🎨
-🧑‍✈️	pilot	🧑🏻‍✈️	🧑🏼‍✈️	🧑🏽‍✈️	🧑🏾‍✈️	🧑🏿‍✈️
-👨‍✈️	man pilot	👨🏻‍✈️	👨🏼‍✈️	👨🏽‍✈️	👨🏾‍✈️	👨🏿‍✈️
-👩‍✈️	woman pilot	👩🏻‍✈️	👩🏼‍✈️	👩🏽‍✈️	👩🏾‍✈️	👩🏿‍✈️
-🧑‍🚀	astronaut	🧑🏻‍🚀	🧑🏼‍🚀	🧑🏽‍🚀	🧑🏾‍🚀	🧑🏿‍🚀
-👨‍🚀	man astronaut	👨🏻‍🚀	👨🏼‍🚀	👨🏽‍🚀	👨🏾‍🚀	👨🏿‍🚀
-👩‍🚀	woman astronaut	👩🏻‍🚀	👩🏼‍🚀	👩🏽‍🚀	👩🏾‍🚀	👩🏿‍🚀
-🧑‍🚒	firefighter	🧑🏻‍🚒	🧑🏼‍🚒	🧑🏽‍🚒	🧑🏾‍🚒	🧑🏿‍🚒
-👨‍🚒	man firefighter	👨🏻‍🚒	👨🏼‍🚒	👨🏽‍🚒	👨🏾‍🚒	👨🏿‍🚒
-👩‍🚒	woman firefighter	👩🏻‍🚒	👩🏼‍🚒	👩🏽‍🚒	👩🏾‍🚒	👩🏿‍🚒
-👮	police officer	👮🏻	👮🏼	👮🏽	👮🏾	👮🏿
-👮‍♂️	man police officer	👮🏻‍♂️	👮🏼‍♂️	👮🏽‍♂️	👮🏾‍♂️	👮🏿‍♂️
-👮‍♀️	woman police officer	👮🏻‍♀️	👮🏼‍♀️	👮🏽‍♀️	👮🏾‍♀️	👮🏿‍♀️
-🕵️	detective	🕵🏻	🕵🏼	🕵🏽	🕵🏾	🕵🏿
-🕵️‍♂️	man detective	🕵🏻‍♂️	🕵🏼‍♂️	🕵🏽‍♂️	🕵🏾‍♂️	🕵🏿‍♂️
-🕵️‍♀️	woman detective	🕵🏻‍♀️	🕵🏼‍♀️	🕵🏽‍♀️	🕵🏾‍♀️	🕵🏿‍♀️
-💂	guard	💂🏻	💂🏼	💂🏽	💂🏾	💂🏿
-💂‍♂️	man guard	💂🏻‍♂️	💂🏼‍♂️	💂🏽‍♂️	💂🏾‍♂️	💂🏿‍♂️
-💂‍♀️	woman guard	💂🏻‍♀️	💂🏼‍♀️	💂🏽‍♀️	💂🏾‍♀️	💂🏿‍♀️
-🥷	ninja	🥷🏻	🥷🏼	🥷🏽	🥷🏾	🥷🏿
-👷	construction worker	👷🏻	👷🏼	👷🏽	👷🏾	👷🏿
-👷‍♂️	man construction worker	👷🏻‍♂️	👷🏼‍♂️	👷🏽‍♂️	👷🏾‍♂️	👷🏿‍♂️
-👷‍♀️	woman construction worker	👷🏻‍♀️	👷🏼‍♀️	👷🏽‍♀️	👷🏾‍♀️	👷🏿‍♀️
-🫅	person with crown	🫅🏻	🫅🏼	🫅🏽	🫅🏾	🫅🏿
-🤴	prince	🤴🏻	🤴🏼	🤴🏽	🤴🏾	🤴🏿
-👸	princess	👸🏻	👸🏼	👸🏽	👸🏾	👸🏿
-👳	person wearing turban	👳🏻	👳🏼	👳🏽	👳🏾	👳🏿
-👳‍♂️	man wearing turban	👳🏻‍♂️	👳🏼‍♂️	👳🏽‍♂️	👳🏾‍♂️	👳🏿‍♂️
-👳‍♀️	woman wearing turban	👳🏻‍♀️	👳🏼‍♀️	👳🏽‍♀️	👳🏾‍♀️	👳🏿‍♀️
-👲	person with skullcap	👲🏻	👲🏼	👲🏽	👲🏾	👲🏿
-🧕	woman with headscarf	🧕🏻	🧕🏼	🧕🏽	🧕🏾	🧕🏿
-🤵	person in tuxedo	🤵🏻	🤵🏼	🤵🏽	🤵🏾	🤵🏿
-🤵‍♂️	man in tuxedo	🤵🏻‍♂️	🤵🏼‍♂️	🤵🏽‍♂️	🤵🏾‍♂️	🤵🏿‍♂️
-🤵‍♀️	woman in tuxedo	🤵🏻‍♀️	🤵🏼‍♀️	🤵🏽‍♀️	🤵🏾‍♀️	🤵🏿‍♀️
-👰	person with veil	👰🏻	👰🏼	👰🏽	👰🏾	👰🏿
-👰‍♂️	man with veil	👰🏻‍♂️	👰🏼‍♂️	👰🏽‍♂️	👰🏾‍♂️	👰🏿‍♂️
-👰‍♀️	woman with veil	👰🏻‍♀️	👰🏼‍♀️	👰🏽‍♀️	👰🏾‍♀️	👰🏿‍♀️
-🤰	pregnant woman	🤰🏻	🤰🏼	🤰🏽	🤰🏾	🤰🏿
-🫃	pregnant man	🫃🏻	🫃🏼	🫃🏽	🫃🏾	🫃🏿
-🫄	pregnant person	🫄🏻	🫄🏼	🫄🏽	🫄🏾	🫄🏿
-🤱	breast-feeding	🤱🏻	🤱🏼	🤱🏽	🤱🏾	🤱🏿
-👩‍🍼	woman feeding baby	👩🏻‍🍼	👩🏼‍🍼	👩🏽‍🍼	👩🏾‍🍼	👩🏿‍🍼
-👨‍🍼	man feeding baby	👨🏻‍🍼	👨🏼‍🍼	👨🏽‍🍼	👨🏾‍🍼	👨🏿‍🍼
-🧑‍🍼	person feeding baby	🧑🏻‍🍼	🧑🏼‍🍼	🧑🏽‍🍼	🧑🏾‍🍼	🧑🏿‍🍼
-👼	baby angel	👼🏻	👼🏼	👼🏽	👼🏾	👼🏿
-🎅	Santa Claus	🎅🏻	🎅🏼	🎅🏽	🎅🏾	🎅🏿
-🤶	Mrs. Claus	🤶🏻	🤶🏼	🤶🏽	🤶🏾	🤶🏿
-🧑‍🎄	mx claus	🧑🏻‍🎄	🧑🏼‍🎄	🧑🏽‍🎄	🧑🏾‍🎄	🧑🏿‍🎄
-🦸	superhero	🦸🏻	🦸🏼	🦸🏽	🦸🏾	🦸🏿
-🦸‍♂️	man superhero	🦸🏻‍♂️	🦸🏼‍♂️	🦸🏽‍♂️	🦸🏾‍♂️	🦸🏿‍♂️
-🦸‍♀️	woman superhero	🦸🏻‍♀️	🦸🏼‍♀️	🦸🏽‍♀️	🦸🏾‍♀️	🦸🏿‍♀️
-🦹	supervillain	🦹🏻	🦹🏼	🦹🏽	🦹🏾	🦹🏿
-🦹‍♂️	man supervillain	🦹🏻‍♂️	🦹🏼‍♂️	🦹🏽‍♂️	🦹🏾‍♂️	🦹🏿‍♂️
-🦹‍♀️	woman supervillain	🦹🏻‍♀️	🦹🏼‍♀️	🦹🏽‍♀️	🦹🏾‍♀️	🦹🏿‍♀️
-🧙	mage	🧙🏻	🧙🏼	🧙🏽	🧙🏾	🧙🏿
-🧙‍♂️	man mage	🧙🏻‍♂️	🧙🏼‍♂️	🧙🏽‍♂️	🧙🏾‍♂️	🧙🏿‍♂️
-🧙‍♀️	woman mage	🧙🏻‍♀️	🧙🏼‍♀️	🧙🏽‍♀️	🧙🏾‍♀️	🧙🏿‍♀️
-🧚	fairy	🧚🏻	🧚🏼	🧚🏽	🧚🏾	🧚🏿
-🧚‍♂️	man fairy	🧚🏻‍♂️	🧚🏼‍♂️	🧚🏽‍♂️	🧚🏾‍♂️	🧚🏿‍♂️
-🧚‍♀️	woman fairy	🧚🏻‍♀️	🧚🏼‍♀️	🧚🏽‍♀️	🧚🏾‍♀️	🧚🏿‍♀️
-🧛	vampire	🧛🏻	🧛🏼	🧛🏽	🧛🏾	🧛🏿
-🧛‍♂️	man vampire	🧛🏻‍♂️	🧛🏼‍♂️	🧛🏽‍♂️	🧛🏾‍♂️	🧛🏿‍♂️
-🧛‍♀️	woman vampire	🧛🏻‍♀️	🧛🏼‍♀️	🧛🏽‍♀️	🧛🏾‍♀️	🧛🏿‍♀️
-🧜	merperson	🧜🏻	🧜🏼	🧜🏽	🧜🏾	🧜🏿
-🧜‍♂️	merman	🧜🏻‍♂️	🧜🏼‍♂️	🧜🏽‍♂️	🧜🏾‍♂️	🧜🏿‍♂️
-🧜‍♀️	mermaid	🧜🏻‍♀️	🧜🏼‍♀️	🧜🏽‍♀️	🧜🏾‍♀️	🧜🏿‍♀️
-🧝	elf	🧝🏻	🧝🏼	🧝🏽	🧝🏾	🧝🏿
-🧝‍♂️	man elf	🧝🏻‍♂️	🧝🏼‍♂️	🧝🏽‍♂️	🧝🏾‍♂️	🧝🏿‍♂️
-🧝‍♀️	woman elf	🧝🏻‍♀️	🧝🏼‍♀️	🧝🏽‍♀️	🧝🏾‍♀️	🧝🏿‍♀️
-🧞	genie
-🧞‍♂️	man genie
-🧞‍♀️	woman genie
-🧟	zombie
-🧟‍♂️	man zombie
-🧟‍♀️	woman zombie
-🧌	troll
-💆	person getting massage	💆🏻	💆🏼	💆🏽	💆🏾	💆🏿
-💆‍♂️	man getting massage	💆🏻‍♂️	💆🏼‍♂️	💆🏽‍♂️	💆🏾‍♂️	💆🏿‍♂️
-💆‍♀️	woman getting massage	💆🏻‍♀️	💆🏼‍♀️	💆🏽‍♀️	💆🏾‍♀️	💆🏿‍♀️
-💇	person getting haircut	💇🏻	💇🏼	💇🏽	💇🏾	💇🏿
-💇‍♂️	man getting haircut	💇🏻‍♂️	💇🏼‍♂️	💇🏽‍♂️	💇🏾‍♂️	💇🏿‍♂️
-💇‍♀️	woman getting haircut	💇🏻‍♀️	💇🏼‍♀️	💇🏽‍♀️	💇🏾‍♀️	💇🏿‍♀️
-🚶	person walking	🚶🏻	🚶🏼	🚶🏽	🚶🏾	🚶🏿
-🚶‍♂️	man walking	🚶🏻‍♂️	🚶🏼‍♂️	🚶🏽‍♂️	🚶🏾‍♂️	🚶🏿‍♂️
-🚶‍♀️	woman walking	🚶🏻‍♀️	🚶🏼‍♀️	🚶🏽‍♀️	🚶🏾‍♀️	🚶🏿‍♀️
-🧍	person standing	🧍🏻	🧍🏼	🧍🏽	🧍🏾	🧍🏿
-🧍‍♂️	man standing	🧍🏻‍♂️	🧍🏼‍♂️	🧍🏽‍♂️	🧍🏾‍♂️	🧍🏿‍♂️
-🧍‍♀️	woman standing	🧍🏻‍♀️	🧍🏼‍♀️	🧍🏽‍♀️	🧍🏾‍♀️	🧍🏿‍♀️
-🧎	person kneeling	🧎🏻	🧎🏼	🧎🏽	🧎🏾	🧎🏿
-🧎‍♂️	man kneeling	🧎🏻‍♂️	🧎🏼‍♂️	🧎🏽‍♂️	🧎🏾‍♂️	🧎🏿‍♂️
-🧎‍♀️	woman kneeling	🧎🏻‍♀️	🧎🏼‍♀️	🧎🏽‍♀️	🧎🏾‍♀️	🧎🏿‍♀️
-🧑‍🦯	person with white cane	🧑🏻‍🦯	🧑🏼‍🦯	🧑🏽‍🦯	🧑🏾‍🦯	🧑🏿‍🦯
-👨‍🦯	man with white cane	👨🏻‍🦯	👨🏼‍🦯	👨🏽‍🦯	👨🏾‍🦯	👨🏿‍🦯
-👩‍🦯	woman with white cane	👩🏻‍🦯	👩🏼‍🦯	👩🏽‍🦯	👩🏾‍🦯	👩🏿‍🦯
-🧑‍🦼	person in motorized wheelchair	🧑🏻‍🦼	🧑🏼‍🦼	🧑🏽‍🦼	🧑🏾‍🦼	🧑🏿‍🦼
-👨‍🦼	man in motorized wheelchair	👨🏻‍🦼	👨🏼‍🦼	👨🏽‍🦼	👨🏾‍🦼	👨🏿‍🦼
-👩‍🦼	woman in motorized wheelchair	👩🏻‍🦼	👩🏼‍🦼	👩🏽‍🦼	👩🏾‍🦼	👩🏿‍🦼
-🧑‍🦽	person in manual wheelchair	🧑🏻‍🦽	🧑🏼‍🦽	🧑🏽‍🦽	🧑🏾‍🦽	🧑🏿‍🦽
-👨‍🦽	man in manual wheelchair	👨🏻‍🦽	👨🏼‍🦽	👨🏽‍🦽	👨🏾‍🦽	👨🏿‍🦽
-👩‍🦽	woman in manual wheelchair	👩🏻‍🦽	👩🏼‍🦽	👩🏽‍🦽	👩🏾‍🦽	👩🏿‍🦽
-🏃	person running	🏃🏻	🏃🏼	🏃🏽	🏃🏾	🏃🏿
-🏃‍♂️	man running	🏃🏻‍♂️	🏃🏼‍♂️	🏃🏽‍♂️	🏃🏾‍♂️	🏃🏿‍♂️
-🏃‍♀️	woman running	🏃🏻‍♀️	🏃🏼‍♀️	🏃🏽‍♀️	🏃🏾‍♀️	🏃🏿‍♀️
-💃	woman dancing	💃🏻	💃🏼	💃🏽	💃🏾	💃🏿
-🕺	man dancing	🕺🏻	🕺🏼	🕺🏽	🕺🏾	🕺🏿
-🕴️	person in suit levitating	🕴🏻	🕴🏼	🕴🏽	🕴🏾	🕴🏿
-👯	people with bunny ears
-👯‍♂️	men with bunny ears
-👯‍♀️	women with bunny ears
-🧖	person in steamy room	🧖🏻	🧖🏼	🧖🏽	🧖🏾	🧖🏿
-🧖‍♂️	man in steamy room	🧖🏻‍♂️	🧖🏼‍♂️	🧖🏽‍♂️	🧖🏾‍♂️	🧖🏿‍♂️
-🧖‍♀️	woman in steamy room	🧖🏻‍♀️	🧖🏼‍♀️	🧖🏽‍♀️	🧖🏾‍♀️	🧖🏿‍♀️
-🧗	person climbing	🧗🏻	🧗🏼	🧗🏽	🧗🏾	🧗🏿
-🧗‍♂️	man climbing	🧗🏻‍♂️	🧗🏼‍♂️	🧗🏽‍♂️	🧗🏾‍♂️	🧗🏿‍♂️
-🧗‍♀️	woman climbing	🧗🏻‍♀️	🧗🏼‍♀️	🧗🏽‍♀️	🧗🏾‍♀️	🧗🏿‍♀️
-🤺	person fencing
-🏇	horse racing	🏇🏻	🏇🏼	🏇🏽	🏇🏾	🏇🏿
-⛷️	skier
-🏂	snowboarder	🏂🏻	🏂🏼	🏂🏽	🏂🏾	🏂🏿
-🏌️	person golfing	🏌🏻	🏌🏼	🏌🏽	🏌🏾	🏌🏿
-🏌️‍♂️	man golfing	🏌🏻‍♂️	🏌🏼‍♂️	🏌🏽‍♂️	🏌🏾‍♂️	🏌🏿‍♂️
-🏌️‍♀️	woman golfing	🏌🏻‍♀️	🏌🏼‍♀️	🏌🏽‍♀️	🏌🏾‍♀️	🏌🏿‍♀️
-🏄	person surfing	🏄🏻	🏄🏼	🏄🏽	🏄🏾	🏄🏿
-🏄‍♂️	man surfing	🏄🏻‍♂️	🏄🏼‍♂️	🏄🏽‍♂️	🏄🏾‍♂️	🏄🏿‍♂️
-🏄‍♀️	woman surfing	🏄🏻‍♀️	🏄🏼‍♀️	🏄🏽‍♀️	🏄🏾‍♀️	🏄🏿‍♀️
-🚣	person rowing boat	🚣🏻	🚣🏼	🚣🏽	🚣🏾	🚣🏿
-🚣‍♂️	man rowing boat	🚣🏻‍♂️	🚣🏼‍♂️	🚣🏽‍♂️	🚣🏾‍♂️	🚣🏿‍♂️
-🚣‍♀️	woman rowing boat	🚣🏻‍♀️	🚣🏼‍♀️	🚣🏽‍♀️	🚣🏾‍♀️	🚣🏿‍♀️
-🏊	person swimming	🏊🏻	🏊🏼	🏊🏽	🏊🏾	🏊🏿
-🏊‍♂️	man swimming	🏊🏻‍♂️	🏊🏼‍♂️	🏊🏽‍♂️	🏊🏾‍♂️	🏊🏿‍♂️
-🏊‍♀️	woman swimming	🏊🏻‍♀️	🏊🏼‍♀️	🏊🏽‍♀️	🏊🏾‍♀️	🏊🏿‍♀️
-⛹️	person bouncing ball	⛹🏻	⛹🏼	⛹🏽	⛹🏾	⛹🏿
-⛹️‍♂️	man bouncing ball	⛹🏻‍♂️	⛹🏼‍♂️	⛹🏽‍♂️	⛹🏾‍♂️	⛹🏿‍♂️
-⛹️‍♀️	woman bouncing ball	⛹🏻‍♀️	⛹🏼‍♀️	⛹🏽‍♀️	⛹🏾‍♀️	⛹🏿‍♀️
-🏋️	person lifting weights	🏋🏻	🏋🏼	🏋🏽	🏋🏾	🏋🏿
-🏋️‍♂️	man lifting weights	🏋🏻‍♂️	🏋🏼‍♂️	🏋🏽‍♂️	🏋🏾‍♂️	🏋🏿‍♂️
-🏋️‍♀️	woman lifting weights	🏋🏻‍♀️	🏋🏼‍♀️	🏋🏽‍♀️	🏋🏾‍♀️	🏋🏿‍♀️
-🚴	person biking	🚴🏻	🚴🏼	🚴🏽	🚴🏾	🚴🏿
-🚴‍♂️	man biking	🚴🏻‍♂️	🚴🏼‍♂️	🚴🏽‍♂️	🚴🏾‍♂️	🚴🏿‍♂️
-🚴‍♀️	woman biking	🚴🏻‍♀️	🚴🏼‍♀️	🚴🏽‍♀️	🚴🏾‍♀️	🚴🏿‍♀️
-🚵	person mountain biking	🚵🏻	🚵🏼	🚵🏽	🚵🏾	🚵🏿
-🚵‍♂️	man mountain biking	🚵🏻‍♂️	🚵🏼‍♂️	🚵🏽‍♂️	🚵🏾‍♂️	🚵🏿‍♂️
-🚵‍♀️	woman mountain biking	🚵🏻‍♀️	🚵🏼‍♀️	🚵🏽‍♀️	🚵🏾‍♀️	🚵🏿‍♀️
-🤸	person cartwheeling	🤸🏻	🤸🏼	🤸🏽	🤸🏾	🤸🏿
-🤸‍♂️	man cartwheeling	🤸🏻‍♂️	🤸🏼‍♂️	🤸🏽‍♂️	🤸🏾‍♂️	🤸🏿‍♂️
-🤸‍♀️	woman cartwheeling	🤸🏻‍♀️	🤸🏼‍♀️	🤸🏽‍♀️	🤸🏾‍♀️	🤸🏿‍♀️
-🤼	people wrestling
-🤼‍♂️	men wrestling
-🤼‍♀️	women wrestling
-🤽	person playing water polo	🤽🏻	🤽🏼	🤽🏽	🤽🏾	🤽🏿
-🤽‍♂️	man playing water polo	🤽🏻‍♂️	🤽🏼‍♂️	🤽🏽‍♂️	🤽🏾‍♂️	🤽🏿‍♂️
-🤽‍♀️	woman playing water polo	🤽🏻‍♀️	🤽🏼‍♀️	🤽🏽‍♀️	🤽🏾‍♀️	🤽🏿‍♀️
-🤾	person playing handball	🤾🏻	🤾🏼	🤾🏽	🤾🏾	🤾🏿
-🤾‍♂️	man playing handball	🤾🏻‍♂️	🤾🏼‍♂️	🤾🏽‍♂️	🤾🏾‍♂️	🤾🏿‍♂️
-🤾‍♀️	woman playing handball	🤾🏻‍♀️	🤾🏼‍♀️	🤾🏽‍♀️	🤾🏾‍♀️	🤾🏿‍♀️
-🤹	person juggling	🤹🏻	🤹🏼	🤹🏽	🤹🏾	🤹🏿
-🤹‍♂️	man juggling	🤹🏻‍♂️	🤹🏼‍♂️	🤹🏽‍♂️	🤹🏾‍♂️	🤹🏿‍♂️
-🤹‍♀️	woman juggling	🤹🏻‍♀️	🤹🏼‍♀️	🤹🏽‍♀️	🤹🏾‍♀️	🤹🏿‍♀️
-🧘	person in lotus position	🧘🏻	🧘🏼	🧘🏽	🧘🏾	🧘🏿
-🧘‍♂️	man in lotus position	🧘🏻‍♂️	🧘🏼‍♂️	🧘🏽‍♂️	🧘🏾‍♂️	🧘🏿‍♂️
-🧘‍♀️	woman in lotus position	🧘🏻‍♀️	🧘🏼‍♀️	🧘🏽‍♀️	🧘🏾‍♀️	🧘🏿‍♀️
-🛀	person taking bath	🛀🏻	🛀🏼	🛀🏽	🛀🏾	🛀🏿
-🛌	person in bed	🛌🏻	🛌🏼	🛌🏽	🛌🏾	🛌🏿
-🧑‍🤝‍🧑	people holding hands	🧑🏻‍🤝‍🧑🏻	🧑🏼‍🤝‍🧑🏼	🧑🏽‍🤝‍🧑🏽	🧑🏾‍🤝‍🧑🏾	🧑🏿‍🤝‍🧑🏿
-👭	women holding hands	👭🏻	👭🏼	👭🏽	👭🏾	👭🏿
-👫	woman and man holding hands	👫🏻	👫🏼	👫🏽	👫🏾	👫🏿
-👬	men holding hands	👬🏻	👬🏼	👬🏽	👬🏾	👬🏿
-💏	kiss	💏🏻	💏🏼	💏🏽	💏🏾	💏🏿
-👩‍❤️‍💋‍👨	kiss: woman, man	👩🏻‍❤️‍💋‍👨🏻	👩🏼‍❤️‍💋‍👨🏼	👩🏽‍❤️‍💋‍👨🏽	👩🏾‍❤️‍💋‍👨🏾	👩🏿‍❤️‍💋‍👨🏿
-👨‍❤️‍💋‍👨	kiss: man, man	👨🏻‍❤️‍💋‍👨🏻	👨🏼‍❤️‍💋‍👨🏼	👨🏽‍❤️‍💋‍👨🏽	👨🏾‍❤️‍💋‍👨🏾	👨🏿‍❤️‍💋‍👨🏿
-👩‍❤️‍💋‍👩	kiss: woman, woman	👩🏻‍❤️‍💋‍👩🏻	👩🏼‍❤️‍💋‍👩🏼	👩🏽‍❤️‍💋‍👩🏽	👩🏾‍❤️‍💋‍👩🏾	👩🏿‍❤️‍💋‍👩🏿
-💑	couple with heart	💑🏻	💑🏼	💑🏽	💑🏾	💑🏿
-👩‍❤️‍👨	couple with heart: woman, man	👩🏻‍❤️‍👨🏻	👩🏼‍❤️‍👨🏼	👩🏽‍❤️‍👨🏽	👩🏾‍❤️‍👨🏾	👩🏿‍❤️‍👨🏿
-👨‍❤️‍👨	couple with heart: man, man	👨🏻‍❤️‍👨🏻	👨🏼‍❤️‍👨🏼	👨🏽‍❤️‍👨🏽	👨🏾‍❤️‍👨🏾	👨🏿‍❤️‍👨🏿
-👩‍❤️‍👩	couple with heart: woman, woman	👩🏻‍❤️‍👩🏻	👩🏼‍❤️‍👩🏼	👩🏽‍❤️‍👩🏽	👩🏾‍❤️‍👩🏾	👩🏿‍❤️‍👩🏿
-👪	family
-👨‍👩‍👦	family: man, woman, boy
-👨‍👩‍👧	family: man, woman, girl
-👨‍👩‍👧‍👦	family: man, woman, girl, boy
-👨‍👩‍👦‍👦	family: man, woman, boy, boy
-👨‍👩‍👧‍👧	family: man, woman, girl, girl
-👨‍👨‍👦	family: man, man, boy
-👨‍👨‍👧	family: man, man, girl
-👨‍👨‍👧‍👦	family: man, man, girl, boy
-👨‍👨‍👦‍👦	family: man, man, boy, boy
-👨‍👨‍👧‍👧	family: man, man, girl, girl
-👩‍👩‍👦	family: woman, woman, boy
-👩‍👩‍👧	family: woman, woman, girl
-👩‍👩‍👧‍👦	family: woman, woman, girl, boy
-👩‍👩‍👦‍👦	family: woman, woman, boy, boy
-👩‍👩‍👧‍👧	family: woman, woman, girl, girl
-👨‍👦	family: man, boy
-👨‍👦‍👦	family: man, boy, boy
-👨‍👧	family: man, girl
-👨‍👧‍👦	family: man, girl, boy
-👨‍👧‍👧	family: man, girl, girl
-👩‍👦	family: woman, boy
-👩‍👦‍👦	family: woman, boy, boy
-👩‍👧	family: woman, girl
-👩‍👧‍👦	family: woman, girl, boy
-👩‍👧‍👧	family: woman, girl, girl
-🗣️	speaking head
-👤	bust in silhouette
-👥	busts in silhouette
-🫂	people hugging
-👣	footprints
+😀	grinning face	หน้ายิ้มยิงฟัน|55|ใบหน้า|ยิ้ม|ยิ้มกว้าง|ยิ้มยิงฟัน|หน้า|หัวเราะ|ฮ่าๆ|ฮ่าฮ่า
+😃	grinning face with big eyes	หน้ายิ้มอ้าปาก|55|ตลก|ยิ้ม|ยิ้มยิงฟันปากอ้า|หน้า|หัวเราะ|ฮ่าๆ|ฮ่าฮ่า
+😄	grinning face with smiling eyes	หน้ายิ้มตายิ้ม และอ้าปาก|55|ตลก|ยิ้ม|หน้า|หัวเราะ|ฮ่าๆ|ฮ่าฮ่า
+😁	beaming face with smiling eyes	ยิ้มยิงฟันตายิ้ม|ยิงฟัน|ยิ้ม|หน้า|ฮี่ๆ|ฮี่ฮี่
+😆	grinning squinting face	ยิ้มตาหยี|555|ขำ|ตลก|ตาหยี|มีความสุข|ยิ้ม|หน้า|หัวเราะ|ฮา
+😅	grinning face with sweat	ยิ้มเหงื่อตก|ยิ้ม|หน้า|เหงื่อออก
+🤣	rolling on the floor laughing	ขำกลิ้ง|555|กลิ้ง|ขำ|ตลก|มีความสุข|แว้ก|หัวเราะ|ฮา
+😂	face with tears of joy	ร้องไห้ดีใจ|555|ขำ|ดีใจ|ตลก|น้ำตา|ปลื้ม|ร้องไห้|หน้า|หัวเราะ|ฮา
+🙂	slightly smiling face	หน้ายิ้มบางๆ|ยิ้ม|หน้า
+🙃	upside-down face	หน้ากลับหัว|กลับหัว|ยิ้ม|หน้า
+🫠	melting face	ใบหน้าละลาย|ของเหลว|เขิน|ร้อน|ละลาย|สูญสลาย|หน้า|หายไป|อาย
+😉	winking face	ขยิบตา|จีบ|ยิ้ม|หน้า|อิอิ
+😊	smiling face with smiling eyes	หน้ายิ้มตายิ้ม|555|ตา|หน้า|หน้าแดง|อมยิ้ม|อิอิ
+😇	smiling face with halo	ยิ้มเทวดา|เทวดา|นางฟ้า|บริสุทธิ์|ยิ้ม|หน้า
+🥰	smiling face with hearts	หน้ายิ้มพร้อมกับหัวใจหลายดวง|ความรัก|ชอบ|ชื่นชอบ|ตกหลุมรัก|ใบหน้า|หลงรัก|หลงใหล|หัวใจ|แอบชอบ
+😍	smiling face with heart-eyes	ตาหัวใจ|ความรัก|ตา|ยิ้ม|หน้า|หัวใจ
+🤩	star-struck	หน้าตาเป็นประกาย|ดวงตา|ดาว|ตาแวววาว|ตื่นเต้น|ใบหน้า|ใบหน้ายิ้ม|รอยยิ้ม|ว้าว
+😘	face blowing a kiss	หน้าส่งจุ๊บ|จุ๊บ|ส่งจูบ|หน้า|หัวใจ
+😗	kissing face	หน้าจุ๊บ|จุ๊บ|ส่งจูบ|หน้า
+☺️	smiling face	หน้ายิ้ม|ยิ้ม|หน้า|หุหุ
+😚	kissing face with closed eyes	หยีตาส่งจุ๊บ|จุ๊บ|ส่งจูบ|หน้า
+😙	kissing face with smiling eyes	หน้ายิ้มส่งจุ๊บ|จุ๊บ|ส่งจูบ|หน้า
+🥲	smiling face with tear	ใบหน้ายิ้มทั้งน้ำตา|เจ็บปวด|ซึ้ง|ดีใจ|น้ำตา|ภูมิใจ|มีความสุข|ยิ้ม|โล่งใจ|สุขใจ|หน้ายิ้มทั้งน้ำตา
+😋	face savoring food	แลบลิ้นมุมปาก|น้ำลายไหล|หน้า|อร่อย
+😛	face with tongue	แลบลิ้น|หน้า
+😜	winking face with tongue	แลบลิ้นหน้าทะเล้น|ขยิบตา|แลบลิ้น|หน้า
+🤪	zany face	หน้าเพี้ยน|กวน|ตลก|บ้า|เพี้ยน|หน้า
+😝	squinting face with tongue	แลบลิ้นตาหยี|แลบลิ้น|หน้า
+🤑	money-mouth face	หน้าเห็นแก่เงิน|เงิน|หน้า|เห็นแก่เงิน
+🤗	smiling face with open hands	ยิ้มกอด|กอด|ยิ้ม|หน้า|อบอุ่น
+🤭	face with hand over mouth	เอามือปิดปาก|ขำขำ|ความลับ|ปิดปาก|แปลกใจ|หัวเราะ|อิอิ|อุ๊บส์
+🫢	face with open eyes and hand over mouth	หน้าเบิกตากว้างและเอามือปิดปาก|เขิน|เซอร์ไพรส์|ตกใจ|ประหลาดใจ|ปิดปาก|ไม่เชื่อ|ไม่พูด|หวั่นใจ|หวาดกลัว|อับอาย
+🫣	face with peeking eye	หน้าแอบมอง|กลัว|เขิน|จ้อง|จับใจ|หน้า|อาย|แอบดู|แอบมอง
+🤫	shushing face	หน้าบอกให้เงียบ|เงียบ|จุ๊|จุ๊จุ๊|บอกให้เงียบ|หน้า
+🤔	thinking face	หน้าครุ่นคิด|ครุ่นคิด|คิด|หน้า
+🫡	saluting face	หน้าทำท่าวันทยาหัตถ์|ครับผม|เคารพ|โชคดี|ดี|ได้เลย|ตะเบ๊ะ|ทำท่าวันทยาหัตถ์|รับทราบ|หน้า|โอเค
+🤐	zipper-mouth face	รูดซิปปาก|รูดซิป|หน้า
+🤨	face with raised eyebrow	หน้าประหลาดใจกับยักคิ้ว|คลางแคลงใจ|ประหลาดใจ|แปลกใจ|พิจารณา|ยกคิ้ว|สงสัย|หวาดระแวง|อืม
+😐	neutral face	หน้าเฉยๆ|เฉยๆ|หน้า
+😑	expressionless face	หน้าเย็นชา|เฉยๆ|หน้า
+😶	face without mouth	หน้าไม่มีปาก|ไม่มีปาก|หน้า
+🫥	dotted line face	หน้าเป็นเส้นประ|เก็บตัว|ซ่อน|เซ็ง|เบื่อ|ล่องหน|เศร้า|เสียใจ|หดหู่|หน้าเส้นประ|หาย
+😶‍🌫️	face in clouds	หน้าในหมู่เมฆ|ใบหน้า​|เมฆ|หมอก|เหม่อลอย|แอบมอง
+😏	smirking face	แสยะยิ้ม|เจ้าเล่ห์|หน้า
+😒	unamused face	หน้าหน่าย|เบื่อหน่าย|ไม่มีความสุข|หน้า
+🙄	face with rolling eyes	กลอกตา|เบื่อ|เบื่อหน่าย|มองบน|หน้า|เหลือทน
+😬	grimacing face	เบะปาก|ยิงฟัน|หน้า
+😮‍💨	face exhaling	หน้าหายใจออก|ถอนหายใจ|เป่าควัน|เป่าลม|พ่นลมหายใจ|โล่งใจ|โล่งอก|หอบ|เหนื่อยล้า|เฮ้อ
+🤥	lying face	ขี้โกหก|โกหก|ขี้จุ๊|จมูกยาว|พิน็อคคิโอ|หน้า
+🫨	shaking face	ใบหน้าสั่น|ช็อค|ตกใจ|บ้า|ประหลาดใจ|แปลกใจ|แผ่นดินไหว|มึนงง|ว้าว|โอ้โห
+😌	relieved face	โล่งใจ|สงบ|หน้า
+😔	pensive face	คิดไม่ตก|คิดมาก|ผิดหวัง|หน้า
+😪	sleepy face	ง่วง|หน้า|หลับ
+🤤	drooling face	น้ำลายไหล|น้ำลาย|หิว
+😴	sleeping face	หลับ|กรน|กู๊ดไนท์|ง่วง|งีบ|นอน|ไปนอน|ราตรีสวัสดิ์|หน้า|เหนื่อย
+😷	face with medical mask	ผ้าคาดปาก|ป่วย|เป็นหวัด|หน้า
+🤒	face with thermometer	อมปรอท|ปรอทวัดไข้|ป่วย|หน้า
+🤕	face with head-bandage	หัวแตก|เจ็บ|ผ้าก็อต|แผล|หน้า
+🤢	nauseated face	หน้าเขียว|เขียว|คลื่นไส้|ซีด|ป่วย|พะอืดพะอม|ไม่สบาย|อ้วก
+🤮	face vomiting	หน้าอาเจียน|ป่วย|ไม่สบาย|แหวะ|อ้วก|อาเจียน
+🤧	sneezing face	จาม|ใครบ่นถึง|ป่วย|หวัด|ฮัดเช้ย
+🥵	hot face	ร้อนมาก|ไข้ขึ้น|เป็นไข้|ร้อน|ร้อนตับแลบ|ลมแดด|หน้าแดง|หอบ|เหงื่อแตกพลั่ก|เหงื่อออก
+🥶	cold face	หนาวสั่น|ไข้หวัด|เย็นจัด|เย็นยะเยือก|หนาว|หนาวจัด|หวัด
+🥴	woozy face	หน้างงงวย|คลื่นไส้|งง|งงงวย|มึน|มึนเมา|เมาเหล้า|วิงเวียน|สับสน|หน้ามืด
+😵	face with crossed-out eyes	หน้ามึน|มึน|หน้า
+😵‍💫	face with spiral eyes	หน้าตาลาย|ตาลาย|เป็นลม|พระเจ้าช่วย|มึน|ยิ้ม|วิงเวียน|โว๊ะ|สะกดจิต|สับสน|หน้ามืด
+🤯	exploding head	ช็อค|ตกใจ|ตะลึง|ระเบิด|หัวระเบิด
+🤠	cowboy hat face	คาวบอยสวมหมวก|คน|คาวบอย|หน้า|หมวก
+🥳	partying face	ไปปาร์ตี้|งานเลี้ยง|ฉลอง|เฉลิมฉลอง|ไชโย|ตื่นเต้น|ปาร์ตี้|วันเกิด|สุขสันต์วันเกิด|หน้า|แฮปปี้เบิร์ดเดย์
+🥸	disguised face	ปลอมตัว|คน|คิ้ว|จมูก|ไม่เปิดเผยตัว|แว่นตา|สปาย|สายลับ|หนวด|หน้า
+😎	smiling face with sunglasses	หน้ายิ้มใส่แว่น|ยิ้ม|แว่นกันแดด|หน้า
+🤓	nerd face	เด็กเนิร์ด|จริงจัง|ฉลาด|เชี่ยวชาญ|เด็กเรียน|เนิร์ด|เปิ่น|พรสวรรค์|แว่น|หน้า|หัวดี
+🧐	face with monocle	หน้ากับแว่นเลนส์เดียว|แฟนซี|ร่ำรวย|เลนส์เดียว|แว่นตา|หน้า
+😕	confused face	หน้าสับสน|สับสน|หน้า
+🫤	face with diagonal mouth	หน้าสงสัย|ขุ่นเคือง|เซ็ง|เบื่อ|ผิดหวัง|ไม่แน่ใจ|สงสัย|สับสน|หงุดหงิด|เอาเถอะ
+😟	worried face	หน้ากังวล|กังวล|หน้า
+🙁	slightly frowning face	หน้าบึ้งเล็กน้อย|บึ้ง|หน้า
+☹️	frowning face	หน้าบึ้ง|บึ้ง|หน้า
+😮	face with open mouth	อ้าปาก|ตกใจ|หน้า
+😯	hushed face	หน้าจุ๊ๆ|หน้า|ห่อปาก|โอว
+😲	astonished face	หน้าประหลาดใจ|ประหลาดใจ|หน้า
+😳	flushed face	อายหน้าแดง|ตาโต|หน้า|อาย
+🥺	pleading face	หน้าอ้อนวอน|ขอความเห็นใจ|ขอร้อง|เสียใจ|อ้อนวอน
+🥹	face holding back tears	หน้ากลั้นน้ำตา|กลั้นน้ำตา|โกรธ|ขอร้อง|ซึ้งใจ|ปลาบปลื้ม|ภูมิใจ|เศร้า|อดกลั้น|อาย|ฮือ
+😦	frowning face with open mouth	หน้าบึ้งอ้าปาก|ตะลึง|บึ้ง|หน้า|อ้าปากค้าง
+😧	anguished face	หน้าเจ็บปวด|เครียด|เจ็บปวด|ทุกข์ใจ|แปลกใจ|หน้า|หวาดกลัว
+😨	fearful face	หวาดกลัว|กลัว|หน้า
+😰	anxious face with sweat	กังวลเหงื่อตก|กลัว|กังวล|ประสาท|ประหม่า|เร่งรีบ|หน้า|เหงื่อตก
+😥	sad but relieved face	โล่งอก|ผิดหวัง|หน้า|เหงื่อตก
+😢	crying face	ร้องไห้|น้ำตา|หน้า
+😭	loudly crying face	ร้องไห้โฮ|น้ำตา|เสียงดัง|เสียใจ|หน้า
+😱	face screaming in fear	กลัวกรีดร้อง|กรีดร้อง|กลัว|ช็อค|ว้าว|หน้า|หวีด
+😖	confounded face	หน้ารำคาญ|คุ้มคลั่ง|ผิดหวัง|รำคาญ|เศร้า|สับสน|หงุดหงิด|หน้า
+😣	persevering face	อดทน|หน้า
+😞	disappointed face	หน้าผิดหวัง|ผิดหวัง|หน้า
+😓	downcast face with sweat	เหงื่อตก|หน้า|เหงื่อ
+😩	weary face	หน้าอิดโรย|ง่วง|ผิดพลาด|ร้องไห้|เศร้า|หน้า|หิว|เหนื่อย|อิดโรย
+😫	tired face	เหนื่อย|หน้า
+🥱	yawning face	หน้ากำลังหาว|คร่อก|ง่วง|ง่วงเหงาหาวนอน|งีบ|เบื่อ|ฝันดี|เวลานอน|หนาว|เหนื่อย
+😤	face with steam from nose	หน้าข่มอารมณ์|เก็บกด|โกรธ|ข่มอารมณ์|จมูก|ชนะแล้ว|พ่นไอ|โมโห|หน้า
+😡	enraged face	โกรธมาก|โกรธ|หน้า
+😠	angry face	หน้าโกรธ|โมโห|หน้า
+🤬	face with symbols on mouth	หน้ากำลังด่า|โกรธ|คำสาบาน|เซ็นเซอร์|บ้า|สบถ|สาปแช่ง
+😈	smiling face with horns	ยิ้มมีเขา|เขา|นิยาย|ปิศาจ|แฟนตาซี|ภูต|ม่วง|ยิ้ม|หน้าปีศาจ
+👿	angry face with horns	หน้าบึ้งมีเขา|ปิศาจ|ภูต|หน้า
+💀	skull	หัวกระโหลก|กะโหลก
+☠️	skull and crossbones	กะโหลกไขว้|กระดูก|กะโหลก|ความตาย|ปิศาจ|อันตราย
+💩	pile of poo	อุนจิ|อึ
+🤡	clown face	หน้าตลก|โจ๊กเกอร์|ตลก|หน้า
+👹	ogre	ยักษ์ญี่ปุ่น|ญี่ปุ่น|ปิศาจ|ยักษ์|หน้า
+👺	goblin	ปีศาจญี่ปุ่น|ญี่ปุ่น|ปิศาจ|หน้า
+👻	ghost	ผี|น่ากลัว|นิทาน|หลอก|หลอน|ฮาโลวีน
+👽	alien	เอเลี่ยน|นอกโลก|แฟนตาซี|มนุษย์ต่างดาว|ยูเอฟโอ|หน้า|อวกาศ
+👾	alien monster	สัตว์ประหลาดเอเลี่ยน|เกมส์|นอกโลก|พิกเซล|มนุษย์ต่างดาว|ยูเอฟโอ|สัตว์ประหลาด|หน้า|อวกาศ|เอเลี่ยน
+🤖	robot	หุ่นยนต์|สัตว์ประหลาด|หน้า
+😺	grinning cat	แมวยิ้มอ้าปาก|ปาก|แมว|ยิ้ม|ยิ้มอ้าปาก|หน้า|อ้าปาก
+😸	grinning cat with smiling eyes	แมวยิ้มอ้าปากและยิ้มออกตา|ตา|แมว|ยิงฟัน|ยิ้ม|สัตว์|หน้า|อ้าปาก
+😹	cat with tears of joy	แมวร้องไห้ดีใจ|ดีใจ|น้ำตา|แมว|ยิ้ม|ร้องไห้|สัตว์|หน้า|หัวเราะ
+😻	smiling cat with heart-eyes	แมวยิ้มมีตารูปหัวใจ|ตา|แมว|ยิ้ม|สัตว์|หน้า|หลงรัก|หัวใจ
+😼	cat with wry smile	แมวยิ้มเจ้าเล่ห์|เจ้าเล่ห์|แมว|ยิ้ม|ยิ้มเยาะ|หน้า
+😽	kissing cat	แมวส่งจุ๊บ|จูบ|ตา|แมว|ส่งจุ๊บ|สัตว์|หน้า
+🙀	weary cat	แมวตกใจ|ตกใจ|ประหลาดใจ|แมว|สัตว์|หน้า|โอ๊ะ
+😿	crying cat	แมวร้องไห้|น้ำตา|แมว|ร้องไห้|เศร้า|หน้า
+😾	pouting cat	แมวโกรธ|โกรธ|แมว|หน้า
+🙈	see-no-evil monkey	ลิงปิดตา|ปิดตา|ลิง
+🙉	hear-no-evil monkey	ลิงปิดหู|ปิดหู|ลิง
+🙊	speak-no-evil monkey	ลิงปิดปาก|ปิดปาก|ลิง
+💌	love letter	จดหมายรัก|ความรัก|จดหมาย|หัวใจ|อีเมล
+💘	heart with arrow	ศรปักใจ|ความรัก|ลูกศร|หัวใจ
+💝	heart with ribbon	หัวใจผูกริบบิ้น|ครบรอบ|จูบ|ซึ้ง|ผูกโบว์|ริบบิ้น|วาเลนไทน์|หัวใจ
+💖	sparkling heart	หัวใจวิบวับ|จูบ|เช้า|ตื่นเต้น|ประกาย|เยี่ยม|รัก|วิบวับ|หัวใจ
+💗	growing heart	ใจพองโต|จูบ|ตื่นเต้น|ประหม่า|พองโต|สีชมพู|หัวใจ
+💓	beating heart	หัวใจเต้น|หัวใจ
+💞	revolving hearts	หัวใจโคจร|หัวใจ
+💕	two hearts	ใจ 2 ดวง|ครบรอบ|คู่รัก|จูบ|ซึ้ง|เดท|มดขึ้น|หวาน|หัวใจ
+💟	heart decoration	หัวใจประดับ|หัวใจ
+❣️	heart exclamation	เครื่องหมายอัศเจรีย์รูปหัวใจ|เครื่องหมายอัศเจรีย์|ตกใจ|เลือด|วรรคตอน|หัวใจ
+💔	broken heart	อกหัก|หัวใจ
+❤️‍🔥	heart on fire	ไฟไหม้หัวใจ|เผ็ด|ไฟไหม้|ร้อนรุ่ม|รัก|หลง|หัวใจ
+❤️‍🩹	mending heart	หัวใจที่มีการซ่อมแซม|ซ่อมแซม|ดีขึ้น|พักฟื้น|เยียวยา|รักษา|สุขภาพดี|หัวใจ
+❤️	red heart	หัวใจสีแดง|หัวใจ|หัวใจแดง
+🩷	pink heart	หัวใจสีชมพู|ชอบ|ซึ้ง|น่ารัก|พิเศษ|สวีท|สีชมพู|หลงรัก|หัวใจ
+🧡	orange heart	หัวใจสีส้ม|เปรี้ยว|สีส้ม|หัวใจ
+💛	yellow heart	หัวใจสีเหลือง|ฉ่ำ|สดใส|สว่างจ้า|สีเหลือง|หัวใจ
+💚	green heart	หัวใจสีเขียว|ขจี|ชุ่มฉ่ำ|เย็นสบาย|รักธรรมชาติ|โรแมนติก|สีขียว|หัวใจ
+💙	blue heart	หัวใจสีน้ำเงิน|รัก|โรแมนติก|สีน้ำเงิน|หัวใจ|อารมณ์
+🩵	light blue heart	หัวใจสีฟ้า|เขียว|ชอบ|ซึ้ง|น่ารัก|ฟ้าอ่อน|สีน้ำเงิน|หัวใจ
+💜	purple heart	หัวใจสีม่วง|ยอดเยี่ยม|รัก|สีม่วง|หัวใจ|อารมณ์
+🤎	brown heart	หัวใจสีน้ำตาล|สีน้ำตาล|หัวใจ
+🖤	black heart	ใจดำ|ชั่ว|ปีศาจ|เลว|สีดำ|หัวใจ|โหดร้าย
+🩶	grey heart	หัวใจสีเทา|เงิน|พิเศษ|รัก|สีเทา|หัวใจ|หินชนวน|อารมณ์
+🤍	white heart	หัวใจสีขาว|บริสุทธิ์|สะอาด|สีขาว|หัวใจ
+💋	kiss mark	รอยจูบ|จูบ|ปาก|อวัยวะ
+💯	hundred points	คะแนนเต็ม|100|คะแนน|จริง|ชัดเจน|เต็ม|เยี่ยม|เลิศ|เห็นด้วย
+💢	anger symbol	สัญลักษณ์ความโกรธ|โกรธ|ตลก|บ้า|โมโห|เศร้า|สัญลักษณ์
+💥	collision	การปะทะ|การ์ตูน|โกรธมาก|ชน|ตูม|บูม|ปะทะ|ระเบิด
+💫	dizzy	มึนหัว|เห็นดาว
+💦	sweat droplets	เหงื่อหยด|เหงื่อ
+💨	dashing away	วิ่งฉิว|การ์ตูน|ควัน|ผายลม|พุ่งชน|เมฆ|หนี|หายไป
+🕳️	hole	หลุม|หลุมดำ
+💬	speech balloon	พูดไม่ออก|การ์ตูน|ข้อความ|คำพูด|คิด|บทสนทนา|พิมพ์|ฟอง
+👁️‍🗨️	eye in speech bubble	ตาในลูกโป่งคำพูด|คำพูด|ตา|พยาน|ลูกโป่ง|เห็น
+🗨️	left speech bubble	ฟองคำพูด|คำพูด|บทสนทนา|ฟอง|ลูกโป่ง
+🗯️	right anger bubble	ฟองคำพูดรุนแรง|โกรธ|ฟองคำพูด|ลูกโป่ง
+💭	thought balloon	ลูกโป่งความคิด|ความคิด|ลูกโป่ง
+💤	ZZZ	หลับปุ๋ย|กรน|การ์ตูน|ง่วง|นอน|ราตรีสวัสดิ์|หลับ|เหนื่อย
+👋	waving hand	โบกมือ|ทักทาย|บ๊ายบาย|ไปก่อนนะ|ร่ำลา|สวัสดี|หวัดดี|อวัยวะ|ฮัลโหล	👋🏻	👋🏼	👋🏽	👋🏾	👋🏿
+🤚	raised back of hand	ยกมือ|มือ|หลังมือ	🤚🏻	🤚🏼	🤚🏽	🤚🏾	🤚🏿
+🖐️	hand with fingers splayed	ชูมือกางนิ้ว|กางนิ้ว|ชูมือ|ผาย|ยกขึ้น|หยุด|อวัยวะ	🖐🏻	🖐🏼	🖐🏽	🖐🏾	🖐🏿
+✋	raised hand	ตั้งฝ่ามือ|มือ|อวัยวะ	✋🏻	✋🏼	✋🏽	✋🏾	✋🏿
+🖖	vulcan salute	ชูนิ้วแบบวัลแคน|นิ้ว|มือ|วัลแคน|อวัยวะ	🖖🏻	🖖🏼	🖖🏽	🖖🏾	🖖🏿
+🫱	rightwards hand	มือหันไปทางขวา|ขวา|จับมือ|เชคแฮนด์|ถือ|ยื่น|หันไปทาง	🫱🏻	🫱🏼	🫱🏽	🫱🏾	🫱🏿
+🫲	leftwards hand	มือหันไปทางซ้าย|จับมือ|เชคแฮนด์|ซ้าย|ถือ|ยื่น|หันไปทาง	🫲🏻	🫲🏼	🫲🏽	🫲🏾	🫲🏿
+🫳	palm down hand	มือคว่ำฝ่ามือ|คว่ำ|ทำตก|ปล่อย|ฝ่ามือ|เลิก|เลือก|วาง|ส่งเสียงไล่|หยิบ	🫳🏻	🫳🏼	🫳🏽	🫳🏾	🫳🏿
+🫴	palm up hand	มือหงายฝ่ามือ|กวัก|จับ|ถือ|แบ|ฝ่ามือ|มาเลย|ยก|เรียก|เสนอ|หงาย	🫴🏻	🫴🏼	🫴🏽	🫴🏾	🫴🏿
+🫷	leftwards pushing hand	มือผลักไปทางซ้าย|ตบ|ทางซ้าย|บล็อค|ปฏิเสธ|แปะ|ผลัก|ฝ่ามือ|พักก่อน|รอ|หยุด	🫷🏻	🫷🏼	🫷🏽	🫷🏾	🫷🏿
+🫸	rightwards pushing hand	มือผลักไปทางขวา|ตบ|ทางขวา|บล็อค|ปฏิเสธ|แปะ|ผลัก|ฝ่ามือ|พักก่อน|รอ|หยุด	🫸🏻	🫸🏼	🫸🏽	🫸🏾	🫸🏿
+👌	OK hand	ทำมือโอเค|ใช่|ได้เลย|ตกลง|นิ้ว|มือ|เยี่ยม|หยิก|โอเค	👌🏻	👌🏼	👌🏽	👌🏾	👌🏿
+🤌	pinched fingers	หุบนิ้ว|จีบ|ถาม|ท่าทาง|นิ้ว|ปากจัด|ผ่อนคลาย|มือ|หุบ|อดทน	🤌🏻	🤌🏼	🤌🏽	🤌🏾	🤌🏿
+🤏	pinching hand	ทำมือบีบนิ้วเข้าหากัน|จิ๋ว|ท่าทาง|นิดเดียว|บีบนิ้ว|ปริมาณ|มือ|เล็กน้อย	🤏🏻	🤏🏼	🤏🏽	🤏🏾	🤏🏿
+✌️	victory hand	ชู 2 นิ้ว|ชูสองนิ้ว	✌🏻	✌🏼	✌🏽	✌🏾	✌🏿
+🤞	crossed fingers	นิ้วไขว้|ไขว้|โชคดี|ท่าทาง|นิ้ว|ภาวนา|มือ	🤞🏻	🤞🏼	🤞🏽	🤞🏾	🤞🏿
+🫰	hand with index finger and thumb crossed	นิ้วชี้ไขว้นิ้วโป้ง|เงิน|ดีด|แพง|มินิฮาร์ท|มือ|รัก|หัวใจ	🫰🏻	🫰🏼	🫰🏽	🫰🏾	🫰🏿
+🤟	love-you gesture	ทำมือ ‘ฉันรักเธอ’|คุณ|ท่าทาง|นิ้ว|มือ|รักเธอ|สาม	🤟🏻	🤟🏼	🤟🏽	🤟🏾	🤟🏿
+🤘	sign of the horns	ชูนิ้วชาวร็อก|ขาร็อก|เขา|ชูนิ้ว|ท่าทาง|มือ|สัญญาณ	🤘🏻	🤘🏼	🤘🏽	🤘🏾	🤘🏿
+🤙	call me hand	มือโทร|โทร|มือ	🤙🏻	🤙🏼	🤙🏽	🤙🏾	🤙🏿
+👈	backhand index pointing left	นิ้วชี้ทางซ้าย|ชี้|ซ้าย|ท่าทาง|ทิศ|นิ้ว|หลังมือ	👈🏻	👈🏼	👈🏽	👈🏾	👈🏿
+👉	backhand index pointing right	นิ้วชี้ทางขวา|ขวา|ชี้|นิ้ว|มือ	👉🏻	👉🏼	👉🏽	👉🏾	👉🏿
+👆	backhand index pointing up	หลังมือนิ้วชี้ขึ้น|ขึ้น|ชี้|ท่าทาง|ทิศ|นิ้ว|บน|หลังมือ	👆🏻	👆🏼	👆🏽	👆🏾	👆🏿
+🖕	middle finger	ชูนิ้วกลาง|ขึ้น|ชี้|ท่าทาง|มือ	🖕🏻	🖕🏼	🖕🏽	🖕🏾	🖕🏿
+👇	backhand index pointing down	นิ้วชี้ลง|ชี้|ใต้|นิ้ว|ลง|ล่าง|หลังมือ	👇🏻	👇🏼	👇🏽	👇🏾	👇🏿
+☝️	index pointing up	นิ้วชี้ขึ้น|ขึ้น|ชี้|นิ้ว|บน|มือ|เหนือ	☝🏻	☝🏼	☝🏽	☝🏾	☝🏿
+🫵	index pointing at the viewer	นิ้วชี้ไปที่ผู้ดู|คุณ|จิ้ม|ชี้หน้า|นิ้ว|ไปที่|ผู้ดู|มือ|สั่ง	🫵🏻	🫵🏼	🫵🏽	🫵🏾	🫵🏿
+👍	thumbs up	ชูนิ้วโป้งขึ้น|เก่ง|เจ๋ง|ชอบ|ชูนิ้วโป้ง|มือ|ยกขึ้น|เยี่ยม|สุดยอด|โอเค	👍🏻	👍🏼	👍🏽	👍🏾	👍🏿
+👎	thumbs down	คว่ำนิ้วโป้งลง|คว่ำลง|ดิสไลค์|นิ้วโป้ง|มือ|ไม่ชอบ|แย่	👎🏻	👎🏼	👎🏽	👎🏾	👎🏿
+✊	raised fist	กำมือ|ค้อน|หมัด|อวัยวะ	✊🏻	✊🏼	✊🏽	✊🏾	✊🏿
+👊	oncoming fist	กำปั้น|ชก|มือ|อวัยวะ	👊🏻	👊🏼	👊🏽	👊🏾	👊🏿
+🤛	left-facing fist	กำปั้นขวา|กำปั้น|ขวา	🤛🏻	🤛🏼	🤛🏽	🤛🏾	🤛🏿
+🤜	right-facing fist	กำปั้นซ้าย|กำปั้น|ซ้าย	🤜🏻	🤜🏼	🤜🏽	🤜🏾	🤜🏿
+👏	clapping hands	ตบมือ|มือ|อวัยวะ	👏🏻	👏🏼	👏🏽	👏🏾	👏🏿
+🙌	raising hands	ชู 2 มือ|ดีใจ|มือ|อวัยวะ	🙌🏻	🙌🏼	🙌🏽	🙌🏾	🙌🏿
+🫶	heart hands	มือรูปหัวใจ|คุณ|นิ้ว|มือ|รัก|หัวใจ	🫶🏻	🫶🏼	🫶🏽	🫶🏾	🫶🏿
+👐	open hands	แบมือ|มือ|อวัยวะ	👐🏻	👐🏼	👐🏽	👐🏾	👐🏿
+🤲	palms up together	แบสองมือ|ฝ่ามือติดกัน|สวดมนต์|อธิษฐาน	🤲🏻	🤲🏼	🤲🏽	🤲🏾	🤲🏿
+🤝	handshake	จับมือ|คืนดี|เชคแฮนด์|ตกลง|ประชุม|ร่วมงาน	🤝🏻	🤝🏼	🤝🏽	🤝🏾	🤝🏿
+🙏	folded hands	พนมมือ|ขอบคุณ|เคารพ|มือ|ไหว้|อวัยวะ	🙏🏻	🙏🏼	🙏🏽	🙏🏾	🙏🏿
+✍️	writing hand	เขียนหนังสือ|เขียน|มือ|อวัยวะ	✍🏻	✍🏼	✍🏽	✍🏾	✍🏿
+💅	nail polish	สีทาเล็บ|ตกแต่ง|ทาเล็บ|นิ้ว|มือ|สำอาง|เสริมสวย	💅🏻	💅🏼	💅🏽	💅🏾	💅🏿
+🤳	selfie	เซลฟี่|กล้อง|มือถือ	🤳🏻	🤳🏼	🤳🏽	🤳🏾	🤳🏿
+💪	flexed biceps	เบ่งกล้าม|กล้าม|แข็งแรง|แขน|เบ่ง|ไบเซป|ยกน้ำหนัก|ยิม|อวัยวะ	💪🏻	💪🏼	💪🏽	💪🏾	💪🏿
+🦾	mechanical arm	แขนกล|กายอุปกรณ์|การเข้าถึง|เทียม|หุ่นยนต์|อวัยวะ
+🦿	mechanical leg	ขากล|กายอุปกรณ์|การเข้าถึง|เทียม|หุ่นยนต์|อวัยวะ
+🦵	leg	ขา|เข่า|งอ|เตะ|เท้า|อวัยวะ	🦵🏻	🦵🏼	🦵🏽	🦵🏾	🦵🏿
+🦶	foot	เท้า|กระทืบ|ข้อเท้า|เตะ|เหยียบ	🦶🏻	🦶🏼	🦶🏽	🦶🏾	🦶🏿
+👂	ear	หู|ฟัง|อวัยวะ	👂🏻	👂🏼	👂🏽	👂🏾	👂🏿
+🦻	ear with hearing aid	หูใส่อุปกรณ์ช่วยฟัง|การเข้าถึง|การช่วยเหลือพิเศษ|เครื่องช่วยฟัง|ได้ยิน|ยาก|หู|อุปกรณ์	🦻🏻	🦻🏼	🦻🏽	🦻🏾	🦻🏿
+👃	nose	จมูก|ดม|อวัยวะ	👃🏻	👃🏼	👃🏽	👃🏾	👃🏿
+🧠	brain	สมอง|ฉลาด
+🫀	anatomical heart	หัวใจ|กายวิภาค|ชีพจร|เต้น|สีแดง|หทัยวิทยา|อวัยวะ
+🫁	lungs	ปอด|กายวิภาค|ภายใน|ลมหายใจ|อวัยวะ
+🦷	tooth	ฟัน|ขาว|ไข่มุก|ทันตแพทย์|หมอ
+🦴	bone	กระดูก|โครงกระดูก|สุนัข
+👀	eyes	ตา 2 ข้าง|ตา|อวัยวะ
+👁️	eye	ตาข้างเดียว|ข้างเดียว|ดวงตา|เพ่งมอง|อวัยวะ
+👅	tongue	ลิ้น|อวัยวะ
+👄	mouth	ปาก|อวัยวะ
+🫦	biting lip	ขบริมฝีปาก|กลัว|จีบ|เจ้าชู้|เซ็กซี่|ประหม่า|ยั่ว|ริมฝีปาก|วิตกกังวล|อ่อย|อึดอัด
+👶	baby	ทารก|เกิดใหม่|คน|เด็ก|ท้อง|ลูก|หัวจุก	👶🏻	👶🏼	👶🏽	👶🏾	👶🏿
+🧒	child	เด็ก	🧒🏻	🧒🏼	🧒🏽	🧒🏾	🧒🏿
+👦	boy	เด็กชาย|คน|เด็ก|ผู้ชาย|ลูก|หนุ่ม|หลาน	👦🏻	👦🏼	👦🏽	👦🏾	👦🏿
+👧	girl	เด็กหญิง|คน|เด็ก|ผู้หญิง|ลูก|สาว|หลาน	👧🏻	👧🏼	👧🏽	👧🏾	👧🏿
+🧑	person	คน|เป็นกลางทางเพศ|ผู้ใหญ่|ไม่ระบุเพศ	🧑🏻	🧑🏼	🧑🏽	🧑🏾	🧑🏿
+👱	person: blond hair	คนผมทอง|คน|ต่างชาติ|บลอนด์|ผมทอง|หัวทอง	👱🏻	👱🏼	👱🏽	👱🏾	👱🏿
+👨	man	ผู้ชาย|คน	👨🏻	👨🏼	👨🏽	👨🏾	👨🏿
+🧔	person: beard	ผู้ชายมีเครา|คน|เครา|จอน|ผู้ชาย|หนวด	🧔🏻	🧔🏼	🧔🏽	🧔🏾	🧔🏿
+🧔‍♂️	man: beard	ชายมีเครา|คน|เครา|จอน|ผู้ชาย|หนวด	🧔🏻‍♂️	🧔🏼‍♂️	🧔🏽‍♂️	🧔🏾‍♂️	🧔🏿‍♂️
+🧔‍♀️	woman: beard	ผู้หญิงมีเครา|ผู้หญิง|มีเครา	🧔🏻‍♀️	🧔🏼‍♀️	🧔🏽‍♀️	🧔🏾‍♀️	🧔🏿‍♀️
+👨‍🦰	man: red hair	ผู้ชาย: ผมแดง|คน|ผมแดง|ผู้ชาย	👨🏻‍🦰	👨🏼‍🦰	👨🏽‍🦰	👨🏾‍🦰	👨🏿‍🦰
+👨‍🦱	man: curly hair	ผู้ชาย: ผมหยิก|คน|ผมหยิก|ผู้ชาย	👨🏻‍🦱	👨🏼‍🦱	👨🏽‍🦱	👨🏾‍🦱	👨🏿‍🦱
+👨‍🦳	man: white hair	ผู้ชาย: ผมขาว|คน|ผมขาว|ผู้ชาย	👨🏻‍🦳	👨🏼‍🦳	👨🏽‍🦳	👨🏾‍🦳	👨🏿‍🦳
+👨‍🦲	man: bald	ผู้ชาย: หัวล้าน|คน|ผู้ชาย|หัวล้าน	👨🏻‍🦲	👨🏼‍🦲	👨🏽‍🦲	👨🏾‍🦲	👨🏿‍🦲
+👩	woman	ผู้หญิง|คน	👩🏻	👩🏼	👩🏽	👩🏾	👩🏿
+👩‍🦰	woman: red hair	ผู้หญิง: ผมแดง|คน|ผมแดง|ผู้หญิง	👩🏻‍🦰	👩🏼‍🦰	👩🏽‍🦰	👩🏾‍🦰	👩🏿‍🦰
+🧑‍🦰	person: red hair	คน: ผมแดง|คน|เป็นกลางทางเพศ|ผมแดง|ผู้ใหญ่|ไม่ระบุเพศ	🧑🏻‍🦰	🧑🏼‍🦰	🧑🏽‍🦰	🧑🏾‍🦰	🧑🏿‍🦰
+👩‍🦱	woman: curly hair	ผู้หญิง: ผมหยิก|คน|ผมหยิก|ผู้หญิง	👩🏻‍🦱	👩🏼‍🦱	👩🏽‍🦱	👩🏾‍🦱	👩🏿‍🦱
+🧑‍🦱	person: curly hair	คน: ผมหยิก|คน|เป็นกลางทางเพศ|ผมหยิก|ผู้ใหญ่|ไม่ระบุเพศ	🧑🏻‍🦱	🧑🏼‍🦱	🧑🏽‍🦱	🧑🏾‍🦱	🧑🏿‍🦱
+👩‍🦳	woman: white hair	ผู้หญิง: ผมขาว|คน|ผมขาว|ผู้หญิง	👩🏻‍🦳	👩🏼‍🦳	👩🏽‍🦳	👩🏾‍🦳	👩🏿‍🦳
+🧑‍🦳	person: white hair	คน: ผมขาว|คน|เป็นกลางทางเพศ|ผมขาว|ผู้ใหญ่|ไม่ระบุเพศ	🧑🏻‍🦳	🧑🏼‍🦳	🧑🏽‍🦳	🧑🏾‍🦳	🧑🏿‍🦳
+👩‍🦲	woman: bald	ผู้หญิง: หัวล้าน|คน|ผู้หญิง|หัวล้าน	👩🏻‍🦲	👩🏼‍🦲	👩🏽‍🦲	👩🏾‍🦲	👩🏿‍🦲
+🧑‍🦲	person: bald	คน: หัวล้าน|คน|เป็นกลางทางเพศ|ผู้ใหญ่|ไม่ระบุเพศ|หัวล้าน	🧑🏻‍🦲	🧑🏼‍🦲	🧑🏽‍🦲	🧑🏾‍🦲	🧑🏿‍🦲
+👱‍♀️	woman: blond hair	ผู้หญิงผมทอง|ผม|ผมทอง|ผู้หญิง	👱🏻‍♀️	👱🏼‍♀️	👱🏽‍♀️	👱🏾‍♀️	👱🏿‍♀️
+👱‍♂️	man: blond hair	ผู้ชายผมทอง|ผม|ผมทอง|ผู้ชาย	👱🏻‍♂️	👱🏼‍♂️	👱🏽‍♂️	👱🏾‍♂️	👱🏿‍♂️
+🧓	older person	คนชรา|แก่|คน|ฉลาด|ชรา|ตายาย|ปู่ย่า|ผู้ใหญ่	🧓🏻	🧓🏼	🧓🏽	🧓🏾	🧓🏿
+👴	old man	ชายแก่|คนแก่|ชาย	👴🏻	👴🏼	👴🏽	👴🏾	👴🏿
+👵	old woman	หญิงแก่|คนแก่|หญิง	👵🏻	👵🏼	👵🏽	👵🏾	👵🏿
+🙍	person frowning	ขมวดคิ้ว|คน|คิ้ว|แซด|บึ้งตึง|ผิดหวัง|ไม่พอใจ|ไม่มีความสุข|เศร้า|หงุดหงิด|อารมณ์เสีย	🙍🏻	🙍🏼	🙍🏽	🙍🏾	🙍🏿
+🙍‍♂️	man frowning	ผู้ชายหน้าบึ้ง|ท่าทาง|ผู้ชาย|หน้าบึ้ง	🙍🏻‍♂️	🙍🏼‍♂️	🙍🏽‍♂️	🙍🏾‍♂️	🙍🏿‍♂️
+🙍‍♀️	woman frowning	ผู้หญิงหน้าบึ้ง|ท่าทาง|ผู้หญิง|หน้าบึ้ง	🙍🏻‍♀️	🙍🏼‍♀️	🙍🏽‍♀️	🙍🏾‍♀️	🙍🏿‍♀️
+🙎	person pouting	ปากยื่น|โกรธ|ขมวดคิ้ว|คน|งอน|ผิดหวัง|มุ่ย|หน้าบึ้ง|อารมณ์เสีย	🙎🏻	🙎🏼	🙎🏽	🙎🏾	🙎🏿
+🙎‍♂️	man pouting	ผู้ชายโกรธ|โกรธ|ท่าทาง|ผู้ชาย	🙎🏻‍♂️	🙎🏼‍♂️	🙎🏽‍♂️	🙎🏾‍♂️	🙎🏿‍♂️
+🙎‍♀️	woman pouting	ผู้หญิงโกรธ|โกรธ|ท่าทาง|ผู้หญิง	🙎🏻‍♀️	🙎🏼‍♀️	🙎🏽‍♀️	🙎🏾‍♀️	🙎🏿‍♀️
+🙅	person gesturing NO	มือทำท่าไม่โอเค|คน|ท่าทาง|มือ|ไม่เห็นด้วย|ไม่โอเค|หยุด|ห้าม|อย่า	🙅🏻	🙅🏼	🙅🏽	🙅🏾	🙅🏿
+🙅‍♂️	man gesturing NO	ผู้ชายทำท่าไม่โอเค|คน|ท่าทาง|ผู้ชาย|มือ|ไม่|ห้าม|อย่า	🙅🏻‍♂️	🙅🏼‍♂️	🙅🏽‍♂️	🙅🏾‍♂️	🙅🏿‍♂️
+🙅‍♀️	woman gesturing NO	ผู้หญิงทำท่าไม่โอเค|ต้องห้าม|ท่าทาง|ผู้หญิง|ห้าม	🙅🏻‍♀️	🙅🏼‍♀️	🙅🏽‍♀️	🙅🏾‍♀️	🙅🏿‍♀️
+🙆	person gesturing OK	ทำท่าโอเค|คน|ตกลง|ท่าทาง|มือ|ไม่น่าเชื่อ|ออกกำลังกาย|โอเค	🙆🏻	🙆🏼	🙆🏽	🙆🏾	🙆🏿
+🙆‍♂️	man gesturing OK	ผู้ชายทำท่าโอเค|ตกลง|ท่าทาง|ผู้ชาย|มือ|ไม่น่าเชื่อ|ออกกำลังกาย|โอเค	🙆🏻‍♂️	🙆🏼‍♂️	🙆🏽‍♂️	🙆🏾‍♂️	🙆🏿‍♂️
+🙆‍♀️	woman gesturing OK	ผู้หญิงทำท่าโอเค|ท่าทาง|ผู้หญิง|มือ|โอเค	🙆🏻‍♀️	🙆🏼‍♀️	🙆🏽‍♀️	🙆🏾‍♀️	🙆🏿‍♀️
+💁	person tipping hand	โต๊ะสอบถาม|คน|ช่วยเหลือ|ซุบซิบ|ถากถาง|ทิ้ง|มือ|สะบัดผม|อะไรก็ได้	💁🏻	💁🏼	💁🏽	💁🏾	💁🏿
+💁‍♂️	man tipping hand	ผู้ชายแบมือ|แบมือ|ผู้ชาย	💁🏻‍♂️	💁🏼‍♂️	💁🏽‍♂️	💁🏾‍♂️	💁🏿‍♂️
+💁‍♀️	woman tipping hand	ผู้หญิงแบมือ|แบมือ|ผู้หญิง	💁🏻‍♀️	💁🏼‍♀️	💁🏽‍♀️	💁🏾‍♀️	💁🏿‍♀️
+🙋	person raising hand	ยกมือขึ้น|คน|คำถาม|ท่าทาง|ยกมือ|รับทราบ|รู้แล้ว|เลือกฉัน|อยู่นี่	🙋🏻	🙋🏼	🙋🏽	🙋🏾	🙋🏿
+🙋‍♂️	man raising hand	ผู้ชายยกมือ|ท่าทาง|ผู้ชาย|ยกมือ	🙋🏻‍♂️	🙋🏼‍♂️	🙋🏽‍♂️	🙋🏾‍♂️	🙋🏿‍♂️
+🙋‍♀️	woman raising hand	ผู้หญิงยกมือ|ท่าทาง|ผู้หญิง|ยกมือ	🙋🏻‍♀️	🙋🏼‍♀️	🙋🏽‍♀️	🙋🏾‍♀️	🙋🏿‍♀️
+🧏	deaf person	คนหูหนวก|การเข้าถึง|คน|ท่าทาง|พิการ|ฟัง|ไม่ได้ยิน|หูหนวก	🧏🏻	🧏🏼	🧏🏽	🧏🏾	🧏🏿
+🧏‍♂️	deaf man	ผู้ชายหูหนวก|ผู้ชาย|หูหนวก	🧏🏻‍♂️	🧏🏼‍♂️	🧏🏽‍♂️	🧏🏾‍♂️	🧏🏿‍♂️
+🧏‍♀️	deaf woman	ผู้หญิงหูหนวก|ผู้หญิง|หูหนวก	🧏🏻‍♀️	🧏🏼‍♀️	🧏🏽‍♀️	🧏🏾‍♀️	🧏🏿‍♀️
+🙇	person bowing	ท่าขอโทษ|ขอโทษ|ขอร้อง|ขออภัย|คน|โค้งคำนับ|ท่าทาง|สมาธิ|สำนึกผิด|เสียใจ	🙇🏻	🙇🏼	🙇🏽	🙇🏾	🙇🏿
+🙇‍♂️	man bowing	ผู้ชายหมอบคำนับ|กราบ|ขอโทษ|ท่าทาง|ผู้ชาย	🙇🏻‍♂️	🙇🏼‍♂️	🙇🏽‍♂️	🙇🏾‍♂️	🙇🏿‍♂️
+🙇‍♀️	woman bowing	ผู้หญิงหมอบคำนับ|ขอโทษ|ขอร้อง|ขออภัย|โค้งคำนับ|ท่าทาง|ผู้หญิง|สมาธิ|สำนึกผิด|เสียใจ	🙇🏻‍♀️	🙇🏼‍♀️	🙇🏽‍♀️	🙇🏾‍♀️	🙇🏿‍♀️
+🤦	person facepalming	หมดกัน|คน|งง|ช็อค|ตกใจ|โธ่|ผิดหวัง|ไม่นะ|เสียใจ|เหลือเชื่อ	🤦🏻	🤦🏼	🤦🏽	🤦🏾	🤦🏿
+🤦‍♂️	man facepalming	ผู้ชายเอามือก่ายหน้าผาก|กุมขมับ|งง|ช็อค|ตกใจ|โธ่|ผิดหวัง|ผู้ชาย|ไม่นะ|เสียใจ|เหลือเชื่อ	🤦🏻‍♂️	🤦🏼‍♂️	🤦🏽‍♂️	🤦🏾‍♂️	🤦🏿‍♂️
+🤦‍♀️	woman facepalming	ผู้หญิงเอามือก่ายหน้าผาก|กุมขมับ|งง|ช็อค|ตกใจ|โธ่|ผิดหวัง|ผู้หญิง|ไม่นะ|เสียใจ|เหลือเชื่อ	🤦🏻‍♀️	🤦🏼‍♀️	🤦🏽‍♀️	🤦🏾‍♀️	🤦🏿‍♀️
+🤷	person shrugging	ยักไหล่|ช่างเถอะ|ไม่แคร์|ไม่รู้|ไม่สน	🤷🏻	🤷🏼	🤷🏽	🤷🏾	🤷🏿
+🤷‍♂️	man shrugging	ผู้ชายยักไหล่|เฉยเมย|เดา|ผู้ชาย|ไม่ทราบ|ไม่สนใจ|ยักไหล่|รู้|สงสัย|อาจจะ	🤷🏻‍♂️	🤷🏼‍♂️	🤷🏽‍♂️	🤷🏾‍♂️	🤷🏿‍♂️
+🤷‍♀️	woman shrugging	ผู้หญิงยักไหล่|เฉยเมย|เดา|ผู้หญิง|ไม่ทราบ|ไม่สนใจ|ยักไหล่|รู้|สงสัย|อาจจะ	🤷🏻‍♀️	🤷🏼‍♀️	🤷🏽‍♀️	🤷🏾‍♀️	🤷🏿‍♀️
+🧑‍⚕️	health worker	หมอ|เจ้าหน้าที่อนามัย|นักบำบัด|พยาบาล	🧑🏻‍⚕️	🧑🏼‍⚕️	🧑🏽‍⚕️	🧑🏾‍⚕️	🧑🏿‍⚕️
+👨‍⚕️	man health worker	หมอชาย|การดูแลสุขภาพ|นักบำบัด|นายแพทย์|ผู้ชาย|พยาบาล|หมอ	👨🏻‍⚕️	👨🏼‍⚕️	👨🏽‍⚕️	👨🏾‍⚕️	👨🏿‍⚕️
+👩‍⚕️	woman health worker	หมอหญิง|การดูแลสุขภาพ|คน|นักบำบัด|พยาบาล|แพทย์หญิง|หมอ	👩🏻‍⚕️	👩🏼‍⚕️	👩🏽‍⚕️	👩🏾‍⚕️	👩🏿‍⚕️
+🧑‍🎓	student	บัณฑิต|รับปริญญา	🧑🏻‍🎓	🧑🏼‍🎓	🧑🏽‍🎓	🧑🏾‍🎓	🧑🏿‍🎓
+👨‍🎓	man student	นักเรียนชาย|จบการศึกษา|นักเรียน|บัณฑิต|ผู้ชาย	👨🏻‍🎓	👨🏼‍🎓	👨🏽‍🎓	👨🏾‍🎓	👨🏿‍🎓
+👩‍🎓	woman student	นักเรียนหญิง|นักเรียน|ผู้หญิง|เรียนจบ	👩🏻‍🎓	👩🏼‍🎓	👩🏽‍🎓	👩🏾‍🎓	👩🏿‍🎓
+🧑‍🏫	teacher	ครู|ผู้สอน|ศาสตราจารย์|อาจารย์	🧑🏻‍🏫	🧑🏼‍🏫	🧑🏽‍🏫	🧑🏾‍🏫	🧑🏿‍🏫
+👨‍🏫	man teacher	ครูชาย|ครู|บรรยาย|ผู้ชาย|ศาสตราจารย์|สอน|อาจารย์	👨🏻‍🏫	👨🏼‍🏫	👨🏽‍🏫	👨🏾‍🏫	👨🏿‍🏫
+👩‍🏫	woman teacher	ครูหญิง|ครู|บรรยาย|ผู้หญิง|ศาสตราจารย์|สอน|อาจารย์	👩🏻‍🏫	👩🏼‍🏫	👩🏽‍🏫	👩🏾‍🏫	👩🏿‍🏫
+🧑‍⚖️	judge	ผู้พิพากษา|ตราชั่ง	🧑🏻‍⚖️	🧑🏼‍⚖️	🧑🏽‍⚖️	🧑🏾‍⚖️	🧑🏿‍⚖️
+👨‍⚖️	man judge	ผู้พิพากษาชาย|กฎหมาย|ชาย|ตราชั่ง|ผู้พิพากษา|ยุติธรรม|ศาล	👨🏻‍⚖️	👨🏼‍⚖️	👨🏽‍⚖️	👨🏾‍⚖️	👨🏿‍⚖️
+👩‍⚖️	woman judge	ผู้พิพากษาหญิง|การตัดสิน|ตราชั่ง|ผู้หญิง	👩🏻‍⚖️	👩🏼‍⚖️	👩🏽‍⚖️	👩🏾‍⚖️	👩🏿‍⚖️
+🧑‍🌾	farmer	ชาวนา|เจ้าของฟาร์ม|ชาวสวน	🧑🏻‍🌾	🧑🏼‍🌾	🧑🏽‍🌾	🧑🏾‍🌾	🧑🏿‍🌾
+👨‍🌾	man farmer	ชาวนาชาย|งาน|เจ้าของฟาร์ม|ชาวนา|ชาวสวน|ผู้ชาย	👨🏻‍🌾	👨🏼‍🌾	👨🏽‍🌾	👨🏾‍🌾	👨🏿‍🌾
+👩‍🌾	woman farmer	ชาวนาหญิง|งาน|เจ้าของฟาร์ม|ชาวนา|ชาวสวน|ผู้หญิง	👩🏻‍🌾	👩🏼‍🌾	👩🏽‍🌾	👩🏾‍🌾	👩🏿‍🌾
+🧑‍🍳	cook	กุ๊ก|เชฟ	🧑🏻‍🍳	🧑🏼‍🍳	🧑🏽‍🍳	🧑🏾‍🍳	🧑🏿‍🍳
+👨‍🍳	man cook	พ่อครัว|งาน|เชฟ|ผู้ชาย	👨🏻‍🍳	👨🏼‍🍳	👨🏽‍🍳	👨🏾‍🍳	👨🏿‍🍳
+👩‍🍳	woman cook	แม่ครัว|งาน|เชฟ|ผู้หญิง	👩🏻‍🍳	👩🏼‍🍳	👩🏽‍🍳	👩🏾‍🍳	👩🏿‍🍳
+🧑‍🔧	mechanic	ช่างกล|ช่าง|ช่างประปา|ช่างไฟฟ้า	🧑🏻‍🔧	🧑🏼‍🔧	🧑🏽‍🔧	🧑🏾‍🔧	🧑🏿‍🔧
+👨‍🔧	man mechanic	ช่างซ่อมชาย|งาน|ช่างกล|ช่างประปา|ช่างไฟฟ้า|ซ่อมแซม|ผู้ชาย	👨🏻‍🔧	👨🏼‍🔧	👨🏽‍🔧	👨🏾‍🔧	👨🏿‍🔧
+👩‍🔧	woman mechanic	ช่างซ่อมหญิง|งาน|ช่างกล|ช่างประปา|ช่างไฟฟ้า|ซ่อมแซม|ผู้หญิง	👩🏻‍🔧	👩🏼‍🔧	👩🏽‍🔧	👩🏾‍🔧	👩🏿‍🔧
+🧑‍🏭	factory worker	พนักงานโรงงาน|คนงาน|พนักงาน|โรงงาน|อุตสาหกรรม	🧑🏻‍🏭	🧑🏼‍🏭	🧑🏽‍🏭	🧑🏾‍🏭	🧑🏿‍🏭
+👨‍🏭	man factory worker	พนักงานโรงงานชาย|คน|ประกอบ|ผู้ชาย|พนักงาน|โรงงาน|อุตสาหกรรม	👨🏻‍🏭	👨🏼‍🏭	👨🏽‍🏭	👨🏾‍🏭	👨🏿‍🏭
+👩‍🏭	woman factory worker	พนักงานโรงงานหญิง|คน|ประกอบ|ผู้หญิง|พนักงาน|โรงงาน|อุตสาหกรรม	👩🏻‍🏭	👩🏼‍🏭	👩🏽‍🏭	👩🏾‍🏭	👩🏿‍🏭
+🧑‍💼	office worker	พนักงานออฟฟิศ|ธุรกิจ|ผู้จัดการ|พนักงานบริษัท|สถาปนิก|ออฟฟิศ	🧑🏻‍💼	🧑🏼‍💼	🧑🏽‍💼	🧑🏾‍💼	🧑🏿‍💼
+👨‍💼	man office worker	พนักงานบริษัทชาย|ธุรกิจ|บริษัท|ผู้จัดการ|ผู้ชาย|พนักงาน|สถาปนิก|ออฟฟิศ	👨🏻‍💼	👨🏼‍💼	👨🏽‍💼	👨🏾‍💼	👨🏿‍💼
+👩‍💼	woman office worker	พนักงานบริษัทหญิง|ธุรกิจ|บริษัท|ผู้จัดการ|ผู้หญิง|พนักงาน|สถาปนิก|ออฟฟิศ	👩🏻‍💼	👩🏼‍💼	👩🏽‍💼	👩🏾‍💼	👩🏿‍💼
+🧑‍🔬	scientist	นักวิทยาศาสตร์|นักเคมี|นักชีววิทยา|นักฟิสิกส์|วิศวกร	🧑🏻‍🔬	🧑🏼‍🔬	🧑🏽‍🔬	🧑🏾‍🔬	🧑🏿‍🔬
+👨‍🔬	man scientist	นักวิทยาศาสตร์ชาย|คณิต|เคมี|งาน|ชีววิทยา|นักวิทยาศาสตร์|ผู้ชาย|ฟิสิกส์|วิศวกร	👨🏻‍🔬	👨🏼‍🔬	👨🏽‍🔬	👨🏾‍🔬	👨🏿‍🔬
+👩‍🔬	woman scientist	นักวิทยาศาสตร์หญิง|คณิต|เคมี|งาน|ชีววิทยา|นักวิทยาศาสตร์|ผู้หญิง|ฟิสิกส์|วิศวกร	👩🏻‍🔬	👩🏼‍🔬	👩🏽‍🔬	👩🏾‍🔬	👩🏿‍🔬
+🧑‍💻	technologist	ผู้เชี่ยวชาญด้านเทคโนโลยี|คอมพิวเตอร์|ซอฟต์แวร์|นักประดิษฐ์|นักพัฒนา|โปรแกรมเมอร์	🧑🏻‍💻	🧑🏼‍💻	🧑🏽‍💻	🧑🏾‍💻	🧑🏿‍💻
+👨‍💻	man technologist	ผู้เชี่ยวชาญด้านเทคโนโลยีชาย|คอมพิวเตอร์|ซอฟต์แวร์|นักประดิษฐ์|นักพัฒนา|โปรแกรมเมอร์|ผู้ชาย|ผู้เชี่ยวชาญด้านเทคโนโลยี	👨🏻‍💻	👨🏼‍💻	👨🏽‍💻	👨🏾‍💻	👨🏿‍💻
+👩‍💻	woman technologist	ผู้เชี่ยวชาญด้านเทคโนโลยีหญิง|คอมพิวเตอร์|ซอฟต์แวร์|นักประดิษฐ์|นักพัฒนา|โปรแกรมเมอร์|ผู้เชี่ยวชาญด้านเทคโนโลยี|ผู้หญิง	👩🏻‍💻	👩🏼‍💻	👩🏽‍💻	👩🏾‍💻	👩🏿‍💻
+🧑‍🎤	singer	นักร้อง|ดารา|นักแสดง|ผู้ให้ความบันเทิง|ร็อค	🧑🏻‍🎤	🧑🏼‍🎤	🧑🏽‍🎤	🧑🏾‍🎤	🧑🏿‍🎤
+👨‍🎤	man singer	นักร้องชาย|งาน|ดารา|นักร้อง|นักแสดง|ผู้ชาย|ผู้ให้ความบันเทิง|ร็อค	👨🏻‍🎤	👨🏼‍🎤	👨🏽‍🎤	👨🏾‍🎤	👨🏿‍🎤
+👩‍🎤	woman singer	นักร้องหญิง|งาน|ดารา|นักร้อง|นักแสดง|ผู้หญิง|ผู้ให้ความบันเทิง|ร็อค	👩🏻‍🎤	👩🏼‍🎤	👩🏽‍🎤	👩🏾‍🎤	👩🏿‍🎤
+🧑‍🎨	artist	ศิลปิน|จานสี	🧑🏻‍🎨	🧑🏼‍🎨	🧑🏽‍🎨	🧑🏾‍🎨	🧑🏿‍🎨
+👨‍🎨	man artist	ศิลปินชาย|งาน|จานสี|ผู้ชาย|วาดภาพ|ศิลปิน	👨🏻‍🎨	👨🏼‍🎨	👨🏽‍🎨	👨🏾‍🎨	👨🏿‍🎨
+👩‍🎨	woman artist	ศิลปินหญิง|งาน|จานสี|ผู้หญิง|วาดภาพ|ศิลปิน	👩🏻‍🎨	👩🏼‍🎨	👩🏽‍🎨	👩🏾‍🎨	👩🏿‍🎨
+🧑‍✈️	pilot	นักบิน|เครื่องบิน	🧑🏻‍✈️	🧑🏼‍✈️	🧑🏽‍✈️	🧑🏾‍✈️	🧑🏿‍✈️
+👨‍✈️	man pilot	นักบินชาย|เครื่องบิน|นักบิน|ผู้ชาย	👨🏻‍✈️	👨🏼‍✈️	👨🏽‍✈️	👨🏾‍✈️	👨🏿‍✈️
+👩‍✈️	woman pilot	นักบินหญิง|เครื่องบิน|นักบิน|ผู้หญิง	👩🏻‍✈️	👩🏼‍✈️	👩🏽‍✈️	👩🏾‍✈️	👩🏿‍✈️
+🧑‍🚀	astronaut	นักบินอวกาศ|จรวด	🧑🏻‍🚀	🧑🏼‍🚀	🧑🏽‍🚀	🧑🏾‍🚀	🧑🏿‍🚀
+👨‍🚀	man astronaut	นักบินอวกาศชาย|งาน|จรวด|นักบินอวกาศ|ผู้ชาย	👨🏻‍🚀	👨🏼‍🚀	👨🏽‍🚀	👨🏾‍🚀	👨🏿‍🚀
+👩‍🚀	woman astronaut	นักบินอวกาศหญิง|งาน|จรวด|นักบินอวกาศ|ผู้หญิง	👩🏻‍🚀	👩🏼‍🚀	👩🏽‍🚀	👩🏾‍🚀	👩🏿‍🚀
+🧑‍🚒	firefighter	พนักงานดับเพลิง|ไฟไหม้|รถดับเพลิง	🧑🏻‍🚒	🧑🏼‍🚒	🧑🏽‍🚒	🧑🏾‍🚒	🧑🏿‍🚒
+👨‍🚒	man firefighter	พนักงานดับเพลิงชาย|งาน|ผู้ชาย|พนักงานดับเพลิง|ไฟไหม้|รถดับเพลิง	👨🏻‍🚒	👨🏼‍🚒	👨🏽‍🚒	👨🏾‍🚒	👨🏿‍🚒
+👩‍🚒	woman firefighter	พนักงานดับเพลิงหญิง|งาน|ผู้หญิง|พนักงานดับเพลิง|ไฟไหม้|รถดับเพลิง	👩🏻‍🚒	👩🏼‍🚒	👩🏽‍🚒	👩🏾‍🚒	👩🏿‍🚒
+👮	police officer	เจ้าหน้าที่ตำรวจ|กฎหมาย|งาน|จับกุม|เจ้าหน้าที่|ตั้งด่าน|ตำรวจ|นอกเครื่องแบบ|ผู้ชาย	👮🏻	👮🏼	👮🏽	👮🏾	👮🏿
+👮‍♂️	man police officer	ตำรวจชาย|เจ้าหน้าที่|ตำรวจ|ผู้ชาย	👮🏻‍♂️	👮🏼‍♂️	👮🏽‍♂️	👮🏾‍♂️	👮🏿‍♂️
+👮‍♀️	woman police officer	ตำรวจหญิง|กฎหมาย|งาน|จับกุม|เจ้าหน้าที่|ตั้งด่าน|ตำรวจ|นอกเครื่องแบบ|ผู้หญิง	👮🏻‍♀️	👮🏼‍♀️	👮🏽‍♀️	👮🏾‍♀️	👮🏿‍♀️
+🕵️	detective	นักสืบ|แกะรอย|งาน	🕵🏻	🕵🏼	🕵🏽	🕵🏾	🕵🏿
+🕵️‍♂️	man detective	นักสืบชาย|นักสืบ|ผู้ชาย|สายลับ	🕵🏻‍♂️	🕵🏼‍♂️	🕵🏽‍♂️	🕵🏾‍♂️	🕵🏿‍♂️
+🕵️‍♀️	woman detective	นักสืบหญิง|นักสืบ|ผู้หญิง|สายลับ	🕵🏻‍♀️	🕵🏼‍♀️	🕵🏽‍♀️	🕵🏾‍♀️	🕵🏿‍♀️
+💂	guard	การ์ดคุ้มกัน|การ์ด|คุ้มกัน|งาน|ทหาร|บัคกิงแฮม|พระราชวัง|ยาม|ลอนดอน|หมวก	💂🏻	💂🏼	💂🏽	💂🏾	💂🏿
+💂‍♂️	man guard	องครักษ์ชาย|ผู้ชาย|องครักษ์	💂🏻‍♂️	💂🏼‍♂️	💂🏽‍♂️	💂🏾‍♂️	💂🏿‍♂️
+💂‍♀️	woman guard	องครักษ์หญิง|คุ้มกัน|งาน|ทหาร|บัคกิงแฮม|ผู้หญิง|พระราชวัง|ลอนดอน|หมวก|องครักษ์	💂🏻‍♀️	💂🏼‍♀️	💂🏽‍♀️	💂🏾‍♀️	💂🏿‍♀️
+🥷	ninja	นินจา|คน|ความลับ|ซ่อน|ต่อสู้|ทหาร|ทักษะ|พรางตัว|สงคราม|สังหาร	🥷🏻	🥷🏼	🥷🏽	🥷🏾	🥷🏿
+👷	construction worker	คนงานก่อสร้าง|ก่อสร้าง|คนงาน|ช่าง|ซ่อมแซม|ปลอดภัยไว้ก่อน|ผู้ชาย|หมวกนิรภัย	👷🏻	👷🏼	👷🏽	👷🏾	👷🏿
+👷‍♂️	man construction worker	พนักงานก่อสร้างชาย|ก่อสร้าง|คนงาน|ผู้ชาย	👷🏻‍♂️	👷🏼‍♂️	👷🏽‍♂️	👷🏾‍♂️	👷🏿‍♂️
+👷‍♀️	woman construction worker	พนักงานก่อสร้างหญิง|ก่อสร้าง|คนงาน|ช่าง|ซ่อมแซม|ปลอดภัยไว้ก่อน|ผู้หญิง|หมวกนิรภัย	👷🏻‍♀️	👷🏼‍♀️	👷🏽‍♀️	👷🏾‍♀️	👷🏿‍♀️
+🫅	person with crown	คนสวมมงกุฎ|กษัตริย์|ขุนนาง|คนชั้นสูง|ควีน|คิง|พระราชา|มงกุฎ|ราชนิกูล|ราชวงศ์|ราชินี	🫅🏻	🫅🏼	🫅🏽	🫅🏾	🫅🏿
+🤴	prince	เจ้าชาย|องค์ชาย	🤴🏻	🤴🏼	🤴🏽	🤴🏾	🤴🏿
+👸	princess	เจ้าหญิง|เทพนิยาย	👸🏻	👸🏼	👸🏽	👸🏾	👸🏿
+👳	person wearing turban	ชายโพกหัว|คน|ชาวมุสลิม|ผ้า|ผู้ชาย|โพกหัว	👳🏻	👳🏼	👳🏽	👳🏾	👳🏿
+👳‍♂️	man wearing turban	ผู้ชายโพกหัว|ผ้าโพกหัว|ผู้ชาย	👳🏻‍♂️	👳🏼‍♂️	👳🏽‍♂️	👳🏾‍♂️	👳🏿‍♂️
+👳‍♀️	woman wearing turban	ผู้หญิงโพกหัว|คน|ชาวมุสลิม|ผ้า|ผู้หญิง|โพกหัว	👳🏻‍♀️	👳🏼‍♀️	👳🏽‍♀️	👳🏾‍♀️	👳🏿‍♀️
+👲	person with skullcap	ชายจีน|คน|ชาวจีน|ผู้ชาย|หมวก	👲🏻	👲🏼	👲🏽	👲🏾	👲🏿
+🧕	woman with headscarf	ผู้หญิงโพกศีรษะ|คน|คลุม|ชาวมุสลิม|ผ้าพันคอ|ผู้หญิง|โพก|ศีรษะ|หัว|ฮิญาบ	🧕🏻	🧕🏼	🧕🏽	🧕🏾	🧕🏿
+🤵	person in tuxedo	คนหล่อ|เจ้าบ่าว|เต็มยศ|แต่งงาน|ทักซิโด้|ทางการ|ผู้ชาย|เฟี้ยว|หนุ่ม	🤵🏻	🤵🏼	🤵🏽	🤵🏾	🤵🏿
+🤵‍♂️	man in tuxedo	ผู้ชายใส่ทักซิโด้|ทักซิโด้|ผู้ชาย	🤵🏻‍♂️	🤵🏼‍♂️	🤵🏽‍♂️	🤵🏾‍♂️	🤵🏿‍♂️
+🤵‍♀️	woman in tuxedo	ผู้หญิงใส่ทักซิโด้|ทักซิโด้|ผู้หญิง	🤵🏻‍♀️	🤵🏼‍♀️	🤵🏽‍♀️	🤵🏾‍♀️	🤵🏿‍♀️
+👰	person with veil	เจ้าสาว|แต่งงาน	👰🏻	👰🏼	👰🏽	👰🏾	👰🏿
+👰‍♂️	man with veil	ผู้ชายที่มีผ้าคลุมหน้า|ผ้าคลุมหน้า|ผู้ชาย	👰🏻‍♂️	👰🏼‍♂️	👰🏽‍♂️	👰🏾‍♂️	👰🏿‍♂️
+👰‍♀️	woman with veil	ผู้หญิงที่มีผ้าคลุมหน้า|ผ้าคลุมหน้า|ผู้หญิง	👰🏻‍♀️	👰🏼‍♀️	👰🏽‍♀️	👰🏾‍♀️	👰🏿‍♀️
+🤰	pregnant woman	คนท้อง|ท้อง|แม่	🤰🏻	🤰🏼	🤰🏽	🤰🏾	🤰🏿
+🫃	pregnant man	ผู้ชายตั้งครรภ์|กินเยอะ|ครรภ์|ตั้งท้อง|ป่อง|ผู้ชาย|พุง|มีลูก|อิ่ม	🫃🏻	🫃🏼	🫃🏽	🫃🏾	🫃🏿
+🫄	pregnant person	คนตั้งครรภ์|กินเยอะ|คน|ครรภ์|ตั้งท้อง|ป่อง|พุง|มีลูก|อิ่ม	🫄🏻	🫄🏼	🫄🏽	🫄🏾	🫄🏿
+🤱	breast-feeding	ให้นม|เด็กทารก|ผู้หญิง|แม่|เลี้ยงลูก|หน้าอก	🤱🏻	🤱🏼	🤱🏽	🤱🏾	🤱🏿
+👩‍🍼	woman feeding baby	ผู้หญิงให้นมลูก|ขวดนม|คน|ความรัก|เด็กทารก|ผู้หญิง|มารดา|แม่|แรกเกิด|เลี้ยงลูก	👩🏻‍🍼	👩🏼‍🍼	👩🏽‍🍼	👩🏾‍🍼	👩🏿‍🍼
+👨‍🍼	man feeding baby	ผู้ชายให้นมลูก|ขวดนม|คน|ความรัก|เด็กทารก|บิดา|ผู้ชาย|พ่อ|แรกเกิด|เลี้ยงลูก	👨🏻‍🍼	👨🏼‍🍼	👨🏽‍🍼	👨🏾‍🍼	👨🏿‍🍼
+🧑‍🍼	person feeding baby	คนให้นมลูก|ขวดนม|คน|เด็กทารก|พ่อแม่|รัก|แรกเกิด|เลี้ยงลูก	🧑🏻‍🍼	🧑🏼‍🍼	🧑🏽‍🍼	🧑🏾‍🍼	🧑🏿‍🍼
+👼	baby angel	นางฟ้าเด็ก|เด็ก|ทารก|เทพนิยาย|เทวดา|นางฟ้า	👼🏻	👼🏼	👼🏽	👼🏾	👼🏿
+🎅	Santa Claus	ซานต้า|คริสต์มาส|ซานตาคลอส	🎅🏻	🎅🏼	🎅🏽	🎅🏾	🎅🏿
+🤶	Mrs. Claus	นางซานต้า|คริสต์มาส|ฉลอง|ซานตาคลอส|นิทาน|แฟนตาซี|แม่|แมรี่|วันหยุด	🤶🏻	🤶🏼	🤶🏽	🤶🏾	🤶🏿
+🧑‍🎄	mx claus	ซานตาคลอส|คริสต์มาส|ฉลอง|นิทาน|แฟนตาซี|วันหยุด|สุขสันต์	🧑🏻‍🎄	🧑🏼‍🎄	🧑🏽‍🎄	🧑🏾‍🎄	🧑🏿‍🎄
+🦸	superhero	ซุปเปอร์ฮีโร่|เก่ง|ซุปเปอร์แมน|ดี|พลังวิเศษ|พาวเวอร์|ยอดมนุษย์|วีรบุรุษ|ฮีโร่	🦸🏻	🦸🏼	🦸🏽	🦸🏾	🦸🏿
+🦸‍♂️	man superhero	พระเอก|เก่ง|จอมพลัง|ตัวพ่อ|ผู้ชาย|ฮีโร่	🦸🏻‍♂️	🦸🏼‍♂️	🦸🏽‍♂️	🦸🏾‍♂️	🦸🏿‍♂️
+🦸‍♀️	woman superhero	ยอดหญิง|เก่ง|จอมพลัง|ตัวแม่|ผู้หญิง|ฮีโร่	🦸🏻‍♀️	🦸🏼‍♀️	🦸🏽‍♀️	🦸🏾‍♀️	🦸🏿‍♀️
+🦹	supervillain	ยอดมนุษย์|คนชั่ว|ซูเปอร์พาวเวอร์|ตัวโกง|ปีศาจ|ร้าย|เลว|อาชญากร	🦹🏻	🦹🏼	🦹🏽	🦹🏾	🦹🏿
+🦹‍♂️	man supervillain	ตัวโกง|ตัวร้าย|ปีศาจ|ผู้ชาย|ผู้ร้าย|อาชญากร	🦹🏻‍♂️	🦹🏼‍♂️	🦹🏽‍♂️	🦹🏾‍♂️	🦹🏿‍♂️
+🦹‍♀️	woman supervillain	นางร้าย|ตัวร้าย|ปีศาจ|ผู้ร้าย|ผู้หญิง|อาชญากร	🦹🏻‍♀️	🦹🏼‍♀️	🦹🏽‍♀️	🦹🏾‍♀️	🦹🏿‍♀️
+🧙	mage	นักเวทย์|คาถา|จอมขมังเวทย์|ผู้วิเศษ|พ่อมด|แฟนตาซี|มายากล|แม่มด|ร่ายมนต์|สะกด	🧙🏻	🧙🏼	🧙🏽	🧙🏾	🧙🏿
+🧙‍♂️	man mage	พ่อมด|ผู้วิเศษ	🧙🏻‍♂️	🧙🏼‍♂️	🧙🏽‍♂️	🧙🏾‍♂️	🧙🏿‍♂️
+🧙‍♀️	woman mage	แม่มด|ผู้วิเศษ	🧙🏻‍♀️	🧙🏼‍♀️	🧙🏽‍♀️	🧙🏾‍♀️	🧙🏿‍♀️
+🧚	fairy	นางฟ้า|คน|นิทาน|ปีก|แฟรี่	🧚🏻	🧚🏼	🧚🏽	🧚🏾	🧚🏿
+🧚‍♂️	man fairy	เทพบุตร|แฟรี่ผู้ชาย	🧚🏻‍♂️	🧚🏼‍♂️	🧚🏽‍♂️	🧚🏾‍♂️	🧚🏿‍♂️
+🧚‍♀️	woman fairy	เทพธิดา|แฟรี่ผู้หญิง	🧚🏻‍♀️	🧚🏼‍♀️	🧚🏽‍♀️	🧚🏾‍♀️	🧚🏿‍♀️
+🧛	vampire	แวมไพร์|เขี้ยว|แดร็กคูลา|แดร็กคูล่า|ผีดูดเลือด|ฟัน|ไม่ตาย|เลือด|อมตะ|ฮาโลวีน	🧛🏻	🧛🏼	🧛🏽	🧛🏾	🧛🏿
+🧛‍♂️	man vampire	แวมไพร์ผู้ชาย|แดร็กคูล่า|อมตะ	🧛🏻‍♂️	🧛🏼‍♂️	🧛🏽‍♂️	🧛🏾‍♂️	🧛🏿‍♂️
+🧛‍♀️	woman vampire	แวมไพร์ผู้หญิง|อมตะ	🧛🏻‍♀️	🧛🏼‍♀️	🧛🏽‍♀️	🧛🏾‍♀️	🧛🏿‍♀️
+🧜	merperson	ครึ่งคนครึ่งปลา|ทะเล|เทพนิยาย|นางเงือก|ประหลาด|มหาสมุทร|เมอร์เมด	🧜🏻	🧜🏼	🧜🏽	🧜🏾	🧜🏿
+🧜‍♂️	merman	เงือกชาย	🧜🏻‍♂️	🧜🏼‍♂️	🧜🏽‍♂️	🧜🏾‍♂️	🧜🏿‍♂️
+🧜‍♀️	mermaid	เงือก	🧜🏻‍♀️	🧜🏼‍♀️	🧜🏽‍♀️	🧜🏾‍♀️	🧜🏿‍♀️
+🧝	elf	เอลฟ์|ขลัง|จอมเวทย์|พลังเวทย์|แฟนตาซี|เวทมนตร์	🧝🏻	🧝🏼	🧝🏽	🧝🏾	🧝🏿
+🧝‍♂️	man elf	เอลฟ์ผู้ชาย|จอมเวทย์	🧝🏻‍♂️	🧝🏼‍♂️	🧝🏽‍♂️	🧝🏾‍♂️	🧝🏿‍♂️
+🧝‍♀️	woman elf	เอลฟ์ผู้หญิง|จอมเวทย์	🧝🏻‍♀️	🧝🏼‍♀️	🧝🏽‍♀️	🧝🏾‍♀️	🧝🏿‍♀️
+🧞	genie	ยักษ์จีนี่|ขอพร|จินนี่|จีนี่|ตะเกียง|ถู|แฟนตาซี|ยักษ์
+🧞‍♂️	man genie	ยักษ์จีนี่ชาย|ขอพร|จินนี่|จีนี่|ตะเกียง|ถู|ผู้ชาย|แฟนตาซี|ยักษ์
+🧞‍♀️	woman genie	ยักษ์จีนี่หญิง|ขอพร|จินนี่|จีนี่|ตะเกียง|ถู|ผู้หญิง|แฟนตาซี|ยักษ์
+🧟	zombie	ซอมบี้|เดิน|ตาย|น่ากลัว|ผีดิบ|สยองขวัญ|ฮาโลวีน
+🧟‍♂️	man zombie	ซอมบี้ผู้ชาย|ผีดิบ
+🧟‍♀️	woman zombie	ซอมบี้ผู้หญิง|ผีดิบ
+🧌	troll	โทรลล์|เทพนิยาย|แฟนตาซี|มอนสเตอร์|ยักษ์|สัตว์ประหลาด
+💆	person getting massage	นวดหน้า|คน|ซาลอน|ทรีทเมนท์|นวด|บำบัด|ผ่อนคลาย|สปา|เสริมสวย|หน้า	💆🏻	💆🏼	💆🏽	💆🏾	💆🏿
+💆‍♂️	man getting massage	ผู้ชายกำลังนวดหน้า|คน|ซาลอน|ทรีทเมนท์|นวด|บำบัด|ผ่อนคลาย|ผู้ชาย|สปา|เสริมสวย|หน้า	💆🏻‍♂️	💆🏼‍♂️	💆🏽‍♂️	💆🏾‍♂️	💆🏿‍♂️
+💆‍♀️	woman getting massage	ผู้หญิงกำลังนวดหน้า|คน|ซาลอน|ทรีทเมนท์|นวด|บำบัด|ผ่อนคลาย|ผู้หญิง|สปา|เสริมสวย|หน้า	💆🏻‍♀️	💆🏼‍♀️	💆🏽‍♀️	💆🏾‍♀️	💆🏿‍♀️
+💇	person getting haircut	ตัดผม|คน|ความงาม|เซ็ตผม|ตัด|ทำผม|ผม|เสริมสวย	💇🏻	💇🏼	💇🏽	💇🏾	💇🏿
+💇‍♂️	man getting haircut	ผู้ชายกำลังตัดผม|คน|ความงาม|เซ็ตผม|ตัด|ตัดผม|ทำผม|ผม|ผู้ชาย|เสริมสวย	💇🏻‍♂️	💇🏼‍♂️	💇🏽‍♂️	💇🏾‍♂️	💇🏿‍♂️
+💇‍♀️	woman getting haircut	ผู้หญิงกำลังตัดผม|คน|ความงาม|เซ็ตผม|ตัด|ตัดผม|ทำผม|ผม|ผู้หญิง|เสริมสวย	💇🏻‍♀️	💇🏼‍♀️	💇🏽‍♀️	💇🏾‍♀️	💇🏿‍♀️
+🚶	person walking	คนเดิน|ก้าว|คน|เดิน	🚶🏻	🚶🏼	🚶🏽	🚶🏾	🚶🏿
+🚶‍♂️	man walking	ผู้ชายเดิน|ก้าว|คน|เดิน|ผู้ชาย	🚶🏻‍♂️	🚶🏼‍♂️	🚶🏽‍♂️	🚶🏾‍♂️	🚶🏿‍♂️
+🚶‍♀️	woman walking	ผู้หญิงเดิน|ก้าว|คน|เดิน|ผู้หญิง	🚶🏻‍♀️	🚶🏼‍♀️	🚶🏽‍♀️	🚶🏾‍♀️	🚶🏿‍♀️
+🧍	person standing	คนกำลังยืน|คน|ตัวตรง|ยืน	🧍🏻	🧍🏼	🧍🏽	🧍🏾	🧍🏿
+🧍‍♂️	man standing	ผู้ชายกำลังยืน|คน|ตัวตรง|ผู้ชาย|ยืน	🧍🏻‍♂️	🧍🏼‍♂️	🧍🏽‍♂️	🧍🏾‍♂️	🧍🏿‍♂️
+🧍‍♀️	woman standing	ผู้หญิงกำลังยืน|คน|ตัวตรง|ผู้หญิง|ยืน	🧍🏻‍♀️	🧍🏼‍♀️	🧍🏽‍♀️	🧍🏾‍♀️	🧍🏿‍♀️
+🧎	person kneeling	คนกำลังคุกเข่า|คน|คุกเข่า|นั่ง	🧎🏻	🧎🏼	🧎🏽	🧎🏾	🧎🏿
+🧎‍♂️	man kneeling	ผู้ชายกำลังคุกเข่า|คน|คุกเข่า|นั่ง|ผู้ชาย	🧎🏻‍♂️	🧎🏼‍♂️	🧎🏽‍♂️	🧎🏾‍♂️	🧎🏿‍♂️
+🧎‍♀️	woman kneeling	ผู้หญิงกำลังคุกเข่า|คน|คุกเข่า|นั่ง|ผู้หญิง	🧎🏻‍♀️	🧎🏼‍♀️	🧎🏽‍♀️	🧎🏾‍♀️	🧎🏿‍♀️
+🧑‍🦯	person with white cane	คนเดินถือไม้เท้านำทาง|การเข้าถึง|การช่วยเหลือพิเศษ|ตาบอด	🧑🏻‍🦯	🧑🏼‍🦯	🧑🏽‍🦯	🧑🏾‍🦯	🧑🏿‍🦯
+👨‍🦯	man with white cane	ผู้ชายเดินถือไม้เท้านำทาง|การเข้าถึง|การช่วยเหลือพิเศษ|คนตาบอด|เดิน|ผู้ชาย|ไม้เท้า|สำรวจ	👨🏻‍🦯	👨🏼‍🦯	👨🏽‍🦯	👨🏾‍🦯	👨🏿‍🦯
+👩‍🦯	woman with white cane	ผู้หญิงเดินถือไม้เท้านำทาง|เข้าถึง|คนตาบอด|เดิน|ผู้หญิง|ไม้เท้า|สำรวจ	👩🏻‍🦯	👩🏼‍🦯	👩🏽‍🦯	👩🏾‍🦯	👩🏿‍🦯
+🧑‍🦼	person in motorized wheelchair	คนนั่งวีลแชร์ไฟฟ้า|การเข้าถึง|การช่วยเหลือพิเศษ|วีลแชร์	🧑🏻‍🦼	🧑🏼‍🦼	🧑🏽‍🦼	🧑🏾‍🦼	🧑🏿‍🦼
+👨‍🦼	man in motorized wheelchair	ผู้ชายนั่งวีลแชร์ไฟฟ้า|การเข้าถึง|การช่วยเหลือพิเศษ|คน|ผู้ชาย|รถเข็น|วีลแชร์ไฟฟ้า	👨🏻‍🦼	👨🏼‍🦼	👨🏽‍🦼	👨🏾‍🦼	👨🏿‍🦼
+👩‍🦼	woman in motorized wheelchair	ผู้หญิงนั่งวีลแชร์ไฟฟ้า|เข้าถึง|คน|ผู้หญิง|รถเข็น|วีลแชร์ไฟฟ้า	👩🏻‍🦼	👩🏼‍🦼	👩🏽‍🦼	👩🏾‍🦼	👩🏿‍🦼
+🧑‍🦽	person in manual wheelchair	คนนั่งวีลแชร์ธรรมดา|การเข้าถึง|การช่วยเหลือพิเศษ|วีลแชร์	🧑🏻‍🦽	🧑🏼‍🦽	🧑🏽‍🦽	🧑🏾‍🦽	🧑🏿‍🦽
+👨‍🦽	man in manual wheelchair	ผู้ชายนั่งวีลแชร์ธรรมดา|เข้าถึง|คน|ผู้ชาย|แมนวล|รถเข็น|วีลแชร์	👨🏻‍🦽	👨🏼‍🦽	👨🏽‍🦽	👨🏾‍🦽	👨🏿‍🦽
+👩‍🦽	woman in manual wheelchair	ผู้หญิงนั่งวีลแชร์ธรรมดา|เข้าถึง|คน|ผู้หญิง|แมนวล|รถเข็น|วีลแชร์	👩🏻‍🦽	👩🏼‍🦽	👩🏽‍🦽	👩🏾‍🦽	👩🏿‍🦽
+🏃	person running	คนวิ่ง|กีฬา|แข่งขัน|คน|ความเร็ว|นักวิ่ง|มาราธอน|รีบ|เร่งรีบ|วิ่ง	🏃🏻	🏃🏼	🏃🏽	🏃🏾	🏃🏿
+🏃‍♂️	man running	ผู้ชายวิ่ง|กีฬา|แข่งขัน|คน|ความเร็ว|นักวิ่ง|ผู้ชาย|มาราธอน|รีบ|เร่งรีบ|วิ่ง	🏃🏻‍♂️	🏃🏼‍♂️	🏃🏽‍♂️	🏃🏾‍♂️	🏃🏿‍♂️
+🏃‍♀️	woman running	ผู้หญิงวิ่ง|กีฬา|แข่งขัน|คน|ความเร็ว|นักวิ่ง|ผู้หญิง|มาราธอน|รีบ|เร่งรีบ|วิ่ง	🏃🏻‍♀️	🏃🏼‍♀️	🏃🏽‍♀️	🏃🏾‍♀️	🏃🏿‍♀️
+💃	woman dancing	นักเต้น|ซัลซ่า|แดนเซอร์|เต้น|เต้นรำ|แทงโก้|ผู้หญิง|ฟลาเมงโก	💃🏻	💃🏼	💃🏽	💃🏾	💃🏿
+🕺	man dancing	คนเต้น|ซัลซ่า|แดนเซอร์|เต้น|เต้นรำ|แทงโก้|นักเต้น|ผู้ชาย|ฟลาเมงโก	🕺🏻	🕺🏼	🕺🏽	🕺🏾	🕺🏿
+🕴️	person in suit levitating	คนใส่สูทลอยได้|คน|ผู้ชาย|ลอย|สูท	🕴🏻	🕴🏼	🕴🏽	🕴🏾	🕴🏿
+👯	people with bunny ears	คนในชุดหูกระต่าย|กระต่าย|คน|ชุด|แดนเซอร์|เต้น|ปาร์ตี้|ฝาแฝด|เพื่อน|หู
+👯‍♂️	men with bunny ears	ผู้ชายในชุดหูกระต่าย|กระต่าย|คน|ชุด|แดนเซอร์|เต้น|ปาร์ตี้|ผู้ชาย|ฝาแฝด|เพื่อน|หู
+👯‍♀️	women with bunny ears	ผู้หญิงในชุดหูกระต่าย|กระต่าย|คน|ชุด|แดนเซอร์|เต้น|ปาร์ตี้|ผู้หญิง|ฝาแฝด|เพื่อน|หู
+🧖	person in steamy room	คนในห้องอบไอน้ำ|คน|ซาวน่า|ผ่อนคลาย|ร้อน|สปา|ห้อง|อบไอน้ำ	🧖🏻	🧖🏼	🧖🏽	🧖🏾	🧖🏿
+🧖‍♂️	man in steamy room	ผู้ชายในห้องอบไอน้ำ|คน|ซาวน่า|ผ่อนคลาย|ผู้ชาย|ร้อน|สปา|ห้อง|อบไอน้ำ	🧖🏻‍♂️	🧖🏼‍♂️	🧖🏽‍♂️	🧖🏾‍♂️	🧖🏿‍♂️
+🧖‍♀️	woman in steamy room	ผู้หญิงในห้องอบไอน้ำ|คน|ซาวน่า|ผ่อนคลาย|ผู้หญิง|ร้อน|สปา|ห้อง|อบไอน้ำ	🧖🏻‍♀️	🧖🏼‍♀️	🧖🏽‍♀️	🧖🏾‍♀️	🧖🏿‍♀️
+🧗	person climbing	นักไต่เขา|กีฬา|คน|ไต่เขา|ปีนเขา|ปีนผา|ภูเขา	🧗🏻	🧗🏼	🧗🏽	🧗🏾	🧗🏿
+🧗‍♂️	man climbing	ผู้ชายไต่เขา|กีฬา|คน|ไต่เขา|ปีนเขา|ปีนผา|ผู้ชาย|ภูเขา	🧗🏻‍♂️	🧗🏼‍♂️	🧗🏽‍♂️	🧗🏾‍♂️	🧗🏿‍♂️
+🧗‍♀️	woman climbing	ผู้หญิงไต่เขา|กีฬา|คน|ไต่เขา|ปีนเขา|ปีนผา|ผู้หญิง|ภูเขา	🧗🏻‍♀️	🧗🏼‍♀️	🧗🏽‍♀️	🧗🏾‍♀️	🧗🏿‍♀️
+🤺	person fencing	นักฟันดาบ|กีฬา|คน|ดวล|ดาบ|ฟัน
+🏇	horse racing	แข่งม้า|แข่ง|จ๊อกกี้|ม้า	🏇🏻	🏇🏼	🏇🏽	🏇🏾	🏇🏿
+⛷️	skier	นักสกี|สกี|หิมะ
+🏂	snowboarder	นักสโนว์บอร์ด|สกี|สโนว์บอร์ด|หิมะ	🏂🏻	🏂🏼	🏂🏽	🏂🏾	🏂🏿
+🏌️	person golfing	นักกอล์ฟ|กอล์ฟ|กีฬา|คน|แคดดี้|ไดร์ฟ|ตี|พัตต์|ออกรอบ	🏌🏻	🏌🏼	🏌🏽	🏌🏾	🏌🏿
+🏌️‍♂️	man golfing	ผู้ชายตีกอล์ฟ|กอล์ฟ|กีฬา|คน|แคดดี้|ไดร์ฟ|ตี|ผู้ชาย|พัตต์|ออกรอบ	🏌🏻‍♂️	🏌🏼‍♂️	🏌🏽‍♂️	🏌🏾‍♂️	🏌🏿‍♂️
+🏌️‍♀️	woman golfing	ผู้หญิงตีกอล์ฟ|กอล์ฟ|กีฬา|คน|แคดดี้|ไดร์ฟ|ตี|ผู้หญิง|พัตต์|ออกรอบ	🏌🏻‍♀️	🏌🏼‍♀️	🏌🏽‍♀️	🏌🏾‍♀️	🏌🏿‍♀️
+🏄	person surfing	นักโต้คลื่น|กีฬา|คน|คลื่น|ชายหาด|เซิร์ฟ|โต้คลื่น|ทะเล|นักเซิร์ฟ|มหาสมุทร	🏄🏻	🏄🏼	🏄🏽	🏄🏾	🏄🏿
+🏄‍♂️	man surfing	ผู้ชายโต้คลื่น|กีฬา|คน|คลื่น|ชายหาด|เซิร์ฟ|โต้คลื่น|ทะเล|นักเซิร์ฟ|ผู้ชาย|มหาสมุทร	🏄🏻‍♂️	🏄🏼‍♂️	🏄🏽‍♂️	🏄🏾‍♂️	🏄🏿‍♂️
+🏄‍♀️	woman surfing	ผู้หญิงโต้คลื่น|กีฬา|คน|คลื่น|ชายหาด|เซิร์ฟ|โต้คลื่น|ทะเล|นักเซิร์ฟ|ผู้หญิง|มหาสมุทร	🏄🏻‍♀️	🏄🏼‍♀️	🏄🏽‍♀️	🏄🏾‍♀️	🏄🏿‍♀️
+🚣	person rowing boat	นักพายเรือ|กีฬา|คน|แจว|ตกปลา|ทะเลสาบ|พาย|แม่น้ำ|ไม้พาย|เรือ	🚣🏻	🚣🏼	🚣🏽	🚣🏾	🚣🏿
+🚣‍♂️	man rowing boat	ผู้ชายพายเรือ|กีฬา|คน|แจว|ตกปลา|ทะเลสาบ|ผู้ชาย|พาย|แม่น้ำ|ไม้พาย|เรือ	🚣🏻‍♂️	🚣🏼‍♂️	🚣🏽‍♂️	🚣🏾‍♂️	🚣🏿‍♂️
+🚣‍♀️	woman rowing boat	ผู้หญิงพายเรือ|กีฬา|คน|แจว|ตกปลา|ทะเลสาบ|ผู้หญิง|พาย|แม่น้ำ|ไม้พาย|เรือ	🚣🏻‍♀️	🚣🏼‍♀️	🚣🏽‍♀️	🚣🏾‍♀️	🚣🏿‍♀️
+🏊	person swimming	นักว่ายน้ำ|กีฬา|คน|ไตรกีฬา|ฟรีสไตล์|ว่ายน้ำ	🏊🏻	🏊🏼	🏊🏽	🏊🏾	🏊🏿
+🏊‍♂️	man swimming	ผู้ชายว่ายน้ำ|กีฬา|คน|ไตรกีฬา|นักว่ายน้ำ|ผู้ชาย|ฟรีสไตล์|ว่ายน้ำ	🏊🏻‍♂️	🏊🏼‍♂️	🏊🏽‍♂️	🏊🏾‍♂️	🏊🏿‍♂️
+🏊‍♀️	woman swimming	ผู้หญิงว่ายน้ำ|กีฬา|คน|ไตรกีฬา|นักว่ายน้ำ|ผู้หญิง|ฟรีสไตล์|ว่ายน้ำ	🏊🏻‍♀️	🏊🏼‍♀️	🏊🏽‍♀️	🏊🏾‍♀️	🏊🏿‍♀️
+⛹️	person bouncing ball	คนเล่นบอล|กีฬา|คน|ชิงแชมป์|นักกีฬา|นักบาส|บาส|บาสเก็ตบอล|ลูก	⛹🏻	⛹🏼	⛹🏽	⛹🏾	⛹🏿
+⛹️‍♂️	man bouncing ball	ผู้ชายเล่นบอล|กีฬา|คน|ชิงแชมป์|นักกีฬา|นักบาส|บาส|บาสเก็ตบอล|ผู้ชาย|ลูก	⛹🏻‍♂️	⛹🏼‍♂️	⛹🏽‍♂️	⛹🏾‍♂️	⛹🏿‍♂️
+⛹️‍♀️	woman bouncing ball	ผู้หญิงเล่นบอล|กีฬา|คน|ชิงแชมป์|นักกีฬา|นักบาส|บาส|บาสเก็ตบอล|ผู้หญิง|ลูก	⛹🏻‍♀️	⛹🏼‍♀️	⛹🏽‍♀️	⛹🏾‍♀️	⛹🏿‍♀️
+🏋️	person lifting weights	นักยกน้ำหนัก|กีฬา|คน|ดัมเบล|บาร์เบล|เพาะกาย|ยกน้ำหนัก|เล่นเวท|ออกกำลังกาย	🏋🏻	🏋🏼	🏋🏽	🏋🏾	🏋🏿
+🏋️‍♂️	man lifting weights	ผู้ชายยกน้ำหนัก|กีฬา|คน|ดัมเบล|บาร์เบล|ผู้ชาย|เพาะกาย|ยกน้ำหนัก|เล่นเวท|ออกกำลังกาย	🏋🏻‍♂️	🏋🏼‍♂️	🏋🏽‍♂️	🏋🏾‍♂️	🏋🏿‍♂️
+🏋️‍♀️	woman lifting weights	ผู้หญิงยกน้ำหนัก|กีฬา|คน|ดัมเบล|บาร์เบล|ผู้หญิง|เพาะกาย|ยกน้ำหนัก|เล่นเวท|ออกกำลังกาย	🏋🏻‍♀️	🏋🏼‍♀️	🏋🏽‍♀️	🏋🏾‍♀️	🏋🏿‍♀️
+🚴	person biking	นักปั่นจักรยาน|กีฬา|ขี่|คน|จักรยาน|ปั่น	🚴🏻	🚴🏼	🚴🏽	🚴🏾	🚴🏿
+🚴‍♂️	man biking	ผู้ชายปั่นจักรยาน|กีฬา|ขี่|คน|จักรยาน|ปั่น|ผู้ชาย	🚴🏻‍♂️	🚴🏼‍♂️	🚴🏽‍♂️	🚴🏾‍♂️	🚴🏿‍♂️
+🚴‍♀️	woman biking	ผู้หญิงปั่นจักรยาน|กีฬา|ขี่|คน|จักรยาน|ปั่น|ผู้หญิง	🚴🏻‍♀️	🚴🏼‍♀️	🚴🏽‍♀️	🚴🏾‍♀️	🚴🏿‍♀️
+🚵	person mountain biking	นักปั่นจักรยานเสือภูเขา|กีฬา|ขี่|คน|จักรยาน|ปั่น|เสือภูเขา	🚵🏻	🚵🏼	🚵🏽	🚵🏾	🚵🏿
+🚵‍♂️	man mountain biking	ผู้ชายปั่นจักรยานเสือภูเขา|กีฬา|ขี่|คน|จักรยาน|ปั่น|ผู้ชาย|เสือภูเขา	🚵🏻‍♂️	🚵🏼‍♂️	🚵🏽‍♂️	🚵🏾‍♂️	🚵🏿‍♂️
+🚵‍♀️	woman mountain biking	ผู้หญิงปั่นจักรยานเสือภูเขา|กีฬา|ขี่|คน|จักรยาน|ปั่น|ผู้หญิง|เสือภูเขา	🚵🏻‍♀️	🚵🏼‍♀️	🚵🏽‍♀️	🚵🏾‍♀️	🚵🏿‍♀️
+🤸	person cartwheeling	คนตีลังกา|คน|คล่องแคล่ว|ตีลังกา|ท่า|มีความสุข|ยิมนาสติก|ล้อเกวียน	🤸🏻	🤸🏼	🤸🏽	🤸🏾	🤸🏿
+🤸‍♂️	man cartwheeling	ผู้ชายตีลังกา|คน|คล่องแคล่ว|ตีลังกา|ท่า|ผู้ชาย|มีความสุข|ยิมนาสติก|ล้อเกวียน	🤸🏻‍♂️	🤸🏼‍♂️	🤸🏽‍♂️	🤸🏾‍♂️	🤸🏿‍♂️
+🤸‍♀️	woman cartwheeling	ผู้หญิงตีลังกา|คน|คล่องแคล่ว|ตีลังกา|ท่า|ผู้หญิง|มีความสุข|ยิมนาสติก|ล้อเกวียน	🤸🏻‍♀️	🤸🏼‍♀️	🤸🏽‍♀️	🤸🏾‍♀️	🤸🏿‍♀️
+🤼	people wrestling	นักมวยปล้ำ|กีฬา|แข่งขัน|คน|ดวล|ต่อสู้|มวยปล้ำ|สังเวียน
+🤼‍♂️	men wrestling	ผู้ชายเล่นมวยปล้ำ|กีฬา|แข่งขัน|คน|ดวล|ต่อสู้|ผู้ชาย|มวยปล้ำ|สังเวียน
+🤼‍♀️	women wrestling	ผู้หญิงเล่นมวยปล้ำ|กีฬา|แข่งขัน|คน|ดวล|ต่อสู้|ผู้หญิง|มวยปล้ำ|สังเวียน
+🤽	person playing water polo	นักโปโลน้ำ|กีฬา|คน|น้ำ|โปโล	🤽🏻	🤽🏼	🤽🏽	🤽🏾	🤽🏿
+🤽‍♂️	man playing water polo	ผู้ชายเล่นโปโลน้ำ|กีฬา|คน|น้ำ|โปโล|ผู้ชาย	🤽🏻‍♂️	🤽🏼‍♂️	🤽🏽‍♂️	🤽🏾‍♂️	🤽🏿‍♂️
+🤽‍♀️	woman playing water polo	ผู้หญิงเล่นโปโลน้ำ|กีฬา|คน|น้ำ|โปโล|ผู้หญิง	🤽🏻‍♀️	🤽🏼‍♀️	🤽🏽‍♀️	🤽🏾‍♀️	🤽🏿‍♀️
+🤾	person playing handball	นักแฮนด์บอล|กีฬา|ขว้าง|คน|บอล|โยน|ลูก|แฮนด์บอล	🤾🏻	🤾🏼	🤾🏽	🤾🏾	🤾🏿
+🤾‍♂️	man playing handball	ผู้ชายเล่นแฮนด์บอล|กีฬา|ขว้าง|คน|บอล|ผู้ชาย|โยน|ลูก|แฮนด์บอล	🤾🏻‍♂️	🤾🏼‍♂️	🤾🏽‍♂️	🤾🏾‍♂️	🤾🏿‍♂️
+🤾‍♀️	woman playing handball	ผู้หญิงเล่นแฮนด์บอล|กีฬา|ขว้าง|คน|บอล|ผู้หญิง|โยน|ลูก|แฮนด์บอล	🤾🏻‍♀️	🤾🏼‍♀️	🤾🏽‍♀️	🤾🏾‍♀️	🤾🏿‍♀️
+🤹	person juggling	คนเล่นจั๊กกลิ้ง|คน|จั๊กกลิ้ง|ทรงตัว|ทักษะ|บาลานซ์|มัลติทาสก์|มายากล|โยนบอล|เล่นกล	🤹🏻	🤹🏼	🤹🏽	🤹🏾	🤹🏿
+🤹‍♂️	man juggling	ผู้ชายเล่นจั๊กกลิ้ง|คน|จั๊กกลิ้ง|ทรงตัว|ทักษะ|บาลานซ์|ผู้ชาย|มัลติทาสก์|มายากล|โยนบอล|เล่นกล	🤹🏻‍♂️	🤹🏼‍♂️	🤹🏽‍♂️	🤹🏾‍♂️	🤹🏿‍♂️
+🤹‍♀️	woman juggling	ผู้หญิงเล่นจั๊กกลิ้ง|คน|จั๊กกลิ้ง|ทรงตัว|ทักษะ|บาลานซ์|ผู้หญิง|มัลติทาสก์|มายากล|โยนบอล|เล่นกล	🤹🏻‍♀️	🤹🏼‍♀️	🤹🏽‍♀️	🤹🏾‍♀️	🤹🏿‍♀️
+🧘	person in lotus position	คนนั่งสมาธิ|ขัดสมาธิ|คน|นั่ง|ผ่อนคลาย|โยคะ|สงบ|สติ|สมาธิ	🧘🏻	🧘🏼	🧘🏽	🧘🏾	🧘🏿
+🧘‍♂️	man in lotus position	ผู้ชายนั่งสมาธิ|ขัดสมาธิ|คน|นั่ง|ผ่อนคลาย|ผู้ชาย|โยคะ|สงบ|สติ|สมาธิ	🧘🏻‍♂️	🧘🏼‍♂️	🧘🏽‍♂️	🧘🏾‍♂️	🧘🏿‍♂️
+🧘‍♀️	woman in lotus position	ผู้หญิงนั่งสมาธิ|ขัดสมาธิ|คน|นั่ง|ผ่อนคลาย|ผู้หญิง|โยคะ|สงบ|สติ|สมาธิ	🧘🏻‍♀️	🧘🏼‍♀️	🧘🏽‍♀️	🧘🏾‍♀️	🧘🏿‍♀️
+🛀	person taking bath	คนนอนแช่น้ำในอ่าง|คน|นอนแช่|อ่าง|อาบน้ำ	🛀🏻	🛀🏼	🛀🏽	🛀🏾	🛀🏿
+🛌	person in bed	คนนอนหลับ|กลางคืน|กู๊ดไนท์|คน|ง่วง|งีบ|นอน|โรงแรม|เวลานอน|หลับ|เหนื่อย	🛌🏻	🛌🏼	🛌🏽	🛌🏾	🛌🏿
+🧑‍🤝‍🧑	people holding hands	คนจับมือกัน|คน|คู่|จับมือ|จีบ|จูง|เดท|แฝด|เพื่อน|รัก	🧑🏻‍🤝‍🧑🏻	🧑🏼‍🤝‍🧑🏼	🧑🏽‍🤝‍🧑🏽	🧑🏾‍🤝‍🧑🏾	🧑🏿‍🤝‍🧑🏿
+👭	women holding hands	หญิง-หญิงจับมือ|คู่|จับมือ|จีบ|เดท|ผู้หญิง|แฝด|พี่น้อง|เพื่อน	👭🏻	👭🏼	👭🏽	👭🏾	👭🏿
+👫	woman and man holding hands	ชาย-หญิงจับมือ|คู่รัก|จับมือ|จีบ|เดท|ผู้ชาย|ผู้หญิง|แฝด|เพื่อน	👫🏻	👫🏼	👫🏽	👫🏾	👫🏿
+👬	men holding hands	ชาย-ชายจับมือ|คู่|จับมือ|จีบ|เดท|ผู้ชาย|แฝด|พี่น้อง|เพื่อน	👬🏻	👬🏼	👬🏽	👬🏾	👬🏿
+💏	kiss	จูบ|คน|คู่รัก|เดท|ร่วมกัน|โรแมนติก|วันครบรอบ|หัวใจ	💏🏻	💏🏼	💏🏽	💏🏾	💏🏿
+👩‍❤️‍💋‍👨	kiss: woman, man	จูบ: ผู้หญิง ผู้ชาย|คน|คู่รัก|จูบ|เดท|ผู้ชาย|ผู้หญิง|ร่วมกัน|โรแมนติก|วันครบรอบ|หัวใจ	👩🏻‍❤️‍💋‍👨🏻	👩🏼‍❤️‍💋‍👨🏼	👩🏽‍❤️‍💋‍👨🏽	👩🏾‍❤️‍💋‍👨🏾	👩🏿‍❤️‍💋‍👨🏿
+👨‍❤️‍💋‍👨	kiss: man, man	จูบ: ผู้ชาย ผู้ชาย|คน|คู่รัก|จูบ|เดท|ผู้ชาย|ร่วมกัน|โรแมนติก|วันครบรอบ|หัวใจ	👨🏻‍❤️‍💋‍👨🏻	👨🏼‍❤️‍💋‍👨🏼	👨🏽‍❤️‍💋‍👨🏽	👨🏾‍❤️‍💋‍👨🏾	👨🏿‍❤️‍💋‍👨🏿
+👩‍❤️‍💋‍👩	kiss: woman, woman	จูบ: ผู้หญิง ผู้หญิง|คน|คู่รัก|จูบ|เดท|ผู้หญิง|ร่วมกัน|โรแมนติก|วันครบรอบ|หัวใจ	👩🏻‍❤️‍💋‍👩🏻	👩🏼‍❤️‍💋‍👩🏼	👩🏽‍❤️‍💋‍👩🏽	👩🏾‍❤️‍💋‍👩🏾	👩🏿‍❤️‍💋‍👩🏿
+💑	couple with heart	คู่รัก|รักกัน|โรแมนติก	💑🏻	💑🏼	💑🏽	💑🏾	💑🏿
+👩‍❤️‍👨	couple with heart: woman, man	คู่รัก: ผู้หญิง ผู้ชาย|คู่รัก|ผู้ชาย|ผู้หญิง|รักกัน|โรแมนติก	👩🏻‍❤️‍👨🏻	👩🏼‍❤️‍👨🏼	👩🏽‍❤️‍👨🏽	👩🏾‍❤️‍👨🏾	👩🏿‍❤️‍👨🏿
+👨‍❤️‍👨	couple with heart: man, man	คู่รัก: ผู้ชาย ผู้ชาย|คู่รัก|ผู้ชาย|รักกัน|โรแมนติก	👨🏻‍❤️‍👨🏻	👨🏼‍❤️‍👨🏼	👨🏽‍❤️‍👨🏽	👨🏾‍❤️‍👨🏾	👨🏿‍❤️‍👨🏿
+👩‍❤️‍👩	couple with heart: woman, woman	คู่รัก: ผู้หญิง ผู้หญิง|คู่รัก|ผู้หญิง|รักกัน|โรแมนติก	👩🏻‍❤️‍👩🏻	👩🏼‍❤️‍👩🏼	👩🏽‍❤️‍👩🏽	👩🏾‍❤️‍👩🏾	👩🏿‍❤️‍👩🏿
+👪	family	ครอบครัว|คน|เด็ก|พ่อ|พ่อแม่ลูก|แม่
+👨‍👩‍👦	family: man, woman, boy	ครอบครัว: ผู้ชาย ผู้หญิง และ เด็กชาย|คน|ครอบครัว|เด็ก|เด็กชาย|ผู้ชาย|ผู้หญิง|พ่อ|พ่อแม่ลูก|แม่
+👨‍👩‍👧	family: man, woman, girl	ครอบครัว: ผู้ชาย ผู้หญิง และ เด็กหญิง|คน|ครอบครัว|เด็ก|เด็กหญิง|ผู้ชาย|ผู้หญิง|พ่อ|พ่อแม่ลูก|แม่
+👨‍👩‍👧‍👦	family: man, woman, girl, boy	ครอบครัว: ผู้ชาย ผู้หญิง เด็กหญิง และ เด็กชาย|คน|ครอบครัว|เด็ก|เด็กชาย|เด็กหญิง|ผู้ชาย|ผู้หญิง|พ่อ|พ่อแม่ลูก|แม่
+👨‍👩‍👦‍👦	family: man, woman, boy, boy	ครอบครัว: ผู้ชาย ผู้หญิง เด็กชาย และ เด็กชาย|คน|ครอบครัว|เด็ก|เด็กชาย|ผู้ชาย|ผู้หญิง|พ่อ|พ่อแม่ลูก|แม่
+👨‍👩‍👧‍👧	family: man, woman, girl, girl	ครอบครัว: ผู้ชาย ผู้หญิง เด็กหญิง และ เด็กหญิง|คน|ครอบครัว|เด็ก|เด็กหญิง|ผู้ชาย|ผู้หญิง|พ่อ|พ่อแม่ลูก|แม่
+👨‍👨‍👦	family: man, man, boy	ครอบครัว: ผู้ชาย ผู้ชาย และ เด็กชาย|คน|ครอบครัว|เด็ก|เด็กชาย|ผู้ชาย|พ่อ|พ่อแม่ลูก|แม่
+👨‍👨‍👧	family: man, man, girl	ครอบครัว: ผู้ชาย ผู้ชาย และ เด็กหญิง|คน|ครอบครัว|เด็ก|เด็กหญิง|ผู้ชาย|พ่อ|พ่อแม่ลูก|แม่
+👨‍👨‍👧‍👦	family: man, man, girl, boy	ครอบครัว: ผู้ชาย ผู้ชาย เด็กหญิง และ เด็กชาย|คน|ครอบครัว|เด็ก|เด็กชาย|เด็กหญิง|ผู้ชาย|พ่อ|พ่อแม่ลูก|แม่
+👨‍👨‍👦‍👦	family: man, man, boy, boy	ครอบครัว: ผู้ชาย ผู้ชาย เด็กชาย และ เด็กชาย|คน|ครอบครัว|เด็ก|เด็กชาย|ผู้ชาย|พ่อ|พ่อแม่ลูก|แม่
+👨‍👨‍👧‍👧	family: man, man, girl, girl	ครอบครัว: ผู้ชาย ผู้ชาย เด็กหญิง และ เด็กหญิง|คน|ครอบครัว|เด็ก|เด็กหญิง|ผู้ชาย|พ่อ|พ่อแม่ลูก|แม่
+👩‍👩‍👦	family: woman, woman, boy	ครอบครัว: ผู้หญิง ผู้หญิง และ เด็กชาย|คน|ครอบครัว|เด็ก|เด็กชาย|ผู้หญิง|พ่อ|พ่อแม่ลูก|แม่
+👩‍👩‍👧	family: woman, woman, girl	ครอบครัว: ผู้หญิง ผู้หญิง และ เด็กหญิง|คน|ครอบครัว|เด็ก|เด็กหญิง|ผู้หญิง|พ่อ|พ่อแม่ลูก|แม่
+👩‍👩‍👧‍👦	family: woman, woman, girl, boy	ครอบครัว: ผู้หญิง ผู้หญิง เด็กหญิง และ เด็กชาย|คน|ครอบครัว|เด็ก|เด็กชาย|เด็กหญิง|ผู้หญิง|พ่อ|พ่อแม่ลูก|แม่
+👩‍👩‍👦‍👦	family: woman, woman, boy, boy	ครอบครัว: ผู้หญิง ผู้หญิง เด็กชาย และ เด็กชาย|คน|ครอบครัว|เด็ก|เด็กชาย|ผู้หญิง|พ่อ|พ่อแม่ลูก|แม่
+👩‍👩‍👧‍👧	family: woman, woman, girl, girl	ครอบครัว: ผู้หญิง ผู้หญิง เด็กหญิง และ เด็กหญิง|คน|ครอบครัว|เด็ก|เด็กหญิง|ผู้หญิง|พ่อ|พ่อแม่ลูก|แม่
+👨‍👦	family: man, boy	ครอบครัว: ผู้ชาย เด็กชาย|คน|ครอบครัว|เด็ก|เด็กชาย|ผู้ชาย|พ่อ|พ่อแม่ลูก|แม่
+👨‍👦‍👦	family: man, boy, boy	ครอบครัว: ผู้ชาย เด็กชาย และ เด็กชาย|คน|ครอบครัว|เด็ก|เด็กชาย|ผู้ชาย|พ่อ|พ่อแม่ลูก|แม่
+👨‍👧	family: man, girl	ครอบครัว: ผู้ชาย เด็กหญิง|คน|ครอบครัว|เด็ก|เด็กหญิง|ผู้ชาย|พ่อ|พ่อแม่ลูก|แม่
+👨‍👧‍👦	family: man, girl, boy	ครอบครัว: ผู้ชาย เด็กหญิง และ เด็กชาย|คน|ครอบครัว|เด็ก|เด็กชาย|เด็กหญิง|ผู้ชาย|พ่อ|พ่อแม่ลูก|แม่
+👨‍👧‍👧	family: man, girl, girl	ครอบครัว: ผู้ชาย เด็กหญิง และ เด็กหญิง|คน|ครอบครัว|เด็ก|เด็กหญิง|ผู้ชาย|พ่อ|พ่อแม่ลูก|แม่
+👩‍👦	family: woman, boy	ครอบครัว: ผู้หญิง เด็กชาย|คน|ครอบครัว|เด็ก|เด็กชาย|ผู้หญิง|พ่อ|พ่อแม่ลูก|แม่
+👩‍👦‍👦	family: woman, boy, boy	ครอบครัว: ผู้หญิง เด็กชาย และ เด็กชาย|คน|ครอบครัว|เด็ก|เด็กชาย|ผู้หญิง|พ่อ|พ่อแม่ลูก|แม่
+👩‍👧	family: woman, girl	ครอบครัว: ผู้หญิง เด็กหญิง|คน|ครอบครัว|เด็ก|เด็กหญิง|ผู้หญิง|พ่อ|พ่อแม่ลูก|แม่
+👩‍👧‍👦	family: woman, girl, boy	ครอบครัว: ผู้หญิง เด็กหญิง และ เด็กชาย|คน|ครอบครัว|เด็ก|เด็กชาย|เด็กหญิง|ผู้หญิง|พ่อ|พ่อแม่ลูก|แม่
+👩‍👧‍👧	family: woman, girl, girl	ครอบครัว: ผู้หญิง เด็กหญิง และ เด็กหญิง|คน|ครอบครัว|เด็ก|เด็กหญิง|ผู้หญิง|พ่อ|พ่อแม่ลูก|แม่
+🗣️	speaking head	เงาคนกำลังพูด|คน|เงา|พูด
+👤	bust in silhouette	เงาครึ่งตัวคนเดียว|คน|เงา|รูปปั้นครึ่งตัว|ลึกลับ
+👥	busts in silhouette	เงาครึ่งตัว 2 คน|ผู้คน
+🫂	people hugging	คนกอดกัน|กอด|ขอบคุณ|คน|ปลอบ|เพื่อน|มิตรภาพ|รัก|ลาก่อน|สวัสดี|อุ่นใจ
+👣	footprints	รอยเท้า|เท้า|อวัยวะ
 animals
-🐵	monkey face
-🐒	monkey
-🦍	gorilla
-🦧	orangutan
-🐶	dog face
-🐕	dog
-🦮	guide dog
-🐕‍🦺	service dog
-🐩	poodle
-🐺	wolf
-🦊	fox
-🦝	raccoon
-🐱	cat face
-🐈	cat
-🐈‍⬛	black cat
-🦁	lion
-🐯	tiger face
-🐅	tiger
-🐆	leopard
-🐴	horse face
-🫎	moose
-🫏	donkey
-🐎	horse
-🦄	unicorn
-🦓	zebra
-🦌	deer
-🦬	bison
-🐮	cow face
-🐂	ox
-🐃	water buffalo
-🐄	cow
-🐷	pig face
-🐖	pig
-🐗	boar
-🐽	pig nose
-🐏	ram
-🐑	ewe
-🐐	goat
-🐪	camel
-🐫	two-hump camel
-🦙	llama
-🦒	giraffe
-🐘	elephant
-🦣	mammoth
-🦏	rhinoceros
-🦛	hippopotamus
-🐭	mouse face
-🐁	mouse
-🐀	rat
-🐹	hamster
-🐰	rabbit face
-🐇	rabbit
-🐿️	chipmunk
-🦫	beaver
-🦔	hedgehog
-🦇	bat
-🐻	bear
-🐻‍❄️	polar bear
-🐨	koala
-🐼	panda
-🦥	sloth
-🦦	otter
-🦨	skunk
-🦘	kangaroo
-🦡	badger
-🐾	paw prints
-🦃	turkey
-🐔	chicken
-🐓	rooster
-🐣	hatching chick
-🐤	baby chick
-🐥	front-facing baby chick
-🐦	bird
-🐧	penguin
-🕊️	dove
-🦅	eagle
-🦆	duck
-🦢	swan
-🦉	owl
-🦤	dodo
-🪶	feather
-🦩	flamingo
-🦚	peacock
-🦜	parrot
-🪽	wing
-🐦‍⬛	black bird
-🪿	goose
-🐸	frog
-🐊	crocodile
-🐢	turtle
-🦎	lizard
-🐍	snake
-🐲	dragon face
-🐉	dragon
-🦕	sauropod
-🦖	T-Rex
-🐳	spouting whale
-🐋	whale
-🐬	dolphin
-🦭	seal
-🐟	fish
-🐠	tropical fish
-🐡	blowfish
-🦈	shark
-🐙	octopus
-🐚	spiral shell
-🪸	coral
-🪼	jellyfish
-🐌	snail
-🦋	butterfly
-🐛	bug
-🐜	ant
-🐝	honeybee
-🪲	beetle
-🐞	lady beetle
-🦗	cricket
-🪳	cockroach
-🕷️	spider
-🕸️	spider web
-🦂	scorpion
-🦟	mosquito
-🪰	fly
-🪱	worm
-🦠	microbe
-💐	bouquet
-🌸	cherry blossom
-💮	white flower
-🪷	lotus
-🏵️	rosette
-🌹	rose
-🥀	wilted flower
-🌺	hibiscus
-🌻	sunflower
-🌼	blossom
-🌷	tulip
-🪻	hyacinth
-🌱	seedling
-🪴	potted plant
-🌲	evergreen tree
-🌳	deciduous tree
-🌴	palm tree
-🌵	cactus
-🌾	sheaf of rice
-🌿	herb
-☘️	shamrock
-🍀	four leaf clover
-🍁	maple leaf
-🍂	fallen leaf
-🍃	leaf fluttering in wind
-🪹	empty nest
-🪺	nest with eggs
-🍄	mushroom
+🐵	monkey face	หน้าลิง|กล้วย|ใบหน้า|ยิ้ม|ลิง|สัตว์
+🐒	monkey	ลิง|สัตว์
+🦍	gorilla	กอริลล่า|ลิง|สัตว์|หน้าขน
+🦧	orangutan	อุรังอุตัง|ลิง|สัตว์|เอป
+🐶	dog face	หน้าสุนัข|น่ารัก|ใบหน้า|สัตว์|สุนัข|หมา
+🐕	dog	สุนัข|สัตว์|หมา
+🦮	guide dog	สุนัขนำทาง|การเข้าถึง|การช่วยเหลือพิเศษ|ตาบอด|นำทาง|สัตว์|สุนัข|หมา
+🐕‍🦺	service dog	สุนัขบริการ|การเข้าถึง|การช่วยเหลือพิเศษ|ตาบอด|นำทาง|บริการ|สัตว์|สุนัข|หมา
+🐩	poodle	พุดเดิ้ล|สัตว์|สุนัข
+🐺	wolf	หมาป่า|สัตว์|หน้า|หน้าหมาป่า
+🦊	fox	จิ้งจอก|สัตว์|หน้า
+🦝	raccoon	แรคคูน|ขี้สงสัย|มีเล่ห์เหลี่ยม|แร็คคูน|สัตว์
+🐱	cat face	หน้าแมว|แมว|สัตว์
+🐈	cat	แมว|สัตว์
+🐈‍⬛	black cat	แมวดำ|โชคร้าย|ดำ|แมว|สัตว์|เหมียว|ฮาโลวีน
+🦁	lion	สิงโต|ราศี|ราศีสิงห์|หน้า|หน้าสิงโต
+🐯	tiger face	หน้าเสือ|สัตว์|เสือ
+🐅	tiger	เสือ|สัตว์
+🐆	leopard	เสือดาว|สัตว์|เสือ
+🐴	horse face	หน้าม้า|ม้า|สัตว์
+🫎	moose	มูส|เขา|สัตว์|สัตว์เลี้ยงลูกด้วยนม|เอลก์
+🫏	donkey	ลา|ดื้อ|ล่อ|ลาตัวเล็ก|สัตว์|สัตว์เลี้ยงลูกด้วยนม
+🐎	horse	ม้า|สัตว์
+🦄	unicorn	ยูนิคอร์น|ม้า|หน้า
+🦓	zebra	ม้าลาย|ลายทาง
+🦌	deer	กวาง|เขา|สัตว์|หัว
+🦬	bison	ควายไบซัน|กระทิง|ควาย|ไบซัน|ฝูง|วัวป่า|ไวเซนต์|สัตว์
+🐮	cow face	หน้าวัว|วัว|สัตว์
+🐂	ox	วัวตัวผู้|วัว|สัตว์
+🐃	water buffalo	ควาย|สัตว์
+🐄	cow	วัว|สัตว์
+🐷	pig face	หน้าหมู|สัตว์|หมู
+🐖	pig	หมู|สัตว์
+🐗	boar	หมูป่าตัวผู้|สัตว์|หมูป่า
+🐽	pig nose	จมูกหมู|หมู
+🐏	ram	แกะตัวผู้|แกะ|สัตว์
+🐑	ewe	แกะ|สัตว์
+🐐	goat	แพะ|สัตว์
+🐪	camel	อูฐโหนกเดียว|สัตว์|อูฐ
+🐫	two-hump camel	อูฐสองโหนก|สัตว์|อูฐ
+🦙	llama	ลามะ|กัวนาโค|ขน|บีกูญ่า|วิคุนย่า|สัตว์|อัลปากา
+🦒	giraffe	ยีราฟ|กีฬา
+🐘	elephant	ช้าง|สัตว์
+🦣	mammoth	ช้างแมมมอธ|ขนสัตว์|งา|ช้าง|แมมมอธ|ยุคน้ำแข็ง|สูญพันธุ์|ใหญ่
+🦏	rhinoceros	แรด|นอ|สัตว์
+🦛	hippopotamus	ฮิปโปโปเตมัส|สัตว์|ฮิปโป
+🐭	mouse face	หน้าหนู|สัตว์|หนู
+🐁	mouse	หนูตัวเล็ก|สัตว์|หนู
+🐀	rat	หนูตัวใหญ่|สัตว์|หนู
+🐹	hamster	หนูแฮมสเตอร์|ใบหน้า|สัตว์
+🐰	rabbit face	หน้ากระต่าย|กระต่าย|สัตว์|หน้า
+🐇	rabbit	กระต่าย|สัตว์
+🐿️	chipmunk	ชิปมังก์|กระรอก|สัตว์
+🦫	beaver	บีเวอร์|เขื่อน|ฟัน|สัตว์
+🦔	hedgehog	เฮดจ์ฮ็อก|เม่น|สัตว์|หนาม
+🦇	bat	ค้างคาว|ดูดเลือด|แวมไพร์|สัตว์
+🐻	bear	หมี|สัตว์|หน้า|หน้าหมี
+🐻‍❄️	polar bear	หมีขั้วโลก|ขั้วโลกเหนือ|ขาว|หมี
+🐨	koala	โคอาล่า|สัตว์|หน้า|หมี|ออสเตรเลีย
+🐼	panda	แพนด้า|สัตว์|หน้า|หน้าแพนด้า|หมี
+🦥	sloth	สลอธ|ขี้เกียจ|เชื่องช้า|สโลว์ไลฟ์|อืดอาด
+🦦	otter	ตัวนาก|ขี้เล่น|ตกปลา|นาก|สัตว์
+🦨	skunk	สกังก์|ส่งกลิ่น|สัตว์|เหม็น
+🦘	kangaroo	จิงโจ้|กระโดด|โจอี้|สัตว์|สัตว์ที่มีกระเป๋าหน้าท้อง|ออสเตรเลีย
+🦡	badger	แบดเจอร์|ก่อกวน|สัตว์|ฮันนี่แบดเจอร์
+🐾	paw prints	รอยเท้าสัตว์|รอยเท้า
+🦃	turkey	ไก่งวง|สัตว์|สัตว์ปีก
+🐔	chicken	ไก่|นก|ปักษี|สัตว์
+🐓	rooster	ไก่ตัวผู้|นก|ปักษี|สัตว์
+🐣	hatching chick	ลูกเจี๊ยบออกจากไข่|ลูกเจี๊ยบ|สัตว์
+🐤	baby chick	ลูกเจี๊ยบ|ไก่|นก|ปักษี|สัตว์
+🐥	front-facing baby chick	ลูกเจี๊ยบยืนหันหน้า|เกิดใหม่|ไก่|นก|ปักษี|เผชิญหน้า|ลูกเจี๊ยบ|สัตว์
+🐦	bird	นก|สัตว์
+🐧	penguin	เพนกวิน|สัตว์
+🕊️	dove	นกพิราบขาว|นก|นางนวล|บิน|ปักษี|พิราบขาว|สันติภาพ
+🦅	eagle	อินทรี|นก|ปักษี|สัตว์
+🦆	duck	เป็ด|นก|ปักษี|สัตว์
+🦢	swan	หงส์|นก|ปักษี|ลูกเป็ดขี้เหร่|สัตว์
+🦉	owl	นกฮูก|เค้าแมว|ฉลาด|ตาโต|ปักษี|สัตว์
+🦤	dodo	นกโดโด|ปักษี|มอริเชียส|สัตว์|สูญพันธุ์|ใหญ่
+🪶	feather	ขนนก|การบิน|ขนสัตว์|นก|เบา|ปีก
+🦩	flamingo	นกฟลามิงโก|ทรอปิคอล|ปักษี|สัตว์|สีชมพู|หรูหรา
+🦚	peacock	นกยูง|ทะนงตัว|ปักษี|ภูมิใจ|รำแพน|สัตว์|สีสัน|โอ้อวด
+🦜	parrot	นกแก้ว|โจรสลัด|ปักษี|พูดคุย|สัตว์|สีสัน
+🪽	wing	ปีก|ตำนาน|นก|นางฟ้า|บิน|พุ่งขึ้น|สวรรค์
+🐦‍⬛	black bird	นกสีดำ|กา|ดำ|นก|เบิร์ด|แบล็ก|เรเวน|สัตว์|อีกา
+🪿	goose	ห่าน|ก้าบ|เด๋อ|ทึ่ม|นก|เป็ด|สัตว์ปีก
+🐸	frog	กบ|ใบหน้า|ยิ้ม|สัตว์
+🐊	crocodile	จระเข้|สัตว์
+🐢	turtle	เต่า|สัตว์
+🦎	lizard	จิ้งจก|ตุ๊กแก|เลื้อยคลาน
+🐍	snake	งู|สัตว์|อสรพิษ
+🐲	dragon face	หน้ามังกร|นิยาย|มังกร|สัตว์|หน้า
+🐉	dragon	มังกร|สัตว์
+🦕	sauropod	ไดโนเสาร์|ซอโรพอด|ไดพลอโดคัส|บรอนโตซอรัส
+🦖	T-Rex	ทีเร็กซ์|ไดโนเสาร์|ไทแรนโนซอรัส เร็กซ์
+🐳	spouting whale	ปลาวาฬพ่นน้ำ|ปลาวาฬ|สัตว์
+🐋	whale	ปลาวาฬ|สัตว์
+🐬	dolphin	ปลาโลมา|ครีบ|มหาสมุทร|สัตว์|หาด
+🦭	seal	แมวน้ำ|มหาสมุทร|สัตว์|สิงโตทะเล
+🐟	fish	ปลา|มื้อเย็น|ราศี|สัตว์
+🐠	tropical fish	ปลาเขตร้อน|ปลา|สัตว์
+🐡	blowfish	ปลาปักเป้า|ปลา|สัตว์
+🦈	shark	ฉลาม|ปลา
+🐙	octopus	ปลาหมึกยักษ์|ปลาหมึก|สัตว์
+🐚	spiral shell	หอย|ทะเล|เปลือกหอย|สังข์|สัตว์|หาด
+🪸	coral	ปะการัง|ทะเล|เปลี่ยนแปลง|ภูมิอากาศ|มหาสมุทร
+🪼	jellyfish	แมงกะพรุน|ต่อย|เยลลี่|สัตว์ทะเล|สัตว์ไม่มีกระดูกสันหลัง|แสบร้อน|โอ๊ย
+🐌	snail	หอยทาก|สัตว์
+🦋	butterfly	ผีเสื้อ|แมลง|สวย
+🐛	bug	แมลง|สัตว์|หนอน
+🐜	ant	มด|แมลง
+🐝	honeybee	ผึ้ง|แมลง|สัตว์
+🪲	beetle	ด้วง|แมลง|สัตว์
+🐞	lady beetle	เต่าทอง|แมลง|แมลงเต่าทอง|สัตว์
+🦗	cricket	จิ้งหรีด|ตั๊กแตน|แมลง
+🪳	cockroach	แมลงสาบ|กะจั๊ว|น่าขยะแขยง|น่ารังเกียจ|แมลง|ศัตรูพืช|สัตว์
+🕷️	spider	แมงมุม|แมลง
+🕸️	spider web	ใยแมงมุม|แมงมุม|ใย
+🦂	scorpion	แมงป่อง|พิจิก|ราศี
+🦟	mosquito	ยุง|ไข้|มาลาเรีย|แมลง|ยุงกัด|โรค|ไวรัส
+🪰	fly	แมลงวัน|เน่า|เน่าเสีย|แมลง|โรค|ศัตรูพืช|สัตว์|หนอนแมลงวัน|หัวเขียว|เหม็น
+🪱	worm	หนอน|กระดึบ|กระดึ๊บ|ปรสิต|สัตว์|ไส้เดือน|หนอนปล้อง
+🦠	microbe	จุลินทรีย์|แบคทีเรีย|วิทยาศาสตร์|ไวรัส|อะมีบา
+💐	bouquet	ช่อดอกไม้|ดอกไม้
+🌸	cherry blossom	ดอกซากุระ|ดอกไม้
+💮	white flower	ตราดอกไม้|ดอกไม้
+🪷	lotus	ดอกบัว|ความงาม|ความบริสุทธิ์|ความสงบ|ดอกไม้|วันพระ|ศาสนาพุทธ|ศาสนาฮินดู|ไหว้พระ|อินเดีย
+🏵️	rosette	ลายดอกกุหลาบ|ดอกไม้
+🌹	rose	ดอกกุหลาบ|กุหลาบแดง|ดอกไม้
+🥀	wilted flower	ดอกไม้เหี่ยว|กุหลาบ|เฉา|ดอกไม้|เหี่ยว
+🌺	hibiscus	ดอกชบา|ชบา|ดอกไม้
+🌻	sunflower	ดอกทานตะวัน|ดอกไม้|ทานตะวัน
+🌼	blossom	ดอกไม้บาน|ดอกไม้
+🌷	tulip	ทิวลิป|ดอกไม้
+🪻	hyacinth	ไฮยาซินธ์|ดอกไม้|ดอกไม้บาน|บลูบอนเนต|ลาเวนเดอร์|ลิ้นมังกร|ลูพิน|สีม่วง
+🌱	seedling	ต้นอ่อน|พืช
+🪴	potted plant	ไม้กระถาง|กระถาง|ของตกแต่ง|ต้นไม้|บ้าน|ปลูก|พืช|เพาะปลูก|ไม้ประดับ|เลี้ยงต้นไม้
+🌲	evergreen tree	ต้นสน|ต้นไม้
+🌳	deciduous tree	ต้นไม้ร่มรื่น|ต้นไม้|ร่มเงา
+🌴	palm tree	ต้นมะพร้าว|ต้นปาล์ม
+🌵	cactus	ตะบองเพชร|พืช
+🌾	sheaf of rice	รวงข้าว|ต้นข้าว
+🌿	herb	สมุนไพร|ใบไม้
+☘️	shamrock	ใบโคลเวอร์|พืช
+🍀	four leaf clover	ใบโคลเวอร์ 4 แฉก|โคลเวอร์|โชคดี|ใบไม้|สี่แฉก|ไอริช
+🍁	maple leaf	ใบเมเปิ้ล|ใบไม้ร่วง
+🍂	fallen leaf	ใบไม้ร่วง|ใบไม้|พืช|ร่วง
+🍃	leaf fluttering in wind	ใบไม้ปลิว|ใบไม้|ปลิว|พืช|ลมพัด
+🪹	empty nest	รังนกเปล่า|ทำรัง|รังนก|รังเปล่า
+🪺	nest with eggs	รังนกที่มีไข่|ไข่|ไข่นก|ทำรังวางไข่|นก|รังนก
+🍄	mushroom	เห็ด|พืช
 food
-🍇	grapes
-🍈	melon
-🍉	watermelon
-🍊	tangerine
-🍋	lemon
-🍌	banana
-🍍	pineapple
-🥭	mango
-🍎	red apple
-🍏	green apple
-🍐	pear
-🍑	peach
-🍒	cherries
-🍓	strawberry
-🫐	blueberries
-🥝	kiwi fruit
-🍅	tomato
-🫒	olive
-🥥	coconut
-🥑	avocado
-🍆	eggplant
-🥔	potato
-🥕	carrot
-🌽	ear of corn
-🌶️	hot pepper
-🫑	bell pepper
-🥒	cucumber
-🥬	leafy green
-🥦	broccoli
-🧄	garlic
-🧅	onion
-🥜	peanuts
-🫘	beans
-🌰	chestnut
-🫚	ginger root
-🫛	pea pod
-🍞	bread
-🥐	croissant
-🥖	baguette bread
-🫓	flatbread
-🥨	pretzel
-🥯	bagel
-🥞	pancakes
-🧇	waffle
-🧀	cheese wedge
-🍖	meat on bone
-🍗	poultry leg
-🥩	cut of meat
-🥓	bacon
-🍔	hamburger
-🍟	french fries
-🍕	pizza
-🌭	hot dog
-🥪	sandwich
-🌮	taco
-🌯	burrito
-🫔	tamale
-🥙	stuffed flatbread
-🧆	falafel
-🥚	egg
-🍳	cooking
-🥘	shallow pan of food
-🍲	pot of food
-🫕	fondue
-🥣	bowl with spoon
-🥗	green salad
-🍿	popcorn
-🧈	butter
-🧂	salt
-🥫	canned food
-🍱	bento box
-🍘	rice cracker
-🍙	rice ball
-🍚	cooked rice
-🍛	curry rice
-🍜	steaming bowl
-🍝	spaghetti
-🍠	roasted sweet potato
-🍢	oden
-🍣	sushi
-🍤	fried shrimp
-🍥	fish cake with swirl
-🥮	moon cake
-🍡	dango
-🥟	dumpling
-🥠	fortune cookie
-🥡	takeout box
-🦀	crab
-🦞	lobster
-🦐	shrimp
-🦑	squid
-🦪	oyster
-🍦	soft ice cream
-🍧	shaved ice
-🍨	ice cream
-🍩	doughnut
-🍪	cookie
-🎂	birthday cake
-🍰	shortcake
-🧁	cupcake
-🥧	pie
-🍫	chocolate bar
-🍬	candy
-🍭	lollipop
-🍮	custard
-🍯	honey pot
-🍼	baby bottle
-🥛	glass of milk
-☕	hot beverage
-🫖	teapot
-🍵	teacup without handle
-🍶	sake
-🍾	bottle with popping cork
-🍷	wine glass
-🍸	cocktail glass
-🍹	tropical drink
-🍺	beer mug
-🍻	clinking beer mugs
-🥂	clinking glasses
-🥃	tumbler glass
-🫗	pouring liquid
-🥤	cup with straw
-🧋	bubble tea
-🧃	beverage box
-🧉	mate
-🧊	ice
-🥢	chopsticks
-🍽️	fork and knife with plate
-🍴	fork and knife
-🥄	spoon
-🔪	kitchen knife
-🫙	jar
-🏺	amphora
+🍇	grapes	องุ่น|ผลไม้
+🍈	melon	เมลอน|ผลไม้
+🍉	watermelon	แตงโม|ผลไม้
+🍊	tangerine	ส้ม|ผลไม้
+🍋	lemon	เลมอน|ผลไม้
+🍌	banana	กล้วย|ผลไม้
+🍍	pineapple	สับปะรด|ผลไม้
+🥭	mango	มะม่วง|เขตร้อน|ผลไม้|อาหาร
+🍎	red apple	แอปเปิ้ลแดง|ผลไม้|แอปเปิ้ล
+🍏	green apple	แอปเปิ้ลเขียว|ผลไม้|แอปเปิ้ล
+🍐	pear	ลูกแพร์|ผลไม้
+🍑	peach	ลูกพีช|ผลไม้
+🍒	cherries	เชอร์รี่|ผลไม้
+🍓	strawberry	สตรอว์เบอร์รี่|ผลไม้
+🫐	blueberries	บลูเบอร์รี่|บิลเบอร์รี่|ผลไม้|สีน้ำเงิน|อาหาร
+🥝	kiwi fruit	กีวี|ผลไม้|อาหาร
+🍅	tomato	มะเขือเทศ|ผัก
+🫒	olive	มะกอก|อาหาร
+🥥	coconut	มะพร้าว|ปาล์ม|พีน่า โคลาด้า
+🥑	avocado	อาโวคาโด|ผลไม้|อาหาร
+🍆	eggplant	มะเขือยาว|ผัก
+🥔	potato	มันฝรั่ง|โปเตโต้|ผัก|มัน|อาหาร
+🥕	carrot	แครอท|ผัก|อาหาร
+🌽	ear of corn	ข้าวโพด|ธัญพืช|พืช
+🌶️	hot pepper	พริก|เผ็ด|พืช
+🫑	bell pepper	พริกหยวก|ผัก|เผ็ด|พริก|ระฆัง|สีเขียว|อาหาร
+🥒	cucumber	แตงกวา|แตง|ผัก|อาหาร
+🥬	leafy green	ผักใบเขียว|กวางตุ้ง|กะหล่ำปลี|คะน้า|บ๊อกฉ่อย|เบอร์เกอร์|ใบเขียว|ผักกาด|สลัด
+🥦	broccoli	บรอกโคลี|กะหล่ำปลี|บร็อกโคลี่|ป่า|ผัก
+🧄	garlic	กระเทียม|กลิ่น|ปรุงรส|ผัก|อาหาร
+🧅	onion	หอมหัวใหญ่|ปรุงรส|ผัก|หัวหอม|อาหาร
+🥜	peanuts	ถั่ว|ธัญพืช|ผัก|อาหาร
+🫘	beans	เมล็ดถั่ว|ถั่ว|ถั่วแดง|อาหาร
+🌰	chestnut	เกาลัด|พืช
+🫚	ginger root	ขิง|ข่า|เครื่องเทศ|แง่ง|ธรรมชาติ|เบียร์|ราก|สมุนไพร|สุขภาพ|อาหาร
+🫛	pea pod	ฝักถั่ว|เขียว|ถั่วแระ|ผัก|ฝัก|พืช|เมล็ด|อาหาร
+🍞	bread	ขนมปัง|ก้อน|ข้าวสาลี|คาร์โบไฮเดรต|ธัญพืช|อาหาร
+🥐	croissant	ครัวซอง|ขนม|ขนมปัง|อาหาร
+🥖	baguette bread	ขนมปังฝรั่งเศส|ขนมปัง|อาหาร
+🫓	flatbread	แฟลตเบรด|กรอบ|กอร์ดิต้า|ขนมปัง|นาน|พิต้า|ลาวาช|อาเรปา|อาหาร
+🥨	pretzel	เพรตเซล|ขนมปัง|เงื่อน|เพรทเซล|อาหาร
+🥯	bagel	เบเกิล|ขนมปัง|ทาแยม|เบเกอรี่|อาหารเช้า
+🥞	pancakes	แพนเค้ก|ขนมปัง|อาหาร
+🧇	waffle	วาฟเฟิล|ขนมรังผึ้ง|ไม่แน่ใจ|อาหารเช้า
+🧀	cheese wedge	เนยแข็ง|ชีส
+🍖	meat on bone	เนื้อ|เนื้อติดกระดูก
+🍗	poultry leg	น่องไก่|ไก่
+🥩	cut of meat	เนื้อหั่นชิ้น|แดง|เนื้อ|เลือด|สด|สเต็ก|สัตว์|สับ|หมู|หั่นชิ้น
+🥓	bacon	เบคอน|เนื้อ|อาหาร
+🍔	hamburger	แฮมเบอร์เกอร์|กิน|ด่วน|ฟาสต์ฟู้ด|หิว|อาหาร
+🍟	french fries	เฟรนช์ฟราย|มันฝรั่งทอด
+🍕	pizza	พิซซ่า 1 ชิ้น|ชิ้น|ชีส|เปปเปอโรนี|พิซซ่า|หิว|อาหาร
+🌭	hot dog	ฮอทด็อก|ไส้กรอก
+🥪	sandwich	แซนด์วิช|ขนมปัง|อาหาร
+🌮	taco	ทาโก้|เม็กซิกัน|เม็กซิโก
+🌯	burrito	เบอร์ริโต|เม็กซิกัน|เม็กซิโก
+🫔	tamale	ทามาเล่|ปาโมญา|เม็กซิโก|ห่อหุ้ม|อาหาร
+🥙	stuffed flatbread	เคบับ|อาหาร
+🧆	falafel	ฟาลาเฟล|ตะวันออกกลาง|ถั่วชิกพี|ปั้น|ลูกไก่|ลูกชิ้น|อาหาร
+🥚	egg	ไข่|ศูนย์|อาหาร
+🍳	cooking	ทำอาหาร|กระทะ|ไข่ดาว
+🥘	shallow pan of food	กระทะ|กะทะ|ทำอาหาร|อาหาร
+🍲	pot of food	สตูว์|หม้ออาหาร
+🫕	fondue	ฟองดูว์|ช็อกโกแลต|ชีส|ละลาย|สวิส|หม้อ|อาหาร
+🥣	bowl with spoon	ชามพร้อมช้อน|ข้าวต้ม|โจ๊ก|ซีเรียล|ซุป|อาหารเช้า
+🥗	green salad	สลัด|คลีน|ไดเอ็ท|ผัก|อาหาร
+🍿	popcorn	ป๊อปคอร์น|ข้าวโพดคั่ว
+🧈	butter	เนย|นม|วัว|อาหาร
+🧂	salt	เกลือ|กระปุก|ขวด|เค็ม|เครื่องปรุง|พริกไทย|รสชาติ
+🥫	canned food	อาหารกระป๋อง|กระป๋อง
+🍱	bento box	กล่องเบนโตะ|กล่องข้าว|เบนโตะ|สำรับ|อาหาร
+🍘	rice cracker	ข้าวอบกรอบ|แครกเกอร์
+🍙	rice ball	ข้าวปั้น|ก้อนข้าวปั้น
+🍚	cooked rice	ข้าวสวย|ข้าว|ชามข้าว
+🍛	curry rice	ข้าวแกงกะหรี่|แกงกะหรี่|ข้าวราดแกง
+🍜	steaming bowl	ราเมน|ก๋วยเตี๋ยว|ชามก๋วยเตี๋ยว|บะหมี่
+🍝	spaghetti	สปาเก็ตตี้|พาสต้า
+🍠	roasted sweet potato	มันเผา|มันเทศเผา
+🍢	oden	โอเด้ง|โอเด้งเสียบไม้
+🍣	sushi	ซูชิ
+🍤	fried shrimp	กุ้งทอด|กุ้ง|อาหาร
+🍥	fish cake with swirl	ลูกชิ้นปลา|ปลา|ลูกชิ้น
+🥮	moon cake	ขนมไหว้พระจันทร์|ขนม|เทศกาล|ฤดูใบไม้ร่วง|ไหว้พระจันทร์
+🍡	dango	ดังโงะ|ดังโงะเสียบไม้|โมจิ
+🥟	dumpling	เกี๊ยว|เกี๊ยวซ่า|ขนมจีบ
+🥠	fortune cookie	คุกกี้เสี่ยงทาย|ขนม|คำพยากรณ์|คุกกี้|ดวง เสี่ยงทาย
+🥡	takeout box	อาหารกล่องซื้อกลับบ้าน|กล่อง|เดลิเวอรี่|ตะเกียบ|สั่งกลับบ้าน|อาหาร
+🦀	crab	ปู|กรกฎ|ราศี|สัตว์
+🦞	lobster	กุ้งมังกร|ก้าม|ซีฟู๊ด|ล็อปสเตอร์|สัตว์|อาหารทะเล
+🦐	shrimp	กุ้ง|อาหาร
+🦑	squid	หมึก|ปลา|อาหาร
+🦪	oyster	หอยนางรม|ไข่มุก|ดำน้ำ|มุก|หอยมุก
+🍦	soft ice cream	ซอฟต์ครีม|ไอศกรีม
+🍧	shaved ice	น้ำแข็งไส|ของหวาน|น้ำแข็ง|น้ำหวาน
+🍨	ice cream	ไอศกรีม|ของหวาน|ครีม|น้ำแข็ง
+🍩	doughnut	โดนัท|ขนม|ของหวาน
+🍪	cookie	คุกกี้|ขนม|ของหวาน
+🎂	birthday cake	เค้กวันเกิด|ขนม|ของหวาน|เค้ก|ฉลอง|เบิร์ดเดย์|วันเกิด|สุขสันต์วันเกิด|แฮปปี้เบิร์ดเดย์
+🍰	shortcake	เค้ก|ชิ้นเค้ก
+🧁	cupcake	คัพเค้ก|ขนมหวาน|ของหวาน|น้ำตาล|เบเกอรี่|รสหวาน
+🥧	pie	พาย|ขนมอบ|พายฟักทอง|พายแอปเปิ้ล
+🍫	chocolate bar	ช็อกโกแลต|ช็อกโกแลตแท่ง
+🍬	candy	ลูกอม|ขนม|ของหวาน
+🍭	lollipop	อมยิ้ม|ขนม|ของหวาน|ลูกอม
+🍮	custard	คัสตาร์ด|พุดดิ้ง
+🍯	honey pot	โถน้ำผึ้ง|น้ำผึ้ง|หวาน
+🍼	baby bottle	ขวดนม|นม
+🥛	glass of milk	แก้วนม|แก้ว|เครื่องดื่ม|นม
+☕	hot beverage	เครื่องดื่มร้อน|กาแฟ|เครื่องดื่ม|ชา|ร้อน
+🫖	teapot	กาน้ำชา|กา|เครื่องดื่ม|ชง|ชา|ดื่ม|น้ำชา
+🍵	teacup without handle	ถ้วยชา|ชา|ชาเขียว
+🍶	sake	สาเก|ขวดสาเก|เหล้าสาเก
+🍾	bottle with popping cork	แชมเปญ|ขวด|เครื่องดื่ม|จุกไม้ก๊อก|บาร์
+🍷	wine glass	ไวน์|แก้วไวน์|ไวน์แดง
+🍸	cocktail glass	ค็อกเทล|แก้วค็อกเทล
+🍹	tropical drink	เครื่องดื่มผสมน้ำผลไม้|เครื่องดื่ม|บาร์|ผลไม้
+🍺	beer mug	เบียร์|ฉลอง|ดื่ม|เหยือกเบียร์
+🍻	clinking beer mugs	เหยือกเบียร์ชนกัน|แก้ว|เครื่องดื่ม|ฉลอง|ชน|ดื่ม|เบียร์|เหยือก
+🥂	clinking glasses	ชนแก้ว|แก้ว|ฉลอง|ชน|เย้
+🥃	tumbler glass	แก้วเหล้า|แก้ว|ดื่ม|เพียว|เหล้า
+🫗	pouring liquid	เทน้ำ|แก้วน้ำ|ดื่ม|น้ำหก|ว่างเปล่า
+🥤	cup with straw	แก้วพร้อมหลอด|แก้ว|ดื่ม|น้ำ|น้ำผลไม้|น้ำอัดลม|หลอด
+🧋	bubble tea	ชาไข่มุก|ไข่มุก|เครื่องดื่ม|ชา|ชานม|ไต้หวัน|นม
+🧃	beverage box	เครื่องดื่มแบบกล่อง|กล่อง|เครื่องดื่ม|น้ำผลไม้|น้ำหวาน|หลอดดูด
+🧉	mate	ชามาเต|แก้ว|เครื่องดื่ม|สมุนไพร
+🧊	ice	ก้อนน้ำแข็ง|ก้อน|น้ำแข็ง|ภูเขาน้ำแข็ง|เย็น|หนาว
+🥢	chopsticks	ตะเกียบ
+🍽️	fork and knife with plate	จานพร้อมส้อมและมีด|จาน|ทำอาหาร|มีด|ส้อม
+🍴	fork and knife	ส้อมและมีด|กินข้าว|ข้าวเช้า|ข้าวเที่ยง|ข้าวเย็น|ช้อนส้อม|มีด|มื้ออาหาร|ร้านอาหาร|ส้อม|อาหาร
+🥄	spoon	ช้อน|ภาชนะ
+🔪	kitchen knife	มีดทำครัว|มีด|มืดทำครัว
+🫙	jar	ขวดโหล|เก็บ|ขวดเปล่า|เครื่องปรุงรส|ซอส|ภาชนะ|ว่างเปล่า
+🏺	amphora	โถโบราณ|จักรราศี|โถ|ราศีกุมภ์
 activity
-🎃	jack-o-lantern
-🎄	Christmas tree
-🎆	fireworks
-🎇	sparkler
-🧨	firecracker
-✨	sparkles
-🎈	balloon
-🎉	party popper
-🎊	confetti ball
-🎋	tanabata tree
-🎍	pine decoration
-🎎	Japanese dolls
-🎏	carp streamer
-🎐	wind chime
-🎑	moon viewing ceremony
-🧧	red envelope
-🎀	ribbon
-🎁	wrapped gift
-🎗️	reminder ribbon
-🎟️	admission tickets
-🎫	ticket
-🎖️	military medal
-🏆	trophy
-🏅	sports medal
-🥇	1st place medal
-🥈	2nd place medal
-🥉	3rd place medal
-⚽	soccer ball
-⚾	baseball
-🥎	softball
-🏀	basketball
-🏐	volleyball
-🏈	american football
-🏉	rugby football
-🎾	tennis
-🥏	flying disc
-🎳	bowling
-🏏	cricket game
-🏑	field hockey
-🏒	ice hockey
-🥍	lacrosse
-🏓	ping pong
-🏸	badminton
-🥊	boxing glove
-🥋	martial arts uniform
-🥅	goal net
-⛳	flag in hole
-⛸️	ice skate
-🎣	fishing pole
-🤿	diving mask
-🎽	running shirt
-🎿	skis
-🛷	sled
-🥌	curling stone
-🎯	bullseye
-🪀	yo-yo
-🪁	kite
-🔫	water pistol
-🎱	pool 8 ball
-🔮	crystal ball
-🪄	magic wand
-🎮	video game
-🕹️	joystick
-🎰	slot machine
-🎲	game die
-🧩	puzzle piece
-🧸	teddy bear
-🪅	piñata
-🪩	mirror ball
-🪆	nesting dolls
-♠️	spade suit
-♥️	heart suit
-♦️	diamond suit
-♣️	club suit
-♟️	chess pawn
-🃏	joker
-🀄	mahjong red dragon
-🎴	flower playing cards
-🎭	performing arts
-🖼️	framed picture
-🎨	artist palette
-🧵	thread
-🪡	sewing needle
-🧶	yarn
-🪢	knot
+🎃	jack-o-lantern	ฟักทองฮาโลวีน|ฟักทอง|ฮาโลวีน
+🎄	Christmas tree	ต้นคริสต์มาส|คริสต์มาส
+🎆	fireworks	พลุ|เฉลิมฉลอง
+🎇	sparkler	ดอกไม้ไฟ|พลุ
+🧨	firecracker	ประทัด|ดอกไม้ไฟ|ไดนาไมต์|ประกาย|ไฟ|ระเบิด
+✨	sparkles	ประกายวิบวับ|*|ดาว|ดาววิบวับ
+🎈	balloon	ลูกโป่ง|เฉลิมฉลอง
+🎉	party popper	ปาร์ตี้|เฉลิมฉลอง
+🎊	confetti ball	ลูกบอลใส่เศษกระดาษงานปาร์ตี้|เฉลิมฉลอง|บอล|ปาร์ตี้|พุ|ลูกปา
+🎋	tanabata tree	ต้นไม้ประดับคำอวยพร|คำอวยพร|เฉลิมฉลอง|ญี่ปุ่น|ต้นไม้
+🎍	pine decoration	ต้นสนประดับ|ญี่ปุ่น|ต้นไผ่|ปีใหม่
+🎎	Japanese dolls	ตุ๊กตาญี่ปุ่น|เฉลิมฉลอง|ญี่ปุ่น|ตุ๊กตา|เทศกาล
+🎏	carp streamer	ธงปลาคาร์พ|เฉลิมฉลอง|ธง|ปลาคาร์พ
+🎐	wind chime	โมบายล์กระดิ่ง|โมบายล์
+🎑	moon viewing ceremony	ไหว้พระจันทร์|เฉลิมฉลอง|พระจันทร์
+🧧	red envelope	อั่งเปา|ของขวัญ|เงิน|โชคลาภ|ซองแดง|ตรุษจีน|แต๊ะเอีย
+🎀	ribbon	ริบบิ้น|การเฉลิมฉลอง|โบ|โบว์
+🎁	wrapped gift	ของขวัญ|กล่อง|คริสต์มาส|ฉลอง|เซอร์ไพรส์|วันเกิด
+🎗️	reminder ribbon	ริบบิ้นรำลึก|รณรงค์|รำลึก|ริบบิ้น
+🎟️	admission tickets	ตั๋วเข้าชม|เข้าชม|ตั๋ว|บัตร
+🎫	ticket	ตั๋ว|เข้าชม|บัตร
+🎖️	military medal	เหรียญกล้าหาญ|กองทัพ|ยกย่อง|เหรียญ
+🏆	trophy	ถ้วยรางวัล|รางวัล
+🏅	sports medal	เหรียญรางวัล|กีฬา|ทอง|ผู้ชนะ|รางวัล|เหรียญ
+🥇	1st place medal	เหรียญทอง|กีฬา|ชนะ|ทอง|ที่ 1|เหรียญรางวัล
+🥈	2nd place medal	เหรียญเงิน|กีฬา|เงิน|ชนะ|ที่ 2|เหรียญรางวัล
+🥉	3rd place medal	เหรียญทองแดง|กีฬา|ชนะ|ทองแดง|ที่ 3|เหรียญรางวัล
+⚽	soccer ball	ลูกฟุตบอล|ฟุตบอล
+⚾	baseball	เบสบอล|บอล
+🥎	softball	ซอฟต์บอล|กีฬา|ถุงมือ|เบสบอล|ลูกบอล|อันเดอร์อาร์ม
+🏀	basketball	บาสเกตบอล|กีฬา|บอล|ยัดห่วง
+🏐	volleyball	วอลเลย์บอล|เกม|บอล
+🏈	american football	อเมริกันฟุตบอล|กีฬา|ลูกบอล
+🏉	rugby football	รักบี้|กีฬา|ลูกรักบี้
+🎾	tennis	เทนนิส|กีฬา|ลูกเทนนิส
+🥏	flying disc	จานร่อน|ไกลสุด|จานบิน|แผ่นดิสก์
+🎳	bowling	โบว์ลิ่ง|กีฬา
+🏏	cricket game	คริกเก็ต|เกม|บอล|ไม้
+🏑	field hockey	ฮอกกี้|เกม|บอล|ไม้|สนาม
+🏒	ice hockey	ไม้ฮอกกี้|เกม|น้ำแข็ง|ลูกยาง|ฮอกกี้
+🥍	lacrosse	ลาครอส|โกล|ไม้|ลูกบอล
+🏓	ping pong	ปิงปอง|เกม|โต๊ะ|ไม้|ลูก
+🏸	badminton	แบดมินตัน|เกม|ไม้แบด|ลูกขนไก่
+🥊	boxing glove	นวม|กีฬา|ชก|มวย
+🥋	martial arts uniform	ชุดยูโด|กีฬา|คาราเต้|ชุด|เทควันโด|ยูโด|ศิลปะป้องกันตัว
+🥅	goal net	โกล|ตาข่าย|เน็ต|ประตู|ฟุตบอล
+⛳	flag in hole	ธงในหลุม|กอล์ฟ
+⛸️	ice skate	สเก็ตน้ำแข็ง|น้ำแข็ง|สเก็ต
+🎣	fishing pole	ตกปลา|เบ็ด|ปลา
+🤿	diving mask	หน้ากากดำน้ำ|ดำน้ำ|น้ำลึก|ผิวน้ำ|สนอร์เกิล|หน้ากาก|อุปกรณ์
+🎽	running shirt	เสื้อวิ่ง|วิ่ง
+🎿	skis	สกี|กีฬา|หิมะ
+🛷	sled	เลื่อนหิมะ|แคร่เลื่อน|เลื่อน
+🥌	curling stone	ลูกกลิ้งหิน|กีฬา|เกม|เคอร์ลิง|หิน
+🎯	bullseye	กลางเป้า|ตรงเป้า|ปาเป้า|ลูกดอก
+🪀	yo-yo	โยโย่|ของเล่น|ขึ้นๆ ลงๆ|เด้งดึ๋ง|ม้วนกลับ|ลูกดิ่ง
+🪁	kite	ว่าว|บิน|ลอยละล่อง|เล่นลม
+🔫	water pistol	ปืนฉีดน้ำ|ปืน|ปืนพก|ลูกโม่|อาวุธ
+🎱	pool 8 ball	บิลเลียด|แปด
+🔮	crystal ball	ลูกแก้ววิเศษ|ดูดวง
+🪄	magic wand	ไม้กายสิทธิ์|คาถา|นักมายากล|ผู้วิเศษ|พ่อมด|แม่มด|เวทมนตร์|เสกคาถา
+🎮	video game	วิดีโอเกม|เกม|จอยสติ๊ก
+🕹️	joystick	จอยสติ๊ก|เกม|วิดีโอ
+🎰	slot machine	สล็อตแมชชีน|เกม|พนัน|สล็อต
+🎲	game die	ลูกเต๋า|ทอยลูกเต๋า
+🧩	puzzle piece	จิ๊กซอว์|ไขปัญหา|คำใบ้|ชิ้นส่วน|ตัวต่อ|ทับซ้อน|ปริศนา
+🧸	teddy bear	ตุ๊กตาหมี|ของเล่น|ตุ๊กตา|เท็ดดี้แบร์|ผ้ากำมะหยี่|ยัดนุ่น|หมี
+🪅	piñata	ปิญญาตา|การเฉลิมฉลอง|ขนมหวาน|ฉลอง|เทศกาล|ปาร์ตี้|เม็กซิกัน|ลูกกวาด
+🪩	mirror ball	ลูกบอลกระจก|ดิสโก้|เต้น|ปาร์ตี้|แสงแวววาว
+🪆	nesting dolls	ตุ๊กตาแม่ลูกดก|ซ้อนกัน|ตุ๊กตา|บาบุชก้า|มาโตรชกา|แม่ลูกดก|รัสเซีย
+♠️	spade suit	โพดำ|เกม|ไพ่
+♥️	heart suit	โพแดง|เกม|พนัน|ไพ่|หัวใจ|อารมณ์
+♦️	diamond suit	ข้าวหลามตัด|เกม|ไพ่
+♣️	club suit	ดอกจิก|เกม|ไพ่
+♟️	chess pawn	หมากรุก|เกม|เบี้ย
+🃏	joker	ไพ่โจ๊กเกอร์|โจ๊กเกอร์|เล่นไพ่
+🀄	mahjong red dragon	ไพ่นกกระจอกมังกรแดง|เกม|แดง|นกกระจอก|ไพ่|ไพ่นกกระจอก|มังกร
+🎴	flower playing cards	ไพ่ดอกไม้|เกม|ญี่ปุ่น|ดอกไม้|พนัน|ไพ่|เล่น
+🎭	performing arts	หน้ากาก|ศาสตร์การแสดง
+🖼️	framed picture	รูปใส่กรอบ|กรอบรูป|พิพิธภัณฑ์|ภาพวาด|รูปภาพ|ศิลปะ
+🎨	artist palette	จานสีวาดรูป|จานสี|พิพิธภัณฑ์|ภาพวาด|ศิลปะ
+🧵	thread	ด้าย|เข็ม|ตัดเย็บ|เย็บผ้า|เส้นด้าย|หลอดด้าย
+🪡	sewing needle	เข็มเย็บผ้า|เข็ม|ด้าย|ตัดเย็บ|เย็บ|เย็บปักถักร้อย|เย็บผ้า|เย็บแผล
+🧶	yarn	ไหมพรม|ก้อนไหมพรม|โครเชต์|ด้าย|ถัก|ไหม
+🪢	knot	เงื่อน|เกลียว|เชือก|บิด|ปม|ผูก|พัน
 travel
-🌍	globe showing Europe-Africa
-🌎	globe showing Americas
-🌏	globe showing Asia-Australia
-🌐	globe with meridians
-🗺️	world map
-🗾	map of Japan
-🧭	compass
-🏔️	snow-capped mountain
-⛰️	mountain
-🌋	volcano
-🗻	mount fuji
-🏕️	camping
-🏖️	beach with umbrella
-🏜️	desert
-🏝️	desert island
-🏞️	national park
-🏟️	stadium
-🏛️	classical building
-🏗️	building construction
-🧱	brick
-🪨	rock
-🪵	wood
-🛖	hut
-🏘️	houses
-🏚️	derelict house
-🏠	house
-🏡	house with garden
-🏢	office building
-🏣	Japanese post office
-🏤	post office
-🏥	hospital
-🏦	bank
-🏨	hotel
-🏩	love hotel
-🏪	convenience store
-🏫	school
-🏬	department store
-🏭	factory
-🏯	Japanese castle
-🏰	castle
-💒	wedding
-🗼	Tokyo tower
-🗽	Statue of Liberty
-⛪	church
-🕌	mosque
-🛕	hindu temple
-🕍	synagogue
-⛩️	shinto shrine
-🕋	kaaba
-⛲	fountain
-⛺	tent
-🌁	foggy
-🌃	night with stars
-🏙️	cityscape
-🌄	sunrise over mountains
-🌅	sunrise
-🌆	cityscape at dusk
-🌇	sunset
-🌉	bridge at night
-♨️	hot springs
-🎠	carousel horse
-🛝	playground slide
-🎡	ferris wheel
-🎢	roller coaster
-💈	barber pole
-🎪	circus tent
-🚂	locomotive
-🚃	railway car
-🚄	high-speed train
-🚅	bullet train
-🚆	train
-🚇	metro
-🚈	light rail
-🚉	station
-🚊	tram
-🚝	monorail
-🚞	mountain railway
-🚋	tram car
-🚌	bus
-🚍	oncoming bus
-🚎	trolleybus
-🚐	minibus
-🚑	ambulance
-🚒	fire engine
-🚓	police car
-🚔	oncoming police car
-🚕	taxi
-🚖	oncoming taxi
-🚗	automobile
-🚘	oncoming automobile
-🚙	sport utility vehicle
-🛻	pickup truck
-🚚	delivery truck
-🚛	articulated lorry
-🚜	tractor
-🏎️	racing car
-🏍️	motorcycle
-🛵	motor scooter
-🦽	manual wheelchair
-🦼	motorized wheelchair
-🛺	auto rickshaw
-🚲	bicycle
-🛴	kick scooter
-🛹	skateboard
-🛼	roller skate
-🚏	bus stop
-🛣️	motorway
-🛤️	railway track
-🛢️	oil drum
-⛽	fuel pump
-🛞	wheel
-🚨	police car light
-🚥	horizontal traffic light
-🚦	vertical traffic light
-🛑	stop sign
-🚧	construction
-⚓	anchor
-🛟	ring buoy
-⛵	sailboat
-🛶	canoe
-🚤	speedboat
-🛳️	passenger ship
-⛴️	ferry
-🛥️	motor boat
-🚢	ship
-✈️	airplane
-🛩️	small airplane
-🛫	airplane departure
-🛬	airplane arrival
-🪂	parachute
-💺	seat
-🚁	helicopter
-🚟	suspension railway
-🚠	mountain cableway
-🚡	aerial tramway
-🛰️	satellite
-🚀	rocket
-🛸	flying saucer
-🛎️	bellhop bell
-🧳	luggage
-⌛	hourglass done
-⏳	hourglass not done
-⌚	watch
-⏰	alarm clock
-⏱️	stopwatch
-⏲️	timer clock
-🕰️	mantelpiece clock
-🕛	twelve o’clock
-🕧	twelve-thirty
-🕐	one o’clock
-🕜	one-thirty
-🕑	two o’clock
-🕝	two-thirty
-🕒	three o’clock
-🕞	three-thirty
-🕓	four o’clock
-🕟	four-thirty
-🕔	five o’clock
-🕠	five-thirty
-🕕	six o’clock
-🕡	six-thirty
-🕖	seven o’clock
-🕢	seven-thirty
-🕗	eight o’clock
-🕣	eight-thirty
-🕘	nine o’clock
-🕤	nine-thirty
-🕙	ten o’clock
-🕥	ten-thirty
-🕚	eleven o’clock
-🕦	eleven-thirty
-🌑	new moon
-🌒	waxing crescent moon
-🌓	first quarter moon
-🌔	waxing gibbous moon
-🌕	full moon
-🌖	waning gibbous moon
-🌗	last quarter moon
-🌘	waning crescent moon
-🌙	crescent moon
-🌚	new moon face
-🌛	first quarter moon face
-🌜	last quarter moon face
-🌡️	thermometer
-☀️	sun
-🌝	full moon face
-🌞	sun with face
-🪐	ringed planet
-⭐	star
-🌟	glowing star
-🌠	shooting star
-🌌	milky way
-☁️	cloud
-⛅	sun behind cloud
-⛈️	cloud with lightning and rain
-🌤️	sun behind small cloud
-🌥️	sun behind large cloud
-🌦️	sun behind rain cloud
-🌧️	cloud with rain
-🌨️	cloud with snow
-🌩️	cloud with lightning
-🌪️	tornado
-🌫️	fog
-🌬️	wind face
-🌀	cyclone
-🌈	rainbow
-🌂	closed umbrella
-☂️	umbrella
-☔	umbrella with rain drops
-⛱️	umbrella on ground
-⚡	high voltage
-❄️	snowflake
-☃️	snowman
-⛄	snowman without snow
-☄️	comet
-🔥	fire
-💧	droplet
-🌊	water wave
+🌍	globe showing Europe-Africa	ลูกโลกแสดงทวีปยุโรปและแอฟริกา|ยุโรป|ลูกโลก|แอฟริกา
+🌎	globe showing Americas	ลูกโลกแสดงทวีปอเมริกา|ลูกโลก|อเมริกา
+🌏	globe showing Asia-Australia	ลูกโลกแสดงทวีปเอเชียและออสเตรเลีย|ลูกโลก|ออสเตรเลีย|เอเชีย
+🌐	globe with meridians	ลูกโลกแสดงเส้นเมริเดียน|ลูกโลก|เส้นเมริเดียน
+🗺️	world map	แผนที่โลก|แผนที่|โลก
+🗾	map of Japan	แผนที่ญี่ปุ่น|ญี่ปุ่น
+🧭	compass	เข็มทิศ|การนำทาง|การผจญภัย|ขั้วแม่เหล็ก|ทิศทาง|โอเรนเทียริ่ง
+🏔️	snow-capped mountain	ภูเขามีหิมะ|ภูเขา|หนาว|หิมะ
+⛰️	mountain	ภูเขา
+🌋	volcano	ภูเขาไฟ|ภูเขาไฟระเบิด
+🗻	mount fuji	ภูเขาไฟฟูจิ|ภูเขา
+🏕️	camping	ตั้งแคมป์|แคมป์|เต็นท์
+🏖️	beach with umbrella	ร่มชายหาด|ชายหาด|ร่ม
+🏜️	desert	ทะเลทราย
+🏝️	desert island	เกาะ|เกาะร้าง|ทะเล
+🏞️	national park	อุทยาน|ต้นไม้|อุทยานแห่งชาติ
+🏟️	stadium	สนามกีฬา|อัฒจันทร์
+🏛️	classical building	อาคารสไตล์คลาสสิก|คลาสสิก|อาคาร
+🏗️	building construction	ก่อสร้างอาคาร|ก่อสร้าง|อาคาร
+🧱	brick	ก้อนอิฐ|กำแพง|ดิน|ปูน
+🪨	rock	หิน|ก้อนหิน|ของแข็ง|หนัก|หินก้อนใหญ่
+🪵	wood	ไม้|ซุง|ท่อนซุง|ท่อนไม้|ไม้ซุง
+🛖	hut	กระท่อม|กระโจม|ที่พัก|ที่อยู่|บ้าน|บ้านทรงกลม
+🏘️	houses	บ้านหลายหลัง|บ้าน
+🏚️	derelict house	บ้านร้าง|บ้าน|รกร้าง
+🏠	house	บ้านเดี่ยว|ตึก|บ้าน
+🏡	house with garden	บ้านพร้อมสวน|บ้าน
+🏢	office building	ตึกสำนักงาน|ตึก|สำนักงาน
+🏣	Japanese post office	ไปรษณีย์ญี่ปุ่น|ญี่ปุ่น|ตึก|ไปรษณีย์|ออฟฟิศ
+🏤	post office	ไปรษณีย์ยุโรป|ตึก|ไปรษณีย์|ยุโรป|ออฟฟิศ
+🏥	hospital	โรงพยาบาล|ตึก
+🏦	bank	ธนาคาร|ตึก
+🏨	hotel	โรงแรม|ตึก
+🏩	love hotel	ม่านรูด|โรงแรม
+🏪	convenience store	ร้านสะดวกซื้อ|ของใช้|ร้านค้า|สินค้า
+🏫	school	โรงเรียน|ตึกเรียน
+🏬	department store	ห้างสรรพสินค้า|ร้านค้า|สินค้า|ห้าง
+🏭	factory	โรงงาน|สิ่งปลูกสร้าง
+🏯	Japanese castle	ปราสาทญี่ปุ่น|ญี่ปุ่น|ปราสาท
+🏰	castle	ปราสาทยุโรป|ปราสาท
+💒	wedding	งานแต่งงาน|แต่งงาน|โบสถ์
+🗼	Tokyo tower	โตเกียวทาวเวอร์|โตเกียว
+🗽	Statue of Liberty	เทพีเสรีภาพ|รูปปั้น
+⛪	church	โบสถ์|คริสต์|ไม้กางเขน|ศาสนสถาน|ศาสนา
+🕌	mosque	มัสยิด|มุสลิม|ศาสนา|อิสลาม
+🛕	hindu temple	วัดฮินดู|โบสถ์ฮินดู|วัด|ศาสนสถาน|ศาสนาฮินดู|ฮินดู
+🕍	synagogue	โบสถ์ยิว|โบสถ์|ยิว|ยูดาย|ศาสนา
+⛩️	shinto shrine	ศาลเจ้าชินโต|ชินโต|ลัทธิ|ศาลเจ้า
+🕋	kaaba	วิหารกะอ์บะฮ์|มุสลิม|ศาสนา|อิสลาม
+⛲	fountain	น้ำพุ
+⛺	tent	เต็นท์|ตั้งแคมป์
+🌁	foggy	หมอกลง|สะพาน|หมอก
+🌃	night with stars	ดาว|กลางคืน|ดาวยามค่ำคืน|ตึก|อาคาร
+🏙️	cityscape	หมู่ตึกสูง|ตึกสูง|เมือง
+🌄	sunrise over mountains	ดวงอาทิตย์โผล่พ้นเขา|ดวงอาทิตย์ตอนเช้า
+🌅	sunrise	ดวงอาทิตย์ขึ้น|ดวงอาทิตย์|ดวงอาทิตย์ตอนเช้า
+🌆	cityscape at dusk	เมืองยามโพล้เพล้|ตอนเย็น|โพล้เพล้
+🌇	sunset	ดวงอาทิตย์ตก|ดวงอาทิตย์ตกเหนือตึก|ตึก|โพล้เพล้
+🌉	bridge at night	สะพานกลางคืน|กลางคืน|สะพาน
+♨️	hot springs	น้ำพุร้อน|น้ำพุ|ไอน้ำ
+🎠	carousel horse	ม้าหมุน|สวนสนุก
+🛝	playground slide	กระดานลื่นของเล่น|กระดานลื่น|ของเล่น|ไถล|เล่น|สนามเด็กเล่น|สไลด์|สไลด์เดอร์|สไลเดอร์|สวนสนุก|ไหล
+🎡	ferris wheel	ชิงช้าสวรรค์|สวนสนุก
+🎢	roller coaster	รถไฟเหาะ|โรลเลอร์โคสเตอร์|สวนสนุก
+💈	barber pole	ร้านตัดผม|บาร์เบอร์
+🎪	circus tent	ละครสัตว์|เต๊นท์ละครสัตว์
+🚂	locomotive	หัวรถจักรไอน้ำ|เครื่องจักร|ยานพาหนะ|รถไฟ|ไอน้ำ
+🚃	railway car	ตู้รถไฟ|รถไฟฟ้า|รถราง
+🚄	high-speed train	ชินคันเซ็น|รถไฟความเร็วสูง
+🚅	bullet train	รถไฟความเร็วสูง|ชินคันเซน|ยานพาหนะ|รถไฟ|เร็ว|หัวกระสุน
+🚆	train	รถไฟ|ยานพาหนะ
+🚇	metro	รถไฟใต้ดิน|ยานพาหนะ|รถไฟ
+🚈	light rail	รถไฟรางเบา|ยานพาหนะ|รถไฟ
+🚉	station	สถานีรถไฟ|ยานพาหนะ|รถไฟ
+🚊	tram	รถรางบนราง|ยานพาหนะ|รถไฟ|ราง
+🚝	monorail	รถไฟรางเดี่ยว|เดี่ยว|โมโนเรล|ยานพาหนะ|รถไฟ|ราง
+🚞	mountain railway	รางรถไฟภูเขา|ภูเขา|ยานพาหนะ|รถไฟ|ราง
+🚋	tram car	ตู้รถราง|ยานพาหนะ|รถ|รถราง
+🚌	bus	รถบัส|ยานพาหนะ
+🚍	oncoming bus	รถบัสกำลังมา|กำลังมา|ยานพาหนะ|รถบัส
+🚎	trolleybus	รถราง|ยานพาหนะ
+🚐	minibus	มินิบัส|ยานพาหนะ|รถบัส
+🚑	ambulance	รถพยาบาล|ยานพาหนะ
+🚒	fire engine	รถดับเพลิง|ไฟ|ยานพาหนะ|รถ|สายดับเพลิง
+🚓	police car	รถตำรวจ|ตรวจการณ์|ตำรวจ|ยานพาหนะ|รถยนต์
+🚔	oncoming police car	รถตำรวจกำลังมา|กำลังมา|ตำรวจ|ยานพาหนะ|รถยนต์
+🚕	taxi	แท็กซี่|เครื่องยนต์
+🚖	oncoming taxi	แท็กซี่กำลังมา|กำลังมา|แท็กซี่|ยานพาหนะ
+🚗	automobile	รถ|ยานพาหนะ|รถยนต์
+🚘	oncoming automobile	รถกำลังมา|รถ
+🚙	sport utility vehicle	รถบ้าน|รถ|รถพักผ่อน
+🛻	pickup truck	รถกระบะ|กระบะ|การขนส่ง|ปิ๊กอัพ|รถบรรทุก|รถปิ๊กอัพ|รถปิคอัพ|รถพ่วง|รถยนต์
+🚚	delivery truck	รถขนส่ง|ขับ|จัดส่ง|บรรทุก|ยานพาหนะ|รถ|สิบล้อ
+🚛	articulated lorry	รถบรรทุก|ขนส่ง|ยานพาหนะ|สิบล้อ
+🚜	tractor	แทร็กเตอร์|ยานพาหนะ
+🏎️	racing car	รถแข่ง|แข่ง|รถ
+🏍️	motorcycle	มอเตอร์ไซค์|แข่ง
+🛵	motor scooter	รถสกู๊ตเตอร์|รถ|สกู๊ตเตอร์
+🦽	manual wheelchair	วีลแชร์ธรรมดา|การเข้าถึง|การช่วยเหลือการเข้าถึง|รถเข็นแบบมือหมุน|วีลแชร์
+🦼	motorized wheelchair	วีลแชร์ไฟฟ้า|การเข้าถึง|การช่วยเหลือการเข้าถึง|รถเข็นไฟฟ้า|วีลแชร์
+🛺	auto rickshaw	รถสามล้อ|รถตุ๊กตุ๊ก|สามล้อ
+🚲	bicycle	จักรยาน|ยานพาหนะ
+🛴	kick scooter	สกู๊ตเตอร์
+🛹	skateboard	สเก็ตบอร์ด|กีฬา|นักเล่นสเก็ต|ล้อ
+🛼	roller skate	รองเท้าสเก็ต|กีฬา|โรลเลอร์|โรลเลอร์เบลด|โรลเลอร์สเก็ต|สเก็ต
+🚏	bus stop	ป้ายรถบัส|ป้ายรถ|ยานพาหนะ|รถบัส
+🛣️	motorway	ทางด่วน|ถนน
+🛤️	railway track	รางรถไฟ|รถไฟ
+🛢️	oil drum	ถังน้ำมัน|ถัง|น้ำมัน
+⛽	fuel pump	ปั๊มน้ำมัน|น้ำมัน
+🛞	wheel	ล้อรถ|ยาง|ยางรถยนต์|รถ|รถยนต์|วงกลม|หมุน
+🚨	police car light	สัญญาณไฟตำรวจ|ฉุกเฉิน|ตำรวจ|ไฟสัญญาณ|ยานพาหนะ|รถยนต์
+🚥	horizontal traffic light	ไฟจราจรแนวนอน|จราจร|ทางแยก|แนวนอน|ไฟ|สัญญาณ|หยุด
+🚦	vertical traffic light	ไฟจราจรแนวตั้ง|จราจร|ทางแยก|แนวตั้ง|ไฟ|สัญญาณ|หยุด
+🛑	stop sign	เครื่องหมายหยุด|เครื่องหมาย|แปดเหลี่ยม|หยุด
+🚧	construction	ป้ายไซต์ก่อสร้าง|กำลังก่อสร้าง
+⚓	anchor	สมอเรือ|เครื่องมือ|เรือ|สมอ
+🛟	ring buoy	ห่วงชูชีพ|กู้ภัย|ความปลอดภัย|เครื่องช่วยชีวิต|ช่วยชีวิต|ชีวิต|ชูชีพ|ลอย|ว่ายน้ำ|ห่วงยาง
+⛵	sailboat	เรือใบ|ทะเล|เรือ
+🛶	canoe	แคนู|พาย|เรือ
+🚤	speedboat	เรือด่วน|ยานพาหนะ|เรือ
+🛳️	passenger ship	เรือโดยสาร|เรือ
+⛴️	ferry	เรือเฟอร์รี|เรือ
+🛥️	motor boat	เรือยนต์|ยานพาหนะ|เรือ
+🚢	ship	เรือ|ยานพาหนะ
+✈️	airplane	เครื่องบิน|ยานพาหนะ
+🛩️	small airplane	เครื่องบินเล็ก|เครื่องบิน|ยานพาหนะ
+🛫	airplane departure	เครื่องบินขึ้น|ขาออก|เครื่องบิน|ยานพาหนะ
+🛬	airplane arrival	เครื่องบินลง|ขาเข้า|เครื่องบิน|ยานพาหนะ
+🪂	parachute	ร่มชูชีพ|กระโดดร่ม|ดิ่งเวหา|โดดร่ม|พาราเซล|แฮงไกลเดอร์
+💺	seat	ที่นั่ง|เก้าอี้
+🚁	helicopter	เฮลิคอปเตอร์|การเดินทาง|คอปเตอร์|ยานพาหนะ|ฮอ
+🚟	suspension railway	รถไฟสะพานแขวน|ยานพาหนะ|รถไฟ|สะพานแขวน
+🚠	mountain cableway	เคเบิลคาร์|ภูเขา|ยานพาหนะ
+🚡	aerial tramway	รถกระเช้าลอยฟ้า|ยานพาหนะ|รถกระเช้า|ลอยฟ้า|สายเคเบิล
+🛰️	satellite	ดาวเทียม|เทคโนโลยี|อวกาศ
+🚀	rocket	จรวด|ยานพาหนะ|อวกาศ
+🛸	flying saucer	จานบิน|มนุษย์ต่างดาว|ยานอวกาศ|ยูเอฟโอ|เอเลี่ยน
+🛎️	bellhop bell	กระดิ่งโรงแรม|กระดิ่ง|พนักงาน|โรงแรม
+🧳	luggage	กระเป๋าเดินทาง|กระเป๋า|เก็บเสื้อผ้า|เดินทาง|ท่องเที่ยว|บรรจุ|ล้อลาก|สัมภาระ
+⌛	hourglass done	นาฬิกาทราย|ทราย
+⏳	hourglass not done	นาฬิกาทรายจับเวลา|นาฬิกาทราย
+⌚	watch	นาฬิกาข้อมือ|นาฬิกา
+⏰	alarm clock	นาฬิกาปลุก|ปลุก
+⏱️	stopwatch	นาฬิกาจับเวลา|นาฬิกา
+⏲️	timer clock	นาฬิกานับถอยหลัง|จับเวลา|นับถอยหลัง|นาฬิกา
+🕰️	mantelpiece clock	นาฬิกาบนหิ้ง|นาฬิกา|เวลา
+🕛	twelve o’clock	สิบสองนาฬิกา|เที่ยง|นาฬิกา|เวลา|สิบสอง
+🕧	twelve-thirty	สิบสองนาฬิกาครึ่ง|นาฬิกา
+🕐	one o’clock	หนึ่งนาฬิกา|ตีหนึ่ง|นาฬิกา|บ่ายโมง|เวลา
+🕜	one-thirty	หนึ่งนาฬิกาครึ่ง|นาฬิกา|บ่ายโมงครึ่ง|โมงครึ่ง|เวลา|สามสิบ|หนึ่ง
+🕑	two o’clock	สองนาฬิกา|ตีสอง|นาฬิกา|บ่ายสอง|สอง
+🕝	two-thirty	สองนาฬิกาครึ่ง|นาฬิกา|บ่ายสองโมงครึ่ง|เวลา|สอง|สองโมงครึ่ง|สามสิบ
+🕒	three o’clock	สามนาฬิกา|ตีสาม|นาฬิกา|บ่ายสาม|เวลา
+🕞	three-thirty	สามนาฬิกาครึ่ง|นาฬิกา|บ่ายสามโมงครึ่ง|เวลา|สามนาฬิกาสามสิบนาที|สามสิบ
+🕓	four o’clock	สี่นาฬิกา|ตีสี่|นาฬิกา|บ่ายสี่โมง|เวลา|สี่
+🕟	four-thirty	สี่นาฬิกาครึ่ง|4:30|ตีสี่ครึ่ง|นาฬิกา|เวลา|สามสิบ|สี่|สี่โมงครึ่ง
+🕔	five o’clock	ห้านาฬิกา|5:00|ตีห้า|นาฬิกา|เวลา|ห้า|ห้าโมงเย็น
+🕠	five-thirty	ห้านาฬิกาครึ่ง|5:30|ตีห้าครึ่ง|นาฬิกา|เวลา|ห้าโมงครึ่ง
+🕕	six o’clock	หกนาฬิกา|6:00|นาฬิกา|เวลา|หกโมง
+🕡	six-thirty	หกนาฬิกาครึ่ง|6:30|นาฬิกา|เวลา|หกโมงครึ่ง
+🕖	seven o’clock	เจ็ดนาฬิกา|7:00|เจ็ดโมง|นาฬิกา|เวลา|หนึ่งทุ่ม
+🕢	seven-thirty	เจ็ดนาฬิกาครึ่ง|7:30|เจ็ดโมงครึ่ง|ทุ่มครึ่ง|นาฬิกา|เวลา
+🕗	eight o’clock	แปดนาฬิกา|8:00|นาฬิกา|แปดโมง|เวลา|สองทุ่ม
+🕣	eight-thirty	แปดนาฬิกาครึ่ง|8:30|นาฬิกา|แปดโมงครึ่ง|เวลา|สองทุ่มครึ่ง
+🕘	nine o’clock	เก้านาฬิกา|9|9:00|เก้าโมง|นาฬิกา|เวลา|สามทุ่ม
+🕤	nine-thirty	เก้านาฬิกาครึ่ง|9:30|เก้าโมงครึ่ง|นาฬิกา|เวลา|สามทุ่มครึ่ง
+🕙	ten o’clock	สิบนาฬิกา|นาฬิกา
+🕥	ten-thirty	สิบนาฬิกาครึ่ง|10:30|นาฬิกา|เวลา|สิบโมงครึ่ง|สี่ทุ่มครึ่ง
+🕚	eleven o’clock	สิบเอ็ดนาฬิกา|11:00|นาฬิกา|เวลา|สิบเอ็ดโมง|ห้าทุ่ม
+🕦	eleven-thirty	สิบเอ็ดนาฬิกาครึ่ง|11:30|นาฬิกา|เวลา|สิบเอ็ดโมงครึ่ง|ห้าทุ่มครึ่ง
+🌑	new moon	จันทร์ดับ|จันทร์มืด|มืด
+🌒	waxing crescent moon	พระจันทร์เสี้ยวข้างขึ้น|ข้างขึ้น
+🌓	first quarter moon	พระจันทร์ครึ่งซีกขวา|ครึ่งซีก|ดวงดาว|พระจันทร์|อวกาศ
+🌔	waxing gibbous moon	ข้างขึ้น|พระจันทร์เกือบเต็มดวง
+🌕	full moon	พระจันทร์เต็มดวง|เต็มดวง|พระจันทร์
+🌖	waning gibbous moon	ข้างแรม|ดวงจันทร์|ดาว|อวกาศ
+🌗	last quarter moon	พระจันทร์ครึ่งซีกซ้าย|ครึ่งซีก|ดวงดาว|พระจันทร์|อวกาศ
+🌘	waning crescent moon	พระจันทร์เสี้ยวข้างแรม|ข้างแรม|พระจันทร์|เสี้ยว
+🌙	crescent moon	พระจันทร์เสี้ยว|พระจันทร์|เสี้ยว
+🌚	new moon face	หน้าพระจันทร์ดับ|ดวงจันทร์|พระจันทร์ดับ|หน้าดำ|อวกาศ
+🌛	first quarter moon face	หน้าพระจันทร์เสี้ยวขวา|ซีก|พระจันทร์|เสี้ยว|หน้า|อวกาศ
+🌜	last quarter moon face	หน้าพระจันทร์เสี้ยวซ้าย|หน้าพระจันทร์
+🌡️	thermometer	เครื่องวัดอุณหภูมิ|เครื่องวัด|อุณหภูมิ
+☀️	sun	พระอาทิตย์|สว่าง|แสงแดด|อากาศ
+🌝	full moon face	หน้าพระจันทร์เต็มดวง|เต็มดวง|พระจันทร์|สว่าง|หน้า|อวกาศ
+🌞	sun with face	หน้าพระอาทิตย์|ใบหน้า|พระอาทิตย์|สว่าง|อากาศ
+🪐	ringed planet	ดาวเคราะห์ที่มีวงแหวน|แซตเทิร์นนายน์|ดาวเสาร์
+⭐	star	ดาวสีขาวขนาดกลาง|ดวงดาว
+🌟	glowing star	ดาวส่องแสง|ดาว|ประกาย|ระยิบระยับ|แสง
+🌠	shooting star	ดาวตก|ดาว
+🌌	milky way	ทางช้างเผือก|ดาราจักร|อวกาศ
+☁️	cloud	เมฆ|เมฆดำ|สภาพอากาศ
+⛅	sun behind cloud	ดวงอาทิตย์หลังเมฆ|ดวงอาทิตย์
+⛈️	cloud with lightning and rain	ฝนฟ้าคะนอง|ฝน|ฟ้าร้อง|เมฆ|สภาพอากาศ
+🌤️	sun behind small cloud	เมฆน้อยบดบังพระอาทิตย์|พระอาทิตย์|เมฆ|สภาพอากาศ
+🌥️	sun behind large cloud	เมฆก้อนใหญ่บังพระอาทิตย์|พระอาทิตย์|เมฆ|สภาพอากาศ
+🌦️	sun behind rain cloud	เมฆฝนบดบังพระอาทิตย์|ฝน|พระอาทิตย์|เมฆ|สภาพอากาศ
+🌧️	cloud with rain	เมฆฝน|ฝน|เมฆ|สภาพอากาศ
+🌨️	cloud with snow	เมฆและหิมะ|เมฆ|สภาพอากาศ|หิมะ
+🌩️	cloud with lightning	เมฆและฟ้าแลบ|ฟ้าแลบ|เมฆ|สภาพอากาศ
+🌪️	tornado	พายุทอร์นาโด|พายุหมุน|เมฆ|อากาศ
+🌫️	fog	หมอก|เมฆ|สภาพอากาศ
+🌬️	wind face	พ่นลม|เมฆ|ลมพัด|สภาพอากาศ
+🌀	cyclone	ไซโคลน|ไต้ฝุ่น|พายุหมุน
+🌈	rainbow	รุ้ง|เกย์ไพรด์|คนข้ามเพศ|ธรรมชาติ|ฝน|สภาพอากาศ|สายรุ้ง|สีสัน|แอลจีบีที
+🌂	closed umbrella	ร่มหุบ|ฝน|ร่ม|เสื้อผ้า
+☂️	umbrella	ร่ม|ฝน|สภาพอากาศ
+☔	umbrella with rain drops	ร่มและหยดน้ำฝน|ฝน|ร่ม|สภาพอากาศ
+⛱️	umbrella on ground	ร่มปักดิน|ฝน|พระอาทิตย์|ร่ม|สภาพอากาศ
+⚡	high voltage	ไฟฟ้าแรงสูง|สัญลักษณ์ไฟฟ้าแรงสูง
+❄️	snowflake	เกล็ดหิมะ|สภาพอากาศ|หนาว|หิมะ
+☃️	snowman	สโนว์แมนและหิมะ|คน|ตุ๊กตา|เย็น|สโนว์แมน|สภาพอากาศ|หนาว|หิมะ
+⛄	snowman without snow	สโนว์แมน|สภาพอากาศ|หนาว|หิมะ
+☄️	comet	ดาวหาง|อวกาศ
+🔥	fire	ไฟ|เปลวไฟ
+💧	droplet	หยดน้ำ|เหงื่อ
+🌊	water wave	คลื่น|คลื่นทะเล
 objects
-👓	glasses
-🕶️	sunglasses
-🥽	goggles
-🥼	lab coat
-🦺	safety vest
-👔	necktie
-👕	t-shirt
-👖	jeans
-🧣	scarf
-🧤	gloves
-🧥	coat
-🧦	socks
-👗	dress
-👘	kimono
-🥻	sari
-🩱	one-piece swimsuit
-🩲	briefs
-🩳	shorts
-👙	bikini
-👚	woman’s clothes
-🪭	folding hand fan
-👛	purse
-👜	handbag
-👝	clutch bag
-🛍️	shopping bags
-🎒	backpack
-🩴	thong sandal
-👞	man’s shoe
-👟	running shoe
-🥾	hiking boot
-🥿	flat shoe
-👠	high-heeled shoe
-👡	woman’s sandal
-🩰	ballet shoes
-👢	woman’s boot
-🪮	hair pick
-👑	crown
-👒	woman’s hat
-🎩	top hat
-🎓	graduation cap
-🧢	billed cap
-🪖	military helmet
-⛑️	rescue worker’s helmet
-📿	prayer beads
-💄	lipstick
-💍	ring
-💎	gem stone
-🔇	muted speaker
-🔈	speaker low volume
-🔉	speaker medium volume
-🔊	speaker high volume
-📢	loudspeaker
-📣	megaphone
-📯	postal horn
-🔔	bell
-🔕	bell with slash
-🎼	musical score
-🎵	musical note
-🎶	musical notes
-🎙️	studio microphone
-🎚️	level slider
-🎛️	control knobs
-🎤	microphone
-🎧	headphone
-📻	radio
-🎷	saxophone
-🪗	accordion
-🎸	guitar
-🎹	musical keyboard
-🎺	trumpet
-🎻	violin
-🪕	banjo
-🥁	drum
-🪘	long drum
-🪇	maracas
-🪈	flute
-📱	mobile phone
-📲	mobile phone with arrow
-☎️	telephone
-📞	telephone receiver
-📟	pager
-📠	fax machine
-🔋	battery
-🪫	low battery
-🔌	electric plug
-💻	laptop
-🖥️	desktop computer
-🖨️	printer
-⌨️	keyboard
-🖱️	computer mouse
-🖲️	trackball
-💽	computer disk
-💾	floppy disk
-💿	optical disk
-📀	dvd
-🧮	abacus
-🎥	movie camera
-🎞️	film frames
-📽️	film projector
-🎬	clapper board
-📺	television
-📷	camera
-📸	camera with flash
-📹	video camera
-📼	videocassette
-🔍	magnifying glass tilted left
-🔎	magnifying glass tilted right
-🕯️	candle
-💡	light bulb
-🔦	flashlight
-🏮	red paper lantern
-🪔	diya lamp
-📔	notebook with decorative cover
-📕	closed book
-📖	open book
-📗	green book
-📘	blue book
-📙	orange book
-📚	books
-📓	notebook
-📒	ledger
-📃	page with curl
-📜	scroll
-📄	page facing up
-📰	newspaper
-🗞️	rolled-up newspaper
-📑	bookmark tabs
-🔖	bookmark
-🏷️	label
-💰	money bag
-🪙	coin
-💴	yen banknote
-💵	dollar banknote
-💶	euro banknote
-💷	pound banknote
-💸	money with wings
-💳	credit card
-🧾	receipt
-💹	chart increasing with yen
-✉️	envelope
-📧	e-mail
-📨	incoming envelope
-📩	envelope with arrow
-📤	outbox tray
-📥	inbox tray
-📦	package
-📫	closed mailbox with raised flag
-📪	closed mailbox with lowered flag
-📬	open mailbox with raised flag
-📭	open mailbox with lowered flag
-📮	postbox
-🗳️	ballot box with ballot
-✏️	pencil
-✒️	black nib
-🖋️	fountain pen
-🖊️	pen
-🖌️	paintbrush
-🖍️	crayon
-📝	memo
-💼	briefcase
-📁	file folder
-📂	open file folder
-🗂️	card index dividers
-📅	calendar
-📆	tear-off calendar
-🗒️	spiral notepad
-🗓️	spiral calendar
-📇	card index
-📈	chart increasing
-📉	chart decreasing
-📊	bar chart
-📋	clipboard
-📌	pushpin
-📍	round pushpin
-📎	paperclip
-🖇️	linked paperclips
-📏	straight ruler
-📐	triangular ruler
-✂️	scissors
-🗃️	card file box
-🗄️	file cabinet
-🗑️	wastebasket
-🔒	locked
-🔓	unlocked
-🔏	locked with pen
-🔐	locked with key
-🔑	key
-🗝️	old key
-🔨	hammer
-🪓	axe
-⛏️	pick
-⚒️	hammer and pick
-🛠️	hammer and wrench
-🗡️	dagger
-⚔️	crossed swords
-💣	bomb
-🪃	boomerang
-🏹	bow and arrow
-🛡️	shield
-🪚	carpentry saw
-🔧	wrench
-🪛	screwdriver
-🔩	nut and bolt
-⚙️	gear
-🗜️	clamp
-⚖️	balance scale
-🦯	white cane
-🔗	link
-⛓️	chains
-🪝	hook
-🧰	toolbox
-🧲	magnet
-🪜	ladder
-⚗️	alembic
-🧪	test tube
-🧫	petri dish
-🧬	dna
-🔬	microscope
-🔭	telescope
-📡	satellite antenna
-💉	syringe
-🩸	drop of blood
-💊	pill
-🩹	adhesive bandage
-🩼	crutch
-🩺	stethoscope
-🩻	x-ray
-🚪	door
-🛗	elevator
-🪞	mirror
-🪟	window
-🛏️	bed
-🛋️	couch and lamp
-🪑	chair
-🚽	toilet
-🪠	plunger
-🚿	shower
-🛁	bathtub
-🪤	mouse trap
-🪒	razor
-🧴	lotion bottle
-🧷	safety pin
-🧹	broom
-🧺	basket
-🧻	roll of paper
-🪣	bucket
-🧼	soap
-🫧	bubbles
-🪥	toothbrush
-🧽	sponge
-🧯	fire extinguisher
-🛒	shopping cart
-🚬	cigarette
-⚰️	coffin
-🪦	headstone
-⚱️	funeral urn
-🧿	nazar amulet
-🪬	hamsa
-🗿	moai
-🪧	placard
-🪪	identification card
+👓	glasses	แว่นตา|ตา|แว่นสายตา
+🕶️	sunglasses	แว่นกันแดด|แดด|ตา|แว่นตา
+🥽	goggles	แว่นตากันลม|เชื่อม|ดำน้ำ|นิรภัย|ป้องกัน|ว่ายน้ำ|แว่นตา
+🥼	lab coat	เสื้อกาวน์|แจ็กเก็ต|ทดลอง|นักวิทยาศาสตร์|แพทย์|แล็บ|สีขาว|หมอ|ห้องปฏิบัติการ
+🦺	safety vest	เสื้อนิรภัย|เกราะ|ความปลอดภัย|จราจร|ฉุกเฉิน|นิรภัย|สะท้อนแสง|เสื้อกั๊ก
+👔	necktie	เนคไท|เสื้อผ้า
+👕	t-shirt	เสื้อยืด|เสื้อผ้า
+👖	jeans	ยีนส์|กางเกง|กางเกงขายาว|เสื้อผ้า
+🧣	scarf	ผ้าพันคอ|มัด|หนาว|หวัด
+🧤	gloves	ถุงมือ|มือ
+🧥	coat	เสื้อโค้ต|คลุม|แจ๊คเก็ต|เสื้อกันหนาว|เสื้อโค้ท|หวัด
+🧦	socks	ถุงเท้า|ถุงน่อง
+👗	dress	ชุดกระโปรง|ช้อปปิ้ง|เดรส|แฟนซี|เสื้อผ้า
+👘	kimono	กิโมโน|เสื้อผ้า
+🥻	sari	ชุดส่าหรี|ชุดกระโปรง|เดรส|ส่าหรี|เสื้อผ้า|อินเดีย
+🩱	one-piece swimsuit	ชุดว่ายน้ำวันพีซ|ชุดเล่นน้ำ|ชุดว่ายน้ำ
+🩲	briefs	กางเกงชั้นในชาย|กกน.|กางเกงใน|ชุดชั้นใน|วันพีซ|ว่ายน้ำ
+🩳	shorts	กางเกงขาสั้น|กางเกง|ชุดชั้นใน|บอกเซอร์|ว่ายน้ำ|เสื้อผ้า
+👙	bikini	บิกินี|ชุดชั้นใน|ว่ายน้ำ|เสื้อผ้า
+👚	woman’s clothes	เสื้อผู้หญิง|ช้อปปิ้ง|เชิ้ต|แต่งตัว|ผู้หญิง|เสื้อผ้า
+🪭	folding hand fan	พัดแบบพับได้|กระพือ|ขี้อาย|จีบ|เต้นรำ|พัด|พับ|มือ|เย็น|ร้อน|ระบำ
+👛	purse	กระเป๋าใส่เงิน|กระเป๋า|เงิน|ช้อปปิ้ง|สตางค์|เสื้อผ้า|เหรียญ
+👜	handbag	กระเป๋าถือ|กระเป๋า
+👝	clutch bag	กระเป๋าใบเล็ก|กระเป๋า
+🛍️	shopping bags	ถุงช็อปปิ้ง|ช็อปปิ้ง|ถุง|โรงแรม|ห้าง|หิ้ว
+🎒	backpack	เป้นักเรียน|กระเป๋า|การศึกษา|โรงเรียน|สะพายหลัง|หนังสือ
+🩴	thong sandal	รองเท้าลำลอง|คีบ|ชายหาด|โซริ|รองเท้าแตะ|ลำลอง|หนีบ
+👞	man’s shoe	รองเท้าชาย|ผู้ชาย|รองเท้า|รองเท้าผู้ชาย
+👟	running shoe	รองเท้ากีฬา|รองเท้า|รองเท้าผ้าใบ
+🥾	hiking boot	รองเท้าปีนเขา|กลางแจ้ง|แคมป์|เดิน|บู๊ท|แบ็คแพ็ค|ปีนเขา|รองเท้า|สีน้ำตาล|หนัง
+🥿	flat shoe	รองเท้าส้นเตี้ย|บัลเล่ต์|แบนราบ|ผู้หญิง|รองเท้าคัทชู|ส้นเตี้ย|สลิปเปอร์
+👠	high-heeled shoe	รองเท้าส้นสูง|รองเท้า|รองเท้าผู้หญิง|ส้นสูง
+👡	woman’s sandal	รองเท้าแตะผู้หญิง|ผู้หญิง|รองเท้า|รองเท้าแตะ|เสื้อผ้า
+🩰	ballet shoes	รองเท้าบัลเล่ต์|ชมพู|เต้น|บัลเล่ต์|รองเท้า
+👢	woman’s boot	รองเท้าบู๊ตผู้หญิง|ช็อปปิ้ง|แต่งตัว|ผู้หญิง|รองเท้าบู๊ต|ส้นสูง|เสื้อผ้า
+🪮	hair pick	หวีส้อม|ผม|ผิวดำ|ส้อม|หวี
+👑	crown	มงกุฎ|พระราชา|พระราชินี
+👒	woman’s hat	หมวกผู้หญิง|ผู้หญิง|หมวก
+🎩	top hat	หมวกสูง|หมวก
+🎓	graduation cap	หมวกรับปริญญา|รับปริญญา|หมวก
+🧢	billed cap	หมวกแก๊ป|เบสบอล
+🪖	military helmet	หมวกทหาร|กองทัพ|ทหาร|นักรบ|นิรภัย|สงคราม|หมวกกันน็อค
+⛑️	rescue worker’s helmet	หมวกนิรภัยมีกากบาทขาว|กากบาท|ปลอดภัย|หมวกนิรภัย
+📿	prayer beads	ลูกประคำ|ลูกปัด|ศาสนา|สร้อย|สวดมนต์
+💄	lipstick	ลิปสติก|เครื่องสำอาง
+💍	ring	แหวน|ความรัก
+💎	gem stone	อัญมณี|เพชร
+🔇	muted speaker	ไม่ใช้เสียง|เงียบ|ปิดเสียง|ลำโพง|ห้าม
+🔈	speaker low volume	ลำโพงเสียงเบา|นุ่ม|เบา|ลำโพง|วอลลุ่ม|เสียง
+🔉	speaker medium volume	ลำโพงเสียงปานกลาง|ปานกลาง|ลำโพง|วอลลุ่ม|เสียง
+🔊	speaker high volume	ลำโพงเสียงดัง|ลำโพง|ลำโพงดัง
+📢	loudspeaker	เครื่องขยายเสียง|ประกาศ|เสียงดัง
+📣	megaphone	โทรโข่ง|เชียร์|ประกาศ
+📯	postal horn	แตรส่งสาร|แตร|สาร
+🔔	bell	กระดิ่ง|โบสถ์|ระฆัง|วัด|เสียง
+🔕	bell with slash	ไม่มีกระดิ่ง|กระดิ่ง|เงียบ|ไม่|เสียง|ห้าม
+🎼	musical score	บรรทัดห้าเส้น|กุญแจซอล|โน้ตเพลง
+🎵	musical note	โน้ตดนตรี|ดนตรี|โน้ต
+🎶	musical notes	โน้ตดนตรีหลายตัว|เขบ็ต|ดนตรี|โน้ต|เพลง|เสียง
+🎙️	studio microphone	ไมค์สตูดิโอ|เพลง|ไมค์|ไมโครโฟน|สตูดิโอ
+🎚️	level slider	ที่ปรับระดับเสียง|ที่ปรับ|เพลง|ระดับ|เสียง
+🎛️	control knobs	ปุ่มควบคุมเสียง|ควบคุม|ปรับ|ปุ่ม|เพลง|เสียง
+🎤	microphone	ไมโครโฟน|คาราโอเกะ|เพลง|ไมค์|สตูดิโอ
+🎧	headphone	หูฟัง|เฮดโฟน
+📻	radio	วิทยุ|เพลง
+🎷	saxophone	แซ็กโซโฟน|เครื่องดนตรี|แซ็ก
+🪗	accordion	แอคคอร์เดียน|เครื่องดนตรี|สควีซบ็อกซ์|หีบเพลง
+🎸	guitar	กีต้าร์|กีตาร์|กีตาร์ไฟฟ้า|เครื่องดนตรี
+🎹	musical keyboard	เปียโน|คีย์บอร์ด|เครื่องดนตรี
+🎺	trumpet	ทรัมเป็ต|เครื่องดนตรี
+🎻	violin	ไวโอลิน|เครื่องดนตรี
+🪕	banjo	แบนโจ|เครื่องสาย|ดนตรี|เพลง|สตริง
+🥁	drum	กลอง|ดนตรี|ตี|เพลง|ไม้|รัว
+🪘	long drum	กลองยาว|คองกา|เครื่องดนตรี|จังหวะ|ตี
+🪇	maracas	มาราคัส|เขย่า|เครื่องดนตรี|เคาะ|แซก|ปาร์ตี้|เพลง|ลูกแซค
+🪈	flute	ขลุ่ย|ขลุ่ยไม้|เครื่องดนตรี|ปี่|เป่า|พิคโคโล|เพลง|ไพพ์|รีคอร์เดอร์|ออเคสตร้า
+📱	mobile phone	โทรศัพท์มือถือ|โทรศัพท์|มือถือ|ไร้สาย|สื่อสาร
+📲	mobile phone with arrow	โทรศัพท์มือถือพร้อมลูกศรชี้|โทร|โทรศัพท์|มือถือ|ลูกศร
+☎️	telephone	โทรศัพท์
+📞	telephone receiver	หูโทรศัพท์|เครื่องรับ|โทรศัพท์
+📟	pager	เพจเจอร์|วิทยุติดตามตัว|สื่อสาร
+📠	fax machine	แฟกซ์|เครื่องแฟกซ์
+🔋	battery	แบตเตอรี่|ถ่าน
+🪫	low battery	แบตเตอรี่ต่ำ|ชาร์จไฟ|ถ่าน|แบตหมด|พลังงาน|อิเล็กทรอนิกส์
+🔌	electric plug	ปลั๊กไฟ|ปลั๊ก|ไฟฟ้า
+💻	laptop	แล็ปท็อป|คอมพิวเตอร์|พีซี
+🖥️	desktop computer	คอมพิวเตอร์เดสก์ท็อป|คอมพิวเตอร์|เดสก์ท็อป|ตั้งโต๊ะ
+🖨️	printer	เครื่องพิมพ์|คอมพิวเตอร์
+⌨️	keyboard	แป้นพิมพ์|คอมพิวเตอร์
+🖱️	computer mouse	เมาส์|คอมพิวเตอร์
+🖲️	trackball	แทร็กบอล|คอมพิวเตอร์
+💽	computer disk	แผ่นดิสก์|คอมพิวเตอร์|ซีดี|แสง|ออปติคอล
+💾	floppy disk	ฟลอปปี้ดิสก์|คอมพิวเตอร์|แผ่นบันทึก
+💿	optical disk	บลูเรย์|ซีดี|ดีวีดี
+📀	dvd	ดีวีดี|คอมพิวเตอร์|ซีดี|ดิสก์|บลูเรย์|แสง|ออปติคอล
+🧮	abacus	ลูกคิด|คำนวณ|เครื่องคิดเลข
+🎥	movie camera	กล้องถ่ายภาพยนตร์|บอลลีวูด|บันทึก|ฟิล์ม|หนัง|ฮอลลีวูด
+🎞️	film frames	เฟรมภาพยนตร์|เฟรม|ภาพยนตร์|หนัง
+📽️	film projector	เครื่องฉายหนัง|เครื่องฉาย|ภาพยนตร์|วิดีโอ|หนัง
+🎬	clapper board	สเลท|คัท|ถ่ายหนัง|ภาพยนตร์|แอคชั่น
+📺	television	ทีวี|โทรทัศน์
+📷	camera	กล้อง|วิดีโอ
+📸	camera with flash	กล้องเปิดแฟลช|กล้อง|แฟลช|วิดีโอ
+📹	video camera	กล้องวิดีโอ|กล้อง|วิดีโอ
+📼	videocassette	วิดีโอเทป|เทป|เพลง|วิทยุ
+🔍	magnifying glass tilted left	แว่นขยายเอียงซ้าย|ขยาย|ค้นหา|เครื่องมือ|แว่น
+🔎	magnifying glass tilted right	แว่นขยายเอียงขวา|ค้นหา|เครื่องมือ|ติดต่อ|แล็บ|วิทยาศาสตร์|แว่นขยาย|เอียง
+🕯️	candle	เทียน|แสง
+💡	light bulb	หลอดไฟ|ปิ๊งไอเดีย
+🔦	flashlight	ไฟฉาย|เครื่องมือ|ไฟฟ้า|แสง
+🏮	red paper lantern	โคมไฟแดง|กระดาษ|โคมไฟ|ญี่ปุ่น|ตะเกียง|บาร์|ร้านอาหาร|สีแดง|แสงไฟ
+🪔	diya lamp	ตะเกียงดิยา|ดิยา|ตะเกียง|น้ำมัน|แสงไฟ|อินเดีย
+📔	notebook with decorative cover	สมุดโน้ตมีลาย|สมุดโน้ต
+📕	closed book	หนังสือปิด|หนังสือ
+📖	open book	หนังสือเปิด|หนังสือ
+📗	green book	หนังสือสีเขียว|หนังสือ
+📘	blue book	หนังสือสีน้ำเงิน|หนังสือ
+📙	orange book	หนังสือสีส้ม|หนังสือ
+📚	books	หนังสือ|จด
+📓	notebook	สมุดโน้ต|จด|บันทึก
+📒	ledger	สมุดโน้ตเจาะรูข้าง|โน้ต|บัญชี|สมุด|หนังสือ
+📃	page with curl	เอกสารม้วนปลาย|กระดาษ|จด|บันทึก|เพจ|ม้วน|หน้า|เอกสาร
+📜	scroll	ม้วนกระดาษ|กระดาษ
+📄	page facing up	เอกสาร|กระดาษ|หน้า
+📰	newspaper	หนังสือพิมพ์|ข่าวสาร
+🗞️	rolled-up newspaper	ม้วนหนังสือพิมพ์|กระดาษ|ข่าว|ม้วน|หนังสือพิมพ์
+📑	bookmark tabs	แถบคั่นหน้า|คั่นหน้า|เครื่องหมาย|แท็บ
+🔖	bookmark	ที่คั่นหนังสือ|คั่น|เครื่องหมาย|หนังสือ
+🏷️	label	ป้าย
+💰	money bag	ถุงเงิน|เงิน
+🪙	coin	เหรียญ|เงิน|ดอลลาร์|ทอง|บาท|ยูโร|รวย|โลหะ|สมบัติ
+💴	yen banknote	ธนบัตรเยน|เงิน|ธนบัตร|แบงค์|เยน|แลกเปลี่ยน
+💵	dollar banknote	ธนบัตรดอลลาร์|เงิน|ดอลลาร์
+💶	euro banknote	ธนบัตรยูโร|เงิน|ธนบัตร|แบงค์|ยูโร|รวย|แลกเปลี่ยน
+💷	pound banknote	ธนบัตรปอนด์|เงิน|ธนบัตร|แบงค์|ปอนด์|รวย|ล้าน|แลกเปลี่ยน
+💸	money with wings	เงินบิน|เงินมีปีก
+💳	credit card	บัตรเครดิต|บัตร
+🧾	receipt	ใบเสร็จ|แจ้งหนี้|บัญชี|บิล|รับเงิน|หลักฐาน
+💹	chart increasing with yen	ตลาดขึ้น|กราฟ|ธนาคาร|แนวโน้ม|เยน|สกุลเงิน|หุ้น|อัตราแลกเปลี่ยน
+✉️	envelope	ซองจดหมาย|จดหมาย|อีเมล
+📧	e-mail	อีเมล|การสื่อสาร|จดหมาย
+📨	incoming envelope	จดหมายเข้า|การสื่อสาร|จดหมาย
+📩	envelope with arrow	จดหมายออก|การสื่อสาร|จดหมาย
+📤	outbox tray	กล่องขาออก|จดหมายออก
+📥	inbox tray	กล่องขาเข้า|จดหมายเข้า
+📦	package	พัสดุ|กล่อง
+📫	closed mailbox with raised flag	กล่องจดหมายปิดยกธง|กล่องจดหมาย
+📪	closed mailbox with lowered flag	กล่องจดหมายปิดคว่ำธง|กล่องจดหมาย
+📬	open mailbox with raised flag	กล่องจดหมายมีจดหมาย|กล่องจดหมาย|จดหมาย|เปิด
+📭	open mailbox with lowered flag	กล่องจดหมายว่าง|กล่องจดหมาย
+📮	postbox	ตู้ไปรษณีย์|กล่องจดหมาย
+🗳️	ballot box with ballot	หีบบัตรลงคะแนน|บัตร|ลงคะแนน|หีบ
+✏️	pencil	ดินสอ
+✒️	black nib	ปลายปากกาสีดำ|ปลายปากกา|ปากกา|สีดำ
+🖋️	fountain pen	ปากกาหมึกซึม|ปากกา|หมึกซึม
+🖊️	pen	ปากกา|ลูกลื่น|หมึก
+🖌️	paintbrush	แปรงทาสี|ภาพวาด|สี
+🖍️	crayon	ดินสอสี|วาดเขียน|สี
+📝	memo	จดบันทึก|ดินสอ|บันทึก
+💼	briefcase	กระเป๋าเอกสาร|กระเป๋า|เอกสาร
+📁	file folder	แฟ้มเอกสาร|แฟ้ม|โฟลเดอร์|ไฟล์|เอกสาร
+📂	open file folder	เปิดเอกสาร|เปิด|แฟ้ม|โฟลเดอร์|ไฟล์|เอกสาร
+🗂️	card index dividers	ที่คั่นบัตรรายการ|ดัชนี|ที่คั่น|บรรณารักษ์|บัตร|แฟ้ม|รายการ
+📅	calendar	ปฏิทิน|17|วันที่
+📆	tear-off calendar	ปฏิทินแบบฉีกออก|17|ฉีก|ปฏิทิน|วันที่
+🗒️	spiral notepad	สมุดโน้ตสันห่วง|จด|ฉีก|โน้ต|สมุด|สันห่วง
+🗓️	spiral calendar	ปฏิทินสันห่วง|ปฏิทิน|ห่วง
+📇	card index	ที่ใส่บัตร|ดัชนี|บัตร
+📈	chart increasing	แนวโน้มขึ้น|กราฟ|ข้อมูล|ขาขึ้น|เติบโต|แนวโน้ม|แผนภูมิ|เพิ่ม|หุ้น
+📉	chart decreasing	แนวโน้มลง|ขาลง
+📊	bar chart	กราฟแท่ง|ชาร์ต
+📋	clipboard	คลิปบอร์ด
+📌	pushpin	หมุดปัก|หมุด
+📍	round pushpin	หมุดหัวกลม|หมุด
+📎	paperclip	คลิปหนีบกระดาษ|คลิป
+🖇️	linked paperclips	คลิปหนีบกระดาษคู่|กระดาษ|คลิป|เชื่อมโยง|ลิงก์|หนีบ
+📏	straight ruler	ไม้บรรทัดตรง|ไม้บรรทัด
+📐	triangular ruler	ไม้บรรทัดสามเหลี่ยม|ไม้บรรทัด
+✂️	scissors	กรรไกร|เครื่องมือ
+🗃️	card file box	กล่องใส่แฟ้ม|กระดาษ|กล่อง|แฟ้ม|เอกสาร
+🗄️	file cabinet	ตู้เอกสาร|ตู้|แฟ้ม|เอกสาร
+🗑️	wastebasket	ตะกร้าขยะ|ขยะ|ตะกร้า
+🔒	locked	ล็อคปิด|กุญแจ|ปิด|ล็อก|ล็อค|ส่วนตัว
+🔓	unlocked	ล็อคเปิด|กุญแจ|ปลดล็อค|เปิด
+🔏	locked with pen	ล็อคด้วยปากกา|จะงอย|ปากกา|ล็อก|ล็อค|ส่วนตัว|หมึก
+🔐	locked with key	ล็อคด้วยกุญแจ|กุญแจ|จักรยาน|ปลอดภัย|ปิด|ล็อก|ล็อค
+🔑	key	กุญแจ|คีย์|รหัสผ่าน|ล็อก|ล็อค
+🗝️	old key	กุญแจเก่า|กุญแจ|เก่า|ล็อค
+🔨	hammer	ค้อน|เครื่องมือ
+🪓	axe	ขวาน|ผ่าฟืน|ฟัน|ไม้|สับ
+⛏️	pick	จอบ|เครื่องมือ|เหมือง
+⚒️	hammer and pick	ค้อนและจอบ|ค้อน|เครื่องมือ|จอบ
+🛠️	hammer and wrench	ค้อนและประแจ|ค้อน|เครื่องมือ|ประแจ
+🗡️	dagger	ดาบสั้น|ดาบ|อาวุธ
+⚔️	crossed swords	ดาบไขว้|ไขว้|ดาว|อาวุธ
+💣	bomb	ระเบิด|การ์ตูน|ตูม|บูม|ร้อน|อันตราย
+🪃	boomerang	บูมเมอแรง|การเด้งกลับ|สะท้อนกลับ|ออสเตรเลีย|อะบอริจิน|อาวุธ
+🏹	bow and arrow	ธนูและลูกศร|ธนู|ราศี|ลูกศร|อาวุธ
+🛡️	shield	โล่|ป้องกัน|อาวุธ
+🪚	carpentry saw	เลื่อย|เครื่องมือ|ช่างไม้|ตัด|เล็ม
+🔧	wrench	ประแจ|เครื่องมือ
+🪛	screwdriver	ไขควง|เครื่องมือ|ซ่อม|ปากแบน|สกรู
+🔩	nut and bolt	สลักและน็อต|เครื่องมือ|น็อต|สลักเกลียว
+⚙️	gear	เฟือง|เครื่องมือ
+🗜️	clamp	เครื่องบีบอัด|เครื่องมือ|บีบอัด|หนีบ
+⚖️	balance scale	ตราชั่ง|เครื่องมือ|ตุลย์|น้ำหนัก|ยุติธรรม|ราศี|สมดุล
+🦯	white cane	ไม้เท้านำทาง|การเข้าถึง|คนตาบอด|ช่วยเหลือ|นำทาง|ไม้เท้า
+🔗	link	สัญลักษณ์การลิงก์|ลิงก์
+⛓️	chains	โซ่
+🪝	hook	ตะขอ|โค้ง|งอ|จับ|ตกปลา|เบ็ด
+🧰	toolbox	กล่องเครื่องมือ|กล่อง|เครื่องมือ|ช่าง|แดง|ประแจ|หีบ
+🧲	magnet	แม่เหล็ก|กีบ|เกือกม้า|โค้ง|ดึงดูด|ตัวยู
+🪜	ladder	บันไดปีน|ก้าว|ขั้น|ไต่|บันได|ปีน
+⚗️	alembic	อุปกรณ์กลั่น|เครื่องมือ|วิทยาศาสตร์|สารเคมี
+🧪	test tube	หลอดทดลอง|เคมี|ทดลอง|แล็บ|วิทยาศาสตร์|หลอด|ห้องปฏิบัติการ
+🧫	petri dish	จานเพาะเชื้อ|จาน|นักชีววิทยา|แบคทีเรีย|เพาะเชื้อ|แล็บ|ห้องปฏิบัติการ
+🧬	dna	ดีเอ็นเอ|ชีวิต|นักชีววิทยา|พันธุศาสตร์|ยีน|วิวัฒนาการ
+🔬	microscope	กล้องจุลทรรศน์|เครื่องมือ|ทดลอง|แล็บ|วิทยาศาสตร์
+🔭	telescope	กล้องโทรทรรศน์|เครื่องมือ
+📡	satellite antenna	จานดาวเทียม|จาน|ดาวเทียม|เสาอากาศ
+💉	syringe	กระบอกฉีดยา|เข็มฉีดยา|ฉีดยา
+🩸	drop of blood	หยดเลือด|บริจาคเลือด|บาดเจ็บ|ประจำเดือน|แผล|เมนส์|ยา|หยด
+💊	pill	ยาเม็ด|แคปซูล|ป่วย|เม็ด|ยา|ไวตามิน|หมอ
+🩹	adhesive bandage	พลาสเตอร์ปิดแผล|ติด|แปะ|แผล|พลาสเตอร์
+🩼	crutch	ไม้เท้าค้ำยัน|ขา|ช่วยเหลือ|บาดเจ็บ|ป่วย|พิการ|ไม้เท้า|อุบัติเหตุ
+🩺	stethoscope	เครื่องฟังตรวจ|แพทย์|ยา|หมอ|หัวใจ|หูฟัง
+🩻	x-ray	เอ็กซ์เรย์|กระดูก|ซี่โครง|ปอด|แพทย์|หมอ
+🚪	door	ประตู
+🛗	elevator	ลิฟต์|การช่วยการเข้าถึง|รอก
+🪞	mirror	กระจก|เครื่องถ่างตรวจ|เงา|แต่งหน้า|สะท้อน
+🪟	window	หน้าต่าง|กรอบ|การเปิด|โปร่งใส|ภาพทิวทัศน์|อากาศบริสุทธิ์
+🛏️	bed	เตียง|โรงแรม|หลับ
+🛋️	couch and lamp	โซฟากับโคมไฟ|โคมไฟ|โซฟา|โรงแรม
+🪑	chair	เก้าอี้|ที่นั่ง|ไม้
+🚽	toilet	โถส้วม|ห้องน้ำ
+🪠	plunger	ที่ปั๊มชักโครก|ชักโครก|ช่างประปา|ดูดส้วม|ท่อน้ำทิ้ง|ปั๊ม|แรง|ส้วม|ห้องน้ำ
+🚿	shower	ฝักบัว|น้ำ
+🛁	bathtub	อ่างอาบน้ำ|อ่าง|อาบน้ำ
+🪤	mouse trap	กับดักหนู|กับดัก|ชีส|ล่อ|หนู|เหยื่อ
+🪒	razor	ใบมีดโกน|โกนหนวด|คม|ใบมีด
+🧴	lotion bottle	ขวดโลชั่น|ขวด|ครีมกันแดด|แชมพู|บำรุงผิว|มอยเจอร์ไรเซอร์|โลชั่น
+🧷	safety pin	เข็มกลัดซ่อนปลาย|เข็มกลัด|ความปลอดภัย|ผ้าอ้อม|พั้งค์|ร็อค
+🧹	broom	ไม้กวาด|กวาดบ้าน|ทำความสะอาด|แม่มด
+🧺	basket	ตะกร้า|ซักผ้า|ทำฟาร์ม|ปิคนิก
+🧻	roll of paper	กระดาษชำระ|ทิชชู่|ม้วน|ห้องน้ำ
+🪣	bucket	ถัง|ถังขนาดใหญ่|ถังน้ำ|ภาชนะใส่น้ำขนาดใหญ่
+🧼	soap	สบู่|ก้อน|ทำความสะอาด|ฟอง|ล้าง|อาบน้ำ
+🫧	bubbles	ฟอง|ไข่มุก|ใต้น้ำ|เรอ|ลอย|สบู่|สะอาด|อากาศ
+🪥	toothbrush	แปรงสีฟัน|แปรง|ฟัน|สะอาด|สุขอนามัย|ห้องน้ำ|อาบ
+🧽	sponge	ฟองน้ำ|ดูดซึม|ทำความสะอาด|รูพรุน|ล้างจาน|อาบน้ำ
+🧯	fire extinguisher	ที่ดับเพลิง|เคมี|ดับไฟ|ถังดับเพลิง|แรงดัน|ไหม้
+🛒	shopping cart	รถเข็น|จ่าย|ช็อปปิ้ง|ซื้อ|ตะกร้า
+🚬	cigarette	ป้ายสูบบุหรี่|ควัน|บุหรี่|ปอด|มะเร็ง|สูบ
+⚰️	coffin	โลงศพ|ความตาย
+🪦	headstone	แผ่นหินจารึก|ตาย|ป่าช้า|ป้ายสุสาน|สู่สุคติ|เสียชีวิต|หลุมศพ
+⚱️	funeral urn	โกศกระดูก|กระดูก|โกศ|ความตาย|งานศพ
+🧿	nazar amulet	เครื่องราง|ของขลัง|นัยน์ตาปีศาจ|ยันต์|ลูกปัด|สีน้ำเงิน|สีฟ้า
+🪬	hamsa	มือฮัมซา|การปกป้อง|เครื่องราง|โชคชะตา|โชคลาภ|พระแม่มารีย์|ฟาติมา|มิเรียม|มือ|หมอดู
+🗿	moai	รูปปั้นโมไอ|โมไอ|รูปปั้น|หน้า
+🪧	placard	ป้ายประกาศ|การ์ด|เครื่องหมาย|ถือป้าย|ประกาศ|ประท้วง|รั้ว|สาธิต
+🪪	identification card	บัตรประชาชน|ข้อมูล|ความปลอดภัย|บัตรประจำตัว|ใบขับขี่|ใบอนุญาต|เอกสาร|ไอดี
 symbols
-🏧	ATM sign
-🚮	litter in bin sign
-🚰	potable water
-♿	wheelchair symbol
-🚹	men’s room
-🚺	women’s room
-🚻	restroom
-🚼	baby symbol
-🚾	water closet
-🛂	passport control
-🛃	customs
-🛄	baggage claim
-🛅	left luggage
-⚠️	warning
-🚸	children crossing
-⛔	no entry
-🚫	prohibited
-🚳	no bicycles
-🚭	no smoking
-🚯	no littering
-🚱	non-potable water
-🚷	no pedestrians
-📵	no mobile phones
-🔞	no one under eighteen
-☢️	radioactive
-☣️	biohazard
-⬆️	up arrow
-↗️	up-right arrow
-➡️	right arrow
-↘️	down-right arrow
-⬇️	down arrow
-↙️	down-left arrow
-⬅️	left arrow
-↖️	up-left arrow
-↕️	up-down arrow
-↔️	left-right arrow
-↩️	right arrow curving left
-↪️	left arrow curving right
-⤴️	right arrow curving up
-⤵️	right arrow curving down
-🔃	clockwise vertical arrows
-🔄	counterclockwise arrows button
-🔙	BACK arrow
-🔚	END arrow
-🔛	ON! arrow
-🔜	SOON arrow
-🔝	TOP arrow
-🛐	place of worship
-⚛️	atom symbol
-🕉️	om
-✡️	star of David
-☸️	wheel of dharma
-☯️	yin yang
-✝️	latin cross
-☦️	orthodox cross
-☪️	star and crescent
-☮️	peace symbol
-🕎	menorah
-🔯	dotted six-pointed star
-🪯	khanda
-♈	Aries
-♉	Taurus
-♊	Gemini
-♋	Cancer
-♌	Leo
-♍	Virgo
-♎	Libra
-♏	Scorpio
-♐	Sagittarius
-♑	Capricorn
-♒	Aquarius
-♓	Pisces
-⛎	Ophiuchus
-🔀	shuffle tracks button
-🔁	repeat button
-🔂	repeat single button
-▶️	play button
-⏩	fast-forward button
-⏭️	next track button
-⏯️	play or pause button
-◀️	reverse button
-⏪	fast reverse button
-⏮️	last track button
-🔼	upwards button
-⏫	fast up button
-🔽	downwards button
-⏬	fast down button
-⏸️	pause button
-⏹️	stop button
-⏺️	record button
-⏏️	eject button
-🎦	cinema
-🔅	dim button
-🔆	bright button
-📶	antenna bars
-🛜	wireless
-📳	vibration mode
-📴	mobile phone off
-♀️	female sign
-♂️	male sign
-⚧️	transgender symbol
-✖️	multiply
-➕	plus
-➖	minus
-➗	divide
-🟰	heavy equals sign
-♾️	infinity
-‼️	double exclamation mark
-⁉️	exclamation question mark
-❓	red question mark
-❔	white question mark
-❕	white exclamation mark
-❗	red exclamation mark
-〰️	wavy dash
-💱	currency exchange
-💲	heavy dollar sign
-⚕️	medical symbol
-♻️	recycling symbol
-⚜️	fleur-de-lis
-🔱	trident emblem
-📛	name badge
-🔰	Japanese symbol for beginner
-⭕	hollow red circle
-✅	check mark button
-☑️	check box with check
-✔️	check mark
-❌	cross mark
-❎	cross mark button
-➰	curly loop
-➿	double curly loop
-〽️	part alternation mark
-✳️	eight-spoked asterisk
-✴️	eight-pointed star
-❇️	sparkle
-©️	copyright
-®️	registered
-™️	trade mark
-#️⃣	keycap: #
-*️⃣	keycap: *
-0️⃣	keycap: 0
-1️⃣	keycap: 1
-2️⃣	keycap: 2
-3️⃣	keycap: 3
-4️⃣	keycap: 4
-5️⃣	keycap: 5
-6️⃣	keycap: 6
-7️⃣	keycap: 7
-8️⃣	keycap: 8
-9️⃣	keycap: 9
-🔟	keycap: 10
-🔠	input latin uppercase
-🔡	input latin lowercase
-🔢	input numbers
-🔣	input symbols
-🔤	input latin letters
-🅰️	A button (blood type)
-🆎	AB button (blood type)
-🅱️	B button (blood type)
-🆑	CL button
-🆒	COOL button
-🆓	FREE button
-ℹ️	information
-🆔	ID button
-Ⓜ️	circled M
-🆕	NEW button
-🆖	NG button
-🅾️	O button (blood type)
-🆗	OK button
-🅿️	P button
-🆘	SOS button
-🆙	UP! button
-🆚	VS button
-🈁	Japanese “here” button
-🈂️	Japanese “service charge” button
-🈷️	Japanese “monthly amount” button
-🈶	Japanese “not free of charge” button
-🈯	Japanese “reserved” button
-🉐	Japanese “bargain” button
-🈹	Japanese “discount” button
-🈚	Japanese “free of charge” button
-🈲	Japanese “prohibited” button
-🉑	Japanese “acceptable” button
-🈸	Japanese “application” button
-🈴	Japanese “passing grade” button
-🈳	Japanese “vacancy” button
-㊗️	Japanese “congratulations” button
-㊙️	Japanese “secret” button
-🈺	Japanese “open for business” button
-🈵	Japanese “no vacancy” button
-🔴	red circle
-🟠	orange circle
-🟡	yellow circle
-🟢	green circle
-🔵	blue circle
-🟣	purple circle
-🟤	brown circle
-⚫	black circle
-⚪	white circle
-🟥	red square
-🟧	orange square
-🟨	yellow square
-🟩	green square
-🟦	blue square
-🟪	purple square
-🟫	brown square
-⬛	black large square
-⬜	white large square
-◼️	black medium square
-◻️	white medium square
-◾	black medium-small square
-◽	white medium-small square
-▪️	black small square
-▫️	white small square
-🔶	large orange diamond
-🔷	large blue diamond
-🔸	small orange diamond
-🔹	small blue diamond
-🔺	red triangle pointed up
-🔻	red triangle pointed down
-💠	diamond with a dot
-🔘	radio button
-🔳	white square button
-🔲	black square button
+🏧	ATM sign	เอทีเอ็ม|เครื่องกดเงิน|เงิน|ธนาคาร|ฝาก-ถอน|อัตโนมัติ
+🚮	litter in bin sign	ทิ้งขยะให้ลงถัง|ป้ายถังขยะ
+🚰	potable water	น้ำดื่ม|ก๊อก|ก๊อกน้ำ
+♿	wheelchair symbol	รถเข็นผู้ป่วย|คนพิการ
+🚹	men’s room	ห้องน้ำชาย|ผู้ชาย|สุขภัณฑ์|สุขา|ห้องชาย|ห้องน้ำ
+🚺	women’s room	ห้องน้ำหญิง|ผู้หญิง|สัญลักษณ์ผู้หญิง|สุขภัณฑ์|สุขา|ห้องน้ำ|ห้องหญิง
+🚻	restroom	ห้องน้ำ|สุขภัณฑ์
+🚼	baby symbol	ป้ายทารก|ที่เปลี่ยนผ้าอ้อมเด็ก
+🚾	water closet	ป้ายห้องน้ำ|ห้องน้ำ
+🛂	passport control	ตรวจพาสปอร์ต|พาสปอร์ต
+🛃	customs	ศุลกากร|ภาษี
+🛄	baggage claim	รับสัมภาระ|กระเป๋า|เดินทาง|ท่องเที่ยว|สัมภาระ|โหลด
+🛅	left luggage	บริการฝากกระเป๋า|กระเป๋า|รับฝาก|ล็อกเกอร์
+⚠️	warning	ป้ายระวัง|ป้าย|ระวัง
+🚸	children crossing	เด็กๆ ข้ามถนน|การจราจร|ข้าม|คน|เด็ก|เดินเท้า|ถนน|ป้าย|โรงเรียน
+⛔	no entry	ป้ายห้ามเข้า|การจราจร|ป้าย|หยุด|หวงห้าม|ห้ามเข้า
+🚫	prohibited	ป้ายหวงห้าม|ห้ามเข้า
+🚳	no bicycles	ห้ามจักรยาน|จราจร|จักรยาน|ทางเท้า|ห้าม
+🚭	no smoking	ป้ายห้ามสูบบุหรี่|ห้ามสูบบุหรี่
+🚯	no littering	ห้ามทิ้งขยะ|ป้ายห้ามทิ้งขยะ
+🚱	non-potable water	ห้ามดื่มน้ำ|ดื่ม|น้ำ|ห้าม
+🚷	no pedestrians	ห้ามคนเดินเท้า|คนเดินเท้า|ไม่มีคนเดินเท้า|ห้าม|ห้ามเดิน
+📵	no mobile phones	ห้ามใช้โทรศัพท์|โทรศัพท์|มือถือ|ห้าม|ห้ามโทรศัพท์|ห้ามมือถือ
+🔞	no one under eighteen	ห้ามอายุต่ำกว่า 18 ปี|18|สิบแปด|ห้าม|อายุ|อายุไม่ถึง
+☢️	radioactive	กัมมันตรังสี|กัมมันตภาพรังสี|พิษ|สารเคมี
+☣️	biohazard	เชื้อโรคอันตราย|เชื้อโรค|อันตราย
+⬆️	up arrow	ลูกศรชี้ขึ้น|ทิศทาง|ลูกศร|เหนือ
+↗️	up-right arrow	ลูกศรชี้มุมขวาบน|ตะวันออกเฉียงเหนือ|ทิศทาง|มุมขวาบน|ลูกศร
+➡️	right arrow	ลูกศรชี้ไปทางขวา|ตะวันออก|ทิศทาง|ลูกศร
+↘️	down-right arrow	ลูกศรชี้มุมขวาล่าง|ตะวันออกเฉียงใต้|ทิศทาง|ลูกศร
+⬇️	down arrow	ลูกศรชี้ลง|ใต้|ทิศทาง|ลง|ลูกศร
+↙️	down-left arrow	ลูกศรชี้มุุมซ้ายล่าง|ชี้ลง|ตะวันตกเฉียงใต้|ทิศทาง|มุมซ้ายล่าง|ลูกศร
+⬅️	left arrow	ลูกศรชี้ไปทางซ้าย|ตะวันตก|ทิศทาง|ลูกศร
+↖️	up-left arrow	ลูกศรชี้มุมซ้ายบน|ตะวันตกเฉียงเหนือ|ทิศทาง|ลูกศร
+↕️	up-down arrow	ลูกศรชี้ขึ้นลง|ขี้น|ลง|ลูกศร
+↔️	left-right arrow	ลูกศรชี้ซ้ายขวา|ขวา|ซ้าย|ลูกศร
+↩️	right arrow curving left	ลูกศรวนซ้าย|ซ้าย|ลูกศร|วน
+↪️	left arrow curving right	ลูกศรวนขวา|ขวา|ลูกศร|วน
+⤴️	right arrow curving up	ลูกศรโค้งขึ้น|ขี้น|ลูกศร
+⤵️	right arrow curving down	ลูกศรโค้งลง|ลง|ลูกศร
+🔃	clockwise vertical arrows	สัญลักษณ์โหลดซ้ำ|ซ้ำ|ตามเข็มนาฬิกา|ลูกศร|โหลด
+🔄	counterclockwise arrows button	ลูกศรทวนเข็มนาฬิกา|ทวนเข็มนาฬิกา|ลูกศร
+🔙	BACK arrow	กลับ|ลูกศร|ลูกศรกลับ
+🔚	END arrow	สิ้นสุด|ลูกศร|ลูกศรสิ้นสุด
+🔛	ON! arrow	เปิด|ลูกศร
+🔜	SOON arrow	สัญลักษณ์เร็วๆ นี้|ขวา|เร็วๆ นี้|ลูกศร|สัญลักษณ์
+🔝	TOP arrow	สัญลักษณ์บน|ชี้ขึ้น|บนสุด|ลูกศร|สัญลักษณ์
+🛐	place of worship	ที่บูชา|บูชา|ศาสนา|สักการะ
+⚛️	atom symbol	อะตอม|อเทวนิยม
+🕉️	om	เครื่องหมายโอม|ศาสนา|ฮินดู
+✡️	star of David	สตาร์ออฟเดวิด|ดาว|ดาวิด|ยิว|ยูดาย|ศาสนา
+☸️	wheel of dharma	ธรรมจักร|จักร|ธรรมะ|พุทธ|ศาสนา
+☯️	yin yang	หยินหยาง|เต๋า|ลัทธิ
+✝️	latin cross	ไม้กางเขนละติน|คริสต์|ไม้กางเขน|ศาสนา
+☦️	orthodox cross	ไม้กางเขนออร์โธดอกซ์|คริสต์|ไม้กางเขน|ศาสนา
+☪️	star and crescent	พระจันทร์เสี้ยวและดาว|มุสลิม|ศาสนา|อิสลาม
+☮️	peace symbol	เครื่องหมายสันติภาพ|สันติ|สันติภาพ|สันติสุข
+🕎	menorah	เชิงเทียน 7 กิ่ง|เชิงเทียน|เทียน|ศาสนา
+🔯	dotted six-pointed star	ดาว 6 แฉก|จุด|แฉก|โชคชะตา|ดาว|ศาสนายิว
+🪯	khanda	ขัณฑา|เกศ|ขาลสา|ซิกข์|เตฆห|ฟาเตห|ศาสนา|อินเดีย
+♈	Aries	ราศีเมษ|จักรราศี
+♉	Taurus	ราศีพฤษภ|จักรราศี
+♊	Gemini	ราศีเมถุน|จักรราศี
+♋	Cancer	ราศีกรกฎ|จักรราศี
+♌	Leo	ราศีสิงห์|จักรราศี
+♍	Virgo	ราศีกันย์|จักรราศี
+♎	Libra	ราศีตุลย์|จักรราศี
+♏	Scorpio	ราศีพิจิก|จักรราศี
+♐	Sagittarius	ราศีธนู|จักรราศี
+♑	Capricorn	ราศีมังกร|จักรราศี
+♒	Aquarius	ราศีกุมภ์|จักรราศี
+♓	Pisces	ราศีมีน|จักรราศี
+⛎	Ophiuchus	กลุ่มดาวคนแบกงู|จักรราศี
+🔀	shuffle tracks button	ลูกศรไขว้|ไขว้|ลูกศร
+🔁	repeat button	เล่นซ้ำ|ซ้ำ|ตามเข็มนาฬิกา|ลูกศร|ลูกศรตามเข็มนาฬิกา
+🔂	repeat single button	เล่นซ้ำเพลงเดียว|ครั้งเดียว|ตามเข็มนาฬิกา|ปุ่ม|ลูกศร|เล่นซ้ำ|หนึ่ง
+▶️	play button	เล่น|ขวา|ลูกศร|สามเหลี่ยม
+⏩	fast-forward button	เร่งไปข้างหน้า|2 เท่า|เร็ว|ลูกศร
+⏭️	next track button	เล่นแทร็กถัดไป|ฉาก|ถัดไป|แทร็ก|ลูกศร|สามเหลี่ยม
+⏯️	play or pause button	เล่นหรือหยุดชั่วคราว|ขวา|ลูกศร|เล่น|สามเหลี่ยม|หยุดชั่วคราว
+◀️	reverse button	ย้อนกลับ|ซ้าย|ลูกศร|สามเหลี่ยม
+⏪	fast reverse button	ถอยกลับ|กรอกลับ|ขวา|ลูกศร|สามเหลี่ยม
+⏮️	last track button	ปุ่มแทร็กก่อนหน้า|ก่อนหน้า|ฉาก|แทร็ก|ลูกศร|สามเหลี่ยม
+🔼	upwards button	ปุ่มสามเหลี่ยมขึ้น|ปุ่ม|ลูกศร|สีแดง
+⏫	fast up button	ลูกศรขึ้น|ชั้น|ชี้ขึ้น|ปุ่ม|เร็ว|ลูกศร|สองเท่า|สัญลักษณ์
+🔽	downwards button	ปุ่มสามเหลี่ยมลง|ปุ่ม|ลง|ลูกศร|สามเหลี่ยมลง|สีแดง
+⏬	fast down button	ลูกศรลง|ปุ่ม|ลง|ลูกศร
+⏸️	pause button	ปุ่มหยุุดชั่วคราว|แนวตั้ง|ปุ่ม|หยุดชั่วคราว
+⏹️	stop button	ปุ่มหยุด|สี่เหลี่ยม|หยุด
+⏺️	record button	ปุ่มอัด|บันทึก|ปุ่ม|วงกลม|อัด
+⏏️	eject button	ปุ่มดีดออก|ดีดออก|ปฏิเสธ|ปุ่ม|อีเจ็กต์
+🎦	cinema	โรงภาพยนตร์|โรงหนัง|หนัง
+🔅	dim button	แสงสว่างน้อย|ความสว่าง
+🔆	bright button	แสงสว่างมาก|ความสว่าง
+📶	antenna bars	สัญญาณมือถือ|โทรศัพท์|มือถือ|สัญญาณ
+🛜	wireless	ไร้สาย|การเชื่อมต่อ|คอมพิวเตอร์|เครือข่าย|เน็ต|บรอดแบนด์|เราเตอร์|สมาร์ทโฟน|อินเทอร์เน็ต|ฮอตสปอต
+📳	vibration mode	โหมดสั่น|โทรศัพท์มือถือ
+📴	mobile phone off	ปิดมือถือ|โทรศัพท์|ปิด|ปิดเครื่อง|มือถือ
+♀️	female sign	สัญลักษณ์เพศหญิง|ผู้หญิง
+♂️	male sign	สัญลักษณ์เพศชาย|ผู้ชาย
+⚧️	transgender symbol	สัญลักษณ์คนข้ามเพศ|คนข้ามเพศ
+✖️	multiply	คูณ|×|x|การคูณ|เครื่องหมาย|เครื่องหมายคูณ|ยกเลิก
+➕	plus	บวก|+|คณิต|เครื่องหมาย|เครื่องหมายบวก
+➖	minus	ลบ|-|−|คณิต|เครื่องหมาย|เครื่องหมายลบ
+➗	divide	หาร|÷|คณิต|เครื่องหมาย|เครื่องหมายหาร
+🟰	heavy equals sign	เครื่องหมายเท่ากับตัวหนา|คณิต|ความเท่าเทียม|คำตอบ|เครื่องหมาย|ตัวหนา|เท่ากับ
+♾️	infinity	ไม่มีที่สิ้นสุด|ตลอดกาล|ตลอดไป|ไม่มีขอบเขต
+‼️	double exclamation mark	เครื่องหมายอัศเจรีย์คู่|!|!!|เครื่องหมาย|ตกใจ|ปังปัง|วรรคตอน|อัศเจรีย์|อัศเจรีย์คู่
+⁉️	exclamation question mark	เครื่องหมายอัศเจรีย์และคำถาม|!|!?|?|คำถาม|เครื่องหมาย|ตกใจ|วรรคตอน|อัศเจรีย์|อัศเจรีย์และคำถาม
+❓	red question mark	เครื่องหมายคำถาม|?|คำถาม|เครื่องหมาย|เครื่องหมายวรรคตอน
+❔	white question mark	เครื่องหมายคำถามสีขาว|?|คำถาม|เครื่องหมาย|เครื่องหมายวรรคตอน
+❕	white exclamation mark	เครื่องหมายอัศเจรีย์สีขาว|!|เครื่องหมาย|ตกใจ|วรรคตอน|สีขาว|อัศเจรีย์
+❗	red exclamation mark	เครื่องหมายอัศเจรีย์สีแดง|!|เครื่องหมาย|ตกใจ|วรรคตอน|สีแดง|อัศเจรีย์
+〰️	wavy dash	เส้นคลื่น|คลื่น|เครื่องหมาย|เส้น
+💱	currency exchange	การแลกเปลี่ยนเงิน|เงิน|ธนาคาร|แลกเปลี่ยน|สกุลเงิน
+💲	heavy dollar sign	สัญลักษณ์ดอลลาร์|เงิน|เงินสด|จ่าย|ดอลลาร์|ล้าน|สกุลเงิน|สัญลักษณ์
+⚕️	medical symbol	เครื่องหมายการแพทย์|การแพทย์|คทางูไขว้|ไม้เท้า|แอสคูลาปิอุส
+♻️	recycling symbol	สัญลักษณ์รีไซเคิล|ป้าย|รีไซเคิล|สัญลักษณ์
+⚜️	fleur-de-lis	สัญลักษณ์ดอกลิลลี่|ดอกไม้|ลิลลี่|สัญลักษณ์|อัศวิน|ไอริส
+🔱	trident emblem	ฉมวก|เครื่องมือ|ตรา|เรือ|สมอ|สามง่าม
+📛	name badge	ป้ายชื่อ|ชื่อ|ป้าย
+🔰	Japanese symbol for beginner	สัญลักษณ์มือใหม่หัดขับ|เขียว|เครื่องมือ|ญี่ปุ่น|บั้ง|ใบไม้|มือใหม่|สัญลักษณ์|หัดขับ|เหลือง
+⭕	hollow red circle	วงกลมกลวงสีแดง|กลวง|วงกลม|สีแดง|ใหญ่
+✅	check mark button	ปุ่มเครื่องหมายถูก|✓|กา|เครื่องหมาย|เช็ค|ติ๊ก|ถูก|ถูกต้อง|ปุ่ม|เรียบร้อย|เสร็จแล้ว
+☑️	check box with check	กล่องกาเครื่องหมายมีเครื่องหมายถูก|✓|กล่อง|กา|เครื่องหมาย|เช็ค|ถูก|ถูกต้อง|เรียบร้อย|เลือก|เสร็จแล้ว
+✔️	check mark	เครื่องหมายถูก|✓|เครื่องหมาย|เช็ค|ติ๊ก|ถูก|เลือก|เสร็จแล้ว|หนา
+❌	cross mark	เครื่องหมายกากบาท|กากบาท|คูณ|เครื่องหมาย|ยกเลิก
+❎	cross mark button	ปุ่มเครื่องหมายกากบาท|×|x|กากบาท|เครื่องหมาย|สี่เหลี่ยม
+➰	curly loop	ห่วง|วง
+➿	double curly loop	ห่วง 2 รู|เส้นโค้ง|ห่วง
+〽️	part alternation mark	เครื่องหมายเปลี่ยนท่อน|เครื่องหมาย|ท่อน
+✳️	eight-spoked asterisk	ดอกจัน 8 ซี่|*|เครื่องหมาย|ดอกจัน|แปดแฉก|แปดซี่
+✴️	eight-pointed star	ดาว 8 แฉก|*|ดาว
+❇️	sparkle	เปล่งประกาย|*|ประกาย
+©️	copyright	ลิขสิทธิ์|เครื่องหมาย|สงวน|สัญลักษณ์
+®️	registered	จดทะเบียน|เครื่องหมาย|สัญลักษณ์
+™️	trade mark	เครื่องหมายการค้า|ป้ายเครื่องหมายการค้า
+#️⃣	keycap: #	ปุ่มกดเลข: #|ปุ่มกดเลข
+*️⃣	keycap: *	ปุ่มกดเลข: *|ปุ่มกดเลข
+0️⃣	keycap: 0	ปุ่มกดเลข: 0|ปุ่มกดเลข
+1️⃣	keycap: 1	ปุ่มกดเลข: 1|ปุ่มกดเลข
+2️⃣	keycap: 2	ปุ่มกดเลข: 2|ปุ่มกดเลข
+3️⃣	keycap: 3	ปุ่มกดเลข: 3|ปุ่มกดเลข
+4️⃣	keycap: 4	ปุ่มกดเลข: 4|ปุ่มกดเลข
+5️⃣	keycap: 5	ปุ่มกดเลข: 5|ปุ่มกดเลข
+6️⃣	keycap: 6	ปุ่มกดเลข: 6|ปุ่มกดเลข
+7️⃣	keycap: 7	ปุ่มกดเลข: 7|ปุ่มกดเลข
+8️⃣	keycap: 8	ปุ่มกดเลข: 8|ปุ่มกดเลข
+9️⃣	keycap: 9	ปุ่มกดเลข: 9|ปุ่มกดเลข
+🔟	keycap: 10	ปุ่มกดเลข: 10|ปุ่มกดเลข
+🔠	input latin uppercase	อักษรตัวพิมพ์ใหญ่|ภาษาอังกฤษ|อักษรตัวใหญ่
+🔡	input latin lowercase	อักษรตัวพิมพ์เล็ก|ภาษาอังกฤษ|อักษรตัวเล็ก
+🔢	input numbers	หมายเลข|1234|ตัวเลข
+🔣	input symbols	สัญลักษณ์|เครื่องหมาย
+🔤	input latin letters	ตัวอักษรภาษาอังกฤษ|ตัวอักษร|อักษรละติน|เอบีซี
+🅰️	A button (blood type)	เลือดกรุ๊ปเอ|กรุ๊ปเลือด|กรุ๊ปเอ
+🆎	AB button (blood type)	เลือดกรุ๊ปเอบี|กรุ๊ปเลือด|กรุ๊ปเลือดเอบี|กรุ๊ปเอบี
+🅱️	B button (blood type)	เลือดกรุ๊ปบี|กรุ๊ปบี|ชนิด|ปุ่ม|เลือด
+🆑	CL button	ลบข้อมูล|สัญลักษณ์ลบ
+🆒	COOL button	เย็น|สัญลักษณ์ความเย็น
+🆓	FREE button	ฟรี|ไม่มีค่าใช้จ่าย|สัญลักษณ์ฟรี
+ℹ️	information	แหล่งข้อมูล|ข้อมูล|ที่มา|แหล่ง
+🆔	ID button	หมายเลขประจำตัว|รหัสประจำตัว|สัญลักษณ์หมายเลขประจำตัว
+Ⓜ️	circled M	ตัวเอ็มในวงกลม|ตัวเอ็ม|โรมัน|ละติน|วงกลม|อักษร|อังกฤษ
+🆕	NEW button	ใหม่|สัญลักษณ์ใหม่
+🆖	NG button	ปุ่มเอ็นจี|ปุ่ม|โรมัน|ละติน|สัญลักษณ์|อักษร|อังกฤษ|เอ็นจี
+🅾️	O button (blood type)	เลือดกรุ๊ปโอ|กรุ๊ปเลือด|กรุ๊ปโอ
+🆗	OK button	โอเค|ตกลง|สัญลักษณ์โอเค
+🅿️	P button	ที่จอดรถ|จอดรถ
+🆘	SOS button	ช่วยด้วย|ขอความช่วยเหลือ|สัญลักษณ์ขอความช่วยเหลือ
+🆙	UP! button	ขึ้น|สัญลักษณ์ขึ้น
+🆚	VS button	ต่อสู้กับ|สัญลักษณ์ต่อสู้กับ
+🈁	Japanese “here” button	ภาษาญี่ปุ่นคำว่า “ที่นี่”|คะตะกะนะ|ที่นี่|ปุ่ม|ภาษาญี่ปุ่น
+🈂️	Japanese “service charge” button	ภาษาญี่ปุ่นคำว่า “ค่าบริการ”|คะตะกะนะ|ค่าบริการ|ภาษาญี่ปุ่นคำว่าซะ
+🈷️	Japanese “monthly amount” button	ภาษาญี่ปุ่นคำว่า “จำนวนต่อเดือน”|จำนวน|ตัวอักษรจีน|ปุ่ม|พระจันทร์|ภาษาญี่ปุ่น|รายเดือน
+🈶	Japanese “not free of charge” button	ภาษาญี่ปุ่นคำว่า “คิดค่าใช้จ่าย”|ค่าใช้จ่าย|ตัวอักษรจีน|ปุ่ม|ภาษาญี่ปุ่นมี
+🈯	Japanese “reserved” button	ภาษาญี่ปุ่นคำว่า “จองแล้ว”|จองแล้ว|ตัวอักษรจีน|ปุ่ม|ภาษาญี่ปุ่นชี้นิ้ว
+🉐	Japanese “bargain” button	ภาษาญี่ปุ่นคำว่า “ราคาถูก”|ต่อรอง|ตัวอักษรจีน|ปุ่ม|ภาษาญี่ปุ่นประโยชน์|ราคาถูก
+🈹	Japanese “discount” button	ภาษาญี่ปุ่นคำว่า “ส่วนลด”|ตัวอักษรจีน|ปุ่ม|ภาษาญี่ปุ่นหาร|ส่วนลด
+🈚	Japanese “free of charge” button	ภาษาญี่ปุ่นคำว่า “ไม่มี”|ตัวอักษรจีน|ปุ่ม|ภาษาญี่ปุ่นไม่มี|ไม่คิดเงิน
+🈲	Japanese “prohibited” button	ภาษาญี่ปุ่นคำว่า “ห้าม”|ต้องห้าม|ตัวอักษรจีน|ปุ่ม|ภาษาญี่ปุ่น
+🉑	Japanese “acceptable” button	ภาษาญี่ปุ่นคำว่า “ยอมรับได้”|ตัวอักษรจีน|ปุ่ม|ภาษาญี่ปุ่น|ยอมรับได้
+🈸	Japanese “application” button	ภาษาญี่ปุ่นคำว่า “ใบสมัคร”|ใช้|ตัวอักษรจีน|ใบสมัคร|ปุ่ม|ภาษาญี่ปุ่น
+🈴	Japanese “passing grade” button	ภาษาญี่ปุ่นคำว่า “ผ่าน”|เกรด|ตัวอักษรจีน|ปุ่ม|ผ่าน|ภาษาญี่ปุ่น
+🈳	Japanese “vacancy” button	ภาษาจีนว่างเปล่า|ตัวอักษรจีน|ปุ่ม|ภาษาญี่ปุ่น|ว่างเปล่า
+㊗️	Japanese “congratulations” button	ภาษาญี่ปุ่นคำว่า “แสดงความยินดี”|ตัวอักษรจีน|ปุ่ม|ภาษาญี่ปุ่น|แสดงความยินดี
+㊙️	Japanese “secret” button	ภาษาญี่ปุ่นคำว่า “ความลับ”|ความลับ|ตัวอักษรจีน|ปุ่ม|ภาษาญี่ปุ่น
+🈺	Japanese “open for business” button	ภาษาญี่ปุ่นคำว่า “เปิดทำการ”|ตัวอักษรจีน|ปุ่ม|เปิดทำการ|ภาษาญี่ปุ่น
+🈵	Japanese “no vacancy” button	ภาษาญี่ปุ่นคำว่า “เต็ม”|ตัวอักษรจีน|เต็ม|ปุ่ม|ภาษาญี่ปุ่น|ไม่ว่าง|สมบูรณ์
+🔴	red circle	วงกลมสีแดง|แดง|วงกลม
+🟠	orange circle	วงกลมสีส้ม|วงกลม|สีส้ม
+🟡	yellow circle	วงกลมสีเหลือง|จันทร์|บอล|ไฟเหลือง|วงกลม|อาทิตย์
+🟢	green circle	วงกลมสีเขียว|ไฟเขียว|วงกลม|สีเขียว
+🔵	blue circle	วงกลมสีน้ำเงิน|น้ำเงิน|วงกลม
+🟣	purple circle	วงกลมสีม่วง|วงกลม|สีม่วง
+🟤	brown circle	วงกลมสีน้ำตาล|วงกลม|สีน้ำตาล
+⚫	black circle	วงกลมสีดำ|วงกลม|สีดำ
+⚪	white circle	วงกลมสีขาว|วงกลม|สีขาว
+🟥	red square	สี่เหลี่ยมสีแดง|จัตุรัส|โทษ|ใบแดง|สีแดง|สี่เหลี่ยม
+🟧	orange square	สี่เหลี่ยมสีส้ม|จัตุรัส|สีส้ม|สี่เหลี่ยม
+🟨	yellow square	สี่เหลี่ยมสีเหลือง|จัตุรัส|โทษ|ใบเหลือง|สี่เหลี่ยม|สีเหลือง
+🟩	green square	สี่เหลี่ยมสีเขียว|จัตุรัส|สีเขียว|สี่เหลี่ยม
+🟦	blue square	สี่เหลี่ยมสีน้ำเงิน|จัตุรัส|สีน้ำเงิน|สี่เหลี่ยม
+🟪	purple square	สี่เหลี่ยมสีม่วง|จัตุรัส|สีม่วง|สี่เหลี่ยม
+🟫	brown square	สี่เหลี่ยมสีน้ำตาล|จัตุรัส|สีน้ำตาล|สี่เหลี่ยม
+⬛	black large square	สี่เหลี่ยมใหญ่สีดำ|เรขาคณิต|สี่เหลี่ยม
+⬜	white large square	สี่เหลี่ยมใหญ่สีขาว|เรขาคณิต|สี่เหลี่ยม
+◼️	black medium square	สี่เหลี่ยมขนาดกลางสีดำ|จัตุรัส|เรขาคณิต|สีดำ|สี่เหลี่ยม
+◻️	white medium square	สี่เหลี่ยมขนาดกลางสีขาว|เรขาคณิต|สี่เหลี่ยม
+◾	black medium-small square	สี่เหลี่ยมเล็กปานกลางสีดำ|เรขาคณิต|สี่เหลี่ยม
+◽	white medium-small square	สี่เหลี่ยมเล็กปานกลางสีขาว|เรขาคณิต|สี่เหลี่ยม
+▪️	black small square	สี่เหลี่ยมเล็กสีดำ|เรขาคณิต|สี่เหลี่ยม
+▫️	white small square	สี่เหลี่ยมเล็กสีขาว|เรขาคณิต|สี่เหลี่ยม
+🔶	large orange diamond	เพชรใหญ่สีส้ม|เรขาคณิต|สี่เหลี่ยม
+🔷	large blue diamond	เพชรใหญ่สีน้ำเงิน|เรขาคณิต|สี่เหลี่ยม
+🔸	small orange diamond	เพชรเล็กสีส้ม|เพชร|เรขาคณิต|สีส้ม
+🔹	small blue diamond	เพชรเล็กสีน้ำเงิน|เพชร|เรขาคณิต|สีน้ำเงิน
+🔺	red triangle pointed up	สามเหลี่ยมหงายสีแดง|ชี้ขึ้น|เรขาคณิต|สามเหลี่ยม|สีแดง|หงาย
+🔻	red triangle pointed down	สามเหลี่ยมคว่ำสีแดง|คว่ำ|ชี้ลง|เรขาคณิต|สามเหลี่ยม|สีแดง
+💠	diamond with a dot	ข้าวหลามตัดมีจุดตรงกลาง|ข้าวหลามตัด|เพชร|เรขาคณิต
+🔘	radio button	ปุ่มวิทยุ|ปุ่ม|เรขาคณิต|วิทยุ
+🔳	white square button	ปุ่มสี่เหลี่ยมขอบขาว|ปุ่ม|ปุ่มสี่เหลี่ยมสีขาว|สี่เหลี่ยม
+🔲	black square button	ปุ่มสี่เหลี่ยมขอบดำ|ปุ่ม|ปุ่มสี่เหลี่ยมสีดำ|สี่เหลี่ยม
 flags
-🏁	chequered flag
-🚩	triangular flag
-🎌	crossed flags
-🏴	black flag
-🏳️	white flag
-🏳️‍🌈	rainbow flag
-🏳️‍⚧️	transgender flag
-🏴‍☠️	pirate flag
-🇦🇨	flag: Ascension Island
-🇦🇩	flag: Andorra
-🇦🇪	flag: United Arab Emirates
-🇦🇫	flag: Afghanistan
-🇦🇬	flag: Antigua & Barbuda
-🇦🇮	flag: Anguilla
-🇦🇱	flag: Albania
-🇦🇲	flag: Armenia
-🇦🇴	flag: Angola
-🇦🇶	flag: Antarctica
-🇦🇷	flag: Argentina
-🇦🇸	flag: American Samoa
-🇦🇹	flag: Austria
-🇦🇺	flag: Australia
-🇦🇼	flag: Aruba
-🇦🇽	flag: Åland Islands
-🇦🇿	flag: Azerbaijan
-🇧🇦	flag: Bosnia & Herzegovina
-🇧🇧	flag: Barbados
-🇧🇩	flag: Bangladesh
-🇧🇪	flag: Belgium
-🇧🇫	flag: Burkina Faso
-🇧🇬	flag: Bulgaria
-🇧🇭	flag: Bahrain
-🇧🇮	flag: Burundi
-🇧🇯	flag: Benin
-🇧🇱	flag: St. Barthélemy
-🇧🇲	flag: Bermuda
-🇧🇳	flag: Brunei
-🇧🇴	flag: Bolivia
-🇧🇶	flag: Caribbean Netherlands
-🇧🇷	flag: Brazil
-🇧🇸	flag: Bahamas
-🇧🇹	flag: Bhutan
-🇧🇻	flag: Bouvet Island
-🇧🇼	flag: Botswana
-🇧🇾	flag: Belarus
-🇧🇿	flag: Belize
-🇨🇦	flag: Canada
-🇨🇨	flag: Cocos (Keeling) Islands
-🇨🇩	flag: Congo - Kinshasa
-🇨🇫	flag: Central African Republic
-🇨🇬	flag: Congo - Brazzaville
-🇨🇭	flag: Switzerland
-🇨🇮	flag: Côte d’Ivoire
-🇨🇰	flag: Cook Islands
-🇨🇱	flag: Chile
-🇨🇲	flag: Cameroon
-🇨🇳	flag: China
-🇨🇴	flag: Colombia
-🇨🇵	flag: Clipperton Island
-🇨🇷	flag: Costa Rica
-🇨🇺	flag: Cuba
-🇨🇻	flag: Cape Verde
-🇨🇼	flag: Curaçao
-🇨🇽	flag: Christmas Island
-🇨🇾	flag: Cyprus
-🇨🇿	flag: Czechia
-🇩🇪	flag: Germany
-🇩🇬	flag: Diego Garcia
-🇩🇯	flag: Djibouti
-🇩🇰	flag: Denmark
-🇩🇲	flag: Dominica
-🇩🇴	flag: Dominican Republic
-🇩🇿	flag: Algeria
-🇪🇦	flag: Ceuta & Melilla
-🇪🇨	flag: Ecuador
-🇪🇪	flag: Estonia
-🇪🇬	flag: Egypt
-🇪🇭	flag: Western Sahara
-🇪🇷	flag: Eritrea
-🇪🇸	flag: Spain
-🇪🇹	flag: Ethiopia
-🇪🇺	flag: European Union
-🇫🇮	flag: Finland
-🇫🇯	flag: Fiji
-🇫🇰	flag: Falkland Islands
-🇫🇲	flag: Micronesia
-🇫🇴	flag: Faroe Islands
-🇫🇷	flag: France
-🇬🇦	flag: Gabon
-🇬🇧	flag: United Kingdom
-🇬🇩	flag: Grenada
-🇬🇪	flag: Georgia
-🇬🇫	flag: French Guiana
-🇬🇬	flag: Guernsey
-🇬🇭	flag: Ghana
-🇬🇮	flag: Gibraltar
-🇬🇱	flag: Greenland
-🇬🇲	flag: Gambia
-🇬🇳	flag: Guinea
-🇬🇵	flag: Guadeloupe
-🇬🇶	flag: Equatorial Guinea
-🇬🇷	flag: Greece
-🇬🇸	flag: South Georgia & South Sandwich Islands
-🇬🇹	flag: Guatemala
-🇬🇺	flag: Guam
-🇬🇼	flag: Guinea-Bissau
-🇬🇾	flag: Guyana
-🇭🇰	flag: Hong Kong SAR China
-🇭🇲	flag: Heard & McDonald Islands
-🇭🇳	flag: Honduras
-🇭🇷	flag: Croatia
-🇭🇹	flag: Haiti
-🇭🇺	flag: Hungary
-🇮🇨	flag: Canary Islands
-🇮🇩	flag: Indonesia
-🇮🇪	flag: Ireland
-🇮🇱	flag: Israel
-🇮🇲	flag: Isle of Man
-🇮🇳	flag: India
-🇮🇴	flag: British Indian Ocean Territory
-🇮🇶	flag: Iraq
-🇮🇷	flag: Iran
-🇮🇸	flag: Iceland
-🇮🇹	flag: Italy
-🇯🇪	flag: Jersey
-🇯🇲	flag: Jamaica
-🇯🇴	flag: Jordan
-🇯🇵	flag: Japan
-🇰🇪	flag: Kenya
-🇰🇬	flag: Kyrgyzstan
-🇰🇭	flag: Cambodia
-🇰🇮	flag: Kiribati
-🇰🇲	flag: Comoros
-🇰🇳	flag: St. Kitts & Nevis
-🇰🇵	flag: North Korea
-🇰🇷	flag: South Korea
-🇰🇼	flag: Kuwait
-🇰🇾	flag: Cayman Islands
-🇰🇿	flag: Kazakhstan
-🇱🇦	flag: Laos
-🇱🇧	flag: Lebanon
-🇱🇨	flag: St. Lucia
-🇱🇮	flag: Liechtenstein
-🇱🇰	flag: Sri Lanka
-🇱🇷	flag: Liberia
-🇱🇸	flag: Lesotho
-🇱🇹	flag: Lithuania
-🇱🇺	flag: Luxembourg
-🇱🇻	flag: Latvia
-🇱🇾	flag: Libya
-🇲🇦	flag: Morocco
-🇲🇨	flag: Monaco
-🇲🇩	flag: Moldova
-🇲🇪	flag: Montenegro
-🇲🇫	flag: St. Martin
-🇲🇬	flag: Madagascar
-🇲🇭	flag: Marshall Islands
-🇲🇰	flag: North Macedonia
-🇲🇱	flag: Mali
-🇲🇲	flag: Myanmar (Burma)
-🇲🇳	flag: Mongolia
-🇲🇴	flag: Macao SAR China
-🇲🇵	flag: Northern Mariana Islands
-🇲🇶	flag: Martinique
-🇲🇷	flag: Mauritania
-🇲🇸	flag: Montserrat
-🇲🇹	flag: Malta
-🇲🇺	flag: Mauritius
-🇲🇻	flag: Maldives
-🇲🇼	flag: Malawi
-🇲🇽	flag: Mexico
-🇲🇾	flag: Malaysia
-🇲🇿	flag: Mozambique
-🇳🇦	flag: Namibia
-🇳🇨	flag: New Caledonia
-🇳🇪	flag: Niger
-🇳🇫	flag: Norfolk Island
-🇳🇬	flag: Nigeria
-🇳🇮	flag: Nicaragua
-🇳🇱	flag: Netherlands
-🇳🇴	flag: Norway
-🇳🇵	flag: Nepal
-🇳🇷	flag: Nauru
-🇳🇺	flag: Niue
-🇳🇿	flag: New Zealand
-🇴🇲	flag: Oman
-🇵🇦	flag: Panama
-🇵🇪	flag: Peru
-🇵🇫	flag: French Polynesia
-🇵🇬	flag: Papua New Guinea
-🇵🇭	flag: Philippines
-🇵🇰	flag: Pakistan
-🇵🇱	flag: Poland
-🇵🇲	flag: St. Pierre & Miquelon
-🇵🇳	flag: Pitcairn Islands
-🇵🇷	flag: Puerto Rico
-🇵🇸	flag: Palestinian Territories
-🇵🇹	flag: Portugal
-🇵🇼	flag: Palau
-🇵🇾	flag: Paraguay
-🇶🇦	flag: Qatar
-🇷🇪	flag: Réunion
-🇷🇴	flag: Romania
-🇷🇸	flag: Serbia
-🇷🇺	flag: Russia
-🇷🇼	flag: Rwanda
-🇸🇦	flag: Saudi Arabia
-🇸🇧	flag: Solomon Islands
-🇸🇨	flag: Seychelles
-🇸🇩	flag: Sudan
-🇸🇪	flag: Sweden
-🇸🇬	flag: Singapore
-🇸🇭	flag: St. Helena
-🇸🇮	flag: Slovenia
-🇸🇯	flag: Svalbard & Jan Mayen
-🇸🇰	flag: Slovakia
-🇸🇱	flag: Sierra Leone
-🇸🇲	flag: San Marino
-🇸🇳	flag: Senegal
-🇸🇴	flag: Somalia
-🇸🇷	flag: Suriname
-🇸🇸	flag: South Sudan
-🇸🇹	flag: São Tomé & Príncipe
-🇸🇻	flag: El Salvador
-🇸🇽	flag: Sint Maarten
-🇸🇾	flag: Syria
-🇸🇿	flag: Eswatini
-🇹🇦	flag: Tristan da Cunha
-🇹🇨	flag: Turks & Caicos Islands
-🇹🇩	flag: Chad
-🇹🇫	flag: French Southern Territories
-🇹🇬	flag: Togo
-🇹🇭	flag: Thailand
-🇹🇯	flag: Tajikistan
-🇹🇰	flag: Tokelau
-🇹🇱	flag: Timor-Leste
-🇹🇲	flag: Turkmenistan
-🇹🇳	flag: Tunisia
-🇹🇴	flag: Tonga
-🇹🇷	flag: Turkey
-🇹🇹	flag: Trinidad & Tobago
-🇹🇻	flag: Tuvalu
-🇹🇼	flag: Taiwan
-🇹🇿	flag: Tanzania
-🇺🇦	flag: Ukraine
-🇺🇬	flag: Uganda
-🇺🇲	flag: U.S. Outlying Islands
-🇺🇳	flag: United Nations
-🇺🇸	flag: United States
-🇺🇾	flag: Uruguay
-🇺🇿	flag: Uzbekistan
-🇻🇦	flag: Vatican City
-🇻🇨	flag: St. Vincent & Grenadines
-🇻🇪	flag: Venezuela
-🇻🇬	flag: British Virgin Islands
-🇻🇮	flag: U.S. Virgin Islands
-🇻🇳	flag: Vietnam
-🇻🇺	flag: Vanuatu
-🇼🇫	flag: Wallis & Futuna
-🇼🇸	flag: Samoa
-🇽🇰	flag: Kosovo
-🇾🇪	flag: Yemen
-🇾🇹	flag: Mayotte
-🇿🇦	flag: South Africa
-🇿🇲	flag: Zambia
-🇿🇼	flag: Zimbabwe
-🏴󠁧󠁢󠁥󠁮󠁧󠁿	flag: England
-🏴󠁧󠁢󠁳󠁣󠁴󠁿	flag: Scotland
-🏴󠁧󠁢󠁷󠁬󠁳󠁿	flag: Wales
+🏁	chequered flag	ธงตราหมากรุก|กีฬา|แข่งรถ|ชนะ|ตารางหมากรุก|ธง|เส้นชัย
+🚩	triangular flag	ธงปักตำแหน่ง|ธง|ธงแดง|ธงสามเหลี่ยม
+🎌	crossed flags	ธงไขว้|การฉลอง|ไขว้|ญี่ปุ่น|ธง
+🏴	black flag	ธงดำ|ธง
+🏳️	white flag	ธงขาว|ธง
+🏳️‍🌈	rainbow flag	ธงสีรุ้ง|ธง|สายรุ้ง
+🏳️‍⚧️	transgender flag	ธงคนข้ามเพศ|คนข้ามเพศ|ธง|สีขาว|สีชมพู|สีฟ้า
+🏴‍☠️	pirate flag	ธงโจรสลัด|ขุมทรัพย์|จอลลีโรเจอร์|โจรสลัด|ปล้น
+🇦🇨	flag: Ascension Island	ธง: เกาะแอสเซนชัน|ธง
+🇦🇩	flag: Andorra	ธง: อันดอร์รา|ธง
+🇦🇪	flag: United Arab Emirates	ธง: สหรัฐอาหรับเอมิเรตส์|ธง
+🇦🇫	flag: Afghanistan	ธง: อัฟกานิสถาน|ธง
+🇦🇬	flag: Antigua & Barbuda	ธง: แอนติกาและบาร์บูดา|ธง
+🇦🇮	flag: Anguilla	ธง: แองกวิลลา|ธง
+🇦🇱	flag: Albania	ธง: แอลเบเนีย|ธง
+🇦🇲	flag: Armenia	ธง: อาร์เมเนีย|ธง
+🇦🇴	flag: Angola	ธง: แองโกลา|ธง
+🇦🇶	flag: Antarctica	ธง: แอนตาร์กติกา|ธง
+🇦🇷	flag: Argentina	ธง: อาร์เจนตินา|ธง
+🇦🇸	flag: American Samoa	ธง: อเมริกันซามัว|ธง
+🇦🇹	flag: Austria	ธง: ออสเตรีย|ธง
+🇦🇺	flag: Australia	ธง: ออสเตรเลีย|ธง
+🇦🇼	flag: Aruba	ธง: อารูบา|ธง
+🇦🇽	flag: Åland Islands	ธง: หมู่เกาะโอลันด์|ธง
+🇦🇿	flag: Azerbaijan	ธง: อาเซอร์ไบจาน|ธง
+🇧🇦	flag: Bosnia & Herzegovina	ธง: บอสเนียและเฮอร์เซโกวีนา|ธง
+🇧🇧	flag: Barbados	ธง: บาร์เบโดส|ธง
+🇧🇩	flag: Bangladesh	ธง: บังกลาเทศ|ธง
+🇧🇪	flag: Belgium	ธง: เบลเยียม|ธง
+🇧🇫	flag: Burkina Faso	ธง: บูร์กินาฟาโซ|ธง
+🇧🇬	flag: Bulgaria	ธง: บัลแกเรีย|ธง
+🇧🇭	flag: Bahrain	ธง: บาห์เรน|ธง
+🇧🇮	flag: Burundi	ธง: บุรุนดี|ธง
+🇧🇯	flag: Benin	ธง: เบนิน|ธง
+🇧🇱	flag: St. Barthélemy	ธง: เซนต์บาร์เธเลมี|ธง
+🇧🇲	flag: Bermuda	ธง: เบอร์มิวดา|ธง
+🇧🇳	flag: Brunei	ธง: บรูไน|ธง
+🇧🇴	flag: Bolivia	ธง: โบลิเวีย|ธง
+🇧🇶	flag: Caribbean Netherlands	ธง: เนเธอร์แลนด์แคริบเบียน|ธง
+🇧🇷	flag: Brazil	ธง: บราซิล|ธง
+🇧🇸	flag: Bahamas	ธง: บาฮามาส|ธง
+🇧🇹	flag: Bhutan	ธง: ภูฏาน|ธง
+🇧🇻	flag: Bouvet Island	ธง: เกาะบูเว|ธง
+🇧🇼	flag: Botswana	ธง: บอตสวานา|ธง
+🇧🇾	flag: Belarus	ธง: เบลารุส|ธง
+🇧🇿	flag: Belize	ธง: เบลีซ|ธง
+🇨🇦	flag: Canada	ธง: แคนาดา|ธง
+🇨🇨	flag: Cocos (Keeling) Islands	ธง: หมู่เกาะโคโคส (คีลิง)|ธง
+🇨🇩	flag: Congo - Kinshasa	ธง: คองโก - กินชาซา|ธง
+🇨🇫	flag: Central African Republic	ธง: สาธารณรัฐแอฟริกากลาง|ธง
+🇨🇬	flag: Congo - Brazzaville	ธง: คองโก - บราซซาวิล|ธง
+🇨🇭	flag: Switzerland	ธง: สวิตเซอร์แลนด์|ธง
+🇨🇮	flag: Côte d’Ivoire	ธง: โกตดิวัวร์|ธง
+🇨🇰	flag: Cook Islands	ธง: หมู่เกาะคุก|ธง
+🇨🇱	flag: Chile	ธง: ชิลี|ธง
+🇨🇲	flag: Cameroon	ธง: แคเมอรูน|ธง
+🇨🇳	flag: China	ธง: จีน|ธง
+🇨🇴	flag: Colombia	ธง: โคลอมเบีย|ธง
+🇨🇵	flag: Clipperton Island	ธง: เกาะคลิปเปอร์ตัน|ธง
+🇨🇷	flag: Costa Rica	ธง: คอสตาริกา|ธง
+🇨🇺	flag: Cuba	ธง: คิวบา|ธง
+🇨🇻	flag: Cape Verde	ธง: เคปเวิร์ด|ธง
+🇨🇼	flag: Curaçao	ธง: คูราเซา|ธง
+🇨🇽	flag: Christmas Island	ธง: เกาะคริสต์มาส|ธง
+🇨🇾	flag: Cyprus	ธง: ไซปรัส|ธง
+🇨🇿	flag: Czechia	ธง: เช็ก|ธง
+🇩🇪	flag: Germany	ธง: เยอรมนี|ธง
+🇩🇬	flag: Diego Garcia	ธง: ดิเอโกการ์เซีย|ธง
+🇩🇯	flag: Djibouti	ธง: จิบูตี|ธง
+🇩🇰	flag: Denmark	ธง: เดนมาร์ก|ธง
+🇩🇲	flag: Dominica	ธง: โดมินิกา|ธง
+🇩🇴	flag: Dominican Republic	ธง: สาธารณรัฐโดมินิกัน|ธง
+🇩🇿	flag: Algeria	ธง: แอลจีเรีย|ธง
+🇪🇦	flag: Ceuta & Melilla	ธง: เซวตาและเมลียา|ธง
+🇪🇨	flag: Ecuador	ธง: เอกวาดอร์|ธง
+🇪🇪	flag: Estonia	ธง: เอสโตเนีย|ธง
+🇪🇬	flag: Egypt	ธง: อียิปต์|ธง
+🇪🇭	flag: Western Sahara	ธง: ซาฮาราตะวันตก|ธง
+🇪🇷	flag: Eritrea	ธง: เอริเทรีย|ธง
+🇪🇸	flag: Spain	ธง: สเปน|ธง
+🇪🇹	flag: Ethiopia	ธง: เอธิโอเปีย|ธง
+🇪🇺	flag: European Union	ธง: สหภาพยุโรป|ธง
+🇫🇮	flag: Finland	ธง: ฟินแลนด์|ธง
+🇫🇯	flag: Fiji	ธง: ฟิจิ|ธง
+🇫🇰	flag: Falkland Islands	ธง: หมู่เกาะฟอล์กแลนด์|ธง
+🇫🇲	flag: Micronesia	ธง: ไมโครนีเซีย|ธง
+🇫🇴	flag: Faroe Islands	ธง: หมู่เกาะแฟโร|ธง
+🇫🇷	flag: France	ธง: ฝรั่งเศส|ธง
+🇬🇦	flag: Gabon	ธง: กาบอง|ธง
+🇬🇧	flag: United Kingdom	ธง: สหราชอาณาจักร|ธง
+🇬🇩	flag: Grenada	ธง: เกรเนดา|ธง
+🇬🇪	flag: Georgia	ธง: จอร์เจีย|ธง
+🇬🇫	flag: French Guiana	ธง: เฟรนช์เกียนา|ธง
+🇬🇬	flag: Guernsey	ธง: เกิร์นซีย์|ธง
+🇬🇭	flag: Ghana	ธง: กานา|ธง
+🇬🇮	flag: Gibraltar	ธง: ยิบรอลตาร์|ธง
+🇬🇱	flag: Greenland	ธง: กรีนแลนด์|ธง
+🇬🇲	flag: Gambia	ธง: แกมเบีย|ธง
+🇬🇳	flag: Guinea	ธง: กินี|ธง
+🇬🇵	flag: Guadeloupe	ธง: กวาเดอลูป|ธง
+🇬🇶	flag: Equatorial Guinea	ธง: อิเควทอเรียลกินี|ธง
+🇬🇷	flag: Greece	ธง: กรีซ|ธง
+🇬🇸	flag: South Georgia & South Sandwich Islands	ธง: เกาะเซาท์จอร์เจียและหมู่เกาะเซาท์แซนด์วิช|ธง
+🇬🇹	flag: Guatemala	ธง: กัวเตมาลา|ธง
+🇬🇺	flag: Guam	ธง: กวม|ธง
+🇬🇼	flag: Guinea-Bissau	ธง: กินี-บิสเซา|ธง
+🇬🇾	flag: Guyana	ธง: กายอานา|ธง
+🇭🇰	flag: Hong Kong SAR China	ธง: เขตปกครองพิเศษฮ่องกงแห่งสาธารณรัฐประชาชนจีน|ธง
+🇭🇲	flag: Heard & McDonald Islands	ธง: เกาะเฮิร์ดและหมู่เกาะแมกดอนัลด์|ธง
+🇭🇳	flag: Honduras	ธง: ฮอนดูรัส|ธง
+🇭🇷	flag: Croatia	ธง: โครเอเชีย|ธง
+🇭🇹	flag: Haiti	ธง: เฮติ|ธง
+🇭🇺	flag: Hungary	ธง: ฮังการี|ธง
+🇮🇨	flag: Canary Islands	ธง: หมู่เกาะคานารี|ธง
+🇮🇩	flag: Indonesia	ธง: อินโดนีเซีย|ธง
+🇮🇪	flag: Ireland	ธง: ไอร์แลนด์|ธง
+🇮🇱	flag: Israel	ธง: อิสราเอล|ธง
+🇮🇲	flag: Isle of Man	ธง: เกาะแมน|ธง
+🇮🇳	flag: India	ธง: อินเดีย|ธง
+🇮🇴	flag: British Indian Ocean Territory	ธง: บริติชอินเดียนโอเชียนเทร์ริทอรี|ธง
+🇮🇶	flag: Iraq	ธง: อิรัก|ธง
+🇮🇷	flag: Iran	ธง: อิหร่าน|ธง
+🇮🇸	flag: Iceland	ธง: ไอซ์แลนด์|ธง
+🇮🇹	flag: Italy	ธง: อิตาลี|ธง
+🇯🇪	flag: Jersey	ธง: เจอร์ซีย์|ธง
+🇯🇲	flag: Jamaica	ธง: จาเมกา|ธง
+🇯🇴	flag: Jordan	ธง: จอร์แดน|ธง
+🇯🇵	flag: Japan	ธง: ญี่ปุ่น|ธง
+🇰🇪	flag: Kenya	ธง: เคนยา|ธง
+🇰🇬	flag: Kyrgyzstan	ธง: คีร์กีซสถาน|ธง
+🇰🇭	flag: Cambodia	ธง: กัมพูชา|ธง
+🇰🇮	flag: Kiribati	ธง: คิริบาส|ธง
+🇰🇲	flag: Comoros	ธง: คอโมโรส|ธง
+🇰🇳	flag: St. Kitts & Nevis	ธง: เซนต์คิตส์และเนวิส|ธง
+🇰🇵	flag: North Korea	ธง: เกาหลีเหนือ|ธง
+🇰🇷	flag: South Korea	ธง: เกาหลีใต้|ธง
+🇰🇼	flag: Kuwait	ธง: คูเวต|ธง
+🇰🇾	flag: Cayman Islands	ธง: หมู่เกาะเคย์แมน|ธง
+🇰🇿	flag: Kazakhstan	ธง: คาซัคสถาน|ธง
+🇱🇦	flag: Laos	ธง: ลาว|ธง
+🇱🇧	flag: Lebanon	ธง: เลบานอน|ธง
+🇱🇨	flag: St. Lucia	ธง: เซนต์ลูเซีย|ธง
+🇱🇮	flag: Liechtenstein	ธง: ลิกเตนสไตน์|ธง
+🇱🇰	flag: Sri Lanka	ธง: ศรีลังกา|ธง
+🇱🇷	flag: Liberia	ธง: ไลบีเรีย|ธง
+🇱🇸	flag: Lesotho	ธง: เลโซโท|ธง
+🇱🇹	flag: Lithuania	ธง: ลิทัวเนีย|ธง
+🇱🇺	flag: Luxembourg	ธง: ลักเซมเบิร์ก|ธง
+🇱🇻	flag: Latvia	ธง: ลัตเวีย|ธง
+🇱🇾	flag: Libya	ธง: ลิเบีย|ธง
+🇲🇦	flag: Morocco	ธง: โมร็อกโก|ธง
+🇲🇨	flag: Monaco	ธง: โมนาโก|ธง
+🇲🇩	flag: Moldova	ธง: มอลโดวา|ธง
+🇲🇪	flag: Montenegro	ธง: มอนเตเนโกร|ธง
+🇲🇫	flag: St. Martin	ธง: เซนต์มาร์ติน|ธง
+🇲🇬	flag: Madagascar	ธง: มาดากัสการ์|ธง
+🇲🇭	flag: Marshall Islands	ธง: หมู่เกาะมาร์แชลล์|ธง
+🇲🇰	flag: North Macedonia	ธง: มาซิโดเนียเหนือ|ธง
+🇲🇱	flag: Mali	ธง: มาลี|ธง
+🇲🇲	flag: Myanmar (Burma)	ธง: เมียนมา (พม่า)|ธง
+🇲🇳	flag: Mongolia	ธง: มองโกเลีย|ธง
+🇲🇴	flag: Macao SAR China	ธง: เขตปกครองพิเศษมาเก๊าแห่งสาธารณรัฐประชาชนจีน|ธง
+🇲🇵	flag: Northern Mariana Islands	ธง: หมู่เกาะนอร์เทิร์นมาเรียนา|ธง
+🇲🇶	flag: Martinique	ธง: มาร์ตินีก|ธง
+🇲🇷	flag: Mauritania	ธง: มอริเตเนีย|ธง
+🇲🇸	flag: Montserrat	ธง: มอนต์เซอร์รัต|ธง
+🇲🇹	flag: Malta	ธง: มอลตา|ธง
+🇲🇺	flag: Mauritius	ธง: มอริเชียส|ธง
+🇲🇻	flag: Maldives	ธง: มัลดีฟส์|ธง
+🇲🇼	flag: Malawi	ธง: มาลาวี|ธง
+🇲🇽	flag: Mexico	ธง: เม็กซิโก|ธง
+🇲🇾	flag: Malaysia	ธง: มาเลเซีย|ธง
+🇲🇿	flag: Mozambique	ธง: โมซัมบิก|ธง
+🇳🇦	flag: Namibia	ธง: นามิเบีย|ธง
+🇳🇨	flag: New Caledonia	ธง: นิวแคลิโดเนีย|ธง
+🇳🇪	flag: Niger	ธง: ไนเจอร์|ธง
+🇳🇫	flag: Norfolk Island	ธง: เกาะนอร์ฟอล์ก|ธง
+🇳🇬	flag: Nigeria	ธง: ไนจีเรีย|ธง
+🇳🇮	flag: Nicaragua	ธง: นิการากัว|ธง
+🇳🇱	flag: Netherlands	ธง: เนเธอร์แลนด์|ธง
+🇳🇴	flag: Norway	ธง: นอร์เวย์|ธง
+🇳🇵	flag: Nepal	ธง: เนปาล|ธง
+🇳🇷	flag: Nauru	ธง: นาอูรู|ธง
+🇳🇺	flag: Niue	ธง: นีอูเอ|ธง
+🇳🇿	flag: New Zealand	ธง: นิวซีแลนด์|ธง
+🇴🇲	flag: Oman	ธง: โอมาน|ธง
+🇵🇦	flag: Panama	ธง: ปานามา|ธง
+🇵🇪	flag: Peru	ธง: เปรู|ธง
+🇵🇫	flag: French Polynesia	ธง: เฟรนช์โปลินีเซีย|ธง
+🇵🇬	flag: Papua New Guinea	ธง: ปาปัวนิวกินี|ธง
+🇵🇭	flag: Philippines	ธง: ฟิลิปปินส์|ธง
+🇵🇰	flag: Pakistan	ธง: ปากีสถาน|ธง
+🇵🇱	flag: Poland	ธง: โปแลนด์|ธง
+🇵🇲	flag: St. Pierre & Miquelon	ธง: แซงปีแยร์และมีเกอลง|ธง
+🇵🇳	flag: Pitcairn Islands	ธง: หมู่เกาะพิตแคร์น|ธง
+🇵🇷	flag: Puerto Rico	ธง: เปอร์โตริโก|ธง
+🇵🇸	flag: Palestinian Territories	ธง: ดินแดนปาเลสไตน์|ธง
+🇵🇹	flag: Portugal	ธง: โปรตุเกส|ธง
+🇵🇼	flag: Palau	ธง: ปาเลา|ธง
+🇵🇾	flag: Paraguay	ธง: ปารากวัย|ธง
+🇶🇦	flag: Qatar	ธง: กาตาร์|ธง
+🇷🇪	flag: Réunion	ธง: เรอูนียง|ธง
+🇷🇴	flag: Romania	ธง: โรมาเนีย|ธง
+🇷🇸	flag: Serbia	ธง: เซอร์เบีย|ธง
+🇷🇺	flag: Russia	ธง: รัสเซีย|ธง
+🇷🇼	flag: Rwanda	ธง: รวันดา|ธง
+🇸🇦	flag: Saudi Arabia	ธง: ซาอุดีอาระเบีย|ธง
+🇸🇧	flag: Solomon Islands	ธง: หมู่เกาะโซโลมอน|ธง
+🇸🇨	flag: Seychelles	ธง: เซเชลส์|ธง
+🇸🇩	flag: Sudan	ธง: ซูดาน|ธง
+🇸🇪	flag: Sweden	ธง: สวีเดน|ธง
+🇸🇬	flag: Singapore	ธง: สิงคโปร์|ธง
+🇸🇭	flag: St. Helena	ธง: เซนต์เฮเลนา|ธง
+🇸🇮	flag: Slovenia	ธง: สโลวีเนีย|ธง
+🇸🇯	flag: Svalbard & Jan Mayen	ธง: สฟาลบาร์และยานไมเอน|ธง
+🇸🇰	flag: Slovakia	ธง: สโลวะเกีย|ธง
+🇸🇱	flag: Sierra Leone	ธง: เซียร์ราลีโอน|ธง
+🇸🇲	flag: San Marino	ธง: ซานมาริโน|ธง
+🇸🇳	flag: Senegal	ธง: เซเนกัล|ธง
+🇸🇴	flag: Somalia	ธง: โซมาเลีย|ธง
+🇸🇷	flag: Suriname	ธง: ซูรินาเม|ธง
+🇸🇸	flag: South Sudan	ธง: ซูดานใต้|ธง
+🇸🇹	flag: São Tomé & Príncipe	ธง: เซาตูเมและปรินซิปี|ธง
+🇸🇻	flag: El Salvador	ธง: เอลซัลวาดอร์|ธง
+🇸🇽	flag: Sint Maarten	ธง: ซินต์มาร์เทน|ธง
+🇸🇾	flag: Syria	ธง: ซีเรีย|ธง
+🇸🇿	flag: Eswatini	ธง: เอสวาตีนี|ธง
+🇹🇦	flag: Tristan da Cunha	ธง: ทริสตันดาคูนา|ธง
+🇹🇨	flag: Turks & Caicos Islands	ธง: หมู่เกาะเติกส์และหมู่เกาะเคคอส|ธง
+🇹🇩	flag: Chad	ธง: ชาด|ธง
+🇹🇫	flag: French Southern Territories	ธง: เฟรนช์เซาเทิร์นเทร์ริทอรีส์|ธง
+🇹🇬	flag: Togo	ธง: โตโก|ธง
+🇹🇭	flag: Thailand	ธง: ไทย|ธง
+🇹🇯	flag: Tajikistan	ธง: ทาจิกิสถาน|ธง
+🇹🇰	flag: Tokelau	ธง: โตเกเลา|ธง
+🇹🇱	flag: Timor-Leste	ธง: ติมอร์-เลสเต|ธง
+🇹🇲	flag: Turkmenistan	ธง: เติร์กเมนิสถาน|ธง
+🇹🇳	flag: Tunisia	ธง: ตูนิเซีย|ธง
+🇹🇴	flag: Tonga	ธง: ตองกา|ธง
+🇹🇷	flag: Turkey	ธง: ตุรกี|ธง
+🇹🇹	flag: Trinidad & Tobago	ธง: ตรินิแดดและโตเบโก|ธง
+🇹🇻	flag: Tuvalu	ธง: ตูวาลู|ธง
+🇹🇼	flag: Taiwan	ธง: ไต้หวัน|ธง
+🇹🇿	flag: Tanzania	ธง: แทนซาเนีย|ธง
+🇺🇦	flag: Ukraine	ธง: ยูเครน|ธง
+🇺🇬	flag: Uganda	ธง: ยูกันดา|ธง
+🇺🇲	flag: U.S. Outlying Islands	ธง: หมู่เกาะรอบนอกของสหรัฐอเมริกา|ธง
+🇺🇳	flag: United Nations	ธง: สหประชาชาติ|ธง
+🇺🇸	flag: United States	ธง: สหรัฐอเมริกา|ธง
+🇺🇾	flag: Uruguay	ธง: อุรุกวัย|ธง
+🇺🇿	flag: Uzbekistan	ธง: อุซเบกิสถาน|ธง
+🇻🇦	flag: Vatican City	ธง: นครวาติกัน|ธง
+🇻🇨	flag: St. Vincent & Grenadines	ธง: เซนต์วินเซนต์และเกรนาดีนส์|ธง
+🇻🇪	flag: Venezuela	ธง: เวเนซุเอลา|ธง
+🇻🇬	flag: British Virgin Islands	ธง: หมู่เกาะบริติชเวอร์จิน|ธง
+🇻🇮	flag: U.S. Virgin Islands	ธง: หมู่เกาะเวอร์จินของสหรัฐอเมริกา|ธง
+🇻🇳	flag: Vietnam	ธง: เวียดนาม|ธง
+🇻🇺	flag: Vanuatu	ธง: วานูอาตู|ธง
+🇼🇫	flag: Wallis & Futuna	ธง: วาลลิสและฟุตูนา|ธง
+🇼🇸	flag: Samoa	ธง: ซามัว|ธง
+🇽🇰	flag: Kosovo	ธง: โคโซโว|ธง
+🇾🇪	flag: Yemen	ธง: เยเมน|ธง
+🇾🇹	flag: Mayotte	ธง: มายอต|ธง
+🇿🇦	flag: South Africa	ธง: แอฟริกาใต้|ธง
+🇿🇲	flag: Zambia	ธง: แซมเบีย|ธง
+🇿🇼	flag: Zimbabwe	ธง: ซิมบับเว|ธง
+🏴󠁧󠁢󠁥󠁮󠁧󠁿	flag: England	ธง: อังกฤษ|ธง
+🏴󠁧󠁢󠁳󠁣󠁴󠁿	flag: Scotland	ธง: สกอตแลนด์|ธง
+🏴󠁧󠁢󠁷󠁬󠁳󠁿	flag: Wales	ธง: เวลส์|ธง

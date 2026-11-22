@@ -46,53 +46,81 @@ enum EmojiTab: Hashable, CaseIterable {
     }
 }
 
-/// The iPhone emoji keyboard (iOS 26.4), read off screenshots with tools/emoji_metrics.py on an iPhone 17e (390 pt)
-/// and an iPhone 17 Pro Max (440 pt). It is taller than the typing keyboard, so the extension grows while it shows.
-/// Apple's top band holds a search field; ours leaves that band empty, since search needs letters we do not have.
+/// The iPhone emoji keyboard, one row per system generation and width class. It is taller than the typing keyboard,
+/// so the extension grows while it shows; the page's frame (height, search band, bar) did not change in iOS 27, its
+/// grid did: no section titles, four rows of larger emoji.
 struct EmojiMetrics {
+    enum System {
+        case ios26, ios27
+
+        static let current: System = ProcessInfo.processInfo.operatingSystemVersion.majorVersion >= 27 ? .ios27 : .ios26
+    }
+
     /// The extension's height on this page.
     let height: CGFloat
+    /// From the bottom of the page to the middle of the category bar.
+    let barMid: CGFloat
     let cell: CGSize
-    /// From the top of the page to the section header's frame, where Apple's search field band ends.
-    let headerTop: CGFloat
+    let rows: Int
+    /// Section titles' height; zero where the system shows none.
+    let header: CGFloat
+    /// From the top of the page to the grid's frame: the section titles, or the first row where there are none.
+    let gridTop: CGFloat
     /// From the top of the page to the first row of cells.
     let rowsTop: CGFloat
     /// From the screen's edge to the first column's cells.
     let leading: CGFloat
-    /// From the bottom of the page to the middle of the category bar.
-    let barMid: CGFloat
+    let glyph: CGFloat
 
-    static let rows = 5
-    static let header: CGFloat = 13
+    /// Apple's search field: its distance from the top of the page, its height and its distance from the screen's
+    /// sides.
+    static let searchTop: CGFloat = 10
+    static let search: CGFloat = 40
+    static let searchMargin: CGFloat = 9.6
     static let sectionGap: CGFloat = 20
-    static let glyph: CGFloat = 32
     static let bar: CGFloat = 41
 
-    /// A Pro Max class width gets the second set, as in `KeyMetrics`.
-    init(width: CGFloat) {
-        if width >= 428 {
-            height = 324
-            cell = CGSize(width: 42, height: 40)
-            headerTop = 59.7
-            rowsTop = 74.3
-            leading = 5.6
-            barMid = 26
-        } else {
-            height = 313
-            cell = CGSize(width: 46, height: 38.5)
-            headerTop = 62
-            rowsTop = 79.3
-            leading = 4.9
-            barMid = 21
+    /// A Pro Max class width gets the wide rows, as in `KeyMetrics`.
+    init(width: CGFloat, system: System = .current) {
+        switch (system, width >= 428) {
+        // iOS 26.4, read off screenshots with tools/emoji_metrics.py on an iPhone 17e (390 pt).
+        case (.ios26, false):
+            self.init(height: 313, barMid: 21, cell: CGSize(width: 46, height: 38.5), rows: 5, header: 13,
+                      gridTop: 62, rowsTop: 79.3, leading: 4.9, glyph: 32)
+        // iOS 26.4 on an iPhone 17 Pro Max (440 pt).
+        case (.ios26, true):
+            self.init(height: 324, barMid: 26, cell: CGSize(width: 42, height: 40), rows: 5, header: 13,
+                      gridTop: 59.7, rowsTop: 74.3, leading: 5.6, glyph: 32)
+        // iOS 27 on a 393 pt iPhone, from a downscaled screenshot (±0.5 pt). The glyph's ink is 37 pt tall.
+        case (.ios27, false):
+            self.init(height: 313, barMid: 21, cell: CGSize(width: 54.2, height: 54.2), rows: 4, header: 0,
+                      gridTop: 59.2, rowsTop: 59.2, leading: 13.65, glyph: 40.7)
+        // Unmeasured: the 393 pt grid, raised by the 5 pt the iOS 26 rows rise between the two classes.
+        case (.ios27, true):
+            self.init(height: 324, barMid: 26, cell: CGSize(width: 54.2, height: 54.2), rows: 4, header: 0,
+                      gridTop: 54.2, rowsTop: 54.2, leading: 13.65, glyph: 40.7)
         }
     }
 
-    /// From the top of the grid's frame, which starts at the header, to the first row of cells.
-    var rowsBelowHeader: CGFloat { rowsTop - headerTop }
+    private init(height: CGFloat, barMid: CGFloat, cell: CGSize, rows: Int, header: CGFloat, gridTop: CGFloat,
+                 rowsTop: CGFloat, leading: CGFloat, glyph: CGFloat) {
+        self.height = height
+        self.barMid = barMid
+        self.cell = cell
+        self.rows = rows
+        self.header = header
+        self.gridTop = gridTop
+        self.rowsTop = rowsTop
+        self.leading = leading
+        self.glyph = glyph
+    }
+
+    /// From the top of the grid's frame to the first row of cells.
+    var rowsBelowHeader: CGFloat { rowsTop - gridTop }
 }
 
-/// Where the user picks an emoji: a grid that scrolls sideways through the categories over a bar of category icons,
-/// กขค back to the letters and delete, as on the iOS emoji keyboard.
+/// Where the user picks an emoji: the search field, a grid that scrolls sideways through the categories over a bar of
+/// category icons, กขค back to the letters and delete, as on the iOS emoji keyboard.
 struct EmojiPanel: View {
     @ObservedObject var model: KeyboardModel
     @State private var current: EmojiTab = .frequent
@@ -104,8 +132,12 @@ struct EmojiPanel: View {
             let inset = (screen - geo.size.width) / 2
             let metrics = EmojiMetrics(width: screen)
             VStack(spacing: 0) {
-                EmojiGrid(metrics: metrics, inset: inset, jump: jump, type: model.insert, scrolled: { current = $0 })
-                    .padding(.top, metrics.headerTop)
+                EmojiSearchField(query: nil, tap: model.showEmojiSearch)
+                    .frame(height: EmojiMetrics.search)
+                    .padding(.horizontal, EmojiMetrics.searchMargin - inset)
+                    .padding(.top, EmojiMetrics.searchTop)
+                EmojiGrid(metrics: metrics, inset: inset, jump: jump, type: model.pick, scrolled: { current = $0 })
+                    .padding(.top, metrics.gridTop - EmojiMetrics.searchTop - EmojiMetrics.search)
                 bar(margin: KeyMetrics(width: screen).margin - inset)
                     .frame(height: EmojiMetrics.bar)
                     .padding(.bottom, metrics.barMid - EmojiMetrics.bar / 2)
@@ -176,7 +208,7 @@ private struct EmojiGrid: UIViewRepresentable {
 }
 
 /// An emoji cell: which emoji, and in which tone.
-private struct EmojiItem {
+struct EmojiItem {
     let emoji: Emoji
     let tone: Int?
 
@@ -286,7 +318,7 @@ private final class EmojiGridView: UIView, UICollectionViewDataSource, UICollect
     func collectionView(_ collectionView: UICollectionView, cellForItemAt path: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EmojiCell.id, for: path) as! EmojiCell
         let item = item(path)
-        cell.show(item.glyph, name: item.emoji.name(tone: item.tone))
+        cell.show(item.glyph, name: item.emoji.name(tone: item.tone), size: layout.glyph)
         cell.accessibilityCustomActions = item.emoji.tones.indices.map { tone in
             UIAccessibilityCustomAction(name: Emoji.toneNames[tone]) { [weak self] _ in
                 self?.type(EmojiItem(emoji: item.emoji, tone: tone))
@@ -374,17 +406,21 @@ private final class EmojiGridView: UIView, UICollectionViewDataSource, UICollect
     }
 }
 
-/// Emoji in columns of five, sections side by side with a gap, each under its header. Every frame is worked out
-/// once, since the catalog never changes while the panel is open.
+/// Emoji in columns of `rows`, sections side by side with a gap, each under its header where the system draws one.
+/// Every frame is worked out once, since the catalog never changes while the panel is open.
 private final class EmojiGridLayout: UICollectionViewLayout {
     private var items: [[UICollectionViewLayoutAttributes]] = []
     private var headers: [UICollectionViewLayoutAttributes] = []
     private var starts: [CGFloat] = []
     private var width: CGFloat = 0
     private let height: CGFloat
+    private let showsHeaders: Bool
+    let glyph: CGFloat
 
     init(counts: [Int], titles: [String], metrics: EmojiMetrics) {
-        let cell = metrics.cell, rows = EmojiMetrics.rows
+        let cell = metrics.cell, rows = metrics.rows
+        showsHeaders = metrics.header > 0
+        glyph = metrics.glyph
         height = metrics.rowsBelowHeader + CGFloat(rows) * cell.height
         super.init()
         let font = EmojiHeader.font
@@ -397,11 +433,11 @@ private final class EmojiGridLayout: UICollectionViewLayout {
                                           width: cell.width, height: cell.height)
                 return attributes
             })
-            let title = (titles[section] as NSString).size(withAttributes: [.font: font]).width
+            let title = showsHeaders ? (titles[section] as NSString).size(withAttributes: [.font: font]).width : 0
             let columns = CGFloat((count + rows - 1) / rows)
             let header = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
                                                           with: IndexPath(item: 0, section: section))
-            header.frame = CGRect(x: x, y: 0, width: max(columns * cell.width, title + 8), height: EmojiMetrics.header)
+            header.frame = CGRect(x: x, y: 0, width: max(columns * cell.width, title + 8), height: metrics.header)
             headers.append(header)
             x += header.frame.width + EmojiMetrics.sectionGap
         }
@@ -421,7 +457,7 @@ private final class EmojiGridLayout: UICollectionViewLayout {
     }
 
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        var found = headers.filter { $0.frame.intersects(rect) }
+        var found = showsHeaders ? headers.filter { $0.frame.intersects(rect) } : []
         for (section, start) in starts.enumerated() where start <= rect.maxX && headers[section].frame.maxX >= rect.minX {
             found += items[section].filter { $0.frame.intersects(rect) }
         }
@@ -457,7 +493,8 @@ private final class EmojiCell: UICollectionViewCell {
         label.frame = contentView.bounds
     }
 
-    func show(_ glyph: String, name: String) {
+    func show(_ glyph: String, name: String, size: CGFloat) {
+        label.size = size
         label.glyph = glyph
         accessibilityLabel = name
     }
@@ -467,18 +504,31 @@ private final class EmojiCell: UICollectionViewCell {
     }
 }
 
-/// One emoji, drawn at 2x even on a 3x screen. CoreText keeps the image of every emoji it has drawn for the life of
-/// the process: 48 KB each at 32 pt and 3x, 16 KB at 2x, measured in the iOS 26.4 simulator. At 3x, scrolling
-/// through every category kept about 90 MB, more than a keyboard should hold; at 2x the whole catalog stays near 30.
-private final class GlyphView: UIView {
-    private static let font = UIFont.systemFont(ofSize: EmojiMetrics.glyph)
-    private static let scale = min(UIScreen.main.scale, 2)
+/// One emoji, drawn at no more than 64 pixels a side, 2x for the 32 pt grid even on a 3x screen. CoreText keeps the
+/// image of every emoji it has drawn for the life of the process, from the font's bitmap one size up: 48 KB each at
+/// 32 pt and 3x, 16 KB at 2x, measured in the iOS 26.4 simulator. At 3x, scrolling through every category kept about
+/// 90 MB, more than a keyboard should hold; at 64 pixels the whole catalog stays near 30. iOS 27's 40.7 pt glyphs at
+/// 2x took the next bitmap up and a walk through every category added 71 MB, so they draw at 64 pixels too.
+final class GlyphView: UIView {
+    private static let pixels: CGFloat = 64
+    private var font = UIFont.systemFont(ofSize: 32)
+
+    var size: CGFloat = 32 {
+        didSet {
+            guard size != oldValue else { return }
+            font = UIFont.systemFont(ofSize: size)
+            layer.contentsScale = scale
+            setNeedsDisplay()
+        }
+    }
+
+    private var scale: CGFloat { min(UIScreen.main.scale, Self.pixels / size) }
 
     var glyph = "" {
         didSet { if glyph != oldValue { setNeedsDisplay() } }
     }
 
-    override init(frame: CGRect) {
+    override init(frame: CGRect = .zero) {
         super.init(frame: frame)
         isOpaque = false
         contentMode = .redraw
@@ -490,12 +540,12 @@ private final class GlyphView: UIView {
     /// UIKit sets the screen's scale when the view joins a window, so it is put back after.
     override func didMoveToWindow() {
         super.didMoveToWindow()
-        layer.contentsScale = Self.scale
+        layer.contentsScale = scale
     }
 
     override func draw(_ rect: CGRect) {
         let text = glyph as NSString
-        let attributes: [NSAttributedString.Key: Any] = [.font: Self.font]
+        let attributes: [NSAttributedString.Key: Any] = [.font: font]
         let size = text.size(withAttributes: attributes)
         text.draw(at: CGPoint(x: (bounds.width - size.width) / 2, y: (bounds.height - size.height) / 2), withAttributes: attributes)
     }

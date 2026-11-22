@@ -132,6 +132,15 @@ private struct CreditsScreen: View {
                         .licence("Unicode License V3", .unicode),
                     ]
                 )
+                Credit(
+                    title: "Unicode CLDR 47",
+                    byline: "Unicode, Inc. · Unicode License V3",
+                    detail: "ชื่อและคำค้นภาษาไทยของอีโมจิ ที่ใช้ค้นหาในแป้นอีโมจิ สร้างจาก annotations/th.xml ของ CLDR",
+                    links: [
+                        .web("CLDR", "https://github.com/unicode-org/cldr"),
+                        .licence("Unicode License V3", .unicode),
+                    ]
+                )
                 AppVersionLabel()
             }
             .padding(.horizontal, 20)
