@@ -54,7 +54,8 @@ final class KeyboardModel: ObservableObject {
     /// this outlives the dictation view; its `done` is inserted wherever the cursor is then.
     @Published private(set) var pending: UUID?
     @Published var typing = Typing()
-    @Published private(set) var levels: [Float] = Array(repeating: 0, count: 24)
+    /// Polled at 20 Hz while listening, so only the waveform observes it, not the whole keyboard.
+    let levels = Levels()
     @Published var notice: String?
     /// The text before the cursor as the host last reported it: what tap decoding and suggestions read.
     @Published private(set) var context = ""
@@ -394,7 +395,7 @@ final class KeyboardModel: ObservableObject {
         levelTimer = Timer.scheduledTimer(withTimeInterval: 1.0 / 20, repeats: true) { [weak self] _ in
             MainActor.assumeIsolated {
                 guard let self, let bridge = self.bridge else { return }
-                self.levels = Array(self.levels.dropFirst()) + [bridge.readLevel()]
+                self.levels.values = Array(self.levels.values.dropFirst()) + [bridge.readLevel()]
             }
         }
     }
@@ -402,6 +403,10 @@ final class KeyboardModel: ObservableObject {
     private func stopLevels() {
         levelTimer?.invalidate()
         levelTimer = nil
-        levels = Array(repeating: 0, count: levels.count)
+        levels.values = Array(repeating: 0, count: levels.values.count)
     }
+}
+
+final class Levels: ObservableObject {
+    @Published var values: [Float] = Array(repeating: 0, count: 24)
 }
