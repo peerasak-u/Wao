@@ -389,7 +389,7 @@ private struct SessionCard: View {
 
 /// The keyboard reads this switch from the App Group each time it appears, and only with Full Access.
 private struct HapticsCard: View {
-    @AppStorage(KeyHaptics.key, store: KeyHaptics.store) private var on = true
+    @AppStorage(KeyHaptics.key, store: KeyHaptics.store) private var on = false
 
     var body: some View {
         HStack(alignment: .center, spacing: 14) {
