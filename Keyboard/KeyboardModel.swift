@@ -5,21 +5,20 @@ import WaoCore
 /// Everything the keyboard shows. Dictation phases are derived from the app's `state.json`, matched against the
 /// utterance this keyboard started, so a stale `done` from an earlier session is never inserted.
 enum KeyboardMode: Equatable {
-    case voice
     case typing
     case dictation(Dictation)
 
     struct Dictation: Equatable {
         enum Phase: Equatable {
+            /// The app ignores a start while it transcribes, so the start waits for the pending utterance's text.
+            case queued
             /// Start command written; waiting for the app to report `listening`.
             case starting
             case listening
-            case transcribing
         }
 
         let id: UUID
         var phase: Phase
-        /// The newest preview, kept through `transcribing` so the words stay on screen until the result lands.
         var heard: Heard?
     }
 }
@@ -34,6 +33,9 @@ final class KeyboardModel: ObservableObject {
     static let fullAccessNotice = "เปิด \"อนุญาตการเข้าถึงแบบเต็ม\" ให้เว่าก่อน: การตั้งค่า > ทั่วไป > แป้นพิมพ์ > แป้นพิมพ์ > เว่า"
 
     @Published private(set) var mode: KeyboardMode = .typing
+    /// The utterance the user confirmed, whose text is still being transcribed. ✓ returns to typing at once, so
+    /// this outlives the dictation view; its `done` is inserted wherever the cursor is then.
+    @Published private(set) var pending: UUID?
     @Published var typing = Typing()
     @Published private(set) var levels: [Float] = Array(repeating: 0, count: 24)
     @Published var notice: String?
@@ -61,7 +63,7 @@ final class KeyboardModel: ObservableObject {
     private var startTimer: Timer?
 
     /// The keyboard always opens on the typing layout, as the system keyboard does. With Full Access the mic key
-    /// in its bottom row leads to voice; without it there is no mic (App Review 4.4.1).
+    /// in its bottom row starts dictation; without it there is no mic (App Review 4.4.1).
     func activate() {
         mode = .typing
         guard hasFullAccess, stateObserver == nil else { return }
@@ -71,8 +73,12 @@ final class KeyboardModel: ObservableObject {
         }
     }
 
+    /// The host's field is gone, so text still on its way has nowhere to land.
     func deactivate() {
-        if case .dictation = mode { send(.cancel) }
+        if pending != nil || mode != .typing { send(.cancel) }
+        pending = nil
+        mode = .typing
+        startTimer?.invalidate()
         stateObserver = nil
         stopLevels()
     }
@@ -131,16 +137,6 @@ final class KeyboardModel: ObservableObject {
         return model.completions(after: context)
     }
 
-    func showTyping() {
-        notice = nil
-        mode = .typing
-    }
-
-    func showVoice() {
-        notice = nil
-        mode = .voice
-    }
-
     func micTapped() {
         guard hasFullAccess, let bridge else {
             notice = Self.fullAccessNotice
@@ -154,27 +150,38 @@ final class KeyboardModel: ObservableObject {
         }
         if !isLive {
             launchApp()
+        } else if pending != nil {
+            mode = .dictation(.init(id: UUID(), phase: .queued))
         } else {
-            let command = Command(kind: .start(.thaiEnglishMix))
-            write(command)
-            mode = .dictation(.init(id: command.id, phase: .starting))
-            startTimer?.invalidate()
-            startTimer = Timer.scheduledTimer(withTimeInterval: Self.startTimeout, repeats: false) { [weak self] _ in
-                MainActor.assumeIsolated {
-                    guard let self, case .dictation(let dictation) = self.mode, dictation.phase == .starting else { return }
-                    self.mode = .voice
-                    self.launchApp()
-                }
+            start(UUID())
+        }
+    }
+
+    private func start(_ id: UUID) {
+        write(Command(id: id, kind: .start(.thaiEnglishMix)))
+        mode = .dictation(.init(id: id, phase: .starting))
+        startTimer?.invalidate()
+        startTimer = Timer.scheduledTimer(withTimeInterval: Self.startTimeout, repeats: false) { [weak self] _ in
+            MainActor.assumeIsolated {
+                guard let self, case .dictation(let dictation) = self.mode, dictation.phase == .starting else { return }
+                // The app may still act on the start once it wakes; nobody would be left to stop it.
+                self.send(.cancel)
+                self.finish()
+                self.launchApp()
             }
         }
     }
 
     func confirm() {
+        guard case .dictation(let dictation) = mode, dictation.phase == .listening else { return }
         send(.stop)
+        pending = dictation.id
+        finish()
     }
 
+    /// A queued start was never sent, so there is nothing to tell the app.
     func cancel() {
-        send(.cancel)
+        if case .dictation(let dictation) = mode, dictation.phase != .queued { send(.cancel) }
         finish()
     }
 
@@ -198,7 +205,7 @@ final class KeyboardModel: ObservableObject {
     }
 
     private func stateChanged() {
-        guard case .dictation(var dictation) = mode, let bridge else { return }
+        guard let bridge else { return }
         let state: SessionState
         do {
             state = try bridge.readState()
@@ -206,6 +213,8 @@ final class KeyboardModel: ObservableObject {
             notice = "อ่านสถานะไม่ได้: \(error)"
             return
         }
+        if let pending { settle(pending, by: state) }
+        guard case .dictation(var dictation) = mode else { return }
         switch state {
         case .listening(let id, _, let heard) where id == dictation.id:
             startTimer?.invalidate()
@@ -213,26 +222,33 @@ final class KeyboardModel: ObservableObject {
             dictation.heard = heard ?? dictation.heard
             mode = .dictation(dictation)
             startLevels()
-        case .transcribing(let id) where id == dictation.id:
-            dictation.phase = .transcribing
-            mode = .dictation(dictation)
-            stopLevels()
-        case .done(let id, let text) where id == dictation.id:
-            if text.isEmpty { notice = "ไม่ได้ยินเสียงพูด ลองอีกครั้ง" } else { insert(text) }
-            finish()
-        case .failed(let id, let reason) where id == dictation.id:
-            notice = reason
-            finish()
         case .off, .idle:
-            if dictation.phase == .starting { return }
-            finish()
+            if dictation.phase == .listening { finish() }
         default:
             break
         }
     }
 
+    /// Inserts the pending utterance's text once the app reports it, then sends a start that was waiting on it.
+    private func settle(_ id: UUID, by state: SessionState) {
+        switch state {
+        case .done(id, let text):
+            if text.isEmpty { notice = "ไม่ได้ยินเสียงพูด ลองอีกครั้ง" } else { insert(text) }
+        case .failed(id, let reason):
+            notice = reason
+        case .listening(id, _, _), .transcribing(id):
+            // A preview can land before the app reads the stop.
+            return
+        default:
+            // The session ended or another keyboard took it over: the text will not come.
+            notice = "ถอดเสียงไม่สำเร็จ ลองอีกครั้ง"
+        }
+        pending = nil
+        if case .dictation(let dictation) = mode, dictation.phase == .queued { start(dictation.id) }
+    }
+
     private func finish() {
-        mode = .voice
+        mode = .typing
         stopLevels()
     }
 
