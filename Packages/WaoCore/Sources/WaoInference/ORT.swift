@@ -101,13 +101,16 @@ final class Output {
 final class Session {
     private let handle: OpaquePointer
 
-    init(path: URL, threads: Int) throws {
+    init(path: URL, threads: Int, prepack: Bool = true) throws {
         var options: OpaquePointer?
         try ORT.check(ORT.api.CreateSessionOptions(&options))
         defer { ORT.api.ReleaseSessionOptions(options) }
         try ORT.check(ORT.api.SetIntraOpNumThreads(options, Int32(threads)))
         try ORT.check(ORT.api.SetInterOpNumThreads(options, 1))
         try ORT.check(ORT.api.SetSessionGraphOptimizationLevel(options, ORT_ENABLE_ALL))
+        if !prepack {
+            try ORT.check(ORT.api.AddSessionConfigEntry(options, "session.disable_prepacking", "1"))
+        }
         var session: OpaquePointer?
         try path.path.withCString { try ORT.check(ORT.api.CreateSession(ORT.env, $0, options, &session)) }
         handle = session!
