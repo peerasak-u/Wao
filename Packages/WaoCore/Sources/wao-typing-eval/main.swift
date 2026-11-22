@@ -1,6 +1,6 @@
 import CoreGraphics
 import Foundation
-import WaoCore
+import WaoTyping
 
 let usage = """
     wao-typing-eval [fixed|speed|sweep|latency|examples|suggest|retype|retype-sweep|all] [--model FILE] [--seeds N] [--sigma PT...]
@@ -28,7 +28,7 @@ func fail(_ message: String) -> Never {
 
 let here = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
 let fixtures = here.appendingPathComponent("../../Tests/WaoCoreTests/Fixtures").standardized
-var modelPath = here.appendingPathComponent("../WaoCore/Resources/thai-typing.bin").standardized.path
+var modelPath = here.appendingPathComponent("../WaoTyping/Resources/thai-typing.bin").standardized.path
 var command = "all"
 var seeds = 3
 var sigmas: [CGFloat] = [7]

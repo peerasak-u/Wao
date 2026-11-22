@@ -1,5 +1,5 @@
 import CoreGraphics
-import WaoCore
+import WaoTyping
 import XCTest
 
 final class TapDecoderTests: XCTestCase {

@@ -1,5 +1,5 @@
 import SwiftUI
-import WaoCore
+import WaoTyping
 
 struct KeyboardView: View {
     @ObservedObject var model: KeyboardModel

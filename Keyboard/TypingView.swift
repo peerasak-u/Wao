@@ -1,5 +1,5 @@
 import SwiftUI
-import WaoCore
+import WaoTyping
 
 /// Thai Kedmanee and symbols: the page the keyboard opens on. With Full Access its mic key starts dictation.
 struct TypingView: View {

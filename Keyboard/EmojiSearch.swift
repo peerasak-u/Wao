@@ -1,6 +1,6 @@
 import SwiftUI
 import UIKit
-import WaoCore
+import WaoTyping
 
 /// Apple's emoji search: the field over a row of results, over the Thai keys that type the query. It keeps the emoji
 /// page's height, so the host stays put.

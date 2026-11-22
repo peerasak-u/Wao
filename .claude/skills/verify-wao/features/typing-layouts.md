@@ -45,7 +45,7 @@ Preconditions:
 ## Gotchas
 
 - iOS gives a touch on a fully transparent part of a third-party keyboard to the app behind it. If key taps reach nothing while shift and `123` still work, look for a transparent view that should catch touches.
-- The key layouts come from WaoCore's `Typing`; `swift test` covers their logic, not the touch targets, so the simulator run is what proves hit areas.
+- The key layouts come from WaoTyping's `Typing`; `swift test` covers their logic, not the touch targets, so the simulator run is what proves hit areas.
 - Our own globe key only shows where iOS does not draw one (home-button devices). No iPhone 17-family simulator shows it.
 - Typing does not need the app, a session or the model.
 - iOS 26 gives the extension a view 9 pt narrower than a 390 pt screen, centred, so `KeyLayout` takes the screen width too and draws the caps where the system keyboard has them.
