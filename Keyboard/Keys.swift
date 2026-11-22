@@ -43,6 +43,7 @@ struct KeyCap: View {
                 .font(font)
                 .minimumScaleFactor(0.5)
                 .lineLimit(1)
+                .keyLabel()
         }
         .buttonStyle(KeyPress(insets: insets))
         .feedbackOnKeyDown()
@@ -95,6 +96,7 @@ struct SpecialKey: View {
                 }
             }
             .font(font)
+            .keyLabel()
         }
         .buttonStyle(KeyPress(insets: insets))
         .feedbackOnKeyDown()
@@ -111,6 +113,7 @@ struct DeleteKey: View {
     var body: some View {
         Image(systemName: "delete.left")
             .font(font)
+            .keyLabel()
             .keyCap(timer == nil ? Key.fill : Key.pressedFill, insets: insets)
             .gesture(
                 DragGesture(minimumDistance: 0)

@@ -24,6 +24,12 @@ final class KeyFeedback {
         // Keeps the Taptic Engine awake for the next key, so it does not lag behind the finger.
         haptics?.prepare()
     }
+
+    /// The system keyboard taps, without a click, when a held space turns into a trackpad.
+    func trackpadBegan() {
+        haptics?.impactOccurred()
+        haptics?.prepare()
+    }
 }
 
 /// `playInputClick()` is silent unless the visible input view opts in.

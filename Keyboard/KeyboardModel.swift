@@ -28,6 +28,9 @@ enum KeyboardMode: Equatable {
 final class KeyboardModel: ObservableObject {
     /// How long the app gets to answer a start command before we assume its session is gone.
     static let startTimeout: TimeInterval = 1.5
+    static let contextSettle: TimeInterval = 0.15
+    /// The host's text caught up with a cursor move within 25 ms in the iOS 26.4 simulator.
+    static let cursorSettle: TimeInterval = 0.06
     static let fullAccessNotice = "เปิด \"อนุญาตการเข้าถึงแบบเต็ม\" ให้เว่าก่อน: การตั้งค่า > ทั่วไป > แป้นพิมพ์ > แป้นพิมพ์ > เว่า"
 
     @Published private(set) var mode: KeyboardMode = .typing
@@ -36,6 +39,8 @@ final class KeyboardModel: ObservableObject {
     @Published var notice: String?
     /// The text before the cursor as the host last reported it: what tap decoding and suggestions read.
     @Published private(set) var context = ""
+    /// Space is held and the keyboard is a trackpad for the cursor.
+    @Published private(set) var tracksCursor = false
 
     var hasFullAccess = false
     @Published var showsGlobe = true
@@ -43,9 +48,13 @@ final class KeyboardModel: ObservableObject {
     var screenWidth: CGFloat?
     var insert: (String) -> Void = { _ in }
     var deleteBackward: () -> Void = {}
+    /// Moves the host's cursor by this many UTF-16 units.
+    var adjustCursor: (Int) -> Void = { _ in }
     var readContext: () -> String = { "" }
+    var readCursorText: () -> CursorText = { CursorText(before: "", after: "") }
     var openApp: () -> Bool = { false }
 
+    private var cursorWalk: CursorWalk?
     private var bridge: Bridge?
     private var stateObserver: DarwinObserver?
     private var levelTimer: Timer?
@@ -74,6 +83,36 @@ final class KeyboardModel: ObservableObject {
 
     func refreshContext() {
         context = readContext()
+    }
+
+    func beginCursorTracking() {
+        cursorWalk = CursorWalk(readCursorText())
+        tracksCursor = true
+    }
+
+    func moveCursor(columns: Int, lines: Int) {
+        perform(cursorWalk?.move(columns: columns, lines: lines) ?? [])
+    }
+
+    private func perform(_ commands: [CursorWalk.Command]) {
+        for command in commands {
+            switch command {
+            case .adjust(let offset):
+                adjustCursor(offset)
+            case .read:
+                DispatchQueue.main.asyncAfter(deadline: .now() + Self.cursorSettle) { [weak self] in
+                    guard let self else { return }
+                    perform(cursorWalk?.read(readCursorText()) ?? [])
+                }
+            }
+        }
+    }
+
+    func endCursorTracking() {
+        guard tracksCursor else { return }
+        cursorWalk = nil
+        tracksCursor = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + Self.contextSettle) { [weak self] in self?.refreshContext() }
     }
 
     /// The character key a touch on the key rows types, or `nil` when it ended on shift or delete.
