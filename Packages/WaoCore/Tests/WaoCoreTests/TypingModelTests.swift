@@ -53,6 +53,20 @@ final class TypingModelTests: XCTestCase {
         XCTAssertLessThanOrEqual(rice.count, 3)
     }
 
+    func testCompletesTheWordStartedAfterTheLastWholeWord() throws {
+        let model = try model
+        XCTAssertEqual(model.completions(after: "ไม่ร").first?.word, "รู้")
+        XCTAssertEqual(model.completions(after: "ฉันไม่ร").first?.remainder, "ู้")
+        XCTAssertEqual(Set(model.completions(after: "ไม่ค").prefix(2).map(\.word)), ["ควร", "ค่อย"])
+        XCTAssertTrue(model.completions(after: "กินข").contains { $0.word == "ข้าว" })
+    }
+
+    func testAWordBegunAtTheStartIsStillCompletedWhole() throws {
+        let model = try model
+        XCTAssertEqual(model.completions(after: "ไม").first?.word, "ไม่")
+        XCTAssertEqual(model.completions(after: "วันนี้ไม").first?.remainder, "่")
+    }
+
     func testOffersNothingOutsideAThaiWord() throws {
         let model = try model
         XCTAssertEqual(model.completions(after: ""), [])

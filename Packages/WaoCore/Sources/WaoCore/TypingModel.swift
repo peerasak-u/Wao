@@ -83,39 +83,104 @@ public final class TypingModel: @unchecked Sendable {
 
     /// The distribution over the next character, for one context, ready to score every key.
     public func nextCharacter(after context: some StringProtocol) -> NextCharacter {
-        var history = normalized(context, keep: order - 1)
-        if history.atLineStart, history.ids.count < order - 1 {
-            history.ids.insert(contentsOf: repeatElement(Self.space, count: order - 1 - history.ids.count), at: 0)
+        let history = normalized(context, keep: order - 1)
+        return nextCharacter(after: history.ids, atLineStart: history.atLineStart)
+    }
+
+    /// The same for a context already in symbol ids, of which only the last `order - 1` count.
+    func nextCharacter(after ids: some Collection<UInt8>, atLineStart: Bool) -> NextCharacter {
+        var history = Array(ids.suffix(order - 1))
+        if atLineStart, history.count < order - 1 {
+            history.insert(contentsOf: repeatElement(Self.space, count: order - 1 - history.count), at: 0)
         }
         var contexts: [UInt64] = []
         var backoff: [Float] = [0]
-        for start in 0...history.ids.count {
-            let key = history.ids[start...].reduce(UInt64(0)) { $0 << 7 | UInt64($1) }
+        for start in 0...history.count {
+            let key = history[start...].reduce(UInt64(0)) { $0 << 7 | UInt64($1) }
             contexts.append(key)
             backoff.append(backoff.last! + (entry(key).map { bowBook[Int(bowIndex[$0])] } ?? 0))
         }
         return NextCharacter(model: self, contexts: contexts, backoff: backoff)
     }
 
-    /// Up to `limit` words that continue the end of `context`, most frequent first. Thai is written without spaces
-    /// between words, so the longest tail of the context that starts some longer word is taken as the word so far.
+    /// Up to `limit` words that continue the end of `context`, likeliest first. Thai is written without spaces
+    /// between words, so the word so far is the shortest tail that starts some longer word and that the dictionary
+    /// can split everything typed before into words; failing that, the longest tail that starts a longer word.
+    /// The language model ranks the words by how likely the rest of each is after `context`.
     public func completions(after context: some StringProtocol, limit: Int = 3) -> [Completion] {
-        let history = normalized(context, keep: maxWordLength)
-        let typed = Array(history.ids.reversed().prefix { $0 != Self.space }.reversed())
-        for length in stride(from: typed.count, through: 1, by: -1) {
-            let prefix = typed.suffix(length)
-            let lower = partition(0, wordFreq.count) { compare(word: $0, prefix) < 0 }
-            let upper = partition(lower, wordFreq.count) { compare(word: $0, prefix) <= 0 }
-            let longer = (lower..<upper).filter { wordOffsets[$0 + 1] - wordOffsets[$0] > length }
+        let run = self.run(before: context)
+        let breaks = WordBreaks(run, in: self)
+        let atBreaks = run.indices.reversed().filter { breaks.uncovered[$0] == 0 }
+        let anywhere = max(0, run.count - maxWordLength)..<run.count
+        let history = normalized(context, keep: order - 1)
+        for start in atBreaks + anywhere {
+            let typed = run[start...]
+            let longer = words(startingWith: typed).filter { length(of: $0) > typed.count }
             guard !longer.isEmpty else { continue }
-            let best = longer.sorted { wordFreq[$0] != wordFreq[$1] ? wordFreq[$0] > wordFreq[$1] : $0 < $1 }
-            return best.prefix(limit).map { index in
+            let pool = Array(longer.sorted { wordFreq[$0] != wordFreq[$1] ? wordFreq[$0] > wordFreq[$1] : $0 < $1 }.prefix(Self.rankedWords))
+            let rest = restScores(pool, dropping: typed.count, after: history.ids, atLineStart: history.atLineStart)
+            // The pool is in frequency order, so frequency breaks ties.
+            let ranked = pool.enumerated().sorted { a, b in
+                rest[a.element]! != rest[b.element]! ? rest[a.element]! > rest[b.element]! : a.offset < b.offset
+            }
+            return ranked.prefix(limit).map { _, index in
                 let word = symbols(of: index)
-                return Completion(word: String(String.UnicodeScalarView(word)), remainder: String(String.UnicodeScalarView(word.dropFirst(length))))
+                return Completion(word: String(String.UnicodeScalarView(word)),
+                                  remainder: String(String.UnicodeScalarView(word.dropFirst(typed.count))))
             }
         }
         return []
     }
+
+    /// How many of the most frequent candidates the language model ranks: a word begun with one letter has
+    /// thousands.
+    static let rankedWords = 48
+    /// How far back a run of Thai is read for word breaks.
+    static let runLength = 32
+
+    /// The end of the line after its last space, as symbol ids, at most `runLength` of them.
+    func run(before context: some StringProtocol) -> [UInt8] {
+        Array(normalized(context, keep: Self.runLength).ids.reversed().prefix { $0 != Self.space }.reversed())
+    }
+
+    /// ln P of each word's rest, after its first `typed` symbols, following `history`. Words are scored in
+    /// dictionary order so that each reuses what it shares with the one before.
+    private func restScores(_ words: [Int], dropping typed: Int, after history: [UInt8], atLineStart: Bool) -> [Int: Float] {
+        var scores: [Int: Float] = [:]
+        var path = history
+        var cumulative: [Float] = [0]
+        for word in words.sorted() {
+            let rest = symbolIDs(of: word).dropFirst(typed)
+            let shared = zip(path.dropFirst(history.count), rest).prefix { $0 == $1 }.count
+            path.removeLast(path.count - history.count - shared)
+            cumulative.removeLast(cumulative.count - 1 - shared)
+            for id in rest.dropFirst(shared) {
+                cumulative.append(cumulative.last! + nextCharacter(after: path, atLineStart: atLineStart).logP(id))
+                path.append(id)
+            }
+            scores[word] = cumulative.last!
+        }
+        return scores
+    }
+
+    var allWords: Range<Int> { 0..<wordFreq.count }
+
+    /// The words in `range`, which all share their first `offset` symbols, whose next symbol is `symbol`. Words
+    /// sort by their symbol bytes, so one that ends at `offset` sorts before the rest.
+    func narrow(_ range: Range<Int>, at offset: Int, to symbol: UInt8) -> Range<Int> {
+        func next(_ word: Int) -> Int {
+            let at = Int(wordOffsets[word]) + offset
+            return at < Int(wordOffsets[word + 1]) ? Int(wordBlob[at]) : -1
+        }
+        let lower = partition(range.lowerBound, range.upperBound) { next($0) < Int(symbol) }
+        return lower..<partition(lower, range.upperBound) { next($0) <= Int(symbol) }
+    }
+
+    func words(startingWith prefix: some Collection<UInt8>) -> Range<Int> {
+        prefix.enumerated().reduce(allWords) { narrow($0, at: $1.offset, to: $1.element) }
+    }
+
+    func length(of word: Int) -> Int { Int(wordOffsets[word + 1] - wordOffsets[word]) }
 
     func logP(_ id: UInt8, contexts: [UInt64], backoff: [Float]) -> Float {
         for (level, context) in contexts.enumerated() {
@@ -147,19 +212,11 @@ public final class TypingModel: @unchecked Sendable {
         return lower
     }
 
-    private func compare(word index: Int, _ prefix: ArraySlice<UInt8>) -> Int {
-        let start = Int(wordOffsets[index]), end = Int(wordOffsets[index + 1])
-        for (offset, symbol) in prefix.enumerated() {
-            guard start + offset < end else { return -1 }
-            let byte = wordBlob[start + offset]
-            if byte != symbol { return byte < symbol ? -1 : 1 }
-        }
-        return 0
+    private func symbolIDs(of word: Int) -> ArraySlice<UInt8> {
+        ArraySlice(wordBlob[Int(wordOffsets[word])..<Int(wordOffsets[word + 1])])
     }
 
-    private func symbols(of word: Int) -> [Unicode.Scalar] {
-        (Int(wordOffsets[word])..<Int(wordOffsets[word + 1])).map { symbols[Int(wordBlob[$0]) - 1] }
-    }
+    private func symbols(of word: Int) -> [Unicode.Scalar] { symbolIDs(of: word).map { symbols[Int($0) - 1] } }
 
     /// The end of the current line as symbol ids, the way the builder normalised its training lines: anything off
     /// the keys is a space, runs of spaces are one, and a line starts without one.
@@ -189,8 +246,10 @@ public struct NextCharacter: Sendable {
     /// ln P(text | context); `-infinity` for anything that is not one of the model's symbols.
     public func logP(_ text: String) -> Float {
         guard let id = model.id(of: text) else { return -.infinity }
-        return model.logP(id, contexts: contexts, backoff: backoff)
+        return logP(id)
     }
+
+    func logP(_ id: UInt8) -> Float { model.logP(id, contexts: contexts, backoff: backoff) }
 }
 
 /// A word the suggestion bar offers.
