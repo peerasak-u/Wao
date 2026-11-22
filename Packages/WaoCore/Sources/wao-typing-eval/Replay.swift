@@ -79,6 +79,33 @@ struct Replay {
         }
     }
 
+    /// What each tap typed with the shipped decoder followed by retyping after every tap, as the keyboard
+    /// types: each decision sees the text as retyping left it. `retypeTime` collects nanoseconds per retype call.
+    func retyped(_ taps: [Tap?], tuning: RetypeTuning, retypeTime: inout [UInt64]) -> [String] {
+        var typed = ""
+        var trail = TouchTrail()
+        var out: [String] = []
+        for tap in taps {
+            guard let tap else {
+                typed += " "
+                out.append(" ")
+                trail.reset()
+                continue
+            }
+            let text = text(of: key(for: tap, after: typed, with: .decoded(tuning.tap)), shifted: tap.shifted)
+            typed += text
+            out.append(text)
+            trail.record(Touch(point: tap.point, interval: tap.interval, shifted: tap.shifted, text: text))
+            let start = clock_gettime_nsec_np(CLOCK_UPTIME_RAW)
+            let rewrite = trail.retype(before: typed, model: model, layout: layout, tuning: tuning)
+            retypeTime.append(clock_gettime_nsec_np(CLOCK_UPTIME_RAW) - start)
+            guard let rewrite else { continue }
+            typed = String(String.UnicodeScalarView(typed.unicodeScalars.dropLast(rewrite.old.unicodeScalars.count))) + rewrite.new
+            for (i, touch) in zip(out.indices.suffix(trail.touches.count), trail.touches) { out[i] = touch.text }
+        }
+        return out
+    }
+
     func key(for tap: Tap, after typed: String, with decoder: Decoder) -> PlacedKey? {
         switch decoder {
         case .geometric: layout.key(at: tap.point)

@@ -220,7 +220,7 @@ public final class TypingModel: @unchecked Sendable {
 
     /// The end of the current line as symbol ids, the way the builder normalised its training lines: anything off
     /// the keys is a space, runs of spaces are one, and a line starts without one.
-    private func normalized(_ context: some StringProtocol, keep: Int) -> (ids: [UInt8], atLineStart: Bool) {
+    func normalized(_ context: some StringProtocol, keep: Int) -> (ids: [UInt8], atLineStart: Bool) {
         var reversed: [UInt8] = []
         var atLineStart = true
         for scalar in context.unicodeScalars.reversed() {
