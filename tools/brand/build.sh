@@ -17,16 +17,14 @@ while read -r name sheet y x h w; do
   sips -s format bmp "$TMP/$name.png" --out "$TMP/$name.bmp" >/dev/null
   set="$OUT/$name.imageset"
   mkdir -p "$set"
-  potrace "$TMP/$name.bmp" -s --tight --flat -k 0.5 -t 4 -O 0.4 -o "$set/$name.svg"
-  printf '{\n  "images" : [ { "filename" : "%s.svg", "idiom" : "universal" } ],\n  "info" : { "author" : "xcode", "version" : 1 },\n  "properties" : { "preserves-vector-representation" : true, "template-rendering-intent" : "template" }\n}\n' "$name" > "$set/Contents.json"
-  echo "$set/$name.svg"
+  potrace "$TMP/$name.bmp" -b pdf --tight -k 0.5 -t 4 -O 0.4 -o "$set/$name.pdf"
+  potrace "$TMP/$name.bmp" -s --tight -k 0.5 -t 4 -O 0.4 -o "$TMP/$name.svg"
+  printf '{\n  "images" : [ { "filename" : "%s.pdf", "idiom" : "universal" } ],\n  "info" : { "author" : "xcode", "version" : 1 },\n  "properties" : { "preserves-vector-representation" : true, "template-rendering-intent" : "template" }\n}\n' "$name" > "$set/Contents.json"
+  echo "$set/$name.pdf"
 done <<'BOXES'
 MaiEk     strokes  66  176 232  92
 InkTick   marks   180  465 270 245
-InkTally  marks   200  800 230 305
-InkUnderline marks 315 1180 75 305
 InkArrow  marks   600   50 180 320
-InkCircle marks   560  820 275 265
 BOXES
 
 # The app icon is the same stroke on dotted paper, rendered once per appearance.
@@ -34,7 +32,7 @@ CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 ICONS=../../App/Assets.xcassets/AppIcon.appiconset
 for look in light dark; do
   "$CHROME" --headless=new --disable-gpu --hide-scrollbars --force-device-scale-factor=1 --window-size=1024,1024 \
-    --screenshot="$TMP/$look.png" "file://$(pwd)/icon.html?$look" >/dev/null 2>&1
+    --screenshot="$TMP/$look.png" "file://$(pwd)/icon.html?look=$look&src=file://$TMP/MaiEk.svg" >/dev/null 2>&1
   sips -s format png -s formatOptions default "$TMP/$look.png" --out "$ICONS/AppIcon-$look.png" >/dev/null
 done
 cat > "$ICONS/Contents.json" <<'JSON'

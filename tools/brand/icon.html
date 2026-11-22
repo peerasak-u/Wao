@@ -7,5 +7,5 @@ img{position:absolute;height:560px;left:50%;top:50%;transform:translate(-50%,-50
 .light{--paper:#fbfaf6;--dot:rgba(22,22,20,.16);--f:none}
 .dark{--paper:#151514;--dot:rgba(243,241,234,.2);--f:invert(.95)}
 </style>
-<body><img src="../../App/Assets.xcassets/Ink/MaiEk.imageset/MaiEk.svg">
-<script>document.body.className=location.search.slice(1)</script>
+<body><img>
+<script>const q=new URLSearchParams(location.search);document.body.className=q.get('look');document.querySelector('img').src=q.get('src')</script>
