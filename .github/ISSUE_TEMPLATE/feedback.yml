@@ -1,0 +1,16 @@
+name: ข้อเสนอแนะ · Feedback or idea
+description: อยากให้ปรับอะไร หรือมีไอเดียใหม่ · Something to improve or a new idea
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: อยากให้เป็นอย่างไร · What would you like
+      description: เล่าว่าตอนนี้ใช้งานแบบไหน ติดตรงไหน และอยากให้เป็นแบบไหน · How you use it now, where it gets in the way, and what you would like instead.
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: รุ่น iPhone และเวอร์ชัน iOS (ถ้าเกี่ยว) · iPhone model and iOS version, if it matters
+      placeholder: iPhone 15 Pro, iOS 26.2

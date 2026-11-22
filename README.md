@@ -3,6 +3,9 @@
 Offline Thai dictation keyboard for iOS. The keyboard extension is UI only; the app holds the mic and runs
 iapp/OpenThai2.0-ASR-Streaming-ONNX (int8) on the CPU with ONNX Runtime.
 
+Try the beta on [TestFlight](https://testflight.apple.com/join/jU4rVm8a). Report bugs and ideas in
+[GitHub Issues](https://github.com/peerasak-u/thai-wow-keyboard/issues/new/choose), in Thai or English.
+
 ## Credits
 
 - **Speech recognition model:** [OpenThai2.0-ASR-Streaming](https://huggingface.co/iapp/OpenThai2.0-ASR-Streaming)
@@ -75,3 +78,8 @@ cd Packages/WaoCore && swift build -c release --product wao-typing-eval
 
 `wao-typing-eval` replays the held-out lines as noisy taps on a 390 x 242 pt key grid through the shipped
 `KeyLayout`, `TypingModel` and `TapDecoder`, and counts what the geometric keyboard and each decoder typed.
+
+## License
+
+The code is [MIT](LICENSE). The model, the ONNX Runtime binaries and the typing data keep their own licences,
+listed under Credits.

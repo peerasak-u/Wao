@@ -1,0 +1,44 @@
+name: รายงานปัญหา · Bug report
+description: มีอะไรทำงานผิด ถอดเสียงผิด หรือพิมพ์ไม่ได้ · Something is broken or transcribed wrong
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: เกิดอะไรขึ้น · What happened
+      description: บอกสิ่งที่เห็น และสิ่งที่คิดว่าควรเป็น ถ้าถอดเสียงผิด ใส่คำที่พูดกับคำที่ออกมา · What you saw and what you expected. For a wrong transcription, give what you said and what came out.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: ทำอย่างไรถึงเจอ · Steps to reproduce
+      placeholder: |
+        1. เปิด Notes แล้วสลับมาที่คีย์บอร์ดเว่า
+        2. ...
+  - type: input
+    id: device
+    attributes:
+      label: รุ่น iPhone และเวอร์ชัน iOS · iPhone model and iOS version
+      placeholder: iPhone 15 Pro, iOS 26.2
+    validations:
+      required: true
+  - type: input
+    id: build
+    attributes:
+      label: เวอร์ชันเว่า · Wao build
+      description: ดูได้ในแอป TestFlight · Shown in the TestFlight app
+      placeholder: 1.0 (5)
+  - type: dropdown
+    id: full-access
+    attributes:
+      label: เปิด Full Access ให้คีย์บอร์ดเว่าไหม · Is Full Access on for the Wao keyboard?
+      options:
+        - เปิด · On
+        - ไม่ได้เปิด · Off
+        - ไม่แน่ใจ · Not sure
+  - type: textarea
+    id: media
+    attributes:
+      label: ภาพหน้าจอหรือวิดีโอ · Screenshots or a screen recording
+      description: ลากไฟล์มาวางที่นี่ได้ อย่าใส่ข้อความส่วนตัวที่ไม่อยากให้คนอื่นเห็น · Drag files here. Leave out anything private.
