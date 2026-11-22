@@ -1,4 +1,3 @@
-import CoreText
 import SwiftUI
 import WaoCore
 
@@ -74,7 +73,7 @@ struct KeyArea: View {
             }
             bottomRow
             if let pressed, case .character(let character) = pressed.kind {
-                KeyPopup(label: model.typing.caption(of: character), font: popupFont)
+                KeyPopup(text: model.typing.text(of: character))
                     .frame(width: max(pressed.cap.width * 1.5, 44), height: 50)
                     .position(popupCenter(for: pressed.cap))
                     .allowsHitTesting(false)
@@ -120,20 +119,8 @@ struct KeyArea: View {
             // Drawn only: the touch surface beneath decides what a touch types.
             Color.clear
                 .overlay(alignment: .topLeading) {
-                    let style = KeyFont.letter(label)
-                    Group {
-                        if let mark = LoneMark(label) {
-                            mark.fill(Color(.label))
-                        } else {
-                            Text(label)
-                                .font(style.font)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.7)
-                                .foregroundStyle(Color(.label))
-                                .offset(y: style.lift)
-                        }
-                    }
-                    .keyLabel()
+                    CapLabel(text: label)
+                        .keyLabel()
                     .frame(width: cap.width, height: cap.height)
                     .background(pressed?.id == key.id ? Key.pressedFill : Key.fill, in: RoundedRectangle(cornerRadius: Key.cornerRadius))
                     .offset(x: cap.minX, y: cap.minY)
@@ -159,10 +146,6 @@ struct KeyArea: View {
         }
     }
 
-    private var popupFont: Font {
-        model.typing.page == .letters ? .loopless(30) : .system(size: 30)
-    }
-
     /// Sits above the key; on the top row it is pushed down into the room above the keys rather than cut off.
     private func popupCenter(for cap: CGRect) -> CGPoint {
         let halfWidth = max(cap.width * 1.5, 44) / 2
@@ -172,125 +155,14 @@ struct KeyArea: View {
     }
 }
 
-/// The system keyboard's label faces and sizes, matched to its screenshots by the label boxes that
-/// tools/keyboard_parity.py prints.
-enum KeyFont {
-    /// A character cap: Thai in Thonburi Light, figures and symbols in the system font, as iOS draws them.
-    /// `lift` moves the label from the cap's centre to where the system keyboard's sits.
-    static func letter(_ text: String) -> (font: Font, lift: CGFloat) {
-        if text.isThai { return (.custom("Thonburi-Light", size: 24), -4.5) }
-        return (figures, -1.2 + (sunk[text] ?? 0))
-    }
-
-    /// How much lower than the figures' baseline iOS sets these, measured on its numbers page.
-    private static let sunk: [String: CGFloat] = [".": 3, ",": 3, ":": 2.8]
-
-    /// Figures and symbols, with the case-sensitive forms that raise dashes and brackets to the figures.
-    private static let figures: Font = {
-        let feature: [UIFontDescriptor.FeatureKey: Int] = [.type: kCaseSensitiveLayoutType, .selector: kCaseSensitiveLayoutOnSelector]
-        let font = UIFont.systemFont(ofSize: 22)
-        return Font(UIFont(descriptor: font.fontDescriptor.addingAttributes([.featureSettings: [feature]]), size: 22))
-    }()
-
-    /// 123, กขค, #+= and the like.
-    static func label(_ text: String) -> (font: Font, lift: CGFloat) {
-        if text.isThai { return (.custom("Thonburi", size: 16), -1.5) }
-        return (text.count > 2 && text.allSatisfy({ !$0.isLetter && !$0.isNumber }) ? .system(size: 13) : .system(size: 18.5), 0)
-    }
-
-    /// Shift, delete, return and the mic; smaller on the twelve-column Thai rows.
-    static func icon(narrow: Bool) -> Font { .system(size: narrow ? 15 : 19, weight: .regular) }
-}
-
-/// A vowel or tone mark drawn alone, as the system keyboard draws it. As text, Thonburi seats a lone mark on a dotted
-/// circle, and on a consonant it fuses the two into one glyph; so the pair อ + mark is shaped and the outline's
-/// pieces that overlap a lone อ are dropped. ำ counts as a mark: it carries a nikhahit.
-struct LoneMark: Shape {
-    private let outline: Path
-    /// The mark's centre as a fraction of the cap's height from its middle, measured on the system keyboard.
-    private let drop: CGFloat
-
-    init?(_ text: String) {
-        guard let first = text.unicodeScalars.first else { return nil }
-        let below: Set<Unicode.Scalar> = ["\u{0E38}", "\u{0E39}", "\u{0E3A}"]
-        if first == "\u{0E33}" {
-            (outline, drop) = (Self.mark(text, size: 22), -0.07)
-        } else if first.properties.generalCategory == .nonspacingMark {
-            // The system keyboard draws lone marks about a third larger than its letters.
-            (outline, drop) = (Self.mark(text, size: 32), below.contains(first) ? 0.116 : -0.196)
-        } else {
-            return nil
-        }
-    }
-
-    private static func mark(_ text: String, size: CGFloat) -> Path {
-        let font = CTFontCreateWithName("Thonburi-Light" as CFString, size, nil)
-        let base = glyphs("อ", font).boundingBoxOfPath.insetBy(dx: 1, dy: 1)
-        let kept = glyphs("อ" + text, font).componentsSeparated().filter { !$0.boundingBoxOfPath.intersects(base) }
-        var path = Path()
-        // CoreText outlines are y-up from the baseline.
-        for piece in kept { path.addPath(Path(piece), transform: CGAffineTransform(scaleX: 1, y: -1)) }
-        return path
-    }
-
-    private static func glyphs(_ text: String, _ font: CTFont) -> CGPath {
-        let line = CTLineCreateWithAttributedString(NSAttributedString(string: text, attributes: [.font: font]))
-        let path = CGMutablePath()
-        for run in CTLineGetGlyphRuns(line) as? [CTRun] ?? [] {
-            let count = CTRunGetGlyphCount(run)
-            var glyphs = [CGGlyph](repeating: 0, count: count)
-            var positions = [CGPoint](repeating: .zero, count: count)
-            CTRunGetGlyphs(run, CFRange(), &glyphs)
-            CTRunGetPositions(run, CFRange(), &positions)
-            for (glyph, position) in zip(glyphs, positions) {
-                if let outline = CTFontCreatePathForGlyph(font, glyph, nil) {
-                    path.addPath(outline, transform: CGAffineTransform(translationX: position.x, y: position.y))
-                }
-            }
-        }
-        return path
-    }
-
-    func path(in rect: CGRect) -> Path {
-        let ink = outline.boundingRect
-        return outline.offsetBy(dx: rect.midX - ink.midX, dy: rect.midY + drop * rect.height - ink.midY)
-    }
-}
-
 extension View {
     func placed(_ slot: KeySlot) -> some View {
         frame(width: slot.hit.width, height: slot.hit.height).position(x: slot.hit.midX, y: slot.hit.midY)
     }
 }
 
-private extension String {
-    var isThai: Bool { unicodeScalars.contains { (0x0E00...0x0E7F).contains($0.value) } }
-}
-
 extension Typing {
     func text(of key: CharacterKey) -> String { key.text(shifted: shifted) }
-
-    /// The popup's label. A vowel or tone mark alone has nothing to sit on and draws as an empty key. Neither
-    /// Sukhumvit Set nor the system font seats it on a dotted circle, so it sits on a faint อ instead.
-    func caption(of key: CharacterKey) -> Text {
-        let text = text(of: key)
-        guard text.unicodeScalars.first?.properties.generalCategory == .nonspacingMark else { return Text(text) }
-        return Text("อ").foregroundColor(Color(.label).opacity(0.6)) + Text(text)
-    }
-}
-
-private struct KeyPopup: View {
-    let label: Text
-    let font: Font
-
-    var body: some View {
-        label
-            .font(font)
-            .foregroundStyle(Color(.label))
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color(.systemGray4), in: RoundedRectangle(cornerRadius: 8))
-            .shadow(color: .black.opacity(0.35), radius: 4, y: 2)
-    }
 }
 
 /// Text confirmed with ✓ is still on its way. It sits beside the suggestions, and gives up its caption to them.
