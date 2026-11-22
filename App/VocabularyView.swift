@@ -16,9 +16,9 @@ struct VocabularyCard: View {
                     .foregroundStyle(Palette.secondary)
                     .frame(width: 28)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("คลังคำศัพท์").font(.loopless(16, .medium))
+                    Text("คลังคำศัพท์").font(.system(size: 16, weight: .medium))
                     Text("\(book.effectiveWords.count) คำ · เปิด \(book.enabledGroupCount) จาก \(book.groups.count) กลุ่ม")
-                        .font(.loopless(13).monospacedDigit())
+                        .font(.system(size: 13).monospacedDigit())
                         .foregroundStyle(Palette.secondary)
                 }
                 Spacer()
@@ -71,7 +71,7 @@ struct VocabularyScreen: View {
                     results
                 }
                 Button("คืนค่าเริ่มต้น") { confirmingReset = true }
-                    .font(.loopless(14))
+                    .font(.system(size: 14))
                     .foregroundStyle(Palette.tertiary)
                     .confirmationDialog("คืนคลังคำศัพท์เป็นค่าเริ่มต้น?", isPresented: $confirmingReset, titleVisibility: .visible) {
                         Button("คืนค่าเริ่มต้น", role: .destructive) { model.vocabulary = .bundled }
@@ -102,15 +102,15 @@ struct VocabularyScreen: View {
         let count = book.effectiveWords.count
         return VStack(alignment: .leading, spacing: 16) {
             Text("คำภาษาอังกฤษที่อยากให้เขียนเป็นตัวอักษรอังกฤษ เช่น ชื่อบริษัท ชื่อสินค้า ศัพท์ที่ใช้บ่อย")
-                .font(.loopless(14))
+                .font(.system(size: 14))
                 .foregroundStyle(Palette.secondary)
                 .fixedSize(horizontal: false, vertical: true)
             HStack(alignment: .firstTextBaseline, spacing: 6) {
-                Text("\(count)").font(.loopless(44, .bold).monospacedDigit())
-                Text("คำที่ใช้อยู่").font(.loopless(15)).foregroundStyle(Palette.secondary)
+                Text("\(count)").font(.system(size: 44, weight: .bold).monospacedDigit())
+                Text("คำที่ใช้อยู่").font(.system(size: 15)).foregroundStyle(Palette.secondary)
                 Spacer()
                 Text("เปิด \(book.enabledGroupCount) จาก \(book.groups.count) กลุ่ม")
-                    .font(.loopless(14).monospacedDigit())
+                    .font(.system(size: 14).monospacedDigit())
                     .foregroundStyle(Palette.secondary)
             }
             if count > comfortableWordCount {
@@ -119,7 +119,7 @@ struct VocabularyScreen: View {
                         .font(.system(size: 14, weight: .medium))
                         .padding(.top, 2)
                     Text("เกิน \(comfortableWordCount) คำ รายการที่ยาวอาจทำให้โมเดลใส่คำที่คุณไม่ได้พูด ลองปิดกลุ่มที่ไม่ค่อยได้ใช้")
-                        .font(.loopless(13))
+                        .font(.system(size: 13))
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .foregroundStyle(Color(red: 1, green: 0.84, blue: 0.55))
@@ -141,11 +141,11 @@ struct VocabularyScreen: View {
                     NavigationLink(value: VocabularyRoute.group(group.id)) {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(group.name)
-                                .font(.loopless(16, .medium))
+                                .font(.system(size: 16, weight: .medium))
                                 .lineLimit(2)
                                 .multilineTextAlignment(.leading)
                             Text("\(group.words.count) คำ")
-                                .font(.loopless(13).monospacedDigit())
+                                .font(.system(size: 13).monospacedDigit())
                                 .foregroundStyle(Palette.secondary)
                         }
                         .opacity(group.isEnabled ? 1 : 0.5)
@@ -171,7 +171,7 @@ struct VocabularyScreen: View {
         return VStack(alignment: .leading, spacing: 0) {
             if hits.isEmpty {
                 Text("ไม่พบ \"\(needle)\"")
-                    .font(.loopless(14))
+                    .font(.system(size: 14))
                     .foregroundStyle(Palette.secondary)
                     .padding(18)
             }
@@ -179,10 +179,10 @@ struct VocabularyScreen: View {
                 if i > 0 { Divider().overlay(Palette.hairline).padding(.leading, 18) }
                 NavigationLink(value: VocabularyRoute.group(hit.group.id)) {
                     HStack {
-                        Text(hit.word).font(.loopless(16))
+                        Text(hit.word).font(.system(size: 16))
                         Spacer()
                         Text(hit.group.name)
-                            .font(.loopless(13))
+                            .font(.system(size: 13))
                             .foregroundStyle(Palette.tertiary)
                             .lineLimit(1)
                     }
@@ -221,8 +221,8 @@ private struct GroupScreen: View {
             Section {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(group.isEnabled ? "ใช้อยู่" : "ปิดอยู่").font(.loopless(16, .medium))
-                        Text("\(group.words.count) คำ").font(.loopless(13).monospacedDigit()).foregroundStyle(Palette.secondary)
+                        Text(group.isEnabled ? "ใช้อยู่" : "ปิดอยู่").font(.system(size: 16, weight: .medium))
+                        Text("\(group.words.count) คำ").font(.system(size: 13).monospacedDigit()).foregroundStyle(Palette.secondary)
                     }
                     Spacer()
                     Toggle(group.name, isOn: binding.isEnabled).toggleStyle(GlowSwitch())
@@ -230,7 +230,7 @@ private struct GroupScreen: View {
                 .padding(.vertical, 4)
                 HStack(spacing: 10) {
                     TextField("", text: $newWord, prompt: Text("เพิ่มคำ (คั่นหลายคำด้วย ,)").foregroundStyle(Palette.tertiary))
-                        .font(.loopless(16))
+                        .font(.system(size: 16))
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
                         .submitLabel(.done)
@@ -243,7 +243,7 @@ private struct GroupScreen: View {
                     .opacity(newWord.trimmingCharacters(in: .whitespaces).isEmpty ? 0.3 : 1)
                 }
                 if let notice {
-                    Text(notice).font(.loopless(13)).foregroundStyle(Palette.secondary)
+                    Text(notice).font(.system(size: 13)).foregroundStyle(Palette.secondary)
                 }
             }
             .listRowBackground(Color.white.opacity(0.06))
@@ -251,14 +251,14 @@ private struct GroupScreen: View {
             Section {
                 ForEach(Array(group.words.enumerated()), id: \.offset) { i, word in
                     Button { editing = i } label: {
-                        Text(word).font(.loopless(16)).frame(maxWidth: .infinity, alignment: .leading).contentShape(Rectangle())
+                        Text(word).font(.system(size: 16)).frame(maxWidth: .infinity, alignment: .leading).contentShape(Rectangle())
                     }
                     .buttonStyle(.plain)
                 }
                 .onDelete { binding.wrappedValue.words.remove(atOffsets: $0) }
                 .listRowBackground(Color.white.opacity(0.04))
             } header: {
-                Text("แตะเพื่อแก้ · ปัดซ้ายเพื่อลบ").font(.loopless(13)).foregroundStyle(Palette.tertiary).textCase(nil)
+                Text("แตะเพื่อแก้ · ปัดซ้ายเพื่อลบ").font(.system(size: 13)).foregroundStyle(Palette.tertiary).textCase(nil)
             }
 
             Section {
@@ -267,7 +267,7 @@ private struct GroupScreen: View {
                     PillButton(title: "เปลี่ยนชื่อ") { renaming = true }
                     Spacer()
                     Button("ลบกลุ่ม") { confirmingDelete = true }
-                        .font(.loopless(14, .medium))
+                        .font(.system(size: 14, weight: .medium))
                         .foregroundStyle(Color(red: 1, green: 0.45, blue: 0.42))
                         .buttonStyle(.plain)
                 }
@@ -347,7 +347,7 @@ private struct ImportSheet: View {
                         .padding(.horizontal, -20)
                         if target == nil {
                             TextField("", text: $newGroupName, prompt: Text("ชื่อกลุ่มใหม่").foregroundStyle(Palette.tertiary))
-                                .font(.loopless(16))
+                                .font(.system(size: 16))
                                 .padding(14)
                                 .card()
                         }
@@ -356,14 +356,14 @@ private struct ImportSheet: View {
                         ZStack(alignment: .topLeading) {
                             if text.isEmpty {
                                 Text("วางคำที่คั่นด้วย , หรือขึ้นบรรทัดใหม่\nเช่น Supabase, Vercel, Figma")
-                                    .font(.loopless(16))
+                                    .font(.system(size: 16))
                                     .foregroundStyle(Palette.tertiary)
                                     .padding(.horizontal, 5)
                                     .padding(.vertical, 8)
                                     .allowsHitTesting(false)
                             }
                             TextEditor(text: $text)
-                                .font(.loopless(16))
+                                .font(.system(size: 16))
                                 .scrollContentBackground(.hidden)
                                 .textInputAutocapitalization(.never)
                                 .autocorrectionDisabled()
@@ -378,14 +378,14 @@ private struct ImportSheet: View {
                             FlowLayout(spacing: 6) {
                                 ForEach(Array(preview.added.enumerated()), id: \.offset) { _, word in
                                     Text(word)
-                                        .font(.loopless(14))
+                                        .font(.system(size: 14))
                                         .padding(.horizontal, 10)
                                         .padding(.vertical, 5)
                                         .background(.white.opacity(0.1), in: Capsule())
                                 }
                                 ForEach(Array(preview.duplicates.enumerated()), id: \.offset) { _, word in
                                     Text(word)
-                                        .font(.loopless(14))
+                                        .font(.system(size: 14))
                                         .strikethrough()
                                         .foregroundStyle(Palette.tertiary)
                                         .padding(.horizontal, 10)
@@ -403,13 +403,13 @@ private struct ImportSheet: View {
                 VStack(spacing: 10) {
                     if !text.isEmpty {
                         Text("เพิ่ม \(preview.added.count) คำ · ซ้ำ \(preview.duplicates.count) คำ")
-                            .font(.loopless(14).monospacedDigit())
+                            .font(.system(size: 14).monospacedDigit())
                             .foregroundStyle(Palette.secondary)
                             .accessibilityIdentifier("import-summary")
                     }
                     Button { commit(); dismiss() } label: {
                     Text(preview.added.isEmpty ? "เพิ่มคำ" : "เพิ่ม \(preview.added.count) คำ")
-                        .font(.loopless(18, .semibold))
+                        .font(.system(size: 18, weight: .semibold))
                         .frame(maxWidth: .infinity, minHeight: 56)
                         .foregroundStyle(ready ? Palette.canvas : Palette.tertiary)
                         .background(Capsule().fill(ready ? Color.white : Color.white.opacity(0.08)))
@@ -437,7 +437,7 @@ private struct ImportSheet: View {
 
     private func section<Content: View>(_ title: String, @ViewBuilder content: () -> Content) -> some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(title).font(.loopless(13, .medium)).foregroundStyle(Palette.tertiary)
+            Text(title).font(.system(size: 13, weight: .medium)).foregroundStyle(Palette.tertiary)
             content()
         }
     }
@@ -463,7 +463,7 @@ private struct Chip: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(.loopless(14, selected ? .semibold : .text))
+                .font(.system(size: 14, weight: selected ? .semibold : .regular))
                 .lineLimit(1)
                 .padding(.horizontal, 14)
                 .frame(minHeight: 34)
@@ -475,7 +475,6 @@ private struct Chip: View {
     }
 }
 
-/// A sheet rather than an alert, so the field and its labels are in Sukhumvit Set like the rest of the app.
 private struct NameSheet: View {
     @Environment(\.dismiss) private var dismiss
     let title: String
@@ -496,9 +495,9 @@ private struct NameSheet: View {
     var body: some View {
         let value = text.trimmingCharacters(in: .whitespaces)
         VStack(alignment: .leading, spacing: 18) {
-            Text(title).font(.loopless(20, .semibold))
+            Text(title).font(.system(size: 20, weight: .semibold))
             TextField("", text: $text, prompt: Text(placeholder).foregroundStyle(Palette.tertiary))
-                .font(.loopless(17))
+                .font(.system(size: 17))
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
                 .focused($focused)
@@ -508,11 +507,11 @@ private struct NameSheet: View {
                 .card()
             HStack(spacing: 10) {
                 Button("ยกเลิก") { dismiss() }
-                    .font(.loopless(16, .medium))
+                    .font(.system(size: 16, weight: .medium))
                     .frame(maxWidth: .infinity, minHeight: 50)
                     .background(.white.opacity(0.06), in: Capsule())
                 Button(action) { save(value); dismiss() }
-                    .font(.loopless(16, .semibold))
+                    .font(.system(size: 16, weight: .semibold))
                     .foregroundStyle(Palette.canvas)
                     .frame(maxWidth: .infinity, minHeight: 50)
                     .background(Capsule().fill(.white))
@@ -537,7 +536,7 @@ private struct SearchField: View {
         HStack(spacing: 10) {
             Image(systemName: "magnifyingglass").foregroundStyle(Palette.tertiary)
             TextField("", text: $text, prompt: Text("ค้นหาคำในทุกกลุ่ม").foregroundStyle(Palette.tertiary))
-                .font(.loopless(16))
+                .font(.system(size: 16))
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
             if !text.isEmpty {

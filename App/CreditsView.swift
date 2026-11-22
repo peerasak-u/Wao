@@ -31,7 +31,7 @@ struct CreditsFooter: View {
                     .foregroundStyle(.white)
                     .underline()
             }
-            .font(.loopless(13))
+            .font(.system(size: 13))
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 8)
@@ -73,7 +73,7 @@ struct AppVersionLabel: View {
             }
         } label: {
             Text(copied ? "คัดลอกแล้ว" : version.display)
-                .font(.loopless(13).monospacedDigit())
+                .font(.system(size: 13).monospacedDigit())
                 .foregroundStyle(Palette.secondary)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 8)
@@ -158,17 +158,17 @@ private struct ModelCredit: View {
         VStack(alignment: .leading, spacing: 18) {
             VStack(alignment: .leading, spacing: 6) {
                 Text("โมเดลถอดเสียง")
-                    .font(.loopless(13, .medium))
+                    .font(.system(size: 13, weight: .medium))
                     .foregroundStyle(Palette.tertiary)
                 Text("OpenThai2.0-ASR-Streaming")
-                    .font(.loopless(24, .bold))
+                    .font(.system(size: 24, weight: .bold))
                     .shadow(color: .white.opacity(0.25), radius: 16)
                 Text("โดย iApp Technology")
-                    .font(.loopless(15, .medium))
+                    .font(.system(size: 15, weight: .medium))
                     .foregroundStyle(Palette.secondary)
             }
             Text("ขอบคุณ iApp Technology และ AIEAT ที่เปิดโมเดลถอดเสียงภาษาไทยให้ใช้ฟรี")
-                .font(.loopless(17, .medium))
+                .font(.system(size: 17, weight: .medium))
                 .lineSpacing(3)
                 .fixedSize(horizontal: false, vertical: true)
             VStack(alignment: .leading, spacing: 10) {
@@ -208,7 +208,7 @@ private struct Fact: View {
                 .foregroundStyle(.white.opacity(0.85))
                 .fixedSize(horizontal: false, vertical: true)
         }
-        .font(.loopless(14))
+        .font(.system(size: 14))
     }
 }
 
@@ -221,11 +221,11 @@ private struct Credit: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             VStack(alignment: .leading, spacing: 4) {
-                Text(title).font(.loopless(17, .semibold))
-                Text(byline).font(.loopless(14)).foregroundStyle(Palette.secondary)
+                Text(title).font(.system(size: 17, weight: .semibold))
+                Text(byline).font(.system(size: 14)).foregroundStyle(Palette.secondary)
             }
             Text(detail)
-                .font(.loopless(14))
+                .font(.system(size: 14))
                 .foregroundStyle(Palette.secondary)
                 .fixedSize(horizontal: false, vertical: true)
             Links(links: links)
@@ -262,7 +262,7 @@ private struct Links: View {
 
     private func row(_ title: String, symbol: String) -> some View {
         HStack {
-            Text(title).font(.loopless(15, .medium))
+            Text(title).font(.system(size: 15, weight: .medium))
             Spacer()
             Image(systemName: symbol)
                 .font(.system(size: 13, weight: .semibold))

@@ -160,7 +160,7 @@ struct KeyArea: View {
     }
 
     private var popupFont: Font {
-        model.typing.page == .letters ? .loopless(30) : .system(size: 30)
+        model.typing.page == .letters ? .system(size: 30) : .system(size: 30)
     }
 
     /// Sits above the key; on the top row it is pushed down into the room above the keys rather than cut off.
@@ -302,7 +302,7 @@ private struct TranscribingMark: View {
             ProgressView().controlSize(.small)
             if captioned {
                 Text("กำลังถอดเสียง")
-                    .font(.loopless(13))
+                    .font(.system(size: 13))
                     .foregroundStyle(Color(.secondaryLabel))
             }
         }
@@ -328,7 +328,7 @@ private struct SuggestionBar: View {
                     if rank < completions.count {
                         Button { choose(completions[rank]) } label: {
                             Text(label(completions[rank]))
-                                .font(.loopless(17))
+                                .font(.system(size: 17))
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.6)
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -375,7 +375,7 @@ private struct FullAccessBanner: View {
             HStack(spacing: 6) {
                 Image(systemName: "mic.slash")
                 Text("เปิดการเข้าถึงแบบเต็มเพื่อพิมพ์ด้วยเสียง")
-                    .font(.loopless(13))
+                    .font(.system(size: 13))
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
                 Image(systemName: "info.circle")
@@ -396,17 +396,17 @@ private struct FullAccessHelp: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text("พิมพ์ด้วยเสียงต้องเปิดการเข้าถึงแบบเต็ม")
-                .font(.loopless(17, .semibold))
+                .font(.system(size: 17, weight: .semibold))
             Text("การตั้งค่า › ทั่วไป › แป้นพิมพ์ › แป้นพิมพ์ › เว่า › เปิด \"อนุญาตการเข้าถึงแบบเต็ม\"")
-                .font(.loopless(15))
+                .font(.system(size: 15))
                 .fixedSize(horizontal: false, vertical: true)
             Text("แป้นพิมพ์ใช้สิทธิ์นี้เพื่อส่งเสียงไปถอดความในแอปเว่าบนเครื่องนี้ ระหว่างนี้พิมพ์ด้วยแป้นได้ตามปกติ")
-                .font(.loopless(13))
+                .font(.system(size: 13))
                 .foregroundStyle(Color(.secondaryLabel))
                 .fixedSize(horizontal: false, vertical: true)
             Spacer(minLength: 0)
             Text("แตะเพื่อกลับไปพิมพ์")
-                .font(.loopless(13, .medium))
+                .font(.system(size: 13, weight: .medium))
                 .foregroundStyle(Color(.secondaryLabel))
                 .frame(maxWidth: .infinity)
         }

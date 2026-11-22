@@ -78,7 +78,7 @@ struct EmojiSearchField: View {
                 .foregroundStyle(Color(.secondaryLabel))
             if let query, !query.isEmpty {
                 Text(query)
-                    .font(.loopless(17))
+                    .font(.system(size: 17))
                     .foregroundStyle(Color(.label))
                     .lineLimit(1)
                     .truncationMode(.head)
@@ -86,7 +86,7 @@ struct EmojiSearchField: View {
             } else {
                 if query != nil { Caret() }
                 Text("ค้นหาอีโมจิ")
-                    .font(.loopless(17))
+                    .font(.system(size: 17))
                     .foregroundStyle(Color(.secondaryLabel))
                     .lineLimit(1)
             }
@@ -138,7 +138,7 @@ private struct EmojiResults: View {
     var body: some View {
         if items.isEmpty {
             Text(empty)
-                .font(.loopless(15))
+                .font(.system(size: 15))
                 .foregroundStyle(Color(.secondaryLabel))
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else {
