@@ -23,8 +23,7 @@ final class VocabularyBookTests: XCTestCase {
 
     func testSeedsTheBundledListIntoItsSections() {
         let book = VocabularyBook.bundled
-        XCTAssertEqual(book.groups.first?.name, "Companies")
-        XCTAssertEqual(book.groups.count, 9)
+        XCTAssertEqual(book.groups.map(\.name), ["Companies", "Products and platforms", "Terms"])
         XCTAssertFalse(book.groups.contains { $0.name.contains("PoodPim") || $0.name.contains("licence") })
         XCTAssertEqual(book.effectiveWords, Hotwords.bundled.words.reduce(into: [String]()) { out, w in
             if !out.contains(where: { $0.lowercased() == w.lowercased() }) { out.append(w) }
