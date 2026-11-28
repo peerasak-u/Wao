@@ -49,7 +49,7 @@ final class TypingModelTests: XCTestCase {
         let hello = model.completions(after: "สวัส").map { [$0.word, $0.remainder] }
         XCTAssertTrue(hello.contains(["สวัสดี", "ดี"]), "\(hello)")
         let rice = model.completions(after: "ฉันจะไปกินข้า")
-        XCTAssertTrue(rice.contains { $0.word.hasSuffix("ข้าว") && $0.remainder == "ว" }, "\(rice)")
+        XCTAssertTrue(rice.contains { $0.word.hasPrefix("ข้าว") && $0.remainder.hasPrefix("ว") }, "\(rice)")
         XCTAssertLessThanOrEqual(rice.count, 3)
     }
 
@@ -79,8 +79,13 @@ final class TypingModelTests: XCTestCase {
 
     func testAWordBegunAtTheStartIsStillCompletedWhole() throws {
         let model = try model
-        XCTAssertEqual(model.completions(after: "ไม").first?.word, "ไม่")
-        XCTAssertEqual(model.completions(after: "วันนี้ไม").first?.remainder, "่")
+        XCTAssertTrue(try XCTUnwrap(model.completions(after: "ไม").first).word.hasPrefix("ไม่"))
+        XCTAssertTrue(try XCTUnwrap(model.completions(after: "วันนี้ไม").first).remainder.hasPrefix("่"))
+    }
+
+    func testAWordThatSavesNoTapRanksLast() throws {
+        let offered = try model.completions(after: "ไม")
+        XCTAssertFalse(offered.dropLast().contains { $0.remainder.unicodeScalars.count == 1 }, "\(offered)")
     }
 
     func testOffersNothingOutsideAThaiWord() throws {

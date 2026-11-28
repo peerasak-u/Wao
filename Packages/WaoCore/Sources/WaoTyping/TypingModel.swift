@@ -108,8 +108,8 @@ public final class TypingModel: @unchecked Sendable {
     /// into words: ขอบ may be ขอบคุณ begun or ขอ then บอก begun, and both kinds compete. Once the text ends with a
     /// whole word of three letters or more, only words that go on from that word's start count, so ขอบคุณ is not
     /// offered ณรงค์, while ต้องก, which ends in the two-letter งก, still offers กิน. When the dictionary cannot
-    /// split the text at all, the longest tail that starts a longer word. The language model ranks the words by
-    /// how likely the rest of each is after `context`, with a bonus for the letters a longer word saves typing.
+    /// split the text at all, the longest tail that starts a longer word. Words rank by the taps each is expected to
+    /// save: how likely the language model finds its rest after `context`, times the taps tapping it saves.
     public func completions(after context: some StringProtocol, limit: Int = 3) -> [Completion] {
         let run = self.run(before: context)
         let breaks = WordBreaks(run, in: self)
@@ -153,14 +153,15 @@ public final class TypingModel: @unchecked Sendable {
         let pool = Array(longer.sorted { wordFreq[$0] != wordFreq[$1] ? wordFreq[$0] > wordFreq[$1] : $0 < $1 }.prefix(Self.rankedWords))
         let rest = restScores(pool, dropping: typed.count, after: history.ids, atLineStart: history.atLineStart)
         return pool.map { word in
-            let letters = Float(length(of: word) - typed.count)
+            // Tapping a word types its rest in one tap. One that adds a single letter saves none, so it ranks after
+            // every word that saves some.
+            let saved = max(Float(length(of: word) - typed.count - 1), 0.01)
             return Candidate(word: word, typed: typed.count,
-                             score: rest[word]! + Self.letterBonus * letters + Self.frequencyWeight * Float(wordFreq[word]))
+                             score: rest[word]! + log(saved) + Self.frequencyWeight * Float(wordFreq[word]))
         }
     }
 
-    /// Nats per letter a word adds and per step of its frequency byte, both chosen by wao-typing-eval's suggest mode.
-    static let letterBonus: Float = 0.2
+    /// Nats per step of a word's frequency byte, a prior beside the language model, chosen by wao-typing-eval.
     static let frequencyWeight: Float = 0.01
 
     /// The shortest word that ends what is being typed; shorter ones are too often the start of something else.
