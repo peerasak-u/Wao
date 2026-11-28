@@ -49,7 +49,7 @@ final class TypingModelTests: XCTestCase {
         let hello = model.completions(after: "สวัส").map { [$0.word, $0.remainder] }
         XCTAssertTrue(hello.contains(["สวัสดี", "ดี"]), "\(hello)")
         let rice = model.completions(after: "ฉันจะไปกินข้า")
-        XCTAssertTrue(rice.contains { $0.word.hasSuffix("ข้าว") && $0.remainder == "ว" }, "\(rice)")
+        XCTAssertTrue(rice.contains { $0.word.hasPrefix("ข้าว") && $0.remainder.hasPrefix("ว") }, "\(rice)")
         XCTAssertLessThanOrEqual(rice.count, 3)
     }
 
@@ -57,14 +57,36 @@ final class TypingModelTests: XCTestCase {
         let model = try model
         XCTAssertEqual(model.completions(after: "ไม่ร").first?.word, "รู้")
         XCTAssertEqual(model.completions(after: "ฉันไม่ร").first?.remainder, "ู้")
-        XCTAssertEqual(Set(model.completions(after: "ไม่ค").prefix(2).map(\.word)), ["ควร", "ค่อย"])
-        XCTAssertTrue(model.completions(after: "กินข").contains { $0.word == "ข้าว" })
+        XCTAssertEqual(Set(model.completions(after: "ไม่ค").prefix(2).map(\.remainder)), ["วร", "่อย"])
+        XCTAssertTrue(model.completions(after: "กินข").contains { $0.remainder == "้าว" })
+    }
+
+    func testAWordThatStartsWithAShorterOneIsStillCompletedWhole() throws {
+        let model = try model
+        XCTAssertEqual(model.completions(after: "ขอบ").first?.word, "ขอบคุณ")
+        XCTAssertEqual(model.completions(after: "โทร").first?.word, "โทรศัพท์")
+        XCTAssertEqual(model.completions(after: "ประเ").first?.word, "ประเทศ")
+        XCTAssertEqual(model.completions(after: "ขอบค").first?.word, "ขอบคุณ", "shows the whole word, not คุณ")
+    }
+
+    func testAFinishedWordIsNotSplicedOntoItsLastLetters() throws {
+        let model = try model
+        XCTAssertEqual(model.completions(after: "ขอบคุณ"), [])
+        XCTAssertEqual(model.completions(after: "สวัสดี"), [])
+        XCTAssertTrue(model.completions(after: "ข้าว").allSatisfy { $0.word.hasPrefix("ข้าว") })
+        XCTAssertTrue(model.completions(after: "ต้องก").contains { $0.word.unicodeScalars.first == "ก" }, "a word begun at ก")
     }
 
     func testAWordBegunAtTheStartIsStillCompletedWhole() throws {
         let model = try model
         XCTAssertEqual(model.completions(after: "ไม").first?.word, "ไม่")
         XCTAssertEqual(model.completions(after: "วันนี้ไม").first?.remainder, "่")
+    }
+
+    func testACommonShortWordOutranksTheLongerWordsItBegins() throws {
+        let model = try model
+        XCTAssertTrue(model.completions(after: "ครั").prefix(2).contains { $0.word == "ครับ" })
+        XCTAssertEqual(model.completions(after: "เดี๋").first?.word, "เดี๋ยว")
     }
 
     func testOffersNothingOutsideAThaiWord() throws {

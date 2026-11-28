@@ -58,8 +58,10 @@ extension Rewrite {
 public struct RetypeTuning: Equatable, Sendable {
     /// Weight of the language model against the touch positions.
     public var lambda: Float
-    /// How far below the literal text, in nats, a retyped word may score and still replace it.
-    public var slack: Float
+    /// Nats taken off text for each letter since the last space that no dictionary word explains.
+    public var lexicon: Float
+    /// How far, in nats, retyped text must outscore what the touches typed to replace it: about 3 to 1 odds.
+    public var margin: Float
     /// How many of the latest touches retyping may change.
     public var window: Int
     public var beam: Int
@@ -68,16 +70,17 @@ public struct RetypeTuning: Equatable, Sendable {
     /// Where each touch's spread comes from.
     public var tap: TapTuning
 
-    public init(lambda: Float, slack: Float, window: Int, beam: Int, reach: CGFloat, tap: TapTuning = .shipped) {
+    public init(lambda: Float, lexicon: Float, margin: Float, window: Int, beam: Int, reach: CGFloat, tap: TapTuning = .shipped) {
         self.lambda = lambda
-        self.slack = slack
+        self.lexicon = lexicon
+        self.margin = margin
         self.window = window
         self.beam = beam
         self.reach = reach
         self.tap = tap
     }
 
-    public static let shipped = RetypeTuning(lambda: 0.7, slack: 0, window: 8, beam: 8, reach: 45)
+    public static let shipped = RetypeTuning(lambda: 0.7, lexicon: 1, margin: 1, window: 8, beam: 8, reach: 45)
 }
 
 /// The touches that typed the text right before the cursor since the last space, and the last automatic retype
@@ -126,8 +129,8 @@ public struct TouchTrail: Equatable, Sendable {
         return undo
     }
 
-    /// When the text since the last space leaves out characters no dictionary word covers and touches near the
-    /// latest ones would type a word that covers more, the rewrite to it; the trail then holds the new text.
+    /// When touches near the latest ones would type text that is clearly likelier, the rewrite to it; the trail
+    /// then holds the new text.
     public mutating func retype(before context: String, model: TypingModel, layout: KeyLayout,
                                 tuning: RetypeTuning = .shipped) -> Rewrite? {
         guard context.endsInScalars(text) else { return nil }
@@ -155,17 +158,18 @@ public struct TouchTrail: Equatable, Sendable {
 }
 
 extension TypingModel {
-    /// What each of `touches` should have typed after `prefix`, when that differs from what they did and covers
-    /// more of the text since the last space with dictionary words; `nil` otherwise. Each touch scores
-    /// `-½(d/σ)²` for its distance to the key it types, with σ from its interval, so a slow touch costs about 40
-    /// nats to move one key and a hurried one about 7; the text scores λ·ln P.
+    /// What each of `touches` should have typed after `prefix`, when that differs from what they did; `nil`
+    /// otherwise. Text is scored as the channel a keyboard is: each touch scores `-½(d/σ)²` for its distance to
+    /// the key it types, with σ from its interval, so a slow touch costs about 40 nats to move one key and a
+    /// hurried one about 7; the text scores λ·ln P, less `tuning.lexicon` for each letter no dictionary word
+    /// explains. The likeliest text replaces the typed one only when it wins by `tuning.margin`.
     func retype(_ touches: ArraySlice<Touch>, after prefix: String, in layout: KeyLayout, tuning: RetypeTuning) -> [String]? {
         let fixed = run(before: prefix)
         let literal = touches.compactMap { id(of: $0.text) }
         guard literal.count == touches.count else { return nil }
-        let literalOpen = WordBreaks(fixed + literal, in: self).open
-        guard literalOpen > 0 else { return nil }
-
+        func unexplained(_ ids: some Collection<UInt8>) -> Float {
+            tuning.lexicon * Float(WordBreaks(fixed + ids, in: self).open)
+        }
         let history = normalized(prefix, keep: order - 1)
         typealias Choice = (id: UInt8, text: String, cost: Float)
         let choices: [[Choice]] = touches.map { touch in
@@ -202,10 +206,11 @@ extension TypingModel {
             beam = Array(next.sorted { $0.score > $1.score }.prefix(tuning.beam))
         }
         let typedTexts = touches.map(\.text)
-        for path in beam where path.score >= literalScore - tuning.slack && path.texts != typedTexts {
-            if WordBreaks(fixed + path.ids.suffix(touches.count), in: self).open < literalOpen { return path.texts }
+        let rescored = beam.filter { $0.texts != typedTexts }.map { ($0.texts, $0.score - unexplained($0.ids.suffix(touches.count))) }
+        guard let best = rescored.max(by: { $0.1 < $1.1 }), best.1 > literalScore - unexplained(literal) + tuning.margin else {
+            return nil
         }
-        return nil
+        return best.0
     }
 }
 
