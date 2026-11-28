@@ -114,7 +114,7 @@ public final class TypingModel: @unchecked Sendable {
         let run = self.run(before: context)
         let breaks = WordBreaks(run, in: self)
         let history = normalized(context, keep: order - 1)
-        let clean = run.indices.filter { breaks.fits[$0].uncovered == 0 }
+        let clean = run.indices.filter { breaks.uncovered[$0] == 0 }
         let lastWord = clean.first { start in
             let words = words(startingWith: run[start...])
             return run.count - start >= Self.wholeWordLetters && !words.isEmpty

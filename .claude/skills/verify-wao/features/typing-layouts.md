@@ -13,7 +13,7 @@ The เว่า keyboard types without the mic: Thai Kedmanee, a symbols page a
 - `typing-dictation-key` (Full Access) shows a `Dictation` key left of space; one tap starts dictation (see `keyboard-dictation.md`).
 - `typing-pending` shows a small spinner and `กำลังถอดเสียง` in the strip while text confirmed with ✓ is on its way; with suggestions showing, only the spinner, beside them. Typing works meanwhile.
 - `typing-decode` types the key the context makes likely when a Thai tap lands near a key border; a tap in the middle of a key always types that key.
-- `typing-retype` retypes the word being typed when a hurried tap left letters no dictionary word covers and the keys around the touches spell one; slow taps stay as typed, and delete right after a retype puts back what was typed.
+- `typing-retype` retypes the latest touches when the keys around them spell text that is clearly likelier, by touch distance and the language model, with letters no dictionary word explains counting against it; slow taps stay as typed, and delete right after a retype puts back what was typed.
 - `typing-suggestions` shows up to three word completions in the strip above the keys; tapping one inserts the rest of the word.
 
 ## How to get to it (user POV)

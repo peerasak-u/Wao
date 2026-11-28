@@ -4,7 +4,7 @@ import WaoTyping
 
 let usage = """
     wao-typing-eval [fixed|speed|sweep|latency|examples|suggest|retype|retype-sweep|all] [--model FILE] [--seeds N] [--sigma PT...]
-                    [--lambda L --slack NATS --window TOUCHES --beam N --reach PT]
+                    [--lambda L --lexicon NATS --margin NATS --window TOUCHES --beam N --reach PT]
 
     Replays the held-out lines in Tests/WaoCoreTests/Fixtures as noisy taps on the Kedmanee grid a 390 pt iPhone shows and
     prints JSON lines comparing the geometric keyboard with tap decoders:
@@ -43,7 +43,8 @@ while let arg = args.popFirst() {
     switch arg {
     case "--model": modelPath = value { $0 }
     case "--lambda": retypeTuning.lambda = value { Float($0) }
-    case "--slack": retypeTuning.slack = value { Float($0) }
+    case "--lexicon": retypeTuning.lexicon = value { Float($0) }
+    case "--margin": retypeTuning.margin = value { Float($0) }
     case "--window": retypeTuning.window = value { Int($0) }
     case "--beam": retypeTuning.beam = value { Int($0) }
     case "--reach": retypeTuning.reach = value { Double($0).map { CGFloat($0) } }
@@ -357,7 +358,7 @@ func measureRetype(_ tuning: RetypeTuning, seeds: Range<Int>, lines: [String]) -
 }
 
 func describe(_ tuning: RetypeTuning) -> String {
-    "lambda \(tuning.lambda) slack \(tuning.slack) window \(tuning.window) beam \(tuning.beam) reach \(tuning.reach)"
+    "lambda \(tuning.lambda) lexicon \(tuning.lexicon) margin \(tuning.margin) window \(tuning.window) beam \(tuning.beam) reach \(tuning.reach)"
 }
 
 func runRetype() {
@@ -385,9 +386,11 @@ func runRetype() {
 
 func runRetypeSweep() {
     let lines = tests.flatMap(\.lines)
-    let tunings = [0.3, 0.5, 0.7, 1.0].flatMap { lambda in
-        [0, 1, 2, 3, 4].flatMap { slack in
-            [4, 6, 8].map { window in RetypeTuning(lambda: Float(lambda), slack: Float(slack), window: window, beam: 16, reach: 45) }
+    let tunings = [0.5, 0.7, 1.0].flatMap { lambda in
+        [0, 1, 1.5, 2, 3].flatMap { lexicon in
+            [1, 1.5, 2, 3].map { margin in
+                RetypeTuning(lambda: Float(lambda), lexicon: Float(lexicon), margin: Float(margin), window: 8, beam: 8, reach: 45)
+            }
         }
     }
     var results = Array(repeating: RetypeResult(), count: tunings.count)
@@ -402,7 +405,7 @@ func runRetypeSweep() {
     for (tuning, r) in zip(tunings, results).sorted(by: { $0.1.all.errors < $1.1.all.errors }) {
         let a = r.all
         emit([
-            "mode": "retype sweep", "lambda": Double(tuning.lambda), "slack": Double(tuning.slack), "window": tuning.window,
+            "mode": "retype sweep", "lambda": Double(tuning.lambda), "lexicon": Double(tuning.lexicon), "margin": Double(tuning.margin),
             "err_pct_shipped": round(100 * r.shipped.errorRate, 3), "err_pct_retype": round(100 * a.errorRate, 3),
             "fixed": a.fixed, "broken": a.induced, "broken_per_fixed": round(Double(a.induced) / Double(max(a.fixed, 1)), 3),
             "slow_fixed": r.slow.fixed, "slow_broken": r.slow.induced,
