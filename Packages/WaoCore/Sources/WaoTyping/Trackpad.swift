@@ -178,14 +178,17 @@ public struct SpaceTrackpad: Equatable, Sendable {
         case ended
     }
 
-    /// The finger's motion while it moves the cursor, and the parts of it too small to move the cursor yet.
+    /// The finger's motion while it moves the cursor.
     public struct Drag: Equatable, Sendable {
         var point: CGPoint
         var time: TimeInterval?
         /// Smoothed, in pt/s.
         var velocity = CGVector.zero
-        /// Characters moved by the finger but not yet by the cursor, so no motion is lost to rounding.
-        var columns: CGFloat = 0
+        /// Where the hold began, so the cursor's column follows the finger's position and a drag back lands where
+        /// it started.
+        var startX: CGFloat
+        /// Columns already handed out.
+        var columns = 0
         /// Vertical travel toward the next line move.
         var rise: CGFloat = 0
         /// A line moved in this vertical run, so the next one takes only `lineStep`.
@@ -201,14 +204,10 @@ public struct SpaceTrackpad: Equatable, Sendable {
 
     /// The system keyboard's, measured from a recording of a held space in the iOS 26.4 simulator.
     public static let holdDelay: TimeInterval = 0.65
-    /// About one character of 17 pt text, below `precisionSpeed`.
+    /// About one character of 17 pt text, at any speed, so the cursor stays under the finger as the system
+    /// keyboard's does. Speed-scaled gain made a normal drag skip two or three characters a frame, which read as
+    /// jumping by words.
     public static let pointsPerCharacter: CGFloat = 9
-    /// Pointer acceleration in the shape of libinput's adaptive profile: one to one below `precisionSpeed` (pt/s),
-    /// then each `accelerationSpan` faster adds one more, up to `maxGain`. A slow 380 pt drag across the keyboard
-    /// moves about 53 characters, and a 150 pt flick in 0.15 s about 45.
-    static let precisionSpeed: CGFloat = 60
-    static let accelerationSpan: CGFloat = 240
-    static let maxGain: CGFloat = 3
     /// Vertical travel that starts a run of line moves, and then moves each further line: about one line of 17 pt text.
     /// The first is larger so a drag has to mean it.
     public static let lineThreshold: CGFloat = 30
@@ -241,7 +240,7 @@ public struct SpaceTrackpad: Equatable, Sendable {
     /// `holdDelay` passed with the finger still on the key.
     public mutating func held() -> Effect? {
         guard case .pressed(let point) = phase else { return nil }
-        phase = .tracking(Drag(point: point))
+        phase = .tracking(Drag(point: point, startX: point.x))
         return .begin
     }
 
@@ -274,10 +273,8 @@ public struct SpaceTrackpad: Equatable, Sendable {
         drag.point = point
         drag.time = time
 
-        let gain = min(maxGain, 1 + max(0, abs(drag.velocity.dx) - precisionSpeed) / accelerationSpan)
-        drag.columns += dx / pointsPerCharacter * gain
-        let columns = Int(drag.columns)
-        drag.columns -= CGFloat(columns)
+        let columns = Int((point.x - drag.startX) / pointsPerCharacter) - drag.columns
+        drag.columns += columns
 
         var lines = 0
         if abs(drag.velocity.dx) > horizontalDominance * abs(drag.velocity.dy) {
