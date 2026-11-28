@@ -126,8 +126,9 @@ public struct TouchTrail: Equatable, Sendable {
         return undo
     }
 
-    /// When the text since the last space leaves out characters no dictionary word covers and touches near the
-    /// latest ones would type a word that covers more, the rewrite to it; the trail then holds the new text.
+    /// When touches near the latest ones would type text since the last space that dictionary words explain
+    /// better, leaving fewer letters out or taking fewer words, the rewrite to it; the trail then holds the new
+    /// text. บอบคุณ is two words, so a hurried slip off ข is retyped to ขอบคุณ.
     public mutating func retype(before context: String, model: TypingModel, layout: KeyLayout,
                                 tuning: RetypeTuning = .shipped) -> Rewrite? {
         guard context.endsInScalars(text) else { return nil }
@@ -155,16 +156,16 @@ public struct TouchTrail: Equatable, Sendable {
 }
 
 extension TypingModel {
-    /// What each of `touches` should have typed after `prefix`, when that differs from what they did and covers
-    /// more of the text since the last space with dictionary words; `nil` otherwise. Each touch scores
+    /// What each of `touches` should have typed after `prefix`, when that differs from what they did and the
+    /// dictionary explains the text since the last space better; `nil` otherwise. Each touch scores
     /// `-½(d/σ)²` for its distance to the key it types, with σ from its interval, so a slow touch costs about 40
     /// nats to move one key and a hurried one about 7; the text scores λ·ln P.
     func retype(_ touches: ArraySlice<Touch>, after prefix: String, in layout: KeyLayout, tuning: RetypeTuning) -> [String]? {
         let fixed = run(before: prefix)
         let literal = touches.compactMap { id(of: $0.text) }
         guard literal.count == touches.count else { return nil }
-        let literalOpen = WordBreaks(fixed + literal, in: self).open
-        guard literalOpen > 0 else { return nil }
+        let literalFit = WordBreaks(fixed + literal, in: self).open
+        guard literalFit.uncovered > 0 || literalFit.pieces > 1 else { return nil }
 
         let history = normalized(prefix, keep: order - 1)
         typealias Choice = (id: UInt8, text: String, cost: Float)
@@ -203,7 +204,7 @@ extension TypingModel {
         }
         let typedTexts = touches.map(\.text)
         for path in beam where path.score >= literalScore - tuning.slack && path.texts != typedTexts {
-            if WordBreaks(fixed + path.ids.suffix(touches.count), in: self).open < literalOpen { return path.texts }
+            if WordBreaks(fixed + path.ids.suffix(touches.count), in: self).open < literalFit { return path.texts }
         }
         return nil
     }

@@ -16,6 +16,18 @@ final class RetypeTests: XCTestCase {
         /// A tap on the centre of the key that types `letter`, shifted where only the shifted layer has it.
         mutating func tap(_ letter: String, interval: TimeInterval) throws {
             let (point, shifted) = try centre(letter)
+            try tap(at: point, shifted: shifted, interval: interval)
+        }
+
+        /// A tap aimed at `letter` that lands `fraction` of the way to the centre of the key that types `landing`.
+        mutating func tap(_ letter: String, slippingToward landing: String, by fraction: CGFloat, interval: TimeInterval) throws {
+            let (aim, shifted) = try centre(letter)
+            let (hit, _) = try centre(landing)
+            try tap(at: CGPoint(x: aim.x + fraction * (hit.x - aim.x), y: aim.y + fraction * (hit.y - aim.y)),
+                    shifted: shifted, interval: interval)
+        }
+
+        private mutating func tap(at point: CGPoint, shifted: Bool, interval: TimeInterval) throws {
             guard case .character(let key) = model.key(at: point, in: layout, shifted: shifted, before: text, interval: interval)?.kind else {
                 return XCTFail("no character at \(point)")
             }
@@ -59,6 +71,16 @@ final class RetypeTests: XCTestCase {
     func testAHurriedTapOnTheKeyBesideTheOneMeantIsRetyped() throws {
         XCTAssertEqual(try type("ไท่รู้", interval: 0.1), "ไม่รู้")
         XCTAssertEqual(try type("ไมา", interval: 0.1), "ไม่")
+    }
+
+    func testAHurriedSlipThatStillSpellsWordsIsRetypedToTheOneWordMeant() throws {
+        for interval in [0.1, 0.3] {
+            var typist = try typist()
+            try typist.tap("ข", slippingToward: "บ", by: 0.65, interval: interval)
+            XCTAssertEqual(typist.text, "บ", "the slip types บ, and บอบ then คุณ are both words")
+            for letter in "อบคุณ".unicodeScalars { try typist.tap(String(letter), interval: interval) }
+            XCTAssertEqual(typist.text, "ขอบคุณ", "at \(interval) s")
+        }
     }
 
     func testTheSameTapsMadeSlowlyStayAsTyped() throws {
