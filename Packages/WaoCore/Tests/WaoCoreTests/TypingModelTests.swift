@@ -57,8 +57,24 @@ final class TypingModelTests: XCTestCase {
         let model = try model
         XCTAssertEqual(model.completions(after: "ไม่ร").first?.word, "รู้")
         XCTAssertEqual(model.completions(after: "ฉันไม่ร").first?.remainder, "ู้")
-        XCTAssertEqual(Set(model.completions(after: "ไม่ค").prefix(2).map(\.word)), ["ควร", "ค่อย"])
-        XCTAssertTrue(model.completions(after: "กินข").contains { $0.word == "ข้าว" })
+        XCTAssertEqual(Set(model.completions(after: "ไม่ค").prefix(2).map(\.remainder)), ["วร", "่อย"])
+        XCTAssertTrue(model.completions(after: "กินข").contains { $0.remainder == "้าว" })
+    }
+
+    func testAWordThatStartsWithAShorterOneIsStillCompletedWhole() throws {
+        let model = try model
+        XCTAssertEqual(model.completions(after: "ขอบ").first?.word, "ขอบคุณ")
+        XCTAssertEqual(model.completions(after: "โทร").first?.word, "โทรศัพท์")
+        XCTAssertEqual(model.completions(after: "ประเ").first?.word, "ประเทศ")
+        XCTAssertEqual(model.completions(after: "ขอบค").first?.word, "ขอบคุณ", "shows the whole word, not คุณ")
+    }
+
+    func testAFinishedWordIsNotSplicedOntoItsLastLetters() throws {
+        let model = try model
+        XCTAssertEqual(model.completions(after: "ขอบคุณ"), [])
+        XCTAssertEqual(model.completions(after: "สวัสดี"), [])
+        XCTAssertTrue(model.completions(after: "ข้าว").allSatisfy { $0.word.hasPrefix("ข้าว") })
+        XCTAssertTrue(model.completions(after: "ต้องก").contains { $0.word.hasPrefix("ก") }, "a word begun at ก")
     }
 
     func testAWordBegunAtTheStartIsStillCompletedWhole() throws {

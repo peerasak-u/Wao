@@ -104,34 +104,67 @@ public final class TypingModel: @unchecked Sendable {
     }
 
     /// Up to `limit` words that continue the end of `context`, likeliest first. Thai is written without spaces
-    /// between words, so the word so far is the shortest tail that starts some longer word and that the dictionary
-    /// can split everything typed before into words; failing that, the longest tail that starts a longer word.
-    /// The language model ranks the words by how likely the rest of each is after `context`.
+    /// between words, so the word so far may start at any point the dictionary can split everything typed before
+    /// into words: ขอบ may be ขอบคุณ begun or ขอ then บอก begun, and both kinds compete. Once the text ends with a
+    /// whole word of three letters or more, only words that go on from that word's start count, so ขอบคุณ is not
+    /// offered ณรงค์, while ต้องก, which ends in the two-letter งก, still offers กิน. When the dictionary cannot
+    /// split the text at all, the longest tail that starts a longer word. The language model ranks the words by
+    /// how likely the rest of each is after `context`, with a bonus for the letters a longer word saves typing.
     public func completions(after context: some StringProtocol, limit: Int = 3) -> [Completion] {
         let run = self.run(before: context)
         let breaks = WordBreaks(run, in: self)
-        let atBreaks = run.indices.reversed().filter { breaks.uncovered[$0] == 0 }
-        let anywhere = max(0, run.count - maxWordLength)..<run.count
         let history = normalized(context, keep: order - 1)
-        for start in atBreaks + anywhere {
-            let typed = run[start...]
-            let longer = words(startingWith: typed).filter { length(of: $0) > typed.count }
-            guard !longer.isEmpty else { continue }
-            let pool = Array(longer.sorted { wordFreq[$0] != wordFreq[$1] ? wordFreq[$0] > wordFreq[$1] : $0 < $1 }.prefix(Self.rankedWords))
-            let rest = restScores(pool, dropping: typed.count, after: history.ids, atLineStart: history.atLineStart)
-            // The pool is in frequency order, so frequency breaks ties.
-            let ranked = pool.enumerated().sorted { a, b in
-                rest[a.element]! != rest[b.element]! ? rest[a.element]! > rest[b.element]! : a.offset < b.offset
-            }
-            return ranked.prefix(limit).map { _, index in
-                let word = symbols(of: index)
-                return Completion(word: String(String.UnicodeScalarView(word)),
-                                  remainder: String(String.UnicodeScalarView(word.dropFirst(typed.count))))
-            }
+        let clean = run.indices.filter { breaks.uncovered[$0] == 0 }
+        let lastWord = clean.first { start in
+            let words = words(startingWith: run[start...])
+            return run.count - start >= Self.wholeWordLetters && !words.isEmpty
+                && length(of: words.lowerBound) == run.count - start
         }
-        return []
+        let starts = clean.filter { $0 <= lastWord ?? run.count }
+        var found = starts.flatMap { candidates(typed: run[$0...], after: history) }
+        if found.isEmpty, lastWord == nil, let start = (max(0, run.count - maxWordLength)..<run.count).first(where: {
+            !candidates(typed: run[$0...], after: history).isEmpty
+        }) {
+            found = candidates(typed: run[start...], after: history)
+        }
+        // Words that insert the same letters are one suggestion: it ranks as the best of them and shows the one
+        // that takes in the most of what was typed, ขอบคุณ rather than คุณ.
+        var byRemainder: [ArraySlice<UInt8>: (score: Float, shown: Candidate)] = [:]
+        for candidate in found {
+            let remainder = symbolIDs(of: candidate.word).dropFirst(candidate.typed)
+            let best = byRemainder[remainder]
+            byRemainder[remainder] = (max(best?.score ?? -.infinity, candidate.score),
+                                      best.map { $0.shown.typed >= candidate.typed ? $0.shown : candidate } ?? candidate)
+        }
+        let ranked = byRemainder.values.sorted { a, b in a.score != b.score ? a.score > b.score : a.shown.word < b.shown.word }
+        return ranked.prefix(limit).map { _, shown in
+            let word = symbols(of: shown.word)
+            return Completion(word: String(String.UnicodeScalarView(word)),
+                              remainder: String(String.UnicodeScalarView(word.dropFirst(shown.typed))))
+        }
     }
 
+    /// A dictionary word that would finish `typed` letters already on the line, and how it ranks.
+    private struct Candidate { let word: Int, typed: Int, score: Float }
+
+    /// The most frequent words longer than `typed` that begin with it, scored.
+    private func candidates(typed: ArraySlice<UInt8>, after history: (ids: [UInt8], atLineStart: Bool)) -> [Candidate] {
+        let longer = words(startingWith: typed).filter { length(of: $0) > typed.count }
+        let pool = Array(longer.sorted { wordFreq[$0] != wordFreq[$1] ? wordFreq[$0] > wordFreq[$1] : $0 < $1 }.prefix(Self.rankedWords))
+        let rest = restScores(pool, dropping: typed.count, after: history.ids, atLineStart: history.atLineStart)
+        return pool.map { word in
+            let letters = Float(length(of: word) - typed.count)
+            return Candidate(word: word, typed: typed.count,
+                             score: rest[word]! + Self.letterBonus * letters + Self.frequencyWeight * Float(wordFreq[word]))
+        }
+    }
+
+    /// Nats per letter a word adds and per step of its frequency byte, both chosen by wao-typing-eval's suggest mode.
+    static let letterBonus: Float = 0.2
+    static let frequencyWeight: Float = 0.01
+
+    /// The shortest word that ends what is being typed; shorter ones are too often the start of something else.
+    static let wholeWordLetters = 3
     /// How many of the most frequent candidates the language model ranks: a word begun with one letter has
     /// thousands.
     static let rankedWords = 48
