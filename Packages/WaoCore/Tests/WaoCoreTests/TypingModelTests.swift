@@ -74,18 +74,19 @@ final class TypingModelTests: XCTestCase {
         XCTAssertEqual(model.completions(after: "ขอบคุณ"), [])
         XCTAssertEqual(model.completions(after: "สวัสดี"), [])
         XCTAssertTrue(model.completions(after: "ข้าว").allSatisfy { $0.word.hasPrefix("ข้าว") })
-        XCTAssertTrue(model.completions(after: "ต้องก").contains { $0.word.hasPrefix("ก") }, "a word begun at ก")
+        XCTAssertTrue(model.completions(after: "ต้องก").contains { $0.word.unicodeScalars.first == "ก" }, "a word begun at ก")
     }
 
     func testAWordBegunAtTheStartIsStillCompletedWhole() throws {
         let model = try model
-        XCTAssertTrue(try XCTUnwrap(model.completions(after: "ไม").first).word.hasPrefix("ไม่"))
-        XCTAssertTrue(try XCTUnwrap(model.completions(after: "วันนี้ไม").first).remainder.hasPrefix("่"))
+        XCTAssertEqual(model.completions(after: "ไม").first?.word, "ไม่")
+        XCTAssertEqual(model.completions(after: "วันนี้ไม").first?.remainder, "่")
     }
 
-    func testAWordThatSavesNoTapRanksLast() throws {
-        let offered = try model.completions(after: "ไม")
-        XCTAssertFalse(offered.dropLast().contains { $0.remainder.unicodeScalars.count == 1 }, "\(offered)")
+    func testACommonShortWordOutranksTheLongerWordsItBegins() throws {
+        let model = try model
+        XCTAssertTrue(model.completions(after: "ครั").prefix(2).contains { $0.word == "ครับ" })
+        XCTAssertEqual(model.completions(after: "เดี๋").first?.word, "เดี๋ยว")
     }
 
     func testOffersNothingOutsideAThaiWord() throws {

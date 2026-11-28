@@ -26,6 +26,8 @@ public final class TypingModel: @unchecked Sendable {
     private let wordOffsets: UnsafeBufferPointer<UInt32>
     private let wordBlob: UnsafeBufferPointer<UInt8>
     private let wordFreq: UnsafeBufferPointer<UInt8>
+    /// `cumulativeMass[i]` is the frequency, per million, of the words before word `i`.
+    private let cumulativeMass: [Double]
     private static let space: UInt8 = 1
 
     public init(contentsOf url: URL) throws {
@@ -69,6 +71,10 @@ public final class TypingModel: @unchecked Sendable {
             throw error
         }
         ids = Dictionary(uniqueKeysWithValues: symbols.enumerated().map { ($1, UInt8($0 + 1)) })
+        // The builder stores each word's frequency per million as 255·ln(1 + f)/ln(1 + top), and ln(1 + top) is
+        // about 10.5; suggestions rank the same with any scale from 0.03 to 0.05 a step.
+        var running = 0.0
+        cumulativeMass = [0] + wordFreq.map { running += exp(0.041 * Double($0)) - 1; return running }
     }
 
     deinit { munmap(mapping, length) }
@@ -108,8 +114,8 @@ public final class TypingModel: @unchecked Sendable {
     /// into words: ขอบ may be ขอบคุณ begun or ขอ then บอก begun, and both kinds compete. Once the text ends with a
     /// whole word of three letters or more, only words that go on from that word's start count, so ขอบคุณ is not
     /// offered ณรงค์, while ต้องก, which ends in the two-letter งก, still offers กิน. When the dictionary cannot
-    /// split the text at all, the longest tail that starts a longer word. Words rank by the taps each is expected to
-    /// save: how likely the language model finds its rest after `context`, times the taps tapping it saves.
+    /// split the text at all, the longest tail that starts a longer word. Words rank by how likely each is the one
+    /// being typed: the language model's chance of its rest after `context`, times the chance it ends there.
     public func completions(after context: some StringProtocol, limit: Int = 3) -> [Completion] {
         let run = self.run(before: context)
         let breaks = WordBreaks(run, in: self)
@@ -152,17 +158,17 @@ public final class TypingModel: @unchecked Sendable {
         let longer = words(startingWith: typed).filter { length(of: $0) > typed.count }
         let pool = Array(longer.sorted { wordFreq[$0] != wordFreq[$1] ? wordFreq[$0] > wordFreq[$1] : $0 < $1 }.prefix(Self.rankedWords))
         let rest = restScores(pool, dropping: typed.count, after: history.ids, atLineStart: history.atLineStart)
-        return pool.map { word in
-            // Tapping a word types its rest in one tap. One that adds a single letter saves none, so it ranks after
-            // every word that saves some.
-            let saved = max(Float(length(of: word) - typed.count - 1), 0.01)
-            return Candidate(word: word, typed: typed.count,
-                             score: rest[word]! + log(saved) + Self.frequencyWeight * Float(wordFreq[word]))
-        }
+        return pool.map { Candidate(word: $0, typed: typed.count, score: rest[$0]! + log(ending($0))) }
     }
 
-    /// Nats per step of a word's frequency byte, a prior beside the language model, chosen by wao-typing-eval.
-    static let frequencyWeight: Float = 0.01
+    /// How often `word` ends where it does, against every dictionary word that begins with it: ไม่ against ไม่ต้อง,
+    /// ไม่ได้ and the rest. The language model scores the letters but cannot tell that a word is over, since Thai
+    /// puts no space after it.
+    private func ending(_ word: Int) -> Float {
+        let longer = words(startingWith: symbolIDs(of: word))
+        let own = cumulativeMass[word + 1] - cumulativeMass[word]
+        return Float(own / (cumulativeMass[longer.upperBound] - cumulativeMass[longer.lowerBound]))
+    }
 
     /// The shortest word that ends what is being typed; shorter ones are too often the start of something else.
     static let wholeWordLetters = 3
