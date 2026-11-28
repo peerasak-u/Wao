@@ -17,7 +17,8 @@ let usage = """
                 typed with every tap on its key's centre, which retyping must leave alone. RetypeTuning.shipped,
                 or the tuning the flags give
       retype-sweep  the same over a grid of retype tunings, one seed each
-      suggest   how often the suggestion bar, read after each Thai letter of a line, offers what the line types next
+      suggest   the share of taps the suggestion bar saves someone who takes the longest right word after every
+                Thai letter, and how often the bar holds one
     `all` (the default) runs everything but the sweep. Run it built for release.
     """
 
@@ -274,32 +275,34 @@ func runExamples() {
     }
 }
 
-/// A suggestion is right when what tapping it inserts is how the line goes on, so a shorter word that the line
-/// continues past still counts; `saved` is the letters the right suggestions would have typed.
+/// Each line typed by someone who, after every Thai letter, taps the suggestion that types the most of what comes
+/// next, if one types at least two letters; a suggestion that adds one letter saves no tap. `saved_pct` is the share
+/// of the line's taps that saves, and `top1_pct`/`top3_pct` how often the middle slot or any slot held such a word.
 func runSuggest() {
     for test in tests {
-        var reads = 0, top1 = 0, top3 = 0, saved = 0
+        var reads = 0, top1 = 0, top3 = 0, letters = 0, taps = 0
         for line in test.lines {
             let scalars = Array(line.unicodeScalars)
-            for i in 1..<max(1, scalars.count) where (0x0E01...0x0E5B).contains(scalars[i - 1].value) {
-                let typed = String(String.UnicodeScalarView(scalars[..<i]))
-                let rest = String(String.UnicodeScalarView(scalars[i...]))
-                let offered = model.completions(after: typed)
-                guard !offered.isEmpty else { continue }
-                reads += 1
-                let right = offered.map { rest.unicodeScalars.starts(with: $0.remainder.unicodeScalars) }
-                if right.first == true {
-                    top1 += 1
-                    saved += offered[0].remainder.unicodeScalars.count
-                }
-                if right.contains(true) { top3 += 1 }
+            letters += scalars.count
+            var i = 0
+            while i < scalars.count {
+                taps += 1
+                guard i > 0, (0x0E01...0x0E5B).contains(scalars[i - 1].value) else { i += 1; continue }
+                let rest = scalars[i...]
+                let offered = model.completions(after: String(String.UnicodeScalarView(scalars[..<i])))
+                if !offered.isEmpty { reads += 1 }
+                let useful = offered.map { $0.remainder.unicodeScalars.count >= 2 && rest.starts(with: $0.remainder.unicodeScalars) }
+                if useful.first == true { top1 += 1 }
+                guard let best = zip(offered, useful).filter(\.1).map({ $0.0.remainder.unicodeScalars.count }).max() else { i += 1; continue }
+                top3 += 1
+                i += best
             }
         }
         emit([
-            "mode": "suggest", "test": test.name, "reads": reads,
+            "mode": "suggest", "test": test.name, "letters": letters, "reads": reads,
+            "saved_pct": round(100 * (1 - Double(taps) / Double(max(letters, 1))), 2),
             "top1_pct": round(100 * Double(top1) / Double(max(reads, 1)), 2),
             "top3_pct": round(100 * Double(top3) / Double(max(reads, 1)), 2),
-            "top1_saved_letters_per_read": round(Double(saved) / Double(max(reads, 1)), 3),
         ])
     }
 }
