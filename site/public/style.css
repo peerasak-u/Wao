@@ -1,11 +1,24 @@
+/* The ไม้เอก notebook page, the same tokens as App/Ink.swift. */
 :root {
-  --canvas: #0a0a0b;
-  --ink: #f5f5f7;
-  --secondary: rgba(245, 245, 247, 0.62);
-  --tertiary: rgba(245, 245, 247, 0.4);
-  --hairline: rgba(255, 255, 255, 0.09);
-  --card: rgba(255, 255, 255, 0.04);
-  color-scheme: dark;
+  --canvas: #fbfaf6;
+  --ink: #161614;
+  --secondary: rgba(22, 22, 20, 0.62);
+  --tertiary: rgba(22, 22, 20, 0.4);
+  --hairline: rgba(22, 22, 20, 0.15);
+  --dot: rgba(22, 22, 20, 0.2);
+  --card-shape: 20px 17px 21px 16px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --canvas: #151514;
+    --ink: #f3f1ea;
+    --secondary: rgba(243, 241, 234, 0.62);
+    --tertiary: rgba(243, 241, 234, 0.4);
+    --hairline: rgba(243, 241, 234, 0.15);
+    --dot: rgba(243, 241, 234, 0.2);
+    color-scheme: dark;
+  }
 }
 
 * { box-sizing: border-box; }
@@ -14,19 +27,31 @@ html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
+  position: relative;
   background: var(--canvas);
-  background-image: radial-gradient(60rem 36rem at 50% -8rem, rgba(255, 255, 255, 0.09), transparent 70%);
-  background-repeat: no-repeat;
   color: var(--ink);
-  font-family: "IBM Plex Sans Thai", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "Anuphan", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 17px;
   line-height: 1.7;
+}
+
+/* Dot-grid paper that fades out down the first screen, like the app. */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 110vh;
+  background: radial-gradient(circle, var(--dot) 0.9px, transparent 1.4px) 9px 9px / 18px 18px;
+  -webkit-mask-image: linear-gradient(180deg, #000, transparent 55%);
+  mask-image: linear-gradient(180deg, #000, transparent 55%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 main {
   max-width: 44rem;
   margin: 0 auto;
-  padding: 3.5rem 1rem 4rem;
+  padding: 3rem 1rem 4rem;
 }
 
 a { color: var(--ink); text-underline-offset: 3px; text-decoration-color: var(--tertiary); }
@@ -34,92 +59,132 @@ a:hover { text-decoration-color: var(--ink); }
 
 nav {
   display: flex;
-  gap: 1.25rem;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
   align-items: center;
   font-size: 15px;
   color: var(--secondary);
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
 }
 nav a { color: var(--secondary); text-decoration: none; }
 nav a:hover { color: var(--ink); }
 nav .brand { display: flex; align-items: center; gap: 0.6rem; margin-right: auto; color: var(--ink); font-weight: 600; }
-nav .brand img { width: 28px; height: 28px; border-radius: 7px; }
+nav .brand img { width: 30px; height: 30px; border-radius: 7px; border: 1px solid var(--hairline); display: block; }
 
-.hero { text-align: center; padding: 1rem 0 2.5rem; }
-.hero h1 {
-  font-size: clamp(4.5rem, 18vw, 7.5rem);
-  line-height: 1.15;
-  margin: 0;
-  font-weight: 700;
-  text-shadow: 0 0 40px rgba(255, 255, 255, 0.25);
+/* A brand mark drawn in the current ink, from a traced stroke. */
+.mark {
+  display: inline-block;
+  background: var(--ink);
+  -webkit-mask: var(--src) center / contain no-repeat;
+  mask: var(--src) center / contain no-repeat;
 }
-.hero p { color: var(--secondary); margin: 0.75rem auto 0; max-width: 30rem; }
+.mark.maiek { --src: url(ink/maiek.svg); aspect-ratio: 63 / 207; }
+.mark.tick { --src: url(ink/tick.svg); aspect-ratio: 1; }
+.mark.arrow { --src: url(ink/arrow.svg); aspect-ratio: 16 / 9; }
 
-.wave {
+.hero { text-align: center; padding: 0.5rem 0 2.5rem; }
+.hero .stage { position: relative; display: inline-block; margin: 0.5rem 0 1.5rem; }
+
+/* The app's mic: one ไม้เอก stroke in a circle that rises into a wave of strokes while it listens. */
+.orb {
   display: flex;
-  gap: 7px;
   align-items: center;
   justify-content: center;
-  height: 84px;
-  margin: 2.25rem auto;
-  width: min(100%, 22rem);
-  border: 1px solid var(--hairline);
-  border-radius: 999px;
-  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.12), transparent) , var(--card);
+  gap: 5px;
+  width: 9.5rem;
+  height: 9.5rem;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
 }
-.wave span {
-  width: 6px;
-  border-radius: 3px;
-  background: linear-gradient(#c8c8cf, #fff 50%, #c8c8cf);
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.45);
-  animation: breathe 2.4s ease-in-out infinite;
+.orb .maiek { height: 0; opacity: 0; animation: listen 7s ease-in-out infinite; animation-delay: calc(var(--i) * 0.09s); }
+.orb .maiek[style*="--i:0"] { height: 70px; opacity: 1; animation-name: listen-centre; }
+@keyframes listen {
+  0%, 38%, 92%, 100% { height: 0; opacity: 0; }
+  46% { height: calc(52px - var(--i) * 11px); opacity: 1; }
+  54% { height: calc(30px - var(--i) * 5px); opacity: 1; }
+  62% { height: calc(46px - var(--i) * 10px); opacity: 1; }
+  70% { height: calc(24px - var(--i) * 4px); opacity: 1; }
+  78% { height: calc(40px - var(--i) * 8px); opacity: 1; }
+  86% { height: 14px; opacity: 1; }
 }
-@keyframes breathe { 50% { transform: scaleY(0.55); opacity: 0.7; } }
-@media (prefers-reduced-motion: reduce) { .wave span { animation: none; } }
+@keyframes listen-centre {
+  0%, 92%, 100% { height: 70px; }
+  20% { height: 64px; }
+  38% { height: 70px; }
+  46% { height: 60px; }
+  54% { height: 36px; }
+  62% { height: 56px; }
+  70% { height: 30px; }
+  78% { height: 50px; }
+  86% { height: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .orb .maiek { animation: none; } }
+
+.hero .note {
+  position: absolute;
+  left: calc(100% + 0.6rem);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+  text-align: left;
+  font-family: "Itim", "Anuphan", cursive;
+  font-size: 18px;
+  line-height: 1.35;
+  color: var(--secondary);
+}
+.hero .note .arrow-wrap { flex: none; width: 3.25rem; display: flex; }
+.hero .note .arrow { width: 100%; opacity: 0.75; transform: scaleX(-1); }
+.hero h1 { font-size: clamp(3.75rem, 15vw, 5.75rem); line-height: 1.2; margin: 0; font-weight: 700; }
+.hero p { color: var(--secondary); margin: 0.75rem auto 0; max-width: 30rem; }
 
 .cta {
-  display: inline-block;
-  margin-top: 0.5rem;
-  padding: 0.85rem 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.9rem;
+  padding: 0.6rem 1.6rem;
   border-radius: 999px;
   background: var(--ink);
   color: var(--canvas);
+  border: 1.5px solid var(--ink);
   font-weight: 600;
   text-decoration: none;
-  box-shadow: 0 0 32px rgba(255, 255, 255, 0.25);
+  transition: transform 0.12s ease;
 }
-.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-top: 0.5rem; }
-.actions .cta { margin-top: 0; }
-.cta.secondary {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  background: transparent; color: var(--ink); border: 1px solid var(--hairline); box-shadow: none;
-}
-.cta.muted { background: transparent; color: var(--secondary); border: 1px solid var(--hairline); box-shadow: none; }
+.cta:active { transform: scale(0.97); }
+.cta.secondary { background: var(--canvas); color: var(--ink); font-weight: 500; }
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-top: 1.75rem; }
 
 .cards { display: grid; gap: 0.9rem; margin: 2rem 0; }
 @media (min-width: 40rem) { .cards { grid-template-columns: 1fr 1fr; } }
 .card {
-  background: var(--card);
-  border: 1px solid var(--hairline);
-  border-radius: 22px;
-  padding: 1.25rem 1.35rem;
+  background: var(--canvas);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--card-shape);
+  padding: 1.15rem 1.3rem 1.25rem;
 }
-.card h3 { margin: 0 0 0.3rem; font-size: 17px; }
+.card:nth-child(even) { border-radius: 17px 21px 16px 20px; }
+.card h3 { display: flex; align-items: center; gap: 0.5rem; margin: 0 0 0.3rem; font-size: 17px; font-weight: 600; }
+.card h3 .tick { width: 1.05rem; flex: none; }
 .card p { margin: 0; color: var(--secondary); font-size: 15px; }
 
-h1.page { font-size: 2.4rem; line-height: 1.3; margin: 0 0 0.25rem; }
+h1.page { font-size: 2.4rem; line-height: 1.3; margin: 0 0 0.25rem; font-weight: 700; }
 .updated { color: var(--tertiary); font-size: 14px; margin: 0 0 2rem; }
-h2 { font-size: 1.3rem; margin: 2.5rem 0 0.5rem; }
-h2 + p, h2 + ul { margin-top: 0; }
+h2 { font-size: 1.3rem; font-weight: 600; margin: 2.5rem 0 0.5rem; }
+h2 + p, h2 + ul, h2 + ol { margin-top: 0; }
 p, li { color: var(--secondary); }
 strong { color: var(--ink); font-weight: 600; }
 ol, ul { padding-left: 1.3rem; }
 li { margin: 0.3rem 0; }
+li::marker { color: var(--tertiary); }
 
 .lang {
   margin-top: 3.5rem;
   padding-top: 2.5rem;
-  border-top: 1px solid var(--hairline);
+  border-top: 1.5px solid var(--hairline);
 }
 
 footer {
@@ -129,3 +194,10 @@ footer {
   text-align: center;
 }
 footer a { color: var(--tertiary); }
+
+@media (max-width: 34rem) {
+  .hero .stage { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+  .hero .note { position: static; transform: none; flex-direction: column; gap: 0.6rem; text-align: center; font-size: 17px; }
+  .hero .note .arrow-wrap { width: 2.6rem; height: 1.6rem; align-items: center; }
+  .hero .note .arrow { transform: rotate(-80deg); }
+}
